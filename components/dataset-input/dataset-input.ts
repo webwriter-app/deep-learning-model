@@ -126,7 +126,7 @@ export class DatasetInput extends LitElementWw {
     if (supportedTypes.includes(file.type)) {
       Papa.parse(file, {
         header: true,
-        skipEmptyLines:"greedy",                  fderrrrrrrrrrrrrrrrrrr
+        skipEmptyLines:"greedy",
         complete: function(results) {
           that.dispatchEvent(
             new CustomEvent("readDataset", {

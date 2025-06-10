@@ -13,7 +13,7 @@ export class MatthiasschaeferAiwidgets extends LitElementWw {
     "sl-button": SlButton,
     "sl-button-group": SlButtonGroup,
     "dataset-input": DatasetInput
-  }1
+  }
 
   public options: Record<string, OptionDeclaration> = {}
 
