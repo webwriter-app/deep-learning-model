@@ -23,9 +23,46 @@
         "@lit/localize-tools": "^0.8"
     },
     "exports": {
-        "./widgets/matthiasschaefer-aiwidgets.*": {
-            "source": "./widgets/matthiasschaefer-aiwidgets.ts",
-            "default": "./dist/widgets/matthiasschaefer-aiwidgets.*"
+        "./widgets/features.*": {
+            "source": "./widgets/features.ts",
+            "default": "./dist/widgets/features.*"
+        },
+        "./widgets/design.*": {
+            "source": "./widgets/design.ts",
+            "default": "./dist/widgets/design.*"
+        },
+        "./snippets/design.html": "./snippets/design.html",
+        "./snippets/features.html": "./snippets/features.html"
+    },
+    "editingConfig": {
+        ".": {
+            "label": {
+                "_": "AI Widgets"
+            },
+            "description": {
+                "de": "Entwickle eine KI in 5 Schritten."
+            },
+            "uninsertable": true
+        },
+        "./snippets/features.html": {
+            "selectable": true,
+            "label": {
+                "de": "Feature Engineering"
+            },
+            "group": "answer",
+            "content": "webwriter-choice-item+",
+            "uninsertable": true,
+            "inline": false
+        },
+        "./snippets/design.html": {
+            "selectable": true,
+            "label": {
+                "de": "Model Designing"
+            },
+            "group": "answer",
+            "content": "webwriter-choice-item+",
+            "uninsertable": true,
+            "inline": false
         }
     }
 }

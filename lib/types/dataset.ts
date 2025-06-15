@@ -1,4 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
+import {html, css, TemplateResult, PropertyValues} from "lit"
 
 type RawSample = Map<string,string>
 type TensorSample = Map<string,tf.Tensor>
@@ -6,7 +7,7 @@ type TensorSample = Map<string,tf.Tensor>
 type Constructor<T> = new (...args: any[]) => T;
 
 /**
-* This class is a wrapper that refferences the original data and allows to access samples, batches and training/validation/testing splits
+* This class is a wrapper that references the original data and allows to access samples, batches and training/validation/testing splits
 */
 export class Dataset {
 
@@ -22,12 +23,18 @@ export class Dataset {
     * The end of the validation section (index excluded)
     */
     protected validationEnd: number;
+    /**
+     * The fields/column names of the dataset table
+     * (Note: This is captured only by the first entry of the datasets keys)
+     */
+    public readonly fields: Array<string>;
 
     /**
     * This class is a wrapper that references the original data and allows to access samples, batches and training/validation/testing splits
     */
-    constructor(dataset: Array<Map<string,string>>, trainingPercentile = 0.7, validationPercentile = 0.2) {
+    constructor(dataset: Array<RawSample>, trainingPercentile = 0.7, validationPercentile = 0.2) {
         this.dataset = dataset;
+        this.fields = Object.keys(dataset[0]);
         tf.util.shuffle(this.dataset);
         this.trainingEnd = this.dataset.length * trainingPercentile;
         this.validationEnd = this.dataset.length * (trainingPercentile + validationPercentile);
@@ -71,11 +78,14 @@ export class Dataset {
     }
 }
 
+/**
+* This class describes a transformation function from a column in the dataset from string values to tensors
+*/
 export abstract class FeatureTransformation {
     /**
     * The information gathered from one run through all samples. This could be the max, avg or the list of unique classes.
     */
-    private aggrigatedInformation: object;
+    protected aggrigatedInformation: Map<string, any> = new Map<string, any>();
 
     /**
     * The constructor runs through the samples and aggregates needed information.
@@ -87,15 +97,150 @@ export abstract class FeatureTransformation {
      * @param value The string value from the raw data that will be turned into a tensor
      */
     public abstract transform(value: string): tf.Tensor
+
+    /**
+     * Returns the element that will be displayed and changes the settings of the transformation
+     */
+    public abstract getSettingElement(): TemplateResult;
+
+    /**
+     * Returns an html element that will be displayed. Can be a simple text or an image etc.
+     */
+    public abstract renderTransformedValue(value: string): TemplateResult;
 }
+
+type FeatureTransformationRegistryEntry = {
+    name:string,
+    constructor:Constructor<FeatureTransformation>
+}
+let registeredTransformations = new Array<FeatureTransformationRegistryEntry>
+/**
+ * Registers a feature transformation (also for external classes). Primarly used to select the available transformations in the UI
+ * @param name Name of the transformation in literature
+ * @param constructor The class instantiated when the transformation is used
+ */
+export function registerFeatureTransformation(name:string, constructor:Constructor<FeatureTransformation>) {
+    registeredTransformations.push({name, constructor})
+}
+
+/**
+ * Returns the available feature transformations registered by the classes
+ */
+export function getFeatureTransformations(): Array<FeatureTransformationRegistryEntry> {
+    return registeredTransformations;
+}
+/**
+ * Returns the available feature transformations registered by the classes
+ */
+export function getFeatureTransformation(name: string): FeatureTransformationRegistryEntry {
+    return registeredTransformations.find(e => e.name == name);
+}
+registerFeatureTransformation("Ignore", null)
+
+/**
+* This is the transformation from string values to a class encoding
+*/
+export class ClassTransformation extends FeatureTransformation {
+    /**
+    * The constructor runs through the samples and registers the unique classes.
+    */
+    public constructor(samples: Array<string>)  {
+        super(samples);
+        this.aggrigatedInformation.set("classes", new Array<string>());
+        for (let sample of samples) {
+            let classes = this.aggrigatedInformation.get("classes");
+            if (classes.indexOf(sample) == -1)
+                classes.push(sample);
+        }
+    }
+
+    public transform(value: string): tf.Tensor1D {
+        let classes = this.aggrigatedInformation.get("classes");
+        let index = classes.indexOf(value);
+        if (index == -1)
+            return tf.zeros([classes.length]);
+
+        let tensor = new Array<number>(classes.length);
+        tensor.fill(0);
+        tensor[index] = 1;
+        return tf.tensor(tensor);
+    }
+
+    public getSettingElement(): TemplateResult {
+        return html``
+    }
+
+    public renderTransformedValue(value: string): TemplateResult {
+        let transformed = this.transform(value).arraySync();
+        if (transformed.length < 10) {
+            return html`${transformed.join(", ")}`;
+        } else {
+            let before = transformed.indexOf(1);
+            let after =  (transformed.length - transformed.indexOf(1) - 1)
+            let str = (before > 0 ? "0x"+before+", ": "") + "1" + (after > 0 ? ", 0x" + after : "");
+            return html`${str}`;
+        }
+    }
+}
+registerFeatureTransformation("Class Encoding", ClassTransformation)
+
+/**
+* This is the transformation from string values to a class encoding
+*/
+export class LinearTransformation extends FeatureTransformation {
+    /**
+    * The constructor runs through the samples and registers the unique classes.
+    */
+    public constructor(samples: Array<string>)  {
+        super(samples);
+        if (isNaN(parseFloat(samples[0])))
+            throw new Error("number transformation contained invalid numbers")
+        this.aggrigatedInformation.set("max", parseFloat(samples[0]));
+        this.aggrigatedInformation.set("min", parseFloat(samples[0]));
+        for (let sample of samples) {
+            let number = parseFloat(sample);
+            if (isNaN(number))
+                throw new Error("number transformation contained invalid numbers")
+
+            let min = this.aggrigatedInformation.get("min");
+            let max = this.aggrigatedInformation.get("max");
+            if (number > max)
+                this.aggrigatedInformation.set("max", number);
+            if (number < min)
+                this.aggrigatedInformation.set("min", number);
+        }
+        if (this.aggrigatedInformation.get("min") - this.aggrigatedInformation.get("max") == 0)
+            throw new Error("the provided values are all the same and thus do not offer any information")
+    }
+    
+    public transform(value: string): tf.Tensor1D {
+        let min = this.aggrigatedInformation.get("min");
+        let max = this.aggrigatedInformation.get("max");
+        let tensor = new Array<number>(1)
+        let number = parseFloat(value);
+        if (isNaN(number))
+            throw new Error("number transformation contained invalid numbers")
+
+        tensor[0] = (number - min) / (max - min)
+        return tf.tensor(tensor);
+    }
+
+    public getSettingElement(): TemplateResult {
+        return html``
+    }
+
+    public renderTransformedValue(value: string): TemplateResult {
+        return html`${this.transform(value).arraySync()[0].toFixed(3)}`;
+    }
+}
+registerFeatureTransformation("Number Encoding", LinearTransformation)
 
 /**
 * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
 */
 export class TransformedDataset {
-    private dataset: Dataset;
     public featureMaps: Map<string, FeatureTransformation>;
-    private cache: Map<string, Array<TensorSample>>;
+    private cache: Map<string, Array<TensorSample>> = new Map();
 
     /**
     * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
@@ -103,9 +248,23 @@ export class TransformedDataset {
     constructor(dataset: Dataset, featureMaps: Map<string, Constructor<FeatureTransformation>>) {
         this.dataset = dataset;
         for (let key in featureMaps) {
-            let FeatureTransf = featureMaps[key];
-            this.featureMaps[key] = new FeatureTransf(dataset.getSamples().map(v => v[key]))
+            let FeatureTransformationConstructor = featureMaps[key];
+            this.featureMaps[key] = new FeatureTransformationConstructor(dataset.getSamples().map(v => v[key]))
         }
+    }
+
+    /**
+     * Returns the dataset
+     */
+    get dataset() {
+        return this.dataset;
+    }
+    /**
+     * Sets the dataset and clears tensor cache
+     */
+    set dataset(dataset: Dataset) {
+        this.dataset = dataset;
+        this.cache = new Map();
     }
 
     /**
