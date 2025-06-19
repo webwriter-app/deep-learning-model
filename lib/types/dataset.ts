@@ -1,10 +1,12 @@
 import * as tf from '@tensorflow/tfjs';
-import {html, css, TemplateResult, PropertyValues} from "lit"
+import { html, css, TemplateResult, PropertyValues } from "lit"
 
-type RawSample = Map<string,string>
-type TensorSample = Map<string,tf.Tensor>
+type RawSample = Record<string, string>
+type TensorSample = Record<string, tf.Tensor>
 
 type Constructor<T> = new (...args: any[]) => T;
+type NonEmptyArray<T> = [T, ...T[]];
+
 
 /**
 * This class is a wrapper that references the original data and allows to access samples, batches and training/validation/testing splits
@@ -45,7 +47,7 @@ export class Dataset {
      * (note: the dataset is shuffled)
      * @param id The id of the sample
      */
-    getSample(id:number):RawSample {
+    getSample(id: number): RawSample {
         return this.dataset[id];
     }
 
@@ -85,12 +87,20 @@ export abstract class FeatureTransformation {
     /**
     * The information gathered from one run through all samples. This could be the max, avg or the list of unique classes.
     */
-    protected aggrigatedInformation: Map<string, any> = new Map<string, any>();
+    protected aggrigatedInformation: Record<string, any> = {};
+    public readonly name: string;
 
     /**
     * The constructor runs through the samples and aggregates needed information.
     */
-    public constructor(samples: Array<string>)  {}
+    public constructor(name: string, samples: Array<string>) {
+        this.name = name;
+    }
+
+    /**
+     * The size of tensor after the transformation
+     */
+    public abstract size(): NonEmptyArray<number>;
 
     /**
      * Takes a string value from the raw data and turns it into a tensor
@@ -110,8 +120,8 @@ export abstract class FeatureTransformation {
 }
 
 type FeatureTransformationRegistryEntry = {
-    name:string,
-    constructor:Constructor<FeatureTransformation>
+    name: string,
+    constructor: Constructor<FeatureTransformation>
 }
 let registeredTransformations = new Array<FeatureTransformationRegistryEntry>
 /**
@@ -119,8 +129,8 @@ let registeredTransformations = new Array<FeatureTransformationRegistryEntry>
  * @param name Name of the transformation in literature
  * @param constructor The class instantiated when the transformation is used
  */
-export function registerFeatureTransformation(name:string, constructor:Constructor<FeatureTransformation>) {
-    registeredTransformations.push({name, constructor})
+export function registerFeatureTransformation(name: string, constructor: Constructor<FeatureTransformation>) {
+    registeredTransformations.push({ name, constructor })
 }
 
 /**
@@ -129,6 +139,7 @@ export function registerFeatureTransformation(name:string, constructor:Construct
 export function getFeatureTransformations(): Array<FeatureTransformationRegistryEntry> {
     return registeredTransformations;
 }
+
 /**
  * Returns the available feature transformations registered by the classes
  */
@@ -144,21 +155,25 @@ export class ClassTransformation extends FeatureTransformation {
     /**
     * The constructor runs through the samples and registers the unique classes.
     */
-    public constructor(samples: Array<string>)  {
-        super(samples);
-        this.aggrigatedInformation.set("classes", new Array<string>());
+    public constructor(samples: Array<string>) {
+        super("Class Encoding", samples);
+        this.aggrigatedInformation.classes = new Array<string>();
         for (let sample of samples) {
-            let classes = this.aggrigatedInformation.get("classes");
+            let classes = this.aggrigatedInformation.classes;
             if (classes.indexOf(sample) == -1)
                 classes.push(sample);
         }
     }
 
+    public size(): [number] {
+        return [(this.aggrigatedInformation.classes.length as number)];
+    }
+
     public transform(value: string): tf.Tensor1D {
-        let classes = this.aggrigatedInformation.get("classes");
+        let classes = this.aggrigatedInformation.classes;
         let index = classes.indexOf(value);
         if (index == -1)
-            return tf.zeros([classes.length]);
+            return tf.zeros(this.size());
 
         let tensor = new Array<number>(classes.length);
         tensor.fill(0);
@@ -176,8 +191,8 @@ export class ClassTransformation extends FeatureTransformation {
             return html`${transformed.join(", ")}`;
         } else {
             let before = transformed.indexOf(1);
-            let after =  (transformed.length - transformed.indexOf(1) - 1)
-            let str = (before > 0 ? "0x"+before+", ": "") + "1" + (after > 0 ? ", 0x" + after : "");
+            let after = (transformed.length - transformed.indexOf(1) - 1)
+            let str = (before > 0 ? "0x" + before + ", " : "") + "1" + (after > 0 ? ", 0x" + after : "");
             return html`${str}`;
         }
     }
@@ -191,31 +206,35 @@ export class LinearTransformation extends FeatureTransformation {
     /**
     * The constructor runs through the samples and registers the unique classes.
     */
-    public constructor(samples: Array<string>)  {
-        super(samples);
+    public constructor(samples: Array<string>) {
+        super("Number Encoding", samples);
         if (isNaN(parseFloat(samples[0])))
             throw new Error("number transformation contained invalid numbers")
-        this.aggrigatedInformation.set("max", parseFloat(samples[0]));
-        this.aggrigatedInformation.set("min", parseFloat(samples[0]));
+        this.aggrigatedInformation.max = parseFloat(samples[0]);
+        this.aggrigatedInformation.min = parseFloat(samples[0]);
         for (let sample of samples) {
             let number = parseFloat(sample);
             if (isNaN(number))
                 throw new Error("number transformation contained invalid numbers")
 
-            let min = this.aggrigatedInformation.get("min");
-            let max = this.aggrigatedInformation.get("max");
+            let min = this.aggrigatedInformation.min;
+            let max = this.aggrigatedInformation.max;
             if (number > max)
-                this.aggrigatedInformation.set("max", number);
+                this.aggrigatedInformation.max = number;
             if (number < min)
-                this.aggrigatedInformation.set("min", number);
+                this.aggrigatedInformation.min = number;
         }
-        if (this.aggrigatedInformation.get("min") - this.aggrigatedInformation.get("max") == 0)
+        if (this.aggrigatedInformation.min - this.aggrigatedInformation.max == 0)
             throw new Error("the provided values are all the same and thus do not offer any information")
     }
-    
+
+    public size() {
+        return [1] as NonEmptyArray<number>;
+    }
+
     public transform(value: string): tf.Tensor1D {
-        let min = this.aggrigatedInformation.get("min");
-        let max = this.aggrigatedInformation.get("max");
+        let min = this.aggrigatedInformation.min;
+        let max = this.aggrigatedInformation.max;
         let tensor = new Array<number>(1)
         let number = parseFloat(value);
         if (isNaN(number))
@@ -239,13 +258,14 @@ registerFeatureTransformation("Number Encoding", LinearTransformation)
 * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
 */
 export class TransformedDataset {
-    public featureMaps: Map<string, FeatureTransformation>;
-    private cache: Map<string, Array<TensorSample>> = new Map();
+    public readonly dataset: Dataset;
+    public featureMaps: Record<string, FeatureTransformation> = {};
+    private cache: Record<string, Array<TensorSample>> = {};
 
     /**
     * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
     */
-    constructor(dataset: Dataset, featureMaps: Map<string, Constructor<FeatureTransformation>>) {
+    constructor(dataset: Dataset, featureMaps: Record<string, Constructor<FeatureTransformation>>) {
         this.dataset = dataset;
         for (let key in featureMaps) {
             let FeatureTransformationConstructor = featureMaps[key];
@@ -254,27 +274,15 @@ export class TransformedDataset {
     }
 
     /**
-     * Returns the dataset
-     */
-    get dataset() {
-        return this.dataset;
-    }
-    /**
-     * Sets the dataset and clears tensor cache
-     */
-    set dataset(dataset: Dataset) {
-        this.dataset = dataset;
-        this.cache = new Map();
-    }
-
-    /**
      * Transforms the raw sample into a tensor sample
      * @param sample The sample that should be transformed
      */
-    transformSample(sample: RawSample):TensorSample {
-        let tensors = new Map<string, tf.Tensor>()
+    transformSample(sample: RawSample): TensorSample {
+        let tensors: TensorSample = {}
         for (let key in sample) {
-            tensors[key] = this.featureMaps.get("key").transform(sample.get(key))
+            let transformation = this.featureMaps[key];
+            if (transformation)
+                tensors[key] = transformation.transform(sample[key])
         }
         return tensors;
     }
@@ -284,7 +292,7 @@ export class TransformedDataset {
      * (note: the dataset is shuffled)
      * @param id The id of the sample
      */
-    getSample(id:number):TensorSample {
+    getSample(id: number): TensorSample {
         let sample = this.dataset.getSample(id);
         return this.transformSample(sample);
     }
@@ -293,41 +301,41 @@ export class TransformedDataset {
      * Returns all samples from the training portion of the dataset
      */
     getTrainingSamples(): Array<TensorSample> {
-        if (this.cache.get("training") != null)
-            return this.cache.get("training");
+        if (this.cache.training != null)
+            return this.cache.training;
 
         let that = this;
-        this.cache.set("training", this.dataset.getTrainingSamples().map(function(sample: RawSample) {
+        this.cache.training = this.dataset.getTrainingSamples().map(function (sample: RawSample) {
             return that.transformSample(sample);
-        }));
-        return this.cache.get("training");
+        });
+        return this.cache.training;
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
     getValidationSamples(): Array<TensorSample> {
-        if (this.cache.get("validation") != null)
-            return this.cache.get("validation");
+        if (this.cache.validation != null)
+            return this.cache.validation;
 
         let that = this;
-        this.cache.set("validation", this.dataset.getValidationSamples().map(function(sample: RawSample) {
+        this.cache.validation = this.dataset.getValidationSamples().map(function (sample: RawSample) {
             return that.transformSample(sample);
-        }));
-        return this.cache.get("validation");
+        });
+        return this.cache.validation;
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
     getTestSamples(): Array<TensorSample> {
-        if (this.cache.get("testing") != null)
-            return this.cache.get("testing");
+        if (this.cache.testing != null)
+            return this.cache.testing;
 
         let that = this;
-        this.cache.set("testing", this.dataset.getTestSamples().map(function(sample: RawSample) {
+        this.cache.testing = this.dataset.getTestSamples().map(function (sample: RawSample) {
             return that.transformSample(sample);
-        }));
-        return this.cache.get("testing");
+        });
+        return this.cache.testing;
     }
 }

@@ -16,53 +16,38 @@
         "@tabler/icons": "^3.33.0",
         "@tensorflow/tfjs": "^4.22.0",
         "@webwriter/lit": "^2",
+        "drawflow": "^0.0.60",
         "lit": "^3",
         "papaparse": "^5.5.3"
     },
     "devDependencies": {
-        "@lit/localize-tools": "^0.8"
+        "@lit/localize-tools": "^0.8",
+        "@types/drawflow": "^0.0.12"
     },
     "exports": {
-        "./widgets/features.*": {
-            "source": "./widgets/features.ts",
-            "default": "./dist/widgets/features.*"
+        "./widgets/webwriter-typeselect.*": {
+            "source": "./widgets/webwriter-typeselect.ts",
+            "default": "./dist/widgets/webwriter-typeselect.*"
         },
-        "./widgets/design.*": {
-            "source": "./widgets/design.ts",
-            "default": "./dist/widgets/design.*"
+        "./widgets/webwriter-features.*": {
+            "source": "./widgets/webwriter-features.ts",
+            "default": "./dist/widgets/webwriter-features.*"
         },
-        "./snippets/design.html": "./snippets/design.html",
-        "./snippets/features.html": "./snippets/features.html"
+        "./widgets/webwriter-design.*": {
+            "source": "./widgets/webwriter-design.ts",
+            "default": "./dist/widgets/webwriter-design.*"
+        }
     },
     "editingConfig": {
-        ".": {
+        "./widgets/webwriter-typeselect": {
             "label": {
                 "_": "AI Widgets"
             },
             "description": {
-                "de": "Entwickle eine KI in 5 Schritten."
+                "_": "Entwickle eine KI in 5 Schritten."
             },
-            "uninsertable": true
-        },
-        "./snippets/features.html": {
-            "selectable": true,
-            "label": {
-                "de": "Feature Engineering"
-            },
-            "group": "answer",
-            "content": "webwriter-choice-item+",
-            "uninsertable": true,
-            "inline": false
-        },
-        "./snippets/design.html": {
-            "selectable": true,
-            "label": {
-                "de": "Model Designing"
-            },
-            "group": "answer",
-            "content": "webwriter-choice-item+",
-            "uninsertable": true,
-            "inline": false
+            "selectable": false,
+            "uninsertable": false
         }
     }
 }

@@ -1,18 +1,19 @@
-import {html, css, TemplateResult, PropertyValues} from "lit"
-import {LitElementWw, OptionDeclaration, ActionDeclaration} from "@webwriter/lit"
-import {customElement, property, state} from "lit/decorators.js"
+import { html, css, TemplateResult, PropertyValues } from "lit"
+import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
+import { customElement, property, state } from "lit/decorators.js"
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
-import {DatasetInput} from "../components/dataset-input/dataset-input"
-import {Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation} from "../lib/types/dataset"
+import { DatasetInput } from "../components/dataset-input/dataset-input"
+import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
+import { registerCommunicator, Communicator } from "../lib/apis/com";
 import * as tf from '@tensorflow/tfjs';
+type Constructor<T> = new (...args: any[]) => T;
 
-
-@customElement("aiwidgets-design")
-export class MatthiasschaeferAiwidgets extends LitElementWw {
+@customElement("webwriter-features")
+export class AiWidgetsFeatures extends LitElementWw {
   static scopedElements = {
     "sl-button": SlButton,
     "sl-button-group": SlButtonGroup,
@@ -59,16 +60,26 @@ export class MatthiasschaeferAiwidgets extends LitElementWw {
 
   public options: Record<string, OptionDeclaration> = {}
 
-  @property({type:Array, attribute:true, reflect:true})
-  accessor samples: Array<Map<string,string>>;
+  @property({ type: Array, attribute: true, reflect: true })
+  accessor samples: Array<Record<string, string>>;
 
-  @property({type:Object, attribute:true, reflect:true})
+  @property({ type: Object, attribute: true, reflect: true })
   accessor fieldProps: object;
 
   private rawDataset: Dataset;
   private tensorDataset: TransformedDataset;
 
   private activeHeader = "";
+
+  private communicator: Communicator;
+
+  constructor() {
+    super();
+    let that = this;
+    this.communicator = registerCommunicator("features", [], function () {
+      return { dataset: that.rawDataset, tensorDataset: that.tensorDataset };
+    }, function (name) { })
+  }
 
   renderSelectDataset() {
     return html`
@@ -92,8 +103,8 @@ export class MatthiasschaeferAiwidgets extends LitElementWw {
 
     let rows;
     if (this.fieldProps[fieldName].type == "Ignore") {
-      rows = this.samples.slice(0,10).map(
-        function(v) {
+      rows = this.samples.slice(0, 10).map(
+        function (v) {
           return html`<tr><td>${v[fieldName]}</td></tr>`
         }
       )
@@ -101,8 +112,8 @@ export class MatthiasschaeferAiwidgets extends LitElementWw {
     } else {
       let Transformation = getFeatureTransformation(this.fieldProps[fieldName].type).constructor;
       let transformation = new Transformation(this.samples.map(v => v[fieldName]))
-      let rows = this.samples.slice(0,10).map(
-        function(v) {
+      let rows = this.samples.slice(0, 10).map(
+        function (v) {
           return html`<tr><td>${v[fieldName]}</td><td>${transformation.renderTransformedValue(v[fieldName])}</td></tr>`
         }
       )
@@ -119,23 +130,26 @@ export class MatthiasschaeferAiwidgets extends LitElementWw {
       options.push(html`<sl-option value=${option.name.replaceAll(" ", "_")}>${option.name}</sl-option>`)
     }
     let that = this;
-    function onchange(e:Event) {
+    function onchange(e: Event) {
       let value = (e.target as SlSelect).value as string
       that.fieldProps[fieldName].type = value.replaceAll("_", " ");
       //Deep copy for new reference to trigger refreshing the attribute and save ;-;
       that.fieldProps = JSON.parse(JSON.stringify(Object.assign({}, that.fieldProps)));
+      this.updateTensorDataset();
+      that.communicator.changed();
     }
-  
+
     return html`<sl-select @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")}>${options}</sl-select>`
   }
 
   render() {
-    console.log(this.fieldProps);
     if (this.samples == null)
       return this.renderSelectDataset();
     else {
-      if (this.rawDataset == null)
+      if (this.rawDataset == null) {
         this.rawDataset = new Dataset(this.samples);
+        this.updateTensorDataset();
+      }
       return html`
       <div part="options">
         <sl-button id="reset" variant="warning" @click=${this.deleteDataset}>Dataset löschen</sl-button>
@@ -147,26 +161,38 @@ export class MatthiasschaeferAiwidgets extends LitElementWw {
     }
   }
 
-  handleDataset(data: Array<Map<string, string>>, errors:Array<any>, meta:any) {
+  handleDataset(data: Array<Record<string, string>>, errors: Array<any>, meta: any) {
     console.log("handle")
     this.samples = data;
     this.rawDataset = new Dataset(this.samples);
-    this.fieldProps = new Array()
+    this.fieldProps = {}
     for (let field of meta.fields) {
-      this.fieldProps[field] = {type:"Ignore"};
+      this.fieldProps[field] = { type: "Ignore" };
     }
+    this.updateTensorDataset();
+    this.communicator.changed();
   }
 
-  handleHeaderClick(e:Event) {
+  updateTensorDataset() {
+    let transformations: Record<string, Constructor<FeatureTransformation>> = {}
+    for (let field in this.fieldProps) {
+      if (this.fieldProps[field].type != "Ignore")
+        transformations[field] = getFeatureTransformation(this.fieldProps[field].type).constructor;
+    }
+    this.tensorDataset = new TransformedDataset(this.rawDataset, transformations);
+  }
+
+  handleHeaderClick(e: Event) {
     let field = (e.currentTarget as HTMLElement).innerText
     this.activeHeader = field;
     this.requestUpdate();
   }
 
-
   deleteDataset() {
     this.samples = null;
     this.rawDataset = null;
+    this.tensorDataset = null;
     this.requestUpdate();
+    this.communicator.changed();
   }
 }
