@@ -138,8 +138,8 @@ export function setupLayerRenderer(elem) {
         protected getConnectedInputElements() {
             let ret: Record<string, HTMLElement> = {};
             let inputs = this.getNodeInputElements();
-            for (let i of inputs) {
-                let inputName = i.classList.value.split(" ")[1]
+            for (let i = 1; i <= inputs.length; i++) {
+                let inputName = "input_" + i;
                 let connection = this.getNode().inputs[inputName].connections[0];
                 if (connection != null)
                     ret[inputName] = getLayerFromNodeId(parseInt(connection.node)).getNodeOutputElement(connection.input);
