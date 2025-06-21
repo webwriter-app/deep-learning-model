@@ -18,6 +18,9 @@ export function setupLayerRenderer(elem) {
     let editor = new Drawflow(elem);
     editor.reroute = false;
     editor.start();
+    editor.zoom_max = 1.6;
+    editor.zoom_min = 0.5;
+    editor.zoom_value = 0.5;
     editor.on("connectionCreated", function ({ output_id, input_id, output_class, input_class }) {
         let outNode = editor.getNodeFromId(output_id);
         let inNode = editor.getNodeFromId(input_id);
@@ -157,6 +160,9 @@ export function setupLayerRenderer(elem) {
             return output.connections.map(function (value) {
                 return getLayerFromNodeId(parseInt(value.node));
             })
+        }
+        public getNumberOfParameters(): number {
+            return 0;
         }
         public getState(): Record<string, any> {
             let node = this.getNode();
@@ -359,6 +365,7 @@ export function setupLayerRenderer(elem) {
 
     class FCLLayer extends Layer {
         private dimInput: HTMLInputElement;
+        private params: HTMLElement;
 
         constructor() {
             super(1, 1, "Linear")
@@ -366,16 +373,33 @@ export function setupLayerRenderer(elem) {
             this.dimInput = document.createElement("input");
             this.dimInput.type = "number";
             this.dimInput.min = String(1);
-            this.dimInput.value = String(100);
+            this.dimInput.value = String(300);
             let that = this;
             this.dimInput.onchange = function () {
+                if (parseInt(that.dimInput.value) > 300)
+                    that.dimInput.value = "300";
+                if (isNaN(parseInt(that.dimInput.value)))
+                    that.dimInput.value = "1";
+
                 that.getNodeOutputElement("output_1").innerText = that.dimInput.value;
+                that.update();
                 that.notifyOutputChange();
             }
             this.elem.append(wrapWithLabel(this.dimInput, "Output Nodes"));
+
+            this.params = document.createElement("span");
+            this.elem.append(wrapWithLabel(this.params, "Parameters: "));
             this.dimInput.onchange(null);
         }
+        public getNumberOfParameters() {
+            this.update();
+            return parseInt(this.params.innerText);
+        }
         update() {
+            this.updateInputLabels();
+            let inDim = parseInt(this.getNodeInputElement("input_1").innerText)
+            let outDim = parseInt(this.dimInput.value)
+            this.params.innerText = String(inDim * outDim);
         }
         getState() {
             let state = super.getState();
@@ -462,21 +486,30 @@ export function setupLayerRenderer(elem) {
     class DeConcatLayer extends Layer {
         constructor() {
             super(1, 1, "Unpacking")
-            let that = this;
         }
         update() {
             this.updateInputLabels();
             let inputText = this.getNodeInputElement("input_1").innerText
+            let outputElements = this.getNodeOutputElements();
+            let outputs: Record<string, DrawflowConnectionDetail[]> = {}
+            for (let i = 1; i <= outputElements.length; i++) {
+                outputs["output_" + i] = this.getNode().outputs["output_" + i].connections
+            }
             this.removeOutputs();
             let dim = inputText.split(SIZE_SEP);
             let lastDim = parseInt(dim[dim.length - 1]);
-            for (let d = 0; d < lastDim; d++) {
+            for (let d = 1; d <= lastDim; d++) {
                 this.addOutput();
-                let output = this.getNodeOutputElement("output_" + (d + 1));
+                let output = this.getNodeOutputElement("output_" + d);
                 let data = dim.slice(0, dim.length - 1).map(s => parseInt(s));
                 if (data.length == 0)
                     data = [1];
                 output.innerText = data.join(SIZE_SEP);
+
+                let connections = outputs["output_" + d];
+                if (connections != null)
+                    for (let connection of connections)
+                        editor.addConnection(this.id, connection.node, "output_" + d, connection.output);
             }
             this.notifyOutputChange();
         }
@@ -702,6 +735,20 @@ export function setupLayerRenderer(elem) {
 
     return {
         Layer, InputLayer, OutputLayer, FCLLayer, FlattenLayer, ConcatLayer, DeConcatLayer, ActivationLayer, MultiInputLayer, AccessPoint, ProbabalisticLayer, DropoutLayer, AddLayer,
+        editor, getAveragePosition: function () {
+            let pos: { x: number, y: number } = { x: 0, y: 0 };
+            let count = 0;
+            for (let layer of Object.values(LAYERS)) {
+                pos.x += layer.getNode().pos_x;
+                pos.y += layer.getNode().pos_y;
+                count++;
+            }
+            if (count > 0) {
+                pos.x /= count;
+                pos.y /= count;
+            }
+            return pos;
+        },
         export: function () {
             let layers = Object.values(LAYERS).map(value => value.getState()).sort((a, b) => a.id - b.id)
             let currentId = 1;

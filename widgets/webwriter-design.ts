@@ -1,16 +1,13 @@
 import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
-import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js"
-import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
-import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
-import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
 import { DatasetInput } from "../components/dataset-input/dataset-input"
 import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
 import { registerCommunicator, Communicator } from "../lib/apis/com";
 import * as tf from '@tensorflow/tfjs';
 import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
+import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
 
 
 @customElement("webwriter-design")
@@ -20,7 +17,9 @@ export class AiWidgetsDesigns extends LitElementWw {
         "sl-button-group": SlButtonGroup,
         "dataset-input": DatasetInput,
         "sl-option": SlOption,
-        "sl-select": SlSelect
+        "sl-select": SlSelect,
+        "sl-icon": SlIcon,
+        "sl-icon-button": SlIconButton
     }
 
     static styles = css`
@@ -29,15 +28,49 @@ export class AiWidgetsDesigns extends LitElementWw {
       display:block;
       font-size: 0.9rem;
     }
+    #add {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: flex-end;
+        gap: 5px 15px;
+    }
+    .group {
+        padding-top: 18px;
+        position:relative;
+    }
+    .group p {
+        position:absolute;
+        margin:0px;
+        font-size: 12px;
+        top: 0px;
+    }
+    #controls {
+        position:absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 10;
+    }
     #drawflow {
+      margin-top: 10px;
       display:block;
       height: 500px;
       min-width: 300px;
+      border: 1px solid var(--sl-input-border-color);
     }
-    #drawflow p.label {
-
-
+    #drawflow .drawflow::before {
+        content: "";
+        position: absolute;
+        top: -20000px;
+        left: -20000px;
+        right: -20000px;
+        bottom: -20000px;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV8/tCIVh1YQcchQneyiIrqVKhbBQmkrtOpgcukXNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APEXXBSdJES/5cUWsR4cNyPd/ced+8Ab7PKFMMfAxTV1NOJuJDLrwqBV/RiCH7MISQyQ0tmFrNwHV/38PD1Lsqz3M/9OQbkgsEAj0AcY5puEm8Qz2yaGud94jArizLxOfGEThckfuS65PAb55LNXp4Z1rPpeeIwsVDqYqmLWVlXiKeJI7KiUr4357DMeYuzUq2z9j35C4MFdSXDdZqjSGAJSaQgQEIdFVRhIkqrSoqBNO3HXfwjtj9FLolcFTByLKAGBaLtB/+D390axalJJykYB3peLOtjDAjsAq2GZX0fW1brBPA9A1dqx19rArOfpDc6WuQIGNwGLq47mrQHXO4Aw0+aqIu25KPpLRaB9zP6pjwQugX615ze2vs4fQCy1NXyDXBwCIyXKHvd5d193b39e6bd3w/LsnLKuRkBrwAAAAZiS0dEAJQAlACU0L193gAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+kGFQQ7KvUYPNUAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHklEQVQ4y2NgGAWjYBQMbvAfiokCTKPhNQpGwXACAAPIAgEuqw0aAAAAAElFTkSuQmCC") repeat;
+        z-index: -1; /* places it behind the content */
     }
+    #drawflow p.label {}
 
     .drawflow,.drawflow .parent-node {
         position:relative
@@ -52,7 +85,8 @@ export class AiWidgetsDesigns extends LitElementWw {
         width:100%;
         height:100%;
         user-select:none;
-        perspective:0
+        perspective:0;
+        image-rendering: optimizeQuality;
     }
     .drawflow .drawflow-node {
         display:flex;
@@ -232,51 +266,84 @@ export class AiWidgetsDesigns extends LitElementWw {
 
     private currentCanvas: HTMLDivElement;
 
-    public render(): TemplateResult {
-        let that = this;
-        console.log("render");
-        setTimeout(function () {
-            if (that.currentCanvas)
-                that.currentCanvas.outerHTML = "";
-            let canvas = document.createElement("div");
-            canvas.id = "drawflow";
-            that.shadowRoot.append(canvas)
-            that.possibleLayers = setupLayerRenderer(canvas)
-            that.currentCanvas = canvas;
+    public updated(_changedProperties: PropertyValues): void {
+        if (this.currentCanvas)
+            return;
+        let canvas = document.createElement("div");
+        canvas.id = "drawflow";
+        this.shadowRoot.prepend(canvas)
+        this.possibleLayers = setupLayerRenderer(canvas)
+        this.currentCanvas = canvas;
 
-            setTimeout(function () {
-                if (that.state) {
-                    let featureData = that.communicator.getDependency("features");
-                    that.possibleLayers.import(JSON.parse(that.state as string), featureData.tensorDataset);
-                }
-                that.saveInterval = setInterval(function () {
-                    that.state = JSON.stringify(that.possibleLayers.export())
-                }, 1000);
-            }, 100)
+
+        let that = this;
+        setTimeout(function () {
+            if (that.state) {
+                let featureData = that.communicator.getDependency("features");
+                that.possibleLayers.import(JSON.parse(that.state as string), featureData.tensorDataset);
+            }
+            that.saveInterval = setInterval(function () {
+                that.state = JSON.stringify(that.possibleLayers.export())
+            }, 1000);
         }, 100)
+    }
+
+    public render(): TemplateResult {
         return html`
     <div id="add">
-        <p>I/O</p>
-        <sl-button @click=${() => this.addLayer("InputLayer")}>Input</sl-button>
-        <sl-button @click=${() => this.addLayer("MultiInputLayer")}>Multi-Input</sl-button>
-        <sl-button @click=${() => this.addLayer("AccessPoint")}>Access Point</sl-button>
-        <sl-button @click=${() => this.addLayer("OutputLayer")}>Output</sl-button>
-        <p>Deep Layers</p>
-        <sl-button @click=${() => this.addLayer("ActivationLayer")}>Activation</sl-button>
-        <sl-button @click=${() => this.addLayer("FCLLayer")}>Linear</sl-button>
-        <sl-button @click=${() => this.addLayer("ProbabalisticLayer")}>Probabalistic</sl-button>
-        <sl-button @click=${() => this.addLayer("DropoutLayer")}>Dropout</sl-button>
-        <p>Misc</p>
-        <sl-button @click=${() => this.addLayer("FlattenLayer")}>Flatten</sl-button>
-        <sl-button @click=${() => this.addLayer("ConcatLayer")}>Concatination</sl-button>
-        <sl-button @click=${() => this.addLayer("DeConcatLayer")}>DeConcatination Layer</sl-button>
-        <sl-button @click=${() => this.addLayer("AddLayer")}>Add Layer</sl-button>
-        <p>Combination</p>
-    </div>`
+        <div class="group">
+            <p>I/O</p>
+            <sl-button @click=${() => this.addLayer("InputLayer")}>Input</sl-button>
+            <sl-button @click=${() => this.addLayer("MultiInputLayer")}>Multi-Input</sl-button>
+            <sl-button @click=${() => this.addLayer("AccessPoint")}>Access Point</sl-button>
+            <sl-button @click=${() => this.addLayer("OutputLayer")}>Output</sl-button>
+        </div>
+        <div class="group">
+            <p>Deep Layers</p>
+            <sl-button @click=${() => this.addLayer("FCLLayer")}>Linear</sl-button>
+        </div>
+        <div class="group">
+            <p>Misc</p>
+            <sl-button @click=${() => this.addLayer("ActivationLayer")}>Activation</sl-button>
+            <sl-button @click=${() => this.addLayer("ProbabalisticLayer")}>Probabalistic</sl-button>
+            <sl-button @click=${() => this.addLayer("DropoutLayer")}>Dropout</sl-button>
+        </div>
+        <div class="group">
+            <p>Shape</p>
+            <sl-button @click=${() => this.addLayer("FlattenLayer")}>Flatten</sl-button>
+            <sl-button @click=${() => this.addLayer("ConcatLayer")}>Concatination</sl-button>
+            <sl-button @click=${() => this.addLayer("DeConcatLayer")}>DeConcatination Layer</sl-button>
+        </div>
+        <div class="group">
+            <p>Combination</p>
+            <sl-button @click=${() => this.addLayer("AddLayer")}>Add Layer</sl-button>
+        </div>
+    </div>
+    <div id="controls">
+        <sl-button @click=${() => this.zoomReset()}>reset</sl-button>
+        <sl-button @click=${() => this.zoomIn()}>+</sl-button>
+        <sl-button @click=${() => this.zoomOut()}>-</sl-button>
+    </div>
+    `
     }
     public addLayer(type) {
         let featureData = this.communicator.getDependency("features");
         console.log(type, featureData);
         let layer = new this.possibleLayers[type](featureData.tensorDataset);
+    }
+    public zoomIn() {
+        this.possibleLayers.editor.zoom *= 1.1;
+        this.possibleLayers.editor.zoom_refresh();
+    }
+    public zoomOut() {
+        this.possibleLayers.editor.zoom /= 1.1;
+        this.possibleLayers.editor.zoom_refresh();
+    }
+    public zoomReset() {
+        this.possibleLayers.editor.zoom = 1;
+        let pos = this.possibleLayers.getAveragePosition();
+        this.possibleLayers.editor.canvas_x = -pos.x + this.possibleLayers.editor.precanvas.clientWidth / 2;
+        this.possibleLayers.editor.canvas_y = -pos.y + this.possibleLayers.editor.precanvas.clientHeight / 2;
+        this.possibleLayers.editor.zoom_refresh();
     }
 }
