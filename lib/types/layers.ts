@@ -320,7 +320,7 @@ export function setupLayerRenderer(elem) {
     class OutputLayer extends Layer {
         private fields: TransformedDataset;
         private select: HTMLSelectElement;
-        private loss = "BCE";
+        private loss: HTMLSelectElement;
 
         constructor(fields) {
             super(1, 0, "Output")
@@ -335,6 +335,15 @@ export function setupLayerRenderer(elem) {
 
             this.select = select;
             this.elem.append(wrapWithLabel(select, "Output"))
+
+            this.loss = document.createElement("select");
+            for (let loss of ["BCE", "MAE", "MSE", "Hinge"]) {
+                let option = document.createElement("option");
+                option.value = loss;
+                option.innerText = loss;
+                this.loss.append(option);
+            }
+            this.elem.append(wrapWithLabel(this.loss, "Loss Function"))
 
             let that = this;
             select.onchange = function () {
@@ -352,13 +361,13 @@ export function setupLayerRenderer(elem) {
             state.select = this.select.value;
             state.type = "output";
             state.dim = this.fields.featureMaps[state.select].size();
-            state.loss = this.loss;
+            state.loss = this.loss.value;
             return state;
         }
         setState(state: Record<string, any>) {
             super.setState(state);
             this.select.value = state.select;
-            this.loss = state.loss;
+            this.loss.value = state.loss;
             this.select.onchange(null);
         }
     }
