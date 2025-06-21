@@ -28,6 +28,19 @@ export class AiWidgetsDesigns extends LitElementWw {
       display:block;
       font-size: 0.9rem;
     }
+    #stats {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0px 20px;
+        margin-bottom: 10px;
+    }
+    
+    #stats p {
+        margin: 0px;
+    }
     #add {
         display: flex;
         flex-direction: row;
@@ -96,15 +109,14 @@ export class AiWidgetsDesigns extends LitElementWw {
         min-width:100px;
         min-height:20px;
         border-radius:4px;
-        border:2px solid #000;
+        border:1px solid #000;
         color:#000;
         z-index:2;
-        padding:0px 15px;
-        padding-top: 10px;
+        padding:10px 15px;
     }
     .drawflow .drawflow-node.multi-input .output {
         position:relative;
-        top:40px;
+        top:25px;
     }
     .drawflow .drawflow-node.multi-input p {
         position:relative;
@@ -115,7 +127,7 @@ export class AiWidgetsDesigns extends LitElementWw {
     .drawflow .drawflow-node p, .drawflow .drawflow-node input, .drawflow .drawflow-node select {
         max-width: 100px;
     }
-    .drawflow .drawflow-node h4 {
+    .drawflow .drawflow-node p {
         position: relative;
         margin: 0px;
     }
@@ -150,7 +162,7 @@ export class AiWidgetsDesigns extends LitElementWw {
         height:fit-content;
         background:#fff;
         border-radius:0%;
-        border:2px solid #000;
+        border:1px solid #000;
         cursor:crosshair;
         z-index:1;
         margin-bottom:5px;
@@ -255,7 +267,13 @@ export class AiWidgetsDesigns extends LitElementWw {
         }, function (name, data) {
             console.log(name, data)
         })
+        setInterval(function () {
+            let nodes = that.possibleLayers.getNumberOfOperations();
+            that.shadowRoot.getElementById("numberNodes").innerText = nodes;
 
+            let params = that.possibleLayers.getNumberOfParameters();
+            that.shadowRoot.getElementById("params").innerText = params;
+        }, 100);
     }
 
     public options: Record<string, OptionDeclaration> = {}
@@ -290,33 +308,47 @@ export class AiWidgetsDesigns extends LitElementWw {
 
     public render(): TemplateResult {
         return html`
+        <div id="stats">
+            <p>Number of Operation: <span id="numberNodes"></span></p>
+            <p>Total Parameters: <span id="params"></span></p>
+        </div>
     <div id="add">
         <div class="group">
             <p>I/O</p>
-            <sl-button @click=${() => this.addLayer("InputLayer")}>Input</sl-button>
-            <sl-button @click=${() => this.addLayer("MultiInputLayer")}>Multi-Input</sl-button>
-            <sl-button @click=${() => this.addLayer("AccessPoint")}>Access Point</sl-button>
-            <sl-button @click=${() => this.addLayer("OutputLayer")}>Output</sl-button>
+            <sl-button-group>
+                <sl-button @click=${() => this.addLayer("InputLayer")}>Input</sl-button>
+                <sl-button @click=${() => this.addLayer("MultiInputLayer")}>Multi-Input</sl-button>
+                <sl-button @click=${() => this.addLayer("AccessPoint")}>Access Point</sl-button>
+                <sl-button @click=${() => this.addLayer("OutputLayer")}>Output</sl-button>
+            </sl-button-group>
         </div>
         <div class="group">
             <p>Deep Layers</p>
+            <sl-button-group>
             <sl-button @click=${() => this.addLayer("FCLLayer")}>Linear</sl-button>
+            </sl-button-group>
         </div>
         <div class="group">
             <p>Misc</p>
+            <sl-button-group>
             <sl-button @click=${() => this.addLayer("ActivationLayer")}>Activation</sl-button>
             <sl-button @click=${() => this.addLayer("ProbabalisticLayer")}>Probabalistic</sl-button>
             <sl-button @click=${() => this.addLayer("DropoutLayer")}>Dropout</sl-button>
+            </sl-button-group>
         </div>
         <div class="group">
             <p>Shape</p>
+            <sl-button-group>
             <sl-button @click=${() => this.addLayer("FlattenLayer")}>Flatten</sl-button>
             <sl-button @click=${() => this.addLayer("ConcatLayer")}>Concatination</sl-button>
             <sl-button @click=${() => this.addLayer("DeConcatLayer")}>DeConcatination Layer</sl-button>
+            </sl-button-group>
         </div>
         <div class="group">
             <p>Combination</p>
+            <sl-button-group>
             <sl-button @click=${() => this.addLayer("AddLayer")}>Add Layer</sl-button>
+            </sl-button-group>
         </div>
     </div>
     <div id="controls">

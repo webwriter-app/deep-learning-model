@@ -67,7 +67,7 @@ export function setupLayerRenderer(elem) {
         private inputsDiv: HTMLDivElement;
         private outputsDiv: HTMLDivElement;
         private events = {};
-        public type: string;
+        public readonly type: string;
 
         constructor(inputs: number, outputs: number, name: string) {
             let html = ""
@@ -81,7 +81,7 @@ export function setupLayerRenderer(elem) {
             registerLayer(this);
 
             let elem = document.createElement("div");
-            let header = document.createElement("h4");
+            let header = document.createElement("p");
             header.innerText = this.type;
 
             let nodeContentElement = nodeElement.getElementsByClassName("drawflow_content_node")[0] as HTMLDivElement;
@@ -565,7 +565,7 @@ export function setupLayerRenderer(elem) {
             super(0, Object.keys(fields.featureMaps).length, "Input")
             this.fields = fields;
             this.getNodeElement().classList.add("multi-input");
-            this.getNodeElement().style.minHeight = Object.keys(fields.featureMaps).length * 20 + 100 + "px"
+            this.getNodeElement().style.minHeight = this.getNodeElement().clientHeight + 50 + "px"
 
             let i = 1;
             for (let field in this.fields.featureMaps) {
@@ -748,6 +748,16 @@ export function setupLayerRenderer(elem) {
                 pos.y /= count;
             }
             return pos;
+        },
+        getNumberOfParameters: function () {
+            let sum = 0;
+            Object.values(LAYERS).forEach(element => {
+                sum += element.getNumberOfParameters();
+            });
+            return sum;
+        },
+        getNumberOfOperations: function () {
+            return Object.values(LAYERS).filter(l => ["Input", "Output"].indexOf(l.type) == -1).length;
         },
         export: function () {
             let layers = Object.values(LAYERS).map(value => value.getState()).sort((a, b) => a.id - b.id)
