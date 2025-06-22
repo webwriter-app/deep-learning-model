@@ -182,7 +182,16 @@ export class ClassTransformation extends FeatureTransformation {
     }
 
     public getSettingElement(): TemplateResult {
-        return html``
+        function typechange() {
+
+        }
+        return html`
+            <h2>Value Scale</h2>
+            <sl-select @sl-change=${typechange}>
+                <sl-option>Linear</sl-option>
+                <sl-option>Exponential</sl-option>
+            </sl-select>
+        `
     }
 
     public renderTransformedValue(value: string): TemplateResult {
@@ -255,6 +264,47 @@ export class LinearTransformation extends FeatureTransformation {
 registerFeatureTransformation("Number Encoding", LinearTransformation)
 
 /**
+* This is the transformation from string values to an image
+*/
+export class ImageTransformation extends FeatureTransformation {
+    /**
+    * The constructor runs through the samples and registers the unique classes.
+    */
+    public constructor(samples: Array<string>) {
+        super("Image Encoding", samples);
+    }
+
+    public size() {
+        return [1] as NonEmptyArray<number>;
+    }
+
+    public transform(value: string): tf.Tensor2D {
+        return tf.tensor([0]);
+    }
+
+    public getSettingElement(): TemplateResult {
+        return html``
+    }
+
+    public renderTransformedValue(value: string): TemplateResult {
+        function binaryStringToUint8Array(str: string): Uint8Array {
+            const len = str.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = str.charCodeAt(i) & 0xFF;
+            }
+            return bytes;
+        }
+
+        let bytes = binaryStringToUint8Array(JSON.parse(value).bytes);
+        const blob = new Blob([bytes], { type: 'image/png' });
+        const imageUrl = URL.createObjectURL(blob);
+        return html`<img src=${imageUrl}>`;
+    }
+}
+registerFeatureTransformation("Number Encoding", LinearTransformation)
+
+/**
 * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
 */
 export class TransformedDataset {
@@ -269,7 +319,11 @@ export class TransformedDataset {
         this.dataset = dataset;
         for (let key in featureMaps) {
             let FeatureTransformationConstructor = featureMaps[key];
-            this.featureMaps[key] = new FeatureTransformationConstructor(dataset.getSamples().map(v => v[key]))
+            try {
+                this.featureMaps[key] = new FeatureTransformationConstructor(dataset.getSamples().map(v => v[key]))
+            } catch (e) {
+
+            }
         }
     }
 

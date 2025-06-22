@@ -2,7 +2,8 @@ import { html, css, LitElement, PropertyValues } from "lit";
 
 import { LitElementWw } from "@webwriter/lit";
 import { customElement, property, query } from "lit/decorators.js";
-import Papa from "papaparse"
+import Papa from "papaparse";
+import { asyncBufferFromUrl, parquetReadObjects } from 'hyparquet';
 
 import {
   SlCheckbox,
@@ -42,7 +43,7 @@ export class DatasetInput extends LitElementWw {
 
   */
 
-  firstUpdated() {}
+  firstUpdated() { }
 
   render() {
     return html` <div
@@ -63,13 +64,32 @@ export class DatasetInput extends LitElementWw {
           name="fileInput"
           id="fileInput"
           type="file"
-          accept="text/csv"
+          accept="text/csv, *"
           @change=${this.handleFileInput}
           style="display: none;"
         />
       </sl-button>
     </div>`;
   }
+
+  async readParquetFile(file: File): Promise<Array<Record<string, any>>> {
+    let url = URL.createObjectURL(file);
+    let buffer = await asyncBufferFromUrl({ url, byteLength: file.size });
+    let data = await parquetReadObjects({ file: buffer });
+    return data;
+  }
+  async readCSVFile(file: File): Promise<Array<Record<string, any>>> {
+    return new Promise(function (res, rej) {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: "greedy",
+        complete: function (results) {
+          res(results);
+        }
+      });
+    });
+  }
+
 
   triggerFileInput() {
     const fileInput =
@@ -116,29 +136,30 @@ export class DatasetInput extends LitElementWw {
     }
   }
 
+
   /**
    * Handles the selected file and reads its contents and converts them into samples with keyed entries.
    * @param file - The file to be handled.
    */
-  handleFile(file: File) {
+  async handleFile(file: File) {
     let that = this;
-    const supportedTypes = ["text/csv"];
-    if (supportedTypes.includes(file.type)) {
-      Papa.parse(file, {
-        header: true,
-        skipEmptyLines:"greedy",
-        complete: function(results) {
-          that.dispatchEvent(
-            new CustomEvent("readDataset", {
-              detail: { ...results },
-              bubbles: true,
-              composed: true,
-            })
-          );
-        }
-      });
+    let data = null;
+    if (file.name.endsWith("parquet")) {
+      let content = await this.readParquetFile(file);
+      let fields = Object.keys(content[0]);
+      let errors = [];
+      data = { data: content, errors, meta: { fields } };
+    } else if (file.name.endsWith("csv")) {
+      data = await this.readCSVFile(file);
     } else {
       console.error("Unsupported file type:", file.type);
     }
+    this.dispatchEvent(
+      new CustomEvent("readDataset", {
+        detail: { ...data },
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 }

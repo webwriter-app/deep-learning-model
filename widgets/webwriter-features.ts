@@ -12,6 +12,10 @@ import { registerCommunicator, Communicator } from "../lib/apis/com";
 import * as tf from '@tensorflow/tfjs';
 type Constructor<T> = new (...args: any[]) => T;
 
+BigInt.prototype["toJSON"] = function () {
+  return this.toString();
+};
+
 @customElement("webwriter-features")
 export class AiWidgetsFeatures extends LitElementWw {
   static scopedElements = {
@@ -53,6 +57,14 @@ export class AiWidgetsFeatures extends LitElementWw {
     :host div.props table {
       width: 100%;
     }
+    :host div.props table td * {
+      overflow:hidden;
+      text-overflow: ellipsis;
+      max-width: 600px;
+      max-height: 26px;
+      white-space: nowrap;
+      margin: 0px;
+    }
     :host div.props table td:nth-child(2) {
       text-align: right;
     }
@@ -60,8 +72,9 @@ export class AiWidgetsFeatures extends LitElementWw {
 
   public options: Record<string, OptionDeclaration> = {}
 
-  @property({ type: Array, attribute: true, reflect: true })
-  accessor samples: Array<Record<string, string>>;
+  @property({ type: String, attribute: true, reflect: true })
+  accessor samplesSave: string;
+  samples: Array<Record<string, string>>;
 
   @property({ type: Object, attribute: true, reflect: true })
   accessor fieldProps: object;
@@ -80,6 +93,7 @@ export class AiWidgetsFeatures extends LitElementWw {
       return { dataset: that.rawDataset, tensorDataset: that.tensorDataset };
     }, function (name) { })
   }
+
 
   renderSelectDataset() {
     return html`
@@ -105,21 +119,26 @@ export class AiWidgetsFeatures extends LitElementWw {
     if (this.fieldProps[fieldName].type == "Ignore") {
       rows = this.samples.slice(0, 10).map(
         function (v) {
-          return html`<tr><td>${v[fieldName]}</td></tr>`
+          return html`<tr><td><p>${JSON.stringify(v[fieldName])}</p></td></tr>`
         }
       )
       return html`<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
     } else {
       let Transformation = getFeatureTransformation(this.fieldProps[fieldName].type).constructor;
-      let transformation = new Transformation(this.samples.map(v => v[fieldName]))
-      let rows = this.samples.slice(0, 10).map(
-        function (v) {
-          return html`<tr><td>${v[fieldName]}</td><td>${transformation.renderTransformedValue(v[fieldName])}</td></tr>`
-        }
-      )
-      return html`${transformation.getSettingElement()}<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
+      try {
+        let transformation = new Transformation(this.samples.map(v => v[fieldName]))
+        let rows = this.samples.slice(0, 10).map(
+          function (v) {
+            return html`<tr><td><p>${JSON.stringify(v[fieldName])}</p></td><td><p>${transformation.renderTransformedValue(v[fieldName])}</p></td></tr>`
+          }
+        )
+        return html`${transformation.getSettingElement()}<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
+      } catch (e) {
+        return html`<p style="background: red">This Transformation is not applicable for the values</p><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead></table></div>`
+      }
     }
   }
+
 
   renderFieldTypeSelector(fieldName: string) {
     if (fieldName == "")
@@ -143,6 +162,8 @@ export class AiWidgetsFeatures extends LitElementWw {
   }
 
   render() {
+    if (this.samplesSave && !this.samples)
+      this.samples = JSON.parse(this.samplesSave);
     if (this.samples == null)
       return this.renderSelectDataset();
     else {
@@ -163,6 +184,7 @@ export class AiWidgetsFeatures extends LitElementWw {
 
   handleDataset(data: Array<Record<string, string>>, errors: Array<any>, meta: any) {
     console.log("handle")
+    this.samplesSave = JSON.stringify(data);
     this.samples = data;
     this.rawDataset = new Dataset(this.samples);
     this.fieldProps = {}
