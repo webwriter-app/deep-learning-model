@@ -129,16 +129,17 @@ export class AiWidgetsFeatures extends LitElementWw {
         let transformation = new Transformation(this.samples.map(v => v[fieldName]))
         let rows = this.samples.slice(0, 10).map(
           function (v) {
-            return html`<tr><td><p>${JSON.stringify(v[fieldName])}</p></td><td><p>${transformation.renderTransformedValue(v[fieldName])}</p></td></tr>`
+            let value = JSON.stringify(v[fieldName]);
+            return html`<tr><td><p>${value}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
           }
         )
         return html`${transformation.getSettingElement()}<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
       } catch (e) {
+        console.log(e);
         return html`<p style="background: red">This Transformation is not applicable for the values</p><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead></table></div>`
       }
     }
   }
-
 
   renderFieldTypeSelector(fieldName: string) {
     if (fieldName == "")

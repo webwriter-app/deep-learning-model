@@ -136,7 +136,6 @@ export class DatasetInput extends LitElementWw {
     }
   }
 
-
   /**
    * Handles the selected file and reads its contents and converts them into samples with keyed entries.
    * @param file - The file to be handled.
@@ -146,6 +145,9 @@ export class DatasetInput extends LitElementWw {
     let data = null;
     if (file.name.endsWith("parquet")) {
       let content = await this.readParquetFile(file);
+      for (let row of content) {
+
+      }
       let fields = Object.keys(content[0]);
       let errors = [];
       data = { data: content, errors, meta: { fields } };
