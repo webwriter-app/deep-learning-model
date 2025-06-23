@@ -77,7 +77,7 @@ export class AiWidgetsFeatures extends LitElementWw {
   samples: Array<Record<string, string>>;
 
   @property({ type: Object, attribute: true, reflect: true })
-  accessor fieldProps: object;
+  accessor fieldProps: Record<string, any>;
 
   private rawDataset: Dataset;
   private tensorDataset: TransformedDataset;
@@ -115,6 +115,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     if (fieldName == "")
       return html`<div class="props"><p>Wähle eine Tabellenspalte um sie zu formatieren</p></div>`
 
+    let that = this;
     let rows;
     if (this.fieldProps[fieldName].type == "Ignore") {
       rows = this.samples.slice(0, 10).map(
@@ -126,14 +127,14 @@ export class AiWidgetsFeatures extends LitElementWw {
     } else {
       let Transformation = getFeatureTransformation(this.fieldProps[fieldName].type).constructor;
       try {
-        let transformation = new Transformation(this.samples.map(v => v[fieldName]))
+        let transformation = new Transformation(this.samples.map(v => v[fieldName]), this.fieldProps[fieldName].settings)
         let rows = this.samples.slice(0, 10).map(
           function (v) {
             let value = JSON.stringify(v[fieldName]);
             return html`<tr><td><p>${value}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
           }
         )
-        return html`${transformation.getSettingElement()}<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
+        return html`${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) })}<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
       } catch (e) {
         console.log(e);
         return html`<p style="background: red">This Transformation is not applicable for the values</p><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead></table></div>`
@@ -154,7 +155,7 @@ export class AiWidgetsFeatures extends LitElementWw {
       let value = (e.target as SlSelect).value as string
       that.fieldProps[fieldName].type = value.replaceAll("_", " ");
       //Deep copy for new reference to trigger refreshing the attribute and save ;-;
-      that.fieldProps = JSON.parse(JSON.stringify(Object.assign({}, that.fieldProps)));
+      that.fieldProps = Object.assign({}, that.fieldProps);
       this.updateTensorDataset();
       that.communicator.changed();
     }
@@ -190,7 +191,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     this.rawDataset = new Dataset(this.samples);
     this.fieldProps = {}
     for (let field of meta.fields) {
-      this.fieldProps[field] = { type: "Ignore" };
+      this.fieldProps[field] = { type: "Ignore", settings: null };
     }
     this.updateTensorDataset();
     this.communicator.changed();
@@ -202,8 +203,9 @@ export class AiWidgetsFeatures extends LitElementWw {
       if (this.fieldProps[field].type != "Ignore")
         transformations[field] = getFeatureTransformation(this.fieldProps[field].type).constructor;
     }
-    this.tensorDataset = new TransformedDataset(this.rawDataset, transformations);
+    this.tensorDataset = new TransformedDataset(this.rawDataset, transformations, Object.fromEntries(Object.entries(this.fieldProps).filter(([k, v]) => k == "settings")));
   }
+
 
   handleHeaderClick(e: Event) {
     let field = (e.currentTarget as HTMLElement).innerText
@@ -215,6 +217,13 @@ export class AiWidgetsFeatures extends LitElementWw {
     this.samples = null;
     this.rawDataset = null;
     this.tensorDataset = null;
+    this.requestUpdate();
+    this.communicator.changed();
+  }
+
+  handleFeatureSettingsChange(settings: Record<string, any>) {
+    this.fieldProps[this.activeHeader] = { ...this.fieldProps[this.activeHeader], settings };
+    this.fieldProps = Object.assign({}, this.fieldProps);
     this.requestUpdate();
     this.communicator.changed();
   }
