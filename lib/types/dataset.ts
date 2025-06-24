@@ -316,13 +316,17 @@ export class ImageTransformation extends FeatureTransformation {
             let img = e.target as HTMLImageElement;
             if (that.settings.width == 0) {
                 that.settings.width = img.width;
-                that.widthElement.value = String(img.width);
-                that.widthElement.max = img.width;
+                if (that.widthElement) {
+                    that.widthElement.value = String(img.width);
+                    that.widthElement.max = img.width;
+                }
             }
             if (that.settings.height == 0) {
                 that.settings.height = img.height;
-                that.heightElement.value = String(img.height);
-                that.heightElement.max = img.height;
+                if (that.heightElement) {
+                    that.heightElement.value = String(img.height);
+                    that.heightElement.max = img.height;
+                }
             }
         }
     }
@@ -416,7 +420,7 @@ export class ImageTransformation extends FeatureTransformation {
     }
 
     public getImage(value: string): HTMLImageElement {
-        let bytes = new Uint8Array(JSON.parse(value).bytes);
+        let bytes = new Uint8Array(JSON.parse(value));
         const blob = new Blob([bytes], { type: 'image/png' });
         const imageUrl = URL.createObjectURL(blob);
         const img = new Image();

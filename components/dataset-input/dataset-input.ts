@@ -72,11 +72,33 @@ export class DatasetInput extends LitElementWw {
     </div>`;
   }
 
+  private recursiveFlatten(obj, name) {
+    if (obj == null)
+      return null;
+    if (obj.constructor == null || obj.constructor.name != "Object")
+      return obj;
+
+    let out = {};
+    for (let field in obj) {
+      let flattenedField = this.recursiveFlatten(obj[field], field);
+      if (flattenedField == null)
+        continue;
+      if (flattenedField.constructor != null && flattenedField.constructor.name == "Object") {
+        for (let flat in flattenedField) {
+          out[name ? name + "_" + flat : flat] = flattenedField[flat];
+        }
+      } else {
+        out[name ? name + "_" + field : field] = flattenedField;
+      }
+    }
+    return out;
+  }
+
   async readParquetFile(file: File): Promise<Array<Record<string, any>>> {
     let url = URL.createObjectURL(file);
     let buffer = await asyncBufferFromUrl({ url, byteLength: file.size });
     let data = await parquetReadObjects({ file: buffer });
-    return data;
+    return data.map(entry => this.recursiveFlatten(entry, null));
   }
   async readCSVFile(file: File): Promise<Array<Record<string, any>>> {
     return new Promise(function (res, rej) {
