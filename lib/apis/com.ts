@@ -61,8 +61,10 @@ export class Communicator {
      */
     changed() {
         let that = this;
-        for (let d of this.dependencies) {
-            window.AIWIDGETS_SOURCES[d].onchange(that.name, that.getData());
+        for (let s in window.AIWIDGETS_SOURCES) {
+            let source = window.AIWIDGETS_SOURCES[s];
+            if (source.dependencies.indexOf(this.name) != -1)
+                source.onchange(that.name, that.getData());
         }
     }
 }

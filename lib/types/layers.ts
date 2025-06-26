@@ -216,6 +216,7 @@ export function setupLayerRenderer(elem) {
                 this.getNodeInputElement(o).innerText = outputElems[o].innerText;
             }
             this.checkInputs();
+
         }
         protected notifyOutputChange() {
             let outputs = this.getNode().outputs
@@ -539,7 +540,7 @@ export function setupLayerRenderer(elem) {
         constructor() {
             super(1, 1, "Activation")
 
-            let possibleActivations = ["Identity", "ReLU", "TanH", "Sigmoid"]
+            let possibleActivations = ["Identity", "ReLU", "TanH", "Sigmoid", "Softmax"]
             this.typeSelect = document.createElement("select");
             for (let act of possibleActivations) {
                 let option = document.createElement("option");
@@ -811,17 +812,19 @@ export function setupLayerRenderer(elem) {
                 createdLayer.setState(layer);
                 createdLayers.push(createdLayer);
             }
-            for (let layer of layers) {
-                for (let input in layer.inputConnections) {
-                    let connection = layer.inputConnections[input];
-                    if (connection != null) {
-                        editor.addConnection(connection.node, layer.id, connection.input, input)
+            setTimeout(function () {
+                for (let layer of layers) {
+                    for (let input in layer.inputConnections) {
+                        let connection = layer.inputConnections[input];
+                        if (connection != null) {
+                            editor.addConnection(connection.node, layer.id, connection.input, input)
+                        }
                     }
                 }
-            }
-            for (let layer of createdLayers)
-                if (layer.type == "input")
-                    layer.update();
+                for (let layer of createdLayers)
+                    if (layer.type == "input")
+                        layer.update();
+            }, 100)
         }
     }
 }

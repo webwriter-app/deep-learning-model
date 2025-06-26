@@ -197,15 +197,18 @@ export class AiWidgetsFeatures extends LitElementWw {
     this.communicator.changed();
   }
 
+
   updateTensorDataset() {
     let transformations: Record<string, Constructor<FeatureTransformation>> = {}
+    let settings: Record<string, Constructor<FeatureTransformation>> = {};
     for (let field in this.fieldProps) {
-      if (this.fieldProps[field].type != "Ignore")
+      if (this.fieldProps[field].type != "Ignore") {
         transformations[field] = getFeatureTransformation(this.fieldProps[field].type).constructor;
+        settings[field] = this.fieldProps[field].settings;
+      }
     }
-    this.tensorDataset = new TransformedDataset(this.rawDataset, transformations, Object.fromEntries(Object.entries(this.fieldProps).filter(([k, v]) => k == "settings")));
+    this.tensorDataset = new TransformedDataset(this.rawDataset, transformations, settings);
   }
-
 
   handleHeaderClick(e: Event) {
     let field = (e.currentTarget as HTMLElement).innerText

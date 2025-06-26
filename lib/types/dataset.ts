@@ -10,6 +10,8 @@ type Constructor<T> = new (...args: any[]) => T;
 type NonEmptyArray<T> = [T, ...T[]];
 
 type FeatureSettings = Record<string, any> | null;
+type ImageChannel = Uint8ClampedArray[];
+type ImageData = [ImageChannel, ImageChannel, ImageChannel, ImageChannel]
 
 /**
 * This class is a wrapper that references the original data and allows to access samples, batches and training/validation/testing splits
@@ -114,7 +116,7 @@ export abstract class FeatureTransformation {
      * Takes a string value from the raw data and turns it into a tensor
      * @param value The string value from the raw data that will be turned into a tensor
      */
-    public abstract transform(value: string): tf.Tensor
+    public abstract transform(value: string): Promise<tf.Tensor>;
 
     /**
      * Returns the element that will be displayed and changes the settings of the transformation
@@ -181,7 +183,7 @@ export class ClassTransformation extends FeatureTransformation {
         return [(this.aggrigatedInformation.classes.length as number)];
     }
 
-    public transform(value: string): tf.Tensor1D {
+    public async transform(value: string): Promise<tf.Tensor1D> {
         value = JSON.parse(value);
         let classes = this.aggrigatedInformation.classes;
         let index = classes.indexOf(value);
@@ -199,15 +201,18 @@ export class ClassTransformation extends FeatureTransformation {
     }
 
     public renderTransformedValue(value: string): TemplateResult {
-        let transformed = this.transform(value).arraySync();
-        if (transformed.length < 10) {
-            return html`${transformed.join(", ")}`;
-        } else {
-            let before = transformed.indexOf(1);
-            let after = (transformed.length - transformed.indexOf(1) - 1)
-            let str = (before > 0 ? "0x" + before + ", " : "") + "1" + (after > 0 ? ", 0x" + after : "");
-            return html`${str}`;
-        }
+        return html`${until(
+            (async () => {
+                let transformed = (await this.transform(value)).arraySync();
+                if (transformed.length < 10) {
+                    return html`${transformed.join(", ")}`;
+                } else {
+                    let before = transformed.indexOf(1);
+                    let after = (transformed.length - transformed.indexOf(1) - 1)
+                    let str = (before > 0 ? "0x" + before + ", " : "") + "1" + (after > 0 ? ", 0x" + after : "");
+                    return html`${str}`;
+                }
+            })(), html`Loading`)}`;
     }
 }
 registerFeatureTransformation("Class Encoding", ClassTransformation)
@@ -249,7 +254,7 @@ export class LinearTransformation extends FeatureTransformation {
         return [1] as NonEmptyArray<number>;
     }
 
-    public transform(value: string): tf.Tensor1D {
+    public async transform(value: string): Promise<tf.Tensor1D> {
         value = JSON.parse(value);
         let min = this.aggrigatedInformation.min;
         let max = this.aggrigatedInformation.max;
@@ -284,7 +289,8 @@ export class LinearTransformation extends FeatureTransformation {
     }
 
     public renderTransformedValue(value: string): TemplateResult {
-        return html`${this.transform(value).arraySync()[0].toFixed(3)}`;
+        return html`${until(
+            (async () => { return (await this.transform(value)).arraySync()[0].toFixed(3) })(), html`Loading`)}`;
     }
 }
 registerFeatureTransformation("Number Encoding", LinearTransformation)
@@ -312,7 +318,7 @@ export class ImageTransformation extends FeatureTransformation {
             this.settings.transform = "identity";
 
         let that = this;
-        this.getImage(JSON.stringify(samples[0])).onload = function (e: Event) {
+        this.getRawImage(JSON.stringify(samples[0])).onload = function (e: Event) {
             let img = e.target as HTMLImageElement;
             if (that.settings.width == 0) {
                 that.settings.width = img.width;
@@ -332,52 +338,70 @@ export class ImageTransformation extends FeatureTransformation {
     }
 
     public size() {
-        return [1] as NonEmptyArray<number>;
+        let channels = 4;
+        if (this.settings.transform == "grayscale")
+            channels = 1;
+        return [this.settings.width, this.settings.height, channels] as NonEmptyArray<number>;
     }
 
-    public transform(value: string): tf.Tensor2D {
-        return tf.tensor([0]);
+    public async transform(value: string): Promise<tf.Tensor2D> {
+        let img = this.getImagePixels(await this.getImage(value));
+        return tf.tensor(img);
     }
 
-    private scale(img: HTMLImageElement, width: number, height: number) {
-        const canvas = document.createElement('canvas');
+    private getImagePixels(image: HTMLImageElement): ImageData {
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        canvas.width = image.width;
+        canvas.height = image.height;
+        ctx.drawImage(image, 0, 0);
+
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+
+        const R = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
+        const G = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
+        const B = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
+        const A = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
+
+        for (let y = 0; y < canvas.height; y++) {
+            for (let x = 0; x < canvas.width; x++) {
+                let idx = (y * canvas.width + x) * 4;
+                R[y][x] = data[idx];
+                G[y][x] = data[idx + 1];
+                B[y][x] = data[idx + 2];
+                A[y][x] = data[idx + 3];
+            }
+        }
+
+        return [R, G, B, A]
+    }
+
+    private transformImage(img: HTMLImageElement, width: number, height: number) {
+        let canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
 
-        const ctx = canvas.getContext('2d');
+        let ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        if (this.settings.transform == "grayscale") {
+            let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let data = imageData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i];
+                let g = data[i + 1];
+                let b = data[i + 2];
+                let gray = 0.3 * r + 0.59 * g + 0.11 * b;
+
+                data[i] = data[i + 1] = data[i + 2] = gray;
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
 
         let outImg = document.createElement("img");
         outImg.src = canvas.toDataURL();
-        return outImg;
-    }
-
-    private grayscale(img: HTMLImageElement): HTMLImageElement {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-
-        // Loop through each pixel and convert to grayscale
-        for (let i = 0; i < data.length; i += 4) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-
-            // Grayscale formula (luminosity method)
-            const gray = 0.3 * r + 0.59 * g + 0.11 * b;
-
-            data[i] = data[i + 1] = data[i + 2] = gray;
-        }
-
-        ctx.putImageData(imageData, 0, 0);
-        let outImg = document.createElement("img");
-        outImg.src = canvas.toDataURL("image/png");
         return outImg;
     }
 
@@ -419,11 +443,20 @@ export class ImageTransformation extends FeatureTransformation {
         </sl-select>`;
     }
 
-    public getImage(value: string): HTMLImageElement {
+    public async getImage(value: string): Promise<HTMLImageElement> {
+        let img = this.getRawImage(value);
+        await (new Promise(function (res, rej) {
+            img.onload = res;
+        }))
+        let scaled = this.transformImage(img, this.settings.width, this.settings.height);
+        return scaled;
+    }
+
+    public getRawImage(value: string): HTMLImageElement {
         let bytes = new Uint8Array(JSON.parse(value));
-        const blob = new Blob([bytes], { type: 'image/png' });
-        const imageUrl = URL.createObjectURL(blob);
-        const img = new Image();
+        let blob = new Blob([bytes], { type: 'image/png' });
+        let imageUrl = URL.createObjectURL(blob);
+        let img = new Image();
         img.src = imageUrl;
         return img;
     }
@@ -440,18 +473,14 @@ export class ImageTransformation extends FeatureTransformation {
         })
     }
 
-
     public renderTransformedValue(value: string): TemplateResult {
         return html`${until(
             (async () => {
                 await this.waitUntilImageDimensionsAvailable();
-                let img = this.getImage(value);
-                await (new Promise(function (res, rej) {
-                    img.onload = res;
-                }))
-                return this.scale(img, this.settings.width, this.settings.height);;
+                let img = await this.getImage(value);
+                return img;
             })(),
-            html`Loading image dimensions`)
+            html`Loading image`)
             }`;
     }
 }
@@ -484,12 +513,21 @@ export class TransformedDataset {
      * Transforms the raw sample into a tensor sample
      * @param sample The sample that should be transformed
      */
-    transformSample(sample: RawSample): TensorSample {
+    async transformSample(sample: RawSample): Promise<TensorSample> {
         let tensors: TensorSample = {}
+        let keys: string[] = [];
+        let promisses: Promise<tf.Tensor>[] = []
         for (let key in sample) {
             let transformation = this.featureMaps[key];
-            if (transformation)
-                tensors[key] = transformation.transform(sample[key])
+            if (transformation) {
+                keys.push(key);
+                promisses.push(transformation.transform(sample[key]));
+                tensors[key] = await transformation.transform(sample[key])
+            }
+        }
+        let finished = await Promise.all(promisses);
+        for (let i = 0; i < keys.length; i++) {
+            tensors[keys[i]] = finished[i];
         }
         return tensors;
     }
@@ -499,7 +537,7 @@ export class TransformedDataset {
      * (note: the dataset is shuffled)
      * @param id The id of the sample
      */
-    getSample(id: number): TensorSample {
+    async getSample(id: number): Promise<TensorSample> {
         let sample = this.dataset.getSample(id);
         return this.transformSample(sample);
     }
@@ -507,42 +545,42 @@ export class TransformedDataset {
     /**
      * Returns all samples from the training portion of the dataset
      */
-    getTrainingSamples(): Array<TensorSample> {
+    async getTrainingSamples(): Promise<TensorSample[]> {
         if (this.cache.training != null)
             return this.cache.training;
 
         let that = this;
-        this.cache.training = this.dataset.getTrainingSamples().map(function (sample: RawSample) {
+        this.cache.training = await Promise.all(this.dataset.getTrainingSamples().map(async function (sample: RawSample) {
             return that.transformSample(sample);
-        });
+        }));
         return this.cache.training;
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
-    getValidationSamples(): Array<TensorSample> {
+    async getValidationSamples(): Promise<TensorSample[]> {
         if (this.cache.validation != null)
             return this.cache.validation;
 
         let that = this;
-        this.cache.validation = this.dataset.getValidationSamples().map(function (sample: RawSample) {
+        this.cache.validation = await Promise.all(this.dataset.getValidationSamples().map(async function (sample: RawSample) {
             return that.transformSample(sample);
-        });
+        }));
         return this.cache.validation;
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
-    getTestSamples(): Array<TensorSample> {
+    async getTestSamples(): Promise<TensorSample[]> {
         if (this.cache.testing != null)
             return this.cache.testing;
 
         let that = this;
-        this.cache.testing = this.dataset.getTestSamples().map(function (sample: RawSample) {
+        this.cache.testing = await Promise.all(this.dataset.getTestSamples().map(async function (sample: RawSample) {
             return that.transformSample(sample);
-        });
+        }));
         return this.cache.testing;
     }
 }
