@@ -3,11 +3,13 @@ import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/l
 import { customElement, property, state, query } from "lit/decorators.js"
 import { ModelEditor } from "../components/model-editor"
 import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
-import { registerCommunicator, Communicator } from "../lib/apis/com";
 import * as tf from '@tensorflow/tfjs';
 import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
+import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
+import { AiWidgetsFeatures } from "./webwriter-features"
+
 
 
 @customElement("webwriter-design")
@@ -19,7 +21,8 @@ export class AiWidgetsDesigns extends LitElementWw {
         "sl-option": SlOption,
         "sl-select": SlSelect,
         "sl-icon": SlIcon,
-        "sl-icon-button": SlIconButton
+        "sl-icon-button": SlIconButton,
+        "ref-select": AiWidgetsReferenceSelect
     }
 
     static styles = css`
@@ -79,19 +82,28 @@ export class AiWidgetsDesigns extends LitElementWw {
     @property({ type: String, attribute: true, reflect: true })
     accessor state: string;
 
-    private communicator: Communicator;
+    @property({ type: String, attribute: true, reflect: true })
+    accessor featureWidgetId: string;
+
+    private refSelect = document.createElement("ref-select") as AiWidgetsReferenceSelect;
 
     constructor() {
         super();
         let that = this;
-        this.communicator = registerCommunicator("design", ["features"], function () {
-            return {};
-        }, function (name, data) {
+        function featureChange(name, data) {
             let state = that.currentCanvas.controler.export();
             that.state = JSON.stringify(state);
             that.currentCanvas.setFields(data.tensorDataset);
             that.currentCanvas.setState(state);
-        })
+        }
+        setTimeout(function () {
+            that.refSelect["element-type"] = "webwriter-features";
+            that.refSelect.elemId = that.featureWidgetId;
+            that.refSelect.addEventListener("refchange", function (e: CustomEvent) {
+                that.featureWidgetId = e.detail.id;
+            })
+        }, 0)
+
         setInterval(function () {
             let nodes = that.currentCanvas.controler.getNumberOfOperations();
             that.shadowRoot.getElementById("numberNodes").innerText = String(nodes);
@@ -116,7 +128,7 @@ export class AiWidgetsDesigns extends LitElementWw {
             that.currentCanvas.onmodelchange = function () {
                 that.state = JSON.stringify(that.currentCanvas.controler.export())
             }
-            that.currentCanvas.setFields(that.communicator.getDependency("features").tensorDataset);
+            that.currentCanvas.setFields((that.refSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset);
             if (that.state)
                 that.currentCanvas.setState(JSON.parse(that.state));
             that.shadowRoot.prepend(canvas);
@@ -170,11 +182,16 @@ export class AiWidgetsDesigns extends LitElementWw {
         <sl-button @click=${() => this.zoomIn()}>+</sl-button>
         <sl-button @click=${() => this.zoomOut()}>-</sl-button>
     </div>
+    <div part="options">
+        <p>Feature Source</p>
+        ${this.refSelect}
+      </div>
     `
     }
     public addLayer(type) {
-        let featureData = this.communicator.getDependency("features");
-        let layer = new this.currentCanvas.controler[type](featureData.tensorDataset);
+        let dataset = (this.refSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset;
+        let layer = new this.currentCanvas.controler[type](dataset);
+
     }
     public zoomIn() {
         this.currentCanvas.controler.editor.zoom *= 1.1;

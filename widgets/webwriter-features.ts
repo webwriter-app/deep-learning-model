@@ -8,7 +8,6 @@ import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.com
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
 import { DatasetInput } from "../components/dataset-input/dataset-input"
 import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
-import { registerCommunicator, Communicator } from "../lib/apis/com";
 import * as tf from '@tensorflow/tfjs';
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -84,16 +83,9 @@ export class AiWidgetsFeatures extends LitElementWw {
 
   private activeHeader = "";
 
-  private communicator: Communicator;
-
   constructor() {
     super();
-    let that = this;
-    this.communicator = registerCommunicator("features", [], function () {
-      return { dataset: that.rawDataset, tensorDataset: that.tensorDataset };
-    }, function (name) { })
   }
-
 
   renderSelectDataset() {
     return html`
@@ -156,14 +148,15 @@ export class AiWidgetsFeatures extends LitElementWw {
       that.fieldProps[fieldName].type = value.replaceAll("_", " ");
       //Deep copy for new reference to trigger refreshing the attribute and save ;-;
       that.fieldProps = Object.assign({}, that.fieldProps);
-      this.updateTensorDataset();
-      that.communicator.changed();
+      that.updateTensorDataset();
+      that._triggerChanged();
     }
 
     return html`<sl-select @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")}>${options}</sl-select>`
   }
 
   render() {
+    this._triggerChanged();
     if (this.samplesSave && !this.samples)
       this.samples = JSON.parse(this.samplesSave);
     if (this.samples == null)
@@ -194,9 +187,12 @@ export class AiWidgetsFeatures extends LitElementWw {
       this.fieldProps[field] = { type: "Ignore", settings: null };
     }
     this.updateTensorDataset();
-    this.communicator.changed();
+    this._triggerChanged();
   }
 
+  getDataset() {
+    return { rawDataset: this.rawDataset, tensorDataset: this.tensorDataset }
+  }
 
   updateTensorDataset() {
     let transformations: Record<string, Constructor<FeatureTransformation>> = {}
@@ -221,13 +217,22 @@ export class AiWidgetsFeatures extends LitElementWw {
     this.rawDataset = null;
     this.tensorDataset = null;
     this.requestUpdate();
-    this.communicator.changed();
+    this._triggerChanged();
   }
 
   handleFeatureSettingsChange(settings: Record<string, any>) {
     this.fieldProps[this.activeHeader] = { ...this.fieldProps[this.activeHeader], settings };
     this.fieldProps = Object.assign({}, this.fieldProps);
     this.requestUpdate();
-    this.communicator.changed();
+    this._triggerChanged();
+  }
+
+  _triggerChanged() {
+    this.dispatchEvent(new CustomEvent('change', {
+      detail: {
+        dataset: this.rawDataset,
+        tensorDataset: this.tensorDataset
+      }
+    }));
   }
 }

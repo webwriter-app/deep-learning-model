@@ -1,6 +1,6 @@
-import {html, css, TemplateResult, PropertyValues} from "lit"
-import {LitElementWw, OptionDeclaration, ActionDeclaration} from "@webwriter/lit"
-import {customElement, property, state} from "lit/decorators.js"
+import { html, css, TemplateResult, PropertyValues } from "lit"
+import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
+import { customElement, property, state } from "lit/decorators.js"
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
 @customElement("webwriter-typeselect")
