@@ -1,0 +1,63 @@
+[
+    {
+        "id": 1,
+        "posX": 63,
+        "posY": 208,
+        "inputConnections": {},
+        "type": "input",
+        "select": "image_bytes",
+        "dim": [
+            28,
+            28,
+            1
+        ]
+    },
+    {
+        "id": 2,
+        "posX": 234,
+        "posY": 208,
+        "inputConnections": {
+            "input_1": {
+                "node": "1",
+                "input": "output_1"
+            }
+        },
+        "type": "fcl",
+        "dim": [
+            10
+        ]
+    },
+    {
+        "id": 3,
+        "posX": 403,
+        "posY": 209,
+        "inputConnections": {
+            "input_1": {
+                "node": "2",
+                "input": "output_1"
+            }
+        },
+        "type": "activation",
+        "dim": [
+            10
+        ],
+        "act": "Softmax"
+    },
+    {
+        "id": 4,
+        "posX": 572,
+        "posY": 209,
+        "inputConnections": {
+            "input_1": {
+                "node": "3",
+                "input": "output_1"
+            }
+        },
+        "type": "output",
+        "select": "label",
+        "dim": [
+            10
+        ],
+        "loss": "BCE"
+    }
+]

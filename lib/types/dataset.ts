@@ -25,11 +25,11 @@ export class Dataset {
     /**
     * The end of the training section (index excluded)
     */
-    protected trainingEnd: number;
+    public readonly trainingEnd: number;
     /**
     * The end of the validation section (index excluded)
     */
-    protected validationEnd: number;
+    public readonly validationEnd: number;
     /**
      * The fields/column names of the dataset table
      * (Note: This is captured only by the first entry of the datasets keys)
@@ -40,7 +40,7 @@ export class Dataset {
     * This class is a wrapper that references the original data and allows to access samples, batches and training/validation/testing splits
     */
     constructor(dataset: Array<RawSample>, trainingPercentile = 0.7, validationPercentile = 0.2) {
-        this.dataset = dataset;
+        this.dataset = dataset.slice(0,10000);
         this.fields = Object.keys(dataset[0]);
         tf.util.shuffle(this.dataset);
         this.trainingEnd = this.dataset.length * trainingPercentile;
@@ -82,6 +82,10 @@ export class Dataset {
      */
     getTestSamples(): Array<RawSample> {
         return this.dataset.slice(this.validationEnd);
+    }
+
+    length() {
+        return this.dataset.length;
     }
 }
 
@@ -183,8 +187,8 @@ export class ClassTransformation extends FeatureTransformation {
         return [(this.aggrigatedInformation.classes.length as number)];
     }
 
+
     public async transform(value: string): Promise<tf.Tensor1D> {
-        value = JSON.parse(value);
         let classes = this.aggrigatedInformation.classes;
         let index = classes.indexOf(value);
         if (index == -1)
@@ -255,7 +259,8 @@ export class LinearTransformation extends FeatureTransformation {
     }
 
     public async transform(value: string): Promise<tf.Tensor1D> {
-        value = JSON.parse(value);
+        if (typeof value == "string")
+            value = JSON.parse(value);
         let min = this.aggrigatedInformation.min;
         let max = this.aggrigatedInformation.max;
         let tensor = new Array<number>(1)
@@ -305,7 +310,7 @@ export class ImageTransformation extends FeatureTransformation {
     /**
     * The constructor runs through the samples and registers the unique classes.
     */
-    public constructor(samples: Array<string>, settings: FeatureSettings) {
+    public constructor(samples: Array<any>, settings: FeatureSettings) {
         super("Image Encoding", samples, settings);
 
         if (!this.settings.shema)
@@ -318,7 +323,7 @@ export class ImageTransformation extends FeatureTransformation {
             this.settings.transform = "identity";
 
         let that = this;
-        this.getRawImage(JSON.stringify(samples[0])).onload = function (e: Event) {
+        this.getRawImage(samples[0] as number[]).onload = function (e: Event) {
             let img = e.target as HTMLImageElement;
             if (that.settings.width == 0) {
                 that.settings.width = img.width;
@@ -344,9 +349,39 @@ export class ImageTransformation extends FeatureTransformation {
         return [this.settings.width, this.settings.height, channels] as NonEmptyArray<number>;
     }
 
-    public async transform(value: string): Promise<tf.Tensor2D> {
-        let img = this.getImagePixels(await this.getImage(value));
-        return tf.tensor(img);
+    public async transform(value: string | number[]): Promise<tf.Tensor3D> {
+        if (typeof value == "string")
+            value = JSON.parse(value) as number[];
+
+        return await this.pngBinaryToTensor(new Uint8Array(value), this.settings.width, this.settings.height);
+
+        /*let img = this.getImagePixels(await this.getImage(value));
+        if (this.settings.transform == "grayscale")
+            return tf.tensor([img[0]]).div(255) as tf.Tensor3D;
+        else
+            return tf.tensor(img).div(255) as tf.Tensor3D;*/
+    }
+
+    async pngBinaryToTensor(pngBinary, targetWidth, targetHeight) {
+        const blob = new Blob([pngBinary], { type: 'image/png' });
+
+        const bitmap = await createImageBitmap(blob);
+        const canvas = document.createElement("canvas")
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
+
+        let tensor = tf.tidy(() => {
+            let img = tf.browser.fromPixels(canvas)
+            .mean(2)
+            .expandDims(-1)
+            .toFloat()
+            .div(tf.scalar(255));
+            return img;
+        });
+
+        return tensor as tf.Tensor3D;
     }
 
     private getImagePixels(image: HTMLImageElement): ImageData {
@@ -409,7 +444,9 @@ export class ImageTransformation extends FeatureTransformation {
         let that = this;
         function typechange(e: Event) {
             let element = e.target as HTMLInputElement;
-            let value = element.value;
+            let value: string | number = element.value;
+            if (element.type == "number")
+                value = parseFloat(value);
             that.settings[element.name] = value;
             changeCallback(that.settings);
         }
@@ -443,7 +480,7 @@ export class ImageTransformation extends FeatureTransformation {
         </sl-select>`;
     }
 
-    public async getImage(value: string): Promise<HTMLImageElement> {
+    public async getImage(value: number[]): Promise<HTMLImageElement> {
         let img = this.getRawImage(value);
         await (new Promise(function (res, rej) {
             img.onload = res;
@@ -452,8 +489,8 @@ export class ImageTransformation extends FeatureTransformation {
         return scaled;
     }
 
-    public getRawImage(value: string): HTMLImageElement {
-        let bytes = new Uint8Array(JSON.parse(value));
+    public getRawImage(value: number[]): HTMLImageElement {
+        let bytes = new Uint8Array(value);
         let blob = new Blob([bytes], { type: 'image/png' });
         let imageUrl = URL.createObjectURL(blob);
         let img = new Image();
@@ -473,10 +510,12 @@ export class ImageTransformation extends FeatureTransformation {
         })
     }
 
-    public renderTransformedValue(value: string): TemplateResult {
+    public renderTransformedValue(value: string | number[]): TemplateResult {
         return html`${until(
             (async () => {
                 await this.waitUntilImageDimensionsAvailable();
+                if (typeof value == "string")
+                    value = JSON.parse(value) as number[];
                 let img = await this.getImage(value);
                 return img;
             })(),
@@ -492,7 +531,7 @@ registerFeatureTransformation("Image Encoding", ImageTransformation)
 export class TransformedDataset {
     public readonly dataset: Dataset;
     public featureMaps: Record<string, FeatureTransformation> = {};
-    private cache: Record<string, Array<TensorSample>> = {};
+    private cache: Array<TensorSample> = [];
 
     /**
     * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
@@ -538,49 +577,59 @@ export class TransformedDataset {
      * @param id The id of the sample
      */
     async getSample(id: number): Promise<TensorSample> {
+        function cloneSample(sample){
+            let out = {};
+            for (let field in sample) {
+                out[field] = sample[field].clone();
+            }
+            return out;
+        }
+        
+        if (this.cache[id] != null) {
+            return cloneSample(this.cache[id])
+        }
+
         let sample = this.dataset.getSample(id);
-        return this.transformSample(sample);
+        this.cache[id] = await this.transformSample(sample);
+        return cloneSample(this.cache[id]);
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
     async getTrainingSamples(): Promise<TensorSample[]> {
-        if (this.cache.training != null)
-            return this.cache.training;
-
         let that = this;
-        this.cache.training = await Promise.all(this.dataset.getTrainingSamples().map(async function (sample: RawSample) {
-            return that.transformSample(sample);
-        }));
-        return this.cache.training;
+        let promisses = [];
+        for(let sample of this.dataset.getTrainingSamples()) {
+            promisses.push(that.transformSample(sample))
+        }
+        return await Promise.all(promisses);
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
     async getValidationSamples(): Promise<TensorSample[]> {
-        if (this.cache.validation != null)
-            return this.cache.validation;
-
         let that = this;
-        this.cache.validation = await Promise.all(this.dataset.getValidationSamples().map(async function (sample: RawSample) {
-            return that.transformSample(sample);
-        }));
-        return this.cache.validation;
+        let promisses = [];
+        for(let sample of this.dataset.getValidationSamples()) {
+            promisses.push(that.transformSample(sample))
+        }
+        return await Promise.all(promisses);
     }
 
     /**
      * Returns all samples from the training portion of the dataset
      */
     async getTestSamples(): Promise<TensorSample[]> {
-        if (this.cache.testing != null)
-            return this.cache.testing;
-
         let that = this;
-        this.cache.testing = await Promise.all(this.dataset.getTestSamples().map(async function (sample: RawSample) {
-            return that.transformSample(sample);
+        return await Promise.all(this.dataset.getTestSamples().map(async function (sample: RawSample) {
+            return await that.transformSample(sample);
         }));
-        return this.cache.testing;
+    }
+
+
+    length() {
+        return this.dataset.length();
     }
 }

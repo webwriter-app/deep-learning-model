@@ -7,7 +7,6 @@ import SlOption from "@shoelace-style/shoelace/dist/components/option/option.com
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import { AiWidgetsFeatures } from "../widgets/webwriter-features";
 
-@customElement("ref-select")
 export class AiWidgetsReferenceSelect extends LitElementWw {
     static scopedElements = {
         "sl-select": SlSelect,
@@ -17,7 +16,6 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
 
     static styles = css`
     :host {
-      min-height: 200px;
       display:block;
     }
     `
@@ -77,4 +75,3 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
         return document.querySelector("#" + this.elemId) as HTMLElement
     }
 }
-

@@ -1,6 +1,5 @@
 import Drawflow, { DrawflowConnection, DrawflowConnectionDetail } from 'drawflow'
 import { TransformedDataset } from './dataset';
-import { Sigmoid } from '@tensorflow/tfjs';
 
 type NonEmptyArray<T> = [T, ...T[]];
 
@@ -424,6 +423,7 @@ export function setupLayerRenderer(elem) {
             this.dimInput.onchange(null);
         }
     }
+    
 
     class FlattenLayer extends Layer {
         constructor() {
@@ -540,7 +540,7 @@ export function setupLayerRenderer(elem) {
         constructor() {
             super(1, 1, "Activation")
 
-            let possibleActivations = ["Identity", "ReLU", "TanH", "Sigmoid", "Softmax"]
+            let possibleActivations = ["Identity", "ReLU", "tanh", "sigmoid", "Softmax"]
             this.typeSelect = document.createElement("select");
             for (let act of possibleActivations) {
                 let option = document.createElement("option");

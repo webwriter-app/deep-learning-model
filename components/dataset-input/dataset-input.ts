@@ -93,11 +93,12 @@ export class DatasetInput extends LitElementWw {
     }
     return out;
   }
+  
 
   async readParquetFile(file: File): Promise<Array<Record<string, any>>> {
     let url = URL.createObjectURL(file);
     let buffer = await asyncBufferFromUrl({ url, byteLength: file.size });
-    let data = await parquetReadObjects({ file: buffer });
+    let data = await parquetReadObjects({ file: buffer, utf8: false });
     return data.map(entry => this.recursiveFlatten(entry, null));
   }
   async readCSVFile(file: File): Promise<Array<Record<string, any>>> {

@@ -15,7 +15,10 @@
         "@shoelace-style/shoelace": "^2.20.1",
         "@tabler/icons": "^3.33.0",
         "@tensorflow/tfjs": "^4.22.0",
+        "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+        "@tensorflow/tfjs-backend-webgpu": "^4.22.0",
         "@webwriter/lit": "^2",
+        "apexcharts": "^4.7.0",
         "drawflow": "^0.0.60",
         "hyparquet": "^1.16.2",
         "lit": "^3",
@@ -37,17 +40,18 @@
         "./widgets/webwriter-design.*": {
             "source": "./widgets/webwriter-design.ts",
             "default": "./dist/widgets/webwriter-design.*"
+        },
+        "./widgets/webwriter-training.*": {
+            "source": "./widgets/webwriter-training.ts",
+            "default": "./dist/widgets/webwriter-training.*"
         }
     },
     "editingConfig": {
         "./widgets/webwriter-typeselect": {
+            "selectable": false,
             "label": {
                 "_": "AI Widgets"
             },
-            "description": {
-                "_": "Entwickle eine KI in 5 Schritten."
-            },
-            "selectable": false,
             "uninsertable": false
         }
     }

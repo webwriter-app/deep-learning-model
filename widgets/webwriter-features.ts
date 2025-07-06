@@ -14,6 +14,9 @@ type Constructor<T> = new (...args: any[]) => T;
 BigInt.prototype["toJSON"] = function () {
   return this.toString();
 };
+Uint8Array.prototype["toJSON"] = function () {
+  return [...this]
+};
 
 @customElement("webwriter-features")
 export class AiWidgetsFeatures extends LitElementWw {
@@ -122,7 +125,9 @@ export class AiWidgetsFeatures extends LitElementWw {
         let transformation = new Transformation(this.samples.map(v => v[fieldName]), this.fieldProps[fieldName].settings)
         let rows = this.samples.slice(0, 10).map(
           function (v) {
-            let value = JSON.stringify(v[fieldName]);
+            let value = v[fieldName];
+            if (typeof value != "string")
+              value = JSON.stringify(value);
             return html`<tr><td><p>${value}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
           }
         )

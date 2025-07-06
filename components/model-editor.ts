@@ -3,11 +3,11 @@ import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/l
 import { customElement, property, state, query } from "lit/decorators.js"
 import { DatasetInput } from "../components/dataset-input/dataset-input"
 import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
-import { registerCommunicator, Communicator } from "../lib/apis/com";
 import * as tf from '@tensorflow/tfjs';
 import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
+import { Editor } from "../lib/layers"
 
 @customElement("model-editor")
 export class ModelEditor extends LitElementWw {
@@ -85,7 +85,7 @@ export class ModelEditor extends LitElementWw {
         padding:0px;
         margin: 0px;
     }
-    .drawflow .drawflow-node p, .drawflow .drawflow-node input, .drawflow .drawflow-node select {
+    .drawflow .drawflow-node p, .drawflow .drawflow-node sl-input, .drawflow .drawflow-node sl-select {
         max-width: 100px;
     }
     .drawflow .drawflow-node p {
@@ -214,7 +214,7 @@ export class ModelEditor extends LitElementWw {
         top:-15px
     }`
 
-    public controler: ReturnType<typeof setupLayerRenderer>;
+    public controler: Editor;
 
     private state;
     public setState(state) {
@@ -228,21 +228,21 @@ export class ModelEditor extends LitElementWw {
         this.requestUpdate();
     }
 
+    public createLayer(name) {
+        this.controler.createLayer(name, this.fields);
+    }
+
     public onmodelchange() { };
 
     public render(): TemplateResult {
         let that = this;
         let canvas = document.createElement("div");
         canvas.id = "drawflow";
-        this.controler = setupLayerRenderer(canvas);
-        this.controler.import(this.state, this.fields);
+        this.controler = new Editor(canvas);
+        this.controler.import(this.state || [], this.fields);
         canvas.addEventListener("mouseup", function () {
             that.onmodelchange();
         });
-        setTimeout(function () {
-            that.controler.editor.updateConnectionNodes(2);
-        }, 100)
-        this.controler.editor.updateConnectionNodes(2);
         return html`${canvas}`
     }
 }

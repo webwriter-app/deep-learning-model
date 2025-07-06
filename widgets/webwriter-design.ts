@@ -22,7 +22,7 @@ export class AiWidgetsDesigns extends LitElementWw {
         "sl-select": SlSelect,
         "sl-icon": SlIcon,
         "sl-icon-button": SlIconButton,
-        "ref-select": AiWidgetsReferenceSelect
+        "ref-elem-select": AiWidgetsReferenceSelect
     }
 
     static styles = css`
@@ -70,39 +70,46 @@ export class AiWidgetsDesigns extends LitElementWw {
         z-index: 10;
     }`
 
-    private _suppressNextUpdate = false;
-    protected shouldUpdate(changedProps: Map<string, unknown>): boolean {
-        if (this._suppressNextUpdate) {
-            this._suppressNextUpdate = false;
-            return false; // Cancel the update
-        }
-        return true;
-    }
-
     @property({ type: String, attribute: true, reflect: true })
     accessor state: string;
 
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
-    private refSelect = document.createElement("ref-select") as AiWidgetsReferenceSelect;
+    private refSelect = document.createElement("ref-elem-select") as AiWidgetsReferenceSelect;
 
     constructor() {
         super();
         let that = this;
-        function featureChange(name, data) {
+        function featureChange(dataset) {
             let state = that.currentCanvas.controler.export();
             that.state = JSON.stringify(state);
-            that.currentCanvas.setFields(data.tensorDataset);
+            that.currentCanvas.setFields(dataset);
             that.currentCanvas.setState(state);
         }
         setTimeout(function () {
             that.refSelect["element-type"] = "webwriter-features";
             that.refSelect.elemId = that.featureWidgetId;
+            let featuresElem = that.refSelect.getRefElement() as AiWidgetsFeatures;
+            let datasetChangeListener = function() {
+                featureChange(featuresElem.getDataset().tensorDataset)
+            }
             that.refSelect.addEventListener("refchange", function (e: CustomEvent) {
+                if (featuresElem != null)
+                    featuresElem.removeEventListener("change", datasetChangeListener);
+
                 that.featureWidgetId = e.detail.id;
+                that.requestUpdate();
+                featuresElem = (that.refSelect.getRefElement() as AiWidgetsFeatures)
+                featuresElem.addEventListener("change", datasetChangeListener);
+                that.currentCanvas.setFields(featuresElem.getDataset().tensorDataset);
             })
+            if (that.refSelect.elemId != null && that.refSelect.elemId != "") {
+                let features = (that.refSelect.getRefElement() as AiWidgetsFeatures)
+                features.addEventListener("change", datasetChangeListener)
+            }
         }, 0)
+
 
         setInterval(function () {
             let nodes = that.currentCanvas.controler.getNumberOfOperations();
@@ -128,8 +135,9 @@ export class AiWidgetsDesigns extends LitElementWw {
             that.currentCanvas.onmodelchange = function () {
                 that.state = JSON.stringify(that.currentCanvas.controler.export())
             }
-            that.currentCanvas.setFields((that.refSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset);
-            if (that.state)
+            if (that.refSelect.elemId != null && that.refSelect.elemId != "")
+                that.currentCanvas.setFields((that.refSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset);
+            if (that.state && that.state != "")
                 that.currentCanvas.setState(JSON.parse(that.state));
             that.shadowRoot.prepend(canvas);
         }, 1000);
@@ -142,32 +150,31 @@ export class AiWidgetsDesigns extends LitElementWw {
         <div class="group">
             <p>I/O</p>
             <sl-button-group>
-                <sl-button @click=${() => this.addLayer("InputLayer")}>Input</sl-button>
-                <sl-button @click=${() => this.addLayer("MultiInputLayer")}>Multi-Input</sl-button>
-                <sl-button @click=${() => this.addLayer("AccessPoint")}>Access Point</sl-button>
-                <sl-button @click=${() => this.addLayer("OutputLayer")}>Output</sl-button>
+                <sl-button @click=${() => this.addLayer("input")}>Input</sl-button>
+                <sl-button @click=${() => this.addLayer("output")}>Output</sl-button>
             </sl-button-group>
         </div>
         <div class="group">
             <p>Deep Layers</p>
             <sl-button-group>
-            <sl-button @click=${() => this.addLayer("FCLLayer")}>Linear</sl-button>
+            <sl-button @click=${() => this.addLayer("fcl")}>Linear</sl-button>
+            <sl-button @click=${() => this.addLayer("conv")}>Convolution</sl-button>
+            <sl-button @click=${() => this.addLayer("transposeconv")}>Transpose Convolution</sl-button>
             </sl-button-group>
         </div>
         <div class="group">
             <p>Misc</p>
             <sl-button-group>
-            <sl-button @click=${() => this.addLayer("ActivationLayer")}>Activation</sl-button>
-            <sl-button @click=${() => this.addLayer("ProbabalisticLayer")}>Probabalistic</sl-button>
-            <sl-button @click=${() => this.addLayer("DropoutLayer")}>Dropout</sl-button>
+            <sl-button @click=${() => this.addLayer("activation")}>Activation</sl-button>
+            <sl-button @click=${() => this.addLayer("dropout")}>Dropout</sl-button>
             </sl-button-group>
         </div>
         <div class="group">
             <p>Shape</p>
             <sl-button-group>
-            <sl-button @click=${() => this.addLayer("FlattenLayer")}>Flatten</sl-button>
-            <sl-button @click=${() => this.addLayer("ConcatLayer")}>Concatination</sl-button>
-            <sl-button @click=${() => this.addLayer("DeConcatLayer")}>DeConcatination Layer</sl-button>
+            <sl-button @click=${() => this.addLayer("flatten")}>Flatten</sl-button>
+            <sl-button @click=${() => this.addLayer("concat")}>Concatination</sl-button>
+            <sl-button @click=${() => this.addLayer("reshape")}>Reshape</sl-button>
             </sl-button-group>
         </div>
         <div class="group">
@@ -188,24 +195,22 @@ export class AiWidgetsDesigns extends LitElementWw {
       </div>
     `
     }
+    
     public addLayer(type) {
-        let dataset = (this.refSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset;
-        let layer = new this.currentCanvas.controler[type](dataset);
-
+        let layer = this.currentCanvas.createLayer(type);
     }
     public zoomIn() {
-        this.currentCanvas.controler.editor.zoom *= 1.1;
-        this.currentCanvas.controler.editor.zoom_refresh();
+        this.currentCanvas.controler.zoomIn();
     }
     public zoomOut() {
-        this.currentCanvas.controler.editor.zoom /= 1.1;
-        this.currentCanvas.controler.editor.zoom_refresh();
+        this.currentCanvas.controler.zoomOut();
     }
     public zoomReset() {
-        this.currentCanvas.controler.editor.zoom = 1;
-        let pos = this.currentCanvas.controler.getAveragePosition();
-        this.currentCanvas.controler.editor.canvas_x = -pos.x + this.currentCanvas.controler.editor.precanvas.clientWidth / 2;
-        this.currentCanvas.controler.editor.canvas_y = -pos.y + this.currentCanvas.controler.editor.precanvas.clientHeight / 2;
-        this.currentCanvas.controler.editor.zoom_refresh();
+        this.currentCanvas.controler.zoomReset();
+    }
+
+
+    getModel() {
+        return this.currentCanvas.controler.export();
     }
 }
