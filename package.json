@@ -14,17 +14,45 @@
     "dependencies": {
         "@shoelace-style/shoelace": "^2.20.1",
         "@tabler/icons": "^3.33.0",
+        "@tensorflow/tfjs": "^4.22.0",
+        "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+        "@tensorflow/tfjs-backend-webgpu": "^4.22.0",
         "@webwriter/lit": "^2",
+        "apexcharts": "^4.7.0",
+        "drawflow": "^0.0.60",
+        "hyparquet": "^1.16.2",
         "lit": "^3",
         "papaparse": "^5.5.3"
     },
     "devDependencies": {
-        "@lit/localize-tools": "^0.8"
+        "@lit/localize-tools": "^0.8",
+        "@types/drawflow": "^0.0.12"
     },
     "exports": {
-        "./widgets/matthiasschaefer-aiwidgets.*": {
-            "source": "./widgets/matthiasschaefer-aiwidgets.ts",
-            "default": "./dist/widgets/matthiasschaefer-aiwidgets.*"
+        "./widgets/webwriter-typeselect.*": {
+            "source": "./widgets/webwriter-typeselect.ts",
+            "default": "./dist/widgets/webwriter-typeselect.*"
+        },
+        "./widgets/webwriter-features.*": {
+            "source": "./widgets/webwriter-features.ts",
+            "default": "./dist/widgets/webwriter-features.*"
+        },
+        "./widgets/webwriter-design.*": {
+            "source": "./widgets/webwriter-design.ts",
+            "default": "./dist/widgets/webwriter-design.*"
+        },
+        "./widgets/webwriter-training.*": {
+            "source": "./widgets/webwriter-training.ts",
+            "default": "./dist/widgets/webwriter-training.*"
+        }
+    },
+    "editingConfig": {
+        "./widgets/webwriter-typeselect": {
+            "selectable": false,
+            "label": {
+                "_": "AI Widgets"
+            },
+            "uninsertable": false
         }
     }
 }

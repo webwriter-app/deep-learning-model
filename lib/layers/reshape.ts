@@ -1,0 +1,64 @@
+import {Editor, Layer, SIZE_SEP} from "./index";
+import { TransformedDataset } from '../types/dataset';
+import { SlInput, SlSelect } from "@shoelace-style/shoelace";
+import * as tf from "@tensorflow/tfjs";
+    
+export class ExportLayer extends Layer {
+    private shapeInputs: SlInput[] = [];
+    private error: HTMLSpanElement;
+
+    constructor(fields: TransformedDataset, editor: Editor) {
+        super(1, 1, "Transpose Convolution", editor)
+
+        for (let i = 0; i < 3; i++) {
+            this.shapeInputs[i] = this.addNumberInput((i + 1) + "th dim", 0, 9999999);
+            this.shapeInputs[i].value = "1";
+        }
+
+        this.error = document.createElement("span");
+        this.addTextElement("", this.error);
+    }
+    update() {
+        this.updateInputLabels();
+        let inDim = 1;
+        this.getNodeInputElement("input_1").innerText.split(SIZE_SEP).forEach(v => inDim *= parseInt(v));
+        let outDim = 1;
+        let outputDims = [];
+        for (let i = 0; i < this.shapeInputs.length; i++) {
+            let value = parseInt(this.shapeInputs[i].value)
+            if (value > 0) {
+                outputDims.push(parseInt(this.shapeInputs[i].value));
+                outDim *= value;
+            }
+        }
+        if (inDim != outDim) {
+            this.error.innerText = "Output shape invalid: " + inDim + " != " + outDim;
+        } else {
+            this.error.innerText = "";
+        }
+        this.getNodeOutputElement("output_1").innerText = outputDims.join(SIZE_SEP)
+        this.notifyOutputChange();
+    }
+    getState() {
+        let state = super.getState();
+        state.shape = this.shapeInputs.map(input => input.value)
+        state.type = "reshape";
+        return state;
+    }
+
+    setState(state) {
+        super.setState(state);
+        for (let i = 0; i < this.shapeInputs.length; i++) {
+            this.shapeInputs[i].value = state.shape[i];
+        }
+    }
+    public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
+        let outputDims = [];
+        for (let i = 0; i < this.shapeInputs.length; i++) {
+            let value = parseInt(this.shapeInputs[i].value)
+            if (value > 0)
+                outputDims.push(parseInt(this.shapeInputs[i].value));
+        }
+        return { output_1: tf.layers.reshape({ targetShape: outputDims}).apply(inputs.input_1) as tf.SymbolicTensor };
+    }
+}
