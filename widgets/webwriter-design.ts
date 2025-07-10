@@ -88,10 +88,11 @@ export class AiWidgetsDesigns extends LitElementWw {
             that.currentCanvas.setState(state);
         }
         setTimeout(function () {
-            that.refSelect["element-type"] = "webwriter-features";
+            that.refSelect.elementType = "webwriter-features";
+            that.refSelect.typeName = "Features";
             that.refSelect.elemId = that.featureWidgetId;
             let featuresElem = that.refSelect.getRefElement() as AiWidgetsFeatures;
-            let datasetChangeListener = function() {
+            let datasetChangeListener = function () {
                 featureChange(featuresElem.getDataset().tensorDataset)
             }
             that.refSelect.addEventListener("refchange", function (e: CustomEvent) {
@@ -180,7 +181,12 @@ export class AiWidgetsDesigns extends LitElementWw {
         <div class="group">
             <p>Combination</p>
             <sl-button-group>
-            <sl-button @click=${() => this.addLayer("AddLayer")}>Add Layer</sl-button>
+            <sl-button @click=${() => this.addLayer("add")}>Addition</sl-button>
+            </sl-button-group>
+        </div>
+        <div class="group">
+            <p>Compositions</p>
+            <sl-button-group>
             </sl-button-group>
         </div>
     </div>
@@ -195,7 +201,7 @@ export class AiWidgetsDesigns extends LitElementWw {
       </div>
     `
     }
-    
+
     public addLayer(type) {
         let layer = this.currentCanvas.createLayer(type);
     }

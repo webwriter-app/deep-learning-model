@@ -11,7 +11,8 @@ export class ExportLayer extends Layer {
         super(1, 1, "Dropout", editor)
 
         this.rate = this.addNumberInput("Rate", 0, 1);
-        this.rate.value = "0.02";
+        this.rate.value = "0.1";
+        this.rate.step = 0.05;
     }
     update() {
         this.updateInputLabels();

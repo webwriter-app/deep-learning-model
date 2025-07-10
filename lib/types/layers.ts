@@ -707,22 +707,6 @@ export function setupLayerRenderer(elem) {
             this.getNodeOutputElement("output_1").innerHTML = dim.join(SIZE_SEP);
             this.notifyOutputChange();
         }
-        hasFreeInput() {
-            let hasFreeInput = false;
-            for (let input of this.getNodeInputElements()) {
-                if ((input as HTMLElement).innerText == "")
-                    hasFreeInput = true;
-            }
-            return hasFreeInput;
-        }
-        cleanEmptyInputs() {
-            let hasFreeInput = false;
-            for (let input of this.getNodeInputElements()) {
-                if ((input as HTMLElement).innerText == "")
-                    editor.removeNodeInput(this.getNode().id, input.classList.value.split(" ")[1])
-            }
-            return hasFreeInput;
-        }
         getState() {
             let state = super.getState();
             state.type = "add";

@@ -9,6 +9,7 @@ import SlOption from "@shoelace-style/shoelace/dist/components/option/option.com
 import { DatasetInput } from "../components/dataset-input/dataset-input"
 import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
 import * as tf from '@tensorflow/tfjs';
+import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
 type Constructor<T> = new (...args: any[]) => T;
 
 BigInt.prototype["toJSON"] = function () {
@@ -25,7 +26,8 @@ export class AiWidgetsFeatures extends LitElementWw {
     "sl-button-group": SlButtonGroup,
     "dataset-input": DatasetInput,
     "sl-option": SlOption,
-    "sl-select": SlSelect
+    "sl-select": SlSelect,
+    "sl-input": SlInput
   }
 
   static styles = css`
@@ -85,6 +87,9 @@ export class AiWidgetsFeatures extends LitElementWw {
   private tensorDataset: TransformedDataset;
 
   private activeHeader = "";
+
+  @property({ type: Number, attribute: true, reflect: true })
+  accessor limit: number;
 
   constructor() {
     super();
@@ -147,6 +152,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     for (let option of getFeatureTransformations()) {
       options.push(html`<sl-option value=${option.name.replaceAll(" ", "_")}>${option.name}</sl-option>`)
     }
+
     let that = this;
     function onchange(e: Event) {
       let value = (e.target as SlSelect).value as string
@@ -160,22 +166,26 @@ export class AiWidgetsFeatures extends LitElementWw {
     return html`<sl-select @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")}>${options}</sl-select>`
   }
 
+
   render() {
-    this._triggerChanged();
     if (this.samplesSave && !this.samples)
       this.samples = JSON.parse(this.samplesSave);
     if (this.samples == null)
       return this.renderSelectDataset();
     else {
+      if (this.limit == null)
+        this.limit = Math.min(this.samples.length, 1000);
+
       if (this.rawDataset == null) {
-        this.rawDataset = new Dataset(this.samples);
+        this.rawDataset = new Dataset(this.samples, 0.7, 0.2, this.limit);
         this.updateTensorDataset();
       }
+      this._triggerChanged();
       return html`
       <div part="options">
         <sl-button id="reset" variant="warning" @click=${this.deleteDataset}>Dataset löschen</sl-button>
       </div>
-      <p>Tabellen Spalten (Features)</p>
+      <p>Dataset using <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000}} style="display:inline-block"></sl-input> of ${this.samples.length} Samples</p>
       ${this.renderTableHeader()}
       ${this.renderFieldTypeSelector(this.activeHeader)}
       ${this.renderFieldValues(this.activeHeader)}`;
@@ -194,6 +204,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     this.updateTensorDataset();
     this._triggerChanged();
   }
+
 
   getDataset() {
     return { rawDataset: this.rawDataset, tensorDataset: this.tensorDataset }
@@ -228,6 +239,8 @@ export class AiWidgetsFeatures extends LitElementWw {
   handleFeatureSettingsChange(settings: Record<string, any>) {
     this.fieldProps[this.activeHeader] = { ...this.fieldProps[this.activeHeader], settings };
     this.fieldProps = Object.assign({}, this.fieldProps);
+    this.tensorDataset.clearCache();
+    this.updateTensorDataset();
     this.requestUpdate();
     this._triggerChanged();
   }
