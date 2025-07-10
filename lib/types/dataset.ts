@@ -39,12 +39,12 @@ export class Dataset {
     /**
     * This class is a wrapper that references the original data and allows to access samples, batches and training/validation/testing splits
     */
-    constructor(dataset: Array<RawSample>, trainingPercentile = 0.7, validationPercentile = 0.2) {
-        this.dataset = dataset.slice(0,10000);
+    constructor(dataset: Array<RawSample>, trainingPercentile = 0.7, validationPercentile = 0.2, limit = 10000) {
+        this.dataset = dataset.slice(0, limit);
         this.fields = Object.keys(dataset[0]);
         tf.util.shuffle(this.dataset);
-        this.trainingEnd = this.dataset.length * trainingPercentile;
-        this.validationEnd = this.dataset.length * (trainingPercentile + validationPercentile);
+        this.trainingEnd = Math.floor(this.dataset.length * trainingPercentile);
+        this.validationEnd = Math.floor(this.dataset.length * (trainingPercentile + validationPercentile));
     }
 
     /**
@@ -187,7 +187,6 @@ export class ClassTransformation extends FeatureTransformation {
         return [(this.aggrigatedInformation.classes.length as number)];
     }
 
-
     public async transform(value: string): Promise<tf.Tensor1D> {
         let classes = this.aggrigatedInformation.classes;
         let index = classes.indexOf(value);
@@ -329,15 +328,19 @@ export class ImageTransformation extends FeatureTransformation {
                 that.settings.width = img.width;
                 if (that.widthElement) {
                     that.widthElement.value = String(img.width);
-                    that.widthElement.max = img.width;
                 }
             }
+
             if (that.settings.height == 0) {
                 that.settings.height = img.height;
                 if (that.heightElement) {
                     that.heightElement.value = String(img.height);
                     that.heightElement.max = img.height;
                 }
+            }
+            if (that.widthElement && that.heightElement) {
+                that.widthElement.max = img.width;
+                that.heightElement.max = img.height;
             }
         }
     }
@@ -354,62 +357,23 @@ export class ImageTransformation extends FeatureTransformation {
             value = JSON.parse(value) as number[];
 
         return await this.pngBinaryToTensor(new Uint8Array(value), this.settings.width, this.settings.height);
-
-        /*let img = this.getImagePixels(await this.getImage(value));
-        if (this.settings.transform == "grayscale")
-            return tf.tensor([img[0]]).div(255) as tf.Tensor3D;
-        else
-            return tf.tensor(img).div(255) as tf.Tensor3D;*/
     }
 
     async pngBinaryToTensor(pngBinary, targetWidth, targetHeight) {
-        const blob = new Blob([pngBinary], { type: 'image/png' });
-
-        const bitmap = await createImageBitmap(blob);
-        const canvas = document.createElement("canvas")
-        canvas.width = targetWidth;
-        canvas.height = targetHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(bitmap, 0, 0, targetWidth, targetHeight);
+        let blob = new Blob([pngBinary], { type: 'image/png' });
+        let bitmap = await createImageBitmap(blob);
 
         let tensor = tf.tidy(() => {
-            let img = tf.browser.fromPixels(canvas)
-            .mean(2)
-            .expandDims(-1)
+            let img = tf.browser.fromPixels(bitmap)
+            .resizeBilinear([targetWidth, targetHeight])
             .toFloat()
-            .div(tf.scalar(255));
+            .div<tf.Tensor3D>(tf.scalar(255));
+            if (this.settings.transform == "grayscale")
+                img = tf.image.rgbToGrayscale(img);
             return img;
         });
 
         return tensor as tf.Tensor3D;
-    }
-
-    private getImagePixels(image: HTMLImageElement): ImageData {
-        let canvas = document.createElement('canvas');
-        let ctx = canvas.getContext('2d');
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-
-        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let data = imageData.data;
-
-        const R = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
-        const G = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
-        const B = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
-        const A = Array.from({ length: canvas.height }, () => new Uint8ClampedArray(canvas.width));
-
-        for (let y = 0; y < canvas.height; y++) {
-            for (let x = 0; x < canvas.width; x++) {
-                let idx = (y * canvas.width + x) * 4;
-                R[y][x] = data[idx];
-                G[y][x] = data[idx + 1];
-                B[y][x] = data[idx + 2];
-                A[y][x] = data[idx + 3];
-            }
-        }
-
-        return [R, G, B, A]
     }
 
     private transformImage(img: HTMLImageElement, width: number, height: number) {
@@ -450,6 +414,8 @@ export class ImageTransformation extends FeatureTransformation {
             that.settings[element.name] = value;
             changeCallback(that.settings);
         }
+
+        //This is needed because the global sl-input class is broken...
         this.widthElement = document.createElement("sl-input");
         this.widthElement.type = "number"
         this.widthElement.label = "Width";
@@ -572,6 +538,31 @@ export class TransformedDataset {
     }
 
     /**
+     * Transforms the raw sample into a tensor sample
+     * @param sample The sample that should be transformed
+     */
+    async transformAndFilterSample(sample: RawSample, inFields: Set<string>, outFields: Set<string>): Promise<TensorSample> {
+        let tensors: TensorSample = {}
+        let keys: string[] = [];
+        let promisses: Promise<tf.Tensor>[] = []
+        for (let key in sample) {
+            if (!inFields.has(key) && !outFields.has(key))
+                continue;
+            let transformation = this.featureMaps[key];
+            if (transformation) {
+                keys.push(key);
+                promisses.push(transformation.transform(sample[key]));
+                tensors[key] = await transformation.transform(sample[key])
+            }
+        }
+        let finished = await Promise.all(promisses);
+        for (let i = 0; i < keys.length; i++) {
+            tensors[keys[i]] = finished[i];
+        }
+        return tensors;
+    }
+
+    /**
      * Returns a sample from the dataset
      * (note: the dataset is shuffled)
      * @param id The id of the sample
@@ -595,39 +586,89 @@ export class TransformedDataset {
     }
 
     /**
-     * Returns all samples from the training portion of the dataset
+     * Returns a sample from the dataset
+     * (note: the dataset is shuffled)
+     * @param id The id of the sample
      */
-    async getTrainingSamples(): Promise<TensorSample[]> {
-        let that = this;
-        let promisses = [];
-        for(let sample of this.dataset.getTrainingSamples()) {
-            promisses.push(that.transformSample(sample))
+    async getSampleAsInputsOutputs(id: number, inFields: Set<string>, outFields: Set<string>): Promise<{inputs:TensorSample, outputs:TensorSample}> {
+        function cloneSample(sample){
+            let outputs = {};
+            let inputs = {};
+            for (let field in sample) {
+                if (inFields.has(field))
+                    inputs["in_" + field] = sample[field].clone();
+                if (outFields.has(field))
+                    outputs["out_" + field] = sample[field].clone();
+            }
+            return {inputs, outputs};
         }
-        return await Promise.all(promisses);
+        
+        if (this.cache[id] != null) {
+            return cloneSample(this.cache[id])
+        }
+
+        let sample = this.dataset.getSample(id);
+        this.cache[id] = await this.transformAndFilterSample(sample, inFields, outFields);
+        return cloneSample(this.cache[id]);
     }
 
     /**
-     * Returns all samples from the training portion of the dataset
+     * Returns a generator for the training portion of the dataset
      */
-    async getValidationSamples(): Promise<TensorSample[]> {
+    getTrainingDataGenerator(inFields: Set<string>, outFields: Set<string>): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
         let that = this;
-        let promisses = [];
-        for(let sample of this.dataset.getValidationSamples()) {
-            promisses.push(that.transformSample(sample))
+        async function* dataGenerator() {
+            const numElements = that.dataset.trainingEnd;
+            let index = 0;
+            while (index < numElements) {
+                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields);
+                yield {xs:sample.inputs, ys: sample.outputs};
+                index++;
+            }
         }
-        return await Promise.all(promisses);
+        return dataGenerator;
     }
 
     /**
-     * Returns all samples from the training portion of the dataset
+     * Returns a generator for the training portion of the dataset
      */
-    async getTestSamples(): Promise<TensorSample[]> {
+    getValidationDataGenerator(inFields: Set<string>, outFields: Set<string>): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
         let that = this;
-        return await Promise.all(this.dataset.getTestSamples().map(async function (sample: RawSample) {
-            return await that.transformSample(sample);
-        }));
+        async function* dataGenerator() {
+            const numElements = that.dataset.validationEnd;
+            let index = that.dataset.trainingEnd;
+            while (index < numElements) {
+                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields);
+                yield {xs:sample.inputs, ys: sample.outputs};
+                index++;
+            }
+        }
+        return dataGenerator;
     }
 
+    /**
+     * Returns a generator for the training portion of the dataset
+     */
+    getTestDataGenerator(inFields: Set<string>, outFields: Set<string>): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
+        let that = this;
+        async function* dataGenerator() {
+            const numElements = that.dataset.length();
+            let index = that.dataset.validationEnd;
+            while (index < numElements) {
+                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields);
+                yield {xs:sample.inputs, ys: sample.outputs};
+                index++;
+            }
+        }
+        return dataGenerator;
+    }
+    
+    clearCache() {
+        this.cache.forEach(function(sample) {
+            Object.values(sample).forEach(t => t.dispose())
+        })
+        this.cache = [];
+    }
 
     length() {
         return this.dataset.length();

@@ -1,3 +1,4 @@
+import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
@@ -10,9 +11,11 @@ import { AiWidgetsReferenceSelect } from "../components/refference-element-selec
 import { AiWidgetsFeatures } from "./webwriter-features"
 import { AiWidgetsDesigns } from "./webwriter-design";
 import ApexCharts from "apexcharts";
-import {setWasmPaths} from '@tensorflow/tfjs-backend-wasm';
+import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
+import { GrayscaleDrawing } from '../components/image-input';
 setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
+setThreadsCount(4);
 
 class NoOpLayer extends tf.layers.Layer {
   constructor(config) {
@@ -46,7 +49,8 @@ export class AiWidgetsTraining extends LitElementWw {
         "sl-input":SlInput,
         "sl-icon": SlIcon,
         "sl-icon-button": SlIconButton,
-        "ref-select": AiWidgetsReferenceSelect
+        "ref-select": AiWidgetsReferenceSelect,
+        "grayscale-drawing": GrayscaleDrawing
     }
 
 
@@ -67,9 +71,6 @@ export class AiWidgetsTraining extends LitElementWw {
     }`
 
     @property({ type: String, attribute: true, reflect: true })
-    accessor optimizer: string;
-
-    @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
     private featureSelect = document.createElement("ref-select") as AiWidgetsReferenceSelect;
 
@@ -81,13 +82,16 @@ export class AiWidgetsTraining extends LitElementWw {
         super();
         let that = this;
         setTimeout(function () {
-            that.featureSelect["element-type"] = "webwriter-features";
+            that.featureSelect.elementType = "webwriter-features";
+            that.featureSelect.typeName = "Features";
             that.featureSelect.elemId = that.featureWidgetId;
             that.featureSelect.addEventListener("refchange", function (e: CustomEvent) {
                 that.featureWidgetId = e.detail.id;
             })
+            that.featureSelect.requestUpdate();
 
-            that.modelSelect["element-type"] = "webwriter-design";
+            that.modelSelect.elementType = "webwriter-design";
+            that.modelSelect.typeName = "Design";
             that.modelSelect.elemId = that.modelWidgetId;
             that.modelSelect.addEventListener("refchange", function (e: CustomEvent) {
                 that.modelWidgetId = e.detail.id;
@@ -99,7 +103,17 @@ export class AiWidgetsTraining extends LitElementWw {
         })
         this.resetTrainingBtn.innerText = "Reset";
         this.resetTrainingBtn.addEventListener("click", function () {
-            that.resetModel();
+            that.currentBackend = that.backendPriority[0];
+            that.currentTraining.dispose();
+            that.currentTraining = null;
+            that.clearModels();
+            that.losses = {}
+            that.currentEpoch = 0;
+            that.insights = {min_val_loss: 100, min_val_loss_index: 0}; 
+            that.chart.removeAnnotation("lowest");
+            that.updateGraph();
+            that.setHyperParamsActive(true);
+            that.startTrainingBtn.innerText = "Start Training";
         })
         this.speed.innerText = "0";
 
@@ -113,13 +127,20 @@ export class AiWidgetsTraining extends LitElementWw {
     private resetTrainingBtn = document.createElement("sl-button");
     private speed = document.createElement("span");
     private memory = document.createElement("span");
-
     public render(): TemplateResult {
         let that = this;
         setTimeout(function () { that.chart.render() }, 100);
         return html`
             <div class="controls">
-                <sl-input id="lr" type="number" label="Learning Rate" min="0.0001" max="0.01" value="0.005" size="small" style="max-width:100px"></sl-input>
+                <sl-select id="optimizer" value="adam" label="Optimizer" size="small" @sl-change=${this.changeOptimizer}>
+                    <sl-option value="adam">Adam</sl-option>
+                    <sl-option value="momentum">Momentum</sl-option>
+                    <sl-option value="rmsprop">RMSProp</sl-option>
+                    <sl-option value="sgd">SGD</sl-option>
+                </sl-select>
+                <sl-input id="lr" type="number" label="Learning Rate" min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
+                <sl-input style="display:none" id="momentum" type="number" label="Momentum" min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="batch" type="number" label="Batch Size" min="1" max="256" value="32" step="1" size="small" style="max-width:100px"></sl-input>
                 <sl-input id="epochs" type="number" label="Epochs" min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
                 <sl-button-group>
                 ${this.startTrainingBtn}
@@ -127,13 +148,36 @@ export class AiWidgetsTraining extends LitElementWw {
                 </sl-button-group>
             </div>
             ${this.chartContainer}
-            <p>${this.speed}s/epoch\ \ \ ${this.memory}MB</p>
+            <p style="margin:0px">${this.speed}s/epoch\ \ \ ${this.memory}MB</p>
+            <sl-select id="metrics" value="loss acc" multiple clearable @sl-change=${this.updateGraph}>
+                <sl-option value="loss">Loss</sl-option>
+                <sl-option value="acc">Accuracy</sl-option>
+                <sl-option value="r2Score2">r2 Score</sl-option>
+                <sl-option value="precision2">Precision</sl-option>
+                <sl-option value="recall2">Recall</sl-option>
+            </sl-select>
             <div part="options">
                 <p>Feature Source</p>
                 ${this.featureSelect}
                 <p>Model Source</p>
                 ${this.modelSelect}
             </div>`
+    }
+
+    changeOptimizer() {
+        let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
+        if (optimizer == "momentum") {
+            this.shadowRoot.getElementById("momentum").style.display = "";
+        } else {
+            this.shadowRoot.getElementById("momentum").style.display = "none";
+        }
+    }
+
+    setHyperParamsActive(active:boolean) {
+        (this.shadowRoot.getElementById("optimizer") as SlSelect).disabled = !active;
+        (this.shadowRoot.getElementById("lr") as SlInput).disabled = !active;
+        (this.shadowRoot.getElementById("momentum") as SlInput).disabled = !active;
+        (this.shadowRoot.getElementById("batch") as SlInput).disabled = !active;
     }
 
     private chartContainer = document.createElement("div")
@@ -143,7 +187,7 @@ export class AiWidgetsTraining extends LitElementWw {
         series: [],
         chart: {
             id: 'realtime',
-            height: 350,
+            height: 200,
             type: 'line',
             animations: {
                 enabled: false
@@ -159,14 +203,20 @@ export class AiWidgetsTraining extends LitElementWw {
             enabled: false
         },
         title: {
-            text: 'Training Loss',
+            text: 'Training Metrics',
             align: 'left'
         },
         markers: {
             size: 0
         },
         xaxis: {
-            type: 'number'
+            type: 'number',
+            labels: {
+                rotate: -90,
+                tickAmount: 10,
+                hideOverlappingLabels: true,
+                step: 5
+            }
         },
         yaxis: {
             min: 0
@@ -175,7 +225,6 @@ export class AiWidgetsTraining extends LitElementWw {
             show: false
         },
     });
-
 
     resolveOutput(layer: Layer, inputs: Record<string, tf.SymbolicTensor>, resolvedLayers: Record<number, any>): tf.SymbolicTensor {
         let visitedLayersInThisPath = [];
@@ -221,39 +270,82 @@ export class AiWidgetsTraining extends LitElementWw {
 
         let outputs: Record<string, tf.SymbolicTensor> = {};
         let resolvedLayers = {};
+        let losses = {};
         for (let output of editor.getOutputs()) {
             outputs[output.getState().select] = this.resolveOutput(output, inputs, resolvedLayers);
+            losses["out_" + output.getState().select] = this.lossStringToFunction(output.getState().loss);
         }
 
-        return tf.model({ inputs: Object.values(inputs), outputs: Object.values(outputs) })
+
+        return {model:tf.model({ inputs: Object.values(inputs), outputs: Object.values(outputs) }), losses}
+    }
+
+    lossStringToFunction(loss: string) {
+        switch(loss) {
+            case "BCE": return tf.metrics.binaryCrossentropy;
+            case "MAE": return tf.metrics.meanAbsoluteError;
+            case "Huber": return tf.losses.huberLoss;
+            case "MSE": return tf.metrics.meanSquaredError;
+        }
+    }
+
+    updateGraph() {
+        let metrics = (this.shadowRoot.getElementById("metrics") as SlSelect).value as string[]
+        this.chart.updateSeries(
+            Object.entries(this.losses).map(
+                function ([k, v]) { return { name: k, data: v } }
+            ).filter(e => metrics.indexOf(e.name) != -1 || metrics.indexOf(e.name.replace("val_", "")) != -1)
+        )
+    }
+
+    public async getModel(name) {
+        const model = await tf.loadLayersModel('indexeddb://' + name);
+    }
+
+    public async getAvailableModels() {
+        const models = await tf.io.listModels();
+        console.log(models);
+    }
+
+    private async clearModels() {
+        const models = await tf.io.listModels();
+        const deletions = Object.keys(models)
+            .filter(key => key.startsWith('indexeddb://'))
+            .map(key => tf.io.removeModel(key));
+        await Promise.all(deletions);
     }
 
     private isTraining = false;
     private currentTraining: tf.LayersModel;
-    private currentEpoch: number;
+    private currentEpoch = 0;
+    private backendPriority = ["webgl","wasm","cpu"];
+    private currentBackend = "webgl";
     async resetModel() {
         if (this.isTraining)
             return;
 
-        this.losses = {}
-        this.currentEpoch = 0;
-        this.insights = {min_val_loss: 100, min_val_loss_index: 0}; 
+        if (this.currentTraining)
+            this.currentTraining.dispose();
 
-        await tf.setBackend('webgl'); // cpu, webgl, wasm
+        this.setHyperParamsActive(false);
+
+        await tf.setBackend(this.currentBackend); // cpu, webgl, wasm
         await tf.ready();
-        let model = await this.buildModel();
+        let {model, losses} = await this.buildModel();
         this.currentTraining = model;
+        let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
+        let lr = parseFloat((this.shadowRoot.getElementById("lr") as SlInput).value);
+        let momentum = parseFloat((this.shadowRoot.getElementById("momentum") as SlInput).value);
         model.compile({
-            optimizer: tf.train.adam(parseFloat((this.shadowRoot.getElementById("lr") as SlInput).value)),
-            loss: tf.metrics.binaryCrossentropy,
-            metrics: ['accuracy'],
+            optimizer: optimizer != "momentum" ? tf.train[optimizer](lr) : tf.train["momentum"](lr, momentum),
+            loss: losses,
+            metrics: ["accuracy", tf.metrics.r2Score, tf.metrics.precision, tf.metrics.recall],
         });
         model.summary();
         console.log(model.toJSON());
-        this.chart.removeAnnotation("lowest");
-        this.startTrainingBtn.innerText = "Start Training";
     }
     async training() {
+        let that = this;
         if (this.currentTraining != null && this.isTraining) {
             this.currentTraining.stopTraining = true;
             this.isTraining = false;
@@ -271,29 +363,9 @@ export class AiWidgetsTraining extends LitElementWw {
             this.isTraining = true;
             this.resetTrainingBtn.disabled = true;
             let dataset = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset;
-            let batchSamples = [];
-            let batchOutputs = [];
-            //let samples = (await dataset.getValidationSamples()).slice(0, 1024);
-            /*let samples = [];
-            for (let i = 0; i < dataset.length(); i++) {
-                samples.push(await dataset.getSample(i));
-            }
-
-
-            for (let i = 0; i < samples.length; i++) {
-                let sample = samples[i];
-                batchSamples.push(sample.image_bytes.arraySync())
-                let label = sample.label.arraySync()
-                batchOutputs.push(label)
-            }
-            let batch = tf.tensor(batchSamples, [samples.length, 28, 28, 1]);
-            let batchOut = tf.tensor(batchOutputs, [samples.length, 10]);
-            const xTrain = batch
-            const yTrain = batchOut.transpose([0, 1]);*/
-
             let model = (this.modelSelect.getRefElement() as AiWidgetsDesigns).getModel();
+
             let inputNames: Set<string> = new Set();
-            let i = 0;
             for (let input_node of model.filter(l => l.type == "input"))
                 inputNames.add(input_node.select)
 
@@ -302,53 +374,13 @@ export class AiWidgetsTraining extends LitElementWw {
                 outputNames.add(output_node.select);
 
 
-            function getInputsAndOutputs(sample) {
-                let inputs = {};
-                let outputs = {};
-                for (let f in sample) {
-                    if (inputNames.has(f))
-                        inputs["in_" + f] = sample[f];
-                    if (outputNames.has(f))
-                        outputs["out_" + f] = sample[f];
-                }
-                return {inputs, outputs};
-            }
-
-            async function* dataGenerator() {
-                const numElements = dataset.dataset.trainingEnd;
-                let index = 0;
-                while (index < numElements) {
-                    const sample = await dataset.getSample(index);
-                    let {inputs, outputs} = getInputsAndOutputs(sample);
-                    yield {xs:inputs, ys: outputs};
-                    index++;
-                }
-                console.log("done");
-            }
-
-            const tfDataset = tf.data.generator(dataGenerator).batch(16).prefetch(4)
-
-            async function* valdataGenerator() {
-                const numElements = dataset.dataset.validationEnd;
-                let index = dataset.dataset.trainingEnd;
-                while (index < numElements) {
-                    const sample = await dataset.getSample(index);
-                    let {inputs, outputs} = getInputsAndOutputs(sample);
-                    yield {xs:inputs, ys: outputs};
-                    index++;
-                }
-            }
-
-            const valDataset = tf.data.generator(valdataGenerator).batch(16).prefetch(4)
+            let batchsize = parseInt((this.shadowRoot.getElementById("batch") as SlInput).value)
+            const tfDataset = tf.data.generator(dataset.getTrainingDataGenerator(inputNames, outputNames)).batch(batchsize).prefetch(4)
+            const valDataset = tf.data.generator(dataset.getValidationDataGenerator(inputNames, outputNames)).batch(batchsize).prefetch(4)
 
             let lastEpoch = Date.now();
             let numEpochs = parseInt((this.shadowRoot.getElementById("epochs") as SlInput).value);
 
-            /*await this.currentTraining.fit(xTrain, yTrain, {
-                epochs: 20,
-                batchSize: 2,
-                validationSplit: 0.1,*/
-              
             await this.currentTraining.fitDataset(tfDataset, {
                 epochs: this.currentEpoch + numEpochs + 1,
                 validationData: valDataset,
@@ -364,13 +396,14 @@ export class AiWidgetsTraining extends LitElementWw {
                             if (loss == "val_loss" && logs[loss] < this.insights.min_val_loss ) {
                                 this.insights.min_val_loss = logs[loss];
                                 this.insights.min_val_loss_index = epoch;
+                                await this.currentTraining.save('indexeddb://best');
                             }
                         }
-                        this.chart.updateSeries(
-                            Object.entries(this.losses).map(
-                                function ([k, v]) { return { name: k, data: v } }
-                            )
-                        )
+
+                        if (epoch % 5 == 0)
+                            await this.currentTraining.save('indexeddb://epoch-' + epoch);
+
+                        that.updateGraph();
                         this.chart.removeAnnotation("lowest");
                         this.chart.addPointAnnotation({
                             id: "lowest",
@@ -395,11 +428,25 @@ export class AiWidgetsTraining extends LitElementWw {
                         lastEpoch = Date.now();
                     }
                 }
+            }).then(function() {
+                that.resetTrainingBtn.disabled = false;
+                that.currentTraining.stopTraining = false;
+                that.startTrainingBtn.innerText = "Continue Training";
+                that.isTraining = false;
+            }).catch(async function(err) {
+                console.error(err);
+                that.resetTrainingBtn.disabled = false;
+                that.currentTraining.stopTraining = false;
+                that.startTrainingBtn.innerText = "Continue Training";
+                that.isTraining = false;
+                let index = that.backendPriority.indexOf(tf.getBackend()) + 1
+                if (index == that.backendPriority.length)
+                    console.error("no more backends left this probably means the model is broken");
+                console.warn("switching to backend " + that.backendPriority[index]);
+                that.currentBackend = that.backendPriority[index];
+                await that.resetModel();
+                await that.training();
             });
-            this.resetTrainingBtn.disabled = false;
-            this.currentTraining.stopTraining = false;
-            this.startTrainingBtn.innerText = "Continue Training";
-            this.isTraining = false;
         }
     }
     disconnectedCallback(): void {

@@ -5,7 +5,6 @@ import "@shoelace-style/shoelace/dist/themes/light.css";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
-import { AiWidgetsFeatures } from "../widgets/webwriter-features";
 
 export class AiWidgetsReferenceSelect extends LitElementWw {
     static scopedElements = {
@@ -34,17 +33,22 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
     accessor elemId: string;
 
     @property({ type: String, attribute: true })
-    accessor "element-type": string;
+    accessor elementType: string;
+
+    @property({ type: String, attribute: true })
+    accessor typeName: string;
 
     public render(): TemplateResult {
         let that = this;
-        let elements = document.querySelectorAll(this["element-type"])
+        let elements = document.querySelectorAll(this.elementType)
         let options = [];
-        elements.forEach(function (elem: AiWidgetsFeatures) {
+        let index = 1;
+        elements.forEach(function (elem: LitElementWw) {
             let option = document.createElement("sl-option")
-            option.innerText = elem.id;
+            option.innerText = that.typeName + " " + index;
             option.value = elem.id;
             options.push(option)
+            index++;
         })
         function changeElem(e: Event) {
             that.elemId = (e.target as SlSelect).value as string;
@@ -64,12 +68,13 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
                 elem.style.boxShadow = "";
             }, 1000);
         }
-        return html`<sl-select value=${this.elemId} placeholder="Select Source Element" @sl-focus=${highlight} @sl-change=${changeElem}>
+        return html`<sl-select id="elemselect" value=${this.elemId} placeholder="Select Source Element" @sl-focus=${highlight} @sl-change=${changeElem}>
             ${options}
         </sl-select>
         <sl-button @click=${highlight} id="btn">Show selection</sl-button>
         `
     }
+
 
     getRefElement() {
         return document.querySelector("#" + this.elemId) as HTMLElement

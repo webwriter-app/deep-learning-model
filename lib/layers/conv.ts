@@ -37,10 +37,10 @@ export class ExportLayer extends Layer {
     update() {
         this.updateInputLabels();
         let numKernels = parseInt(this.kernelNumInput.value)
-        this.params.innerText = String(parseInt(this.kernelInput.value) ** 2 * numKernels + numKernels);
         let inDims = this.getNodeInputElement("input_1").innerText.split(SIZE_SEP).map(s => parseInt(s));
         let kernelSize = parseInt(this.kernelInput.value)
-        this.getNodeOutputElement("output_1").innerText = [Math.ceil(inDims[0] / parseInt(this.strideInput.value)), Math.ceil(inDims[1] / parseInt(this.strideInput.value)), inDims[2] * numKernels].join(SIZE_SEP)
+        this.params.innerText = String(parseInt(this.kernelInput.value) ** 2 * inDims[2] * numKernels + numKernels);
+        this.getNodeOutputElement("output_1").innerText = [Math.ceil(inDims[0] / parseInt(this.strideInput.value)), Math.ceil(inDims[1] / parseInt(this.strideInput.value)), numKernels].join(SIZE_SEP)
         this.notifyOutputChange();
     }
     getState() {
