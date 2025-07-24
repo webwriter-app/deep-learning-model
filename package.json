@@ -44,7 +44,12 @@
         "./widgets/webwriter-training.*": {
             "source": "./widgets/webwriter-training.ts",
             "default": "./dist/widgets/webwriter-training.*"
-        }
+        },
+        "./widgets/webwriter-inference.*": {
+            "source": "./widgets/webwriter-inference.ts",
+            "default": "./dist/widgets/webwriter-inference.*"
+        },
+        "./snippets/MNIST.html": "./snippets/MNIST.html"
     },
     "editingConfig": {
         "./widgets/webwriter-typeselect": {

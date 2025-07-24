@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
     
@@ -10,7 +10,7 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Linear", editor)
 
-        this.dimInput = this.addNumberInput("Output Nodes", 1, 300);
+        this.dimInput = this.addNumberInput("Output Nodes", 1, 30000);
         let that = this;
         this.dimInput.oninput = function () {
             that.getNodeOutputElement("output_1").innerText = that.dimInput.value;

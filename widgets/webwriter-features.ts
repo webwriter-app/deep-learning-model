@@ -6,9 +6,18 @@ import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
+import SlTab from "@shoelace-style/shoelace/dist/components/tab/tab.component.js"
+import SlTabGroup from "@shoelace-style/shoelace/dist/components/tab-group/tab-group.component.js"
+import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.component.js"
 import { DatasetInput } from "../components/dataset-input/dataset-input"
-import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
+import { Dataset, TransformedDataset, } from "../lib/dataset/dataset"
+import "../lib/dataset/class";
+import "../lib/dataset/image";
+import "../lib/dataset/linear";
+import { FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/dataset/feature"
 import * as tf from '@tensorflow/tfjs';
+await tf.setBackend("cpu");
+await tf.ready();
 import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -27,7 +36,10 @@ export class AiWidgetsFeatures extends LitElementWw {
     "dataset-input": DatasetInput,
     "sl-option": SlOption,
     "sl-select": SlSelect,
-    "sl-input": SlInput
+    "sl-input": SlInput,
+    "sl-tab":SlTab,
+    "sl-tab-group":SlTabGroup,
+    "sl-tooltip":SlTooltip
   }
 
   static styles = css`
@@ -47,15 +59,18 @@ export class AiWidgetsFeatures extends LitElementWw {
       min-height: 200px;
       display:block;
     }
-    :host > div.headers {
+    :host .tabs {
+      margin-bottom: 5px;
+    }
+    :host div.settings {
       display:flex;
       flex-direction: row;
-      align-content: center;
-      justify-content: flex-start;
-      align-items: stretch;
       flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      justify-content: flex-start;
     }
-    :host > div.headers > sl-button {
+    :host div.settings * {
       flex-grow:1;
     }
     :host div.props table {
@@ -71,6 +86,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     }
     :host div.props table td:nth-child(2) {
       text-align: right;
+      float:right;
     }
   `
 
@@ -104,11 +120,11 @@ export class AiWidgetsFeatures extends LitElementWw {
   }
 
   renderTableHeader() {
-    let buttons = new Array<TemplateResult>();
+    let tabs = new Array<TemplateResult>();
     for (let header of this.rawDataset.fields) {
-      buttons.push(html`<sl-button @click=${this.handleHeaderClick} variant=${header == this.activeHeader ? "primary" : "default"}>${header}</sl-button>`);
+      tabs.push(html`<sl-tab @click=${this.handleHeaderClick} slot="nav" ?active=${false}>${header}</sl-tab>`);
     }
-    return html`<div class="headers">${buttons}</div>`
+    return html`<sl-tab-group class="tabs" placement="top">${tabs}</sl-tab-group>`
   }
 
   renderFieldValues(fieldName: string) {
@@ -136,7 +152,7 @@ export class AiWidgetsFeatures extends LitElementWw {
             return html`<tr><td><p>${value}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
           }
         )
-        return html`${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) })}<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
+        return html`<div class="settings">${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) })}</div><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
       } catch (e) {
         console.log(e);
         return html`<p style="background: red">This Transformation is not applicable for the values</p><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead></table></div>`
@@ -163,9 +179,12 @@ export class AiWidgetsFeatures extends LitElementWw {
       that._triggerChanged();
     }
 
-    return html`<sl-select @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")}>${options}</sl-select>`
+    return html`<sl-tooltip content="Select how you want the string to be interpreted."><sl-select @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")}>${options}</sl-select></sl-tooltip>`
   }
 
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    this._triggerChanged();
+  }
 
   render() {
     if (this.samplesSave && !this.samples)
@@ -185,7 +204,7 @@ export class AiWidgetsFeatures extends LitElementWw {
       <div part="options">
         <sl-button id="reset" variant="warning" @click=${this.deleteDataset}>Dataset löschen</sl-button>
       </div>
-      <p>Dataset using <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000}} style="display:inline-block"></sl-input> of ${this.samples.length} Samples</p>
+      <p>Dataset using <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000; this.handleSizeChange()}} style="display:inline-block"></sl-input> of ${this.samples.length} Samples</p>
       ${this.renderTableHeader()}
       ${this.renderFieldTypeSelector(this.activeHeader)}
       ${this.renderFieldValues(this.activeHeader)}`;
@@ -219,6 +238,8 @@ export class AiWidgetsFeatures extends LitElementWw {
         settings[field] = this.fieldProps[field].settings;
       }
     }
+    if (this.tensorDataset)
+      this.tensorDataset.clearCache();
     this.tensorDataset = new TransformedDataset(this.rawDataset, transformations, settings);
   }
 
@@ -236,6 +257,12 @@ export class AiWidgetsFeatures extends LitElementWw {
     this._triggerChanged();
   }
 
+  handleSizeChange() {
+    this.rawDataset = new Dataset(this.samples, 0.7, 0.2, this.limit);
+    this.updateTensorDataset();
+    this._triggerChanged();
+  }
+
   handleFeatureSettingsChange(settings: Record<string, any>) {
     this.fieldProps[this.activeHeader] = { ...this.fieldProps[this.activeHeader], settings };
     this.fieldProps = Object.assign({}, this.fieldProps);
@@ -245,6 +272,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     this._triggerChanged();
   }
 
+
   _triggerChanged() {
     this.dispatchEvent(new CustomEvent('change', {
       detail: {
@@ -252,5 +280,9 @@ export class AiWidgetsFeatures extends LitElementWw {
         tensorDataset: this.tensorDataset
       }
     }));
+  }
+
+  public isReady() {
+    return this.rawDataset != null && this.tensorDataset != null;
   }
 }

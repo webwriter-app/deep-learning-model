@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
 
@@ -11,7 +11,7 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Activation", editor)
 
-        this.typeSelect = this.addSelect("Function", ["Identity", "ReLU", "tanh", "sigmoid", "Softmax", "normalize"])
+        this.typeSelect = this.addSelect("Function", ["Identity", "relu", "tanh", "sigmoid", "Softmax", "normalize"])
     }
     update() {
         this.updateInputLabels();

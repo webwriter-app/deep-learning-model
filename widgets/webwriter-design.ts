@@ -2,7 +2,6 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import { ModelEditor } from "../components/model-editor"
-import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
 import * as tf from '@tensorflow/tfjs';
 import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
@@ -22,7 +21,7 @@ export class AiWidgetsDesigns extends LitElementWw {
         "sl-select": SlSelect,
         "sl-icon": SlIcon,
         "sl-icon-button": SlIconButton,
-        "ref-elem-select": AiWidgetsReferenceSelect
+        "ref-select": AiWidgetsReferenceSelect
     }
 
     static styles = css`
@@ -53,6 +52,12 @@ export class AiWidgetsDesigns extends LitElementWw {
         align-content: flex-end;
         gap: 5px 15px;
     }
+    #add > * {
+        flex-grow:1;
+    }
+    #add * > *{
+        width: 100%;
+    }
     .group {
         padding-top: 18px;
         position:relative;
@@ -60,8 +65,8 @@ export class AiWidgetsDesigns extends LitElementWw {
     .group p {
         position:absolute;
         margin:0px;
-        font-size: 12px;
-        top: 0px;
+        font-size: 15px;
+        top: -2px;
     }
     #controls {
         position:absolute;
@@ -76,41 +81,12 @@ export class AiWidgetsDesigns extends LitElementWw {
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
-    private refSelect = document.createElement("ref-elem-select") as AiWidgetsReferenceSelect;
+    @query("#feature-select")
+    accessor refSelect:AiWidgetsReferenceSelect;
 
     constructor() {
         super();
         let that = this;
-        function featureChange(dataset) {
-            let state = that.currentCanvas.controler.export();
-            that.state = JSON.stringify(state);
-            that.currentCanvas.setFields(dataset);
-            that.currentCanvas.setState(state);
-        }
-        setTimeout(function () {
-            that.refSelect.elementType = "webwriter-features";
-            that.refSelect.typeName = "Features";
-            that.refSelect.elemId = that.featureWidgetId;
-            let featuresElem = that.refSelect.getRefElement() as AiWidgetsFeatures;
-            let datasetChangeListener = function () {
-                featureChange(featuresElem.getDataset().tensorDataset)
-            }
-            that.refSelect.addEventListener("refchange", function (e: CustomEvent) {
-                if (featuresElem != null)
-                    featuresElem.removeEventListener("change", datasetChangeListener);
-
-                that.featureWidgetId = e.detail.id;
-                that.requestUpdate();
-                featuresElem = (that.refSelect.getRefElement() as AiWidgetsFeatures)
-                featuresElem.addEventListener("change", datasetChangeListener);
-                that.currentCanvas.setFields(featuresElem.getDataset().tensorDataset);
-            })
-            if (that.refSelect.elemId != null && that.refSelect.elemId != "") {
-                let features = (that.refSelect.getRefElement() as AiWidgetsFeatures)
-                features.addEventListener("change", datasetChangeListener)
-            }
-        }, 0)
-
 
         setInterval(function () {
             let nodes = that.currentCanvas.controler.getNumberOfOperations();
@@ -121,28 +97,39 @@ export class AiWidgetsDesigns extends LitElementWw {
         }, 100);
     }
 
+    private _handleRefChange(e:CustomEvent) {
+        let that = this;
+        let featuresElem = that.refSelect.getRefElement() as AiWidgetsFeatures;
+        let datasetChangeListener = function () {
+            that.currentCanvas.setFields(featuresElem.getDataset().tensorDataset)
+        }
+
+        if (e.detail.lastRef != null)
+            e.detail.lastRef.removeEventListener("change", datasetChangeListener);
+
+        that.featureWidgetId = e.detail.id;
+        that.requestUpdate();
+        featuresElem = (that.refSelect.getRefElement() as AiWidgetsFeatures)
+        featuresElem.addEventListener("change", datasetChangeListener);
+        if (featuresElem.isReady && featuresElem.isReady())
+            datasetChangeListener();
+
+        if (this.state && this.state != "")
+            this.currentCanvas.setState(JSON.parse(this.state));
+    }
+
     public options: Record<string, OptionDeclaration> = {}
 
-    private currentCanvas: ModelEditor;
+    @query("#model-editor")
+    accessor currentCanvas: ModelEditor;
+
+    private _editorChange(e:CustomEvent) {
+        this.state = JSON.stringify(e.detail.state)
+    }
 
     public render(): TemplateResult {
-        let that = this;
-        console.log("render");
-        setTimeout(function () {
-            if (that.currentCanvas)
-                return;
-            let canvas = new ModelEditor();
-            that.currentCanvas = canvas;
-            that.currentCanvas.onmodelchange = function () {
-                that.state = JSON.stringify(that.currentCanvas.controler.export())
-            }
-            if (that.refSelect.elemId != null && that.refSelect.elemId != "")
-                that.currentCanvas.setFields((that.refSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset);
-            if (that.state && that.state != "")
-                that.currentCanvas.setState(JSON.parse(that.state));
-            that.shadowRoot.prepend(canvas);
-        }, 1000);
         return html`
+        <model-editor id="model-editor" @modelchange=${this._editorChange}></model-editor>
         <div id="stats">
             <p>Number of Operation: <span id="numberNodes"></span></p>
             <p>Total Parameters: <span id="params"></span></p>
@@ -168,6 +155,7 @@ export class AiWidgetsDesigns extends LitElementWw {
             <sl-button-group>
             <sl-button @click=${() => this.addLayer("activation")}>Activation</sl-button>
             <sl-button @click=${() => this.addLayer("dropout")}>Dropout</sl-button>
+            <sl-button @click=${() => this.addLayer("noise")}>Noise</sl-button>
             </sl-button-group>
         </div>
         <div class="group">
@@ -184,11 +172,6 @@ export class AiWidgetsDesigns extends LitElementWw {
             <sl-button @click=${() => this.addLayer("add")}>Addition</sl-button>
             </sl-button-group>
         </div>
-        <div class="group">
-            <p>Compositions</p>
-            <sl-button-group>
-            </sl-button-group>
-        </div>
     </div>
     <div id="controls">
         <sl-button @click=${() => this.zoomReset()}>reset</sl-button>
@@ -197,7 +180,7 @@ export class AiWidgetsDesigns extends LitElementWw {
     </div>
     <div part="options">
         <p>Feature Source</p>
-        ${this.refSelect}
+        <ref-select id="feature-select" elementType="webwriter-features" elemId=${this.featureWidgetId} typeName="Features" @refchange=${this._handleRefChange}></ref-select>
       </div>
     `
     }
@@ -215,8 +198,8 @@ export class AiWidgetsDesigns extends LitElementWw {
         this.currentCanvas.controler.zoomReset();
     }
 
-
     getModel() {
         return this.currentCanvas.controler.export();
     }
+
 }
