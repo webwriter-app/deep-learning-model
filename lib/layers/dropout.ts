@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
     

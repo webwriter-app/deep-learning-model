@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
 
@@ -15,7 +15,7 @@ export class ExportLayer extends Layer {
 
         let that = this;
         this.select.addEventListener("sl-change", function () {
-            that.getNodeOutputElement("output_1").innerText = fields.featureMaps[that.select.value as string].size().join(SIZE_SEP);
+            that.getNodeOutputElement("output_1").innerText = fields.featureMaps[(that.select.value as string).replaceAll("_"," ")].size().join(SIZE_SEP);
             that.update();
         });
     }
@@ -26,7 +26,6 @@ export class ExportLayer extends Layer {
         let state = super.getState();
         state.select = this.select.value;
         state.type = "input";
-        state.dim = this.fields.featureMaps[state.select].size();
         return state;
     }
     setState(state) {

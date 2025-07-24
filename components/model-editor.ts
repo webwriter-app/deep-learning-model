@@ -2,14 +2,12 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import { DatasetInput } from "../components/dataset-input/dataset-input"
-import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
 import * as tf from '@tensorflow/tfjs';
 import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
 import { Editor } from "../lib/layers"
 
-@customElement("model-editor")
 export class ModelEditor extends LitElementWw {
     static scopedElements = {
         "sl-button": SlButton,
@@ -42,9 +40,8 @@ export class ModelEditor extends LitElementWw {
         right: -20000px;
         bottom: -20000px;
         background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV8/tCIVh1YQcchQneyiIrqVKhbBQmkrtOpgcukXNGlIUlwcBdeCgx+LVQcXZ10dXAVB8APEXXBSdJES/5cUWsR4cNyPd/ced+8Ab7PKFMMfAxTV1NOJuJDLrwqBV/RiCH7MISQyQ0tmFrNwHV/38PD1Lsqz3M/9OQbkgsEAj0AcY5puEm8Qz2yaGud94jArizLxOfGEThckfuS65PAb55LNXp4Z1rPpeeIwsVDqYqmLWVlXiKeJI7KiUr4357DMeYuzUq2z9j35C4MFdSXDdZqjSGAJSaQgQEIdFVRhIkqrSoqBNO3HXfwjtj9FLolcFTByLKAGBaLtB/+D390axalJJykYB3peLOtjDAjsAq2GZX0fW1brBPA9A1dqx19rArOfpDc6WuQIGNwGLq47mrQHXO4Aw0+aqIu25KPpLRaB9zP6pjwQugX615ze2vs4fQCy1NXyDXBwCIyXKHvd5d193b39e6bd3w/LsnLKuRkBrwAAAAZiS0dEAJQAlACU0L193gAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAAd0SU1FB+kGFQQ7KvUYPNUAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHklEQVQ4y2NgGAWjYBQMbvAfiokCTKPhNQpGwXACAAPIAgEuqw0aAAAAAElFTkSuQmCC") repeat;
-        z-index: -1; /* places it behind the content */
+        z-index: -1;
     }
-    #drawflow p.label {}
 
     .drawflow,.drawflow .parent-node {
         position:relative
@@ -86,7 +83,9 @@ export class ModelEditor extends LitElementWw {
         margin: 0px;
     }
     .drawflow .drawflow-node p, .drawflow .drawflow-node sl-input, .drawflow .drawflow-node sl-select {
+        position: relative;
         max-width: 100px;
+        z-index: 10;
     }
     .drawflow .drawflow-node p {
         position: relative;
@@ -232,16 +231,19 @@ export class ModelEditor extends LitElementWw {
         this.controler.createLayer(name, this.fields);
     }
 
-    public onmodelchange() { };
-
     public render(): TemplateResult {
-        let that = this;
         let canvas = document.createElement("div");
         canvas.id = "drawflow";
         this.controler = new Editor(canvas);
         this.controler.import(this.state || [], this.fields);
+        let that = this;
         canvas.addEventListener("mouseup", function () {
-            that.onmodelchange();
+            that.state = that.controler.export();
+            that.dispatchEvent(new CustomEvent('modelchange', {
+                detail: {
+                    state:that.controler.export()
+                }
+            }));
         });
         return html`${canvas}`
     }

@@ -38,6 +38,16 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
     @property({ type: String, attribute: true })
     accessor typeName: string;
 
+    private lastRef:HTMLElement;
+
+    firstUpdated() {
+        this.dispatchEvent(new CustomEvent('refchange', {
+            detail: {
+                id: this.elemId
+            }
+        }));
+    }
+
     public render(): TemplateResult {
         let that = this;
         let elements = document.querySelectorAll(this.elementType)
@@ -51,13 +61,15 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
             index++;
         })
         function changeElem(e: Event) {
-            that.elemId = (e.target as SlSelect).value as string;
+            this.elemId = (e.target as SlSelect).value as string;
             highlight();
             this.dispatchEvent(new CustomEvent('refchange', {
                 detail: {
-                    id: that.elemId
+                    id: that.elemId,
+                    lastRef: this.lastRef
                 }
             }));
+            this.lastRef = this.getRefElement();
         }
         function highlight() {
             if (that.elemId == "")
@@ -75,8 +87,7 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
         `
     }
 
-
-    getRefElement() {
+    public getRefElement() {
         return document.querySelector("#" + this.elemId) as HTMLElement
     }
 }

@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
 
@@ -14,7 +14,7 @@ export class ExportLayer extends Layer {
         this.fields = fields;
         this.select = this.addSelect("Output", Object.keys(this.fields.featureMaps))
 
-        this.loss = this.addSelect("Loss Function", ["BCE", "MAE", "MSE", "Huber"])
+        this.loss = this.addSelect("Loss Function", ["BCE", "MAE", "MSE", "Huber","Difference"])
 
         let that = this;
         this.select.addEventListener("sl-change", function () {
@@ -30,7 +30,6 @@ export class ExportLayer extends Layer {
         let state = super.getState();
         state.select = this.select.value;
         state.type = "output";
-        state.dim = this.fields.featureMaps[state.select].size();
         state.loss = this.loss.value;
         return state;
     }

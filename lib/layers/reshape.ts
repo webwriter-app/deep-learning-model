@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
     
@@ -8,7 +8,7 @@ export class ExportLayer extends Layer {
     private error: HTMLSpanElement;
 
     constructor(fields: TransformedDataset, editor: Editor) {
-        super(1, 1, "Transpose Convolution", editor)
+        super(1, 1, "Reshape", editor)
 
         for (let i = 0; i < 3; i++) {
             this.shapeInputs[i] = this.addNumberInput((i + 1) + "th dim", 0, 9999999);

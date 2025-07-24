@@ -2,9 +2,7 @@ import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
-import { Dataset, TransformedDataset, FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/types/dataset"
 import * as tf from '@tensorflow/tfjs';
-import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
@@ -13,7 +11,6 @@ import { AiWidgetsDesigns } from "./webwriter-design";
 import ApexCharts from "apexcharts";
 import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
-import { GrayscaleDrawing } from '../components/image-input';
 setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 setThreadsCount(4);
 
@@ -49,8 +46,7 @@ export class AiWidgetsTraining extends LitElementWw {
         "sl-input":SlInput,
         "sl-icon": SlIcon,
         "sl-icon-button": SlIconButton,
-        "ref-select": AiWidgetsReferenceSelect,
-        "grayscale-drawing": GrayscaleDrawing
+        "ref-select": AiWidgetsReferenceSelect
     }
 
 
@@ -72,61 +68,39 @@ export class AiWidgetsTraining extends LitElementWw {
 
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
-    private featureSelect = document.createElement("ref-select") as AiWidgetsReferenceSelect;
+
+    @query('#feature-select')
+    accessor featureSelect;
 
     @property({ type: String, attribute: true, reflect: true })
     accessor modelWidgetId: string;
-    private modelSelect = document.createElement("ref-select") as AiWidgetsReferenceSelect;
+
+    @query('#design-select')
+    accessor modelSelect;
+
+    @query('#start-training')
+    accessor startTrainingBtn;
+
+    @query('#reset-training')
+    accessor resetTrainingBtn;
+
+    @query("#speed")
+    accessor speed:HTMLSpanElement;
+
+    @query("#memory")
+    accessor memory:HTMLSpanElement;
 
     constructor() {
         super();
         let that = this;
-        setTimeout(function () {
-            that.featureSelect.elementType = "webwriter-features";
-            that.featureSelect.typeName = "Features";
-            that.featureSelect.elemId = that.featureWidgetId;
-            that.featureSelect.addEventListener("refchange", function (e: CustomEvent) {
-                that.featureWidgetId = e.detail.id;
-            })
-            that.featureSelect.requestUpdate();
-
-            that.modelSelect.elementType = "webwriter-design";
-            that.modelSelect.typeName = "Design";
-            that.modelSelect.elemId = that.modelWidgetId;
-            that.modelSelect.addEventListener("refchange", function (e: CustomEvent) {
-                that.modelWidgetId = e.detail.id;
-            })
-        }, 0)
-        this.startTrainingBtn.innerText = "Start training";
-        this.startTrainingBtn.addEventListener("click", function () {
-            that.training();
-        })
-        this.resetTrainingBtn.innerText = "Reset";
-        this.resetTrainingBtn.addEventListener("click", function () {
-            that.currentBackend = that.backendPriority[0];
-            that.currentTraining.dispose();
-            that.currentTraining = null;
-            that.clearModels();
-            that.losses = {}
-            that.currentEpoch = 0;
-            that.insights = {min_val_loss: 100, min_val_loss_index: 0}; 
-            that.chart.removeAnnotation("lowest");
-            that.updateGraph();
-            that.setHyperParamsActive(true);
-            that.startTrainingBtn.innerText = "Start Training";
-        })
-        this.speed.innerText = "0";
-
         setInterval(function() {
+            try {
             that.memory.innerText = (tf.memory().numBytes / 1024 / 1024).toFixed(2);
+            } catch(e) {}
         }, 50) 
     }
 
     public options: Record<string, OptionDeclaration> = {}
-    private startTrainingBtn = document.createElement("sl-button");
-    private resetTrainingBtn = document.createElement("sl-button");
-    private speed = document.createElement("span");
-    private memory = document.createElement("span");
     public render(): TemplateResult {
         let that = this;
         setTimeout(function () { that.chart.render() }, 100);
@@ -140,15 +114,15 @@ export class AiWidgetsTraining extends LitElementWw {
                 </sl-select>
                 <sl-input id="lr" type="number" label="Learning Rate" min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
                 <sl-input style="display:none" id="momentum" type="number" label="Momentum" min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="batch" type="number" label="Batch Size" min="1" max="256" value="32" step="1" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="batch" type="number" label="Batch Size" min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
                 <sl-input id="epochs" type="number" label="Epochs" min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
                 <sl-button-group>
-                ${this.startTrainingBtn}
-                ${this.resetTrainingBtn}
+                <sl-button id="start-training" @click=${this.training}>Start training</sl-button>
+                <sl-button id="reset-training" @click=${this.resetModel}>Reset</sl-button>
                 </sl-button-group>
             </div>
             ${this.chartContainer}
-            <p style="margin:0px">${this.speed}s/epoch\ \ \ ${this.memory}MB</p>
+            <p style="margin:0px"><span id="speed">0</span>s/epoch\ \ \ <span id="memory"></span>MB</p>
             <sl-select id="metrics" value="loss acc" multiple clearable @sl-change=${this.updateGraph}>
                 <sl-option value="loss">Loss</sl-option>
                 <sl-option value="acc">Accuracy</sl-option>
@@ -158,9 +132,9 @@ export class AiWidgetsTraining extends LitElementWw {
             </sl-select>
             <div part="options">
                 <p>Feature Source</p>
-                ${this.featureSelect}
-                <p>Model Source</p>
-                ${this.modelSelect}
+                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${(e) => this.featureWidgetId = e.detail.id}></ref-select>
+                <p>Design Source</p>
+                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-design" @refchange=${(e) => this.modelWidgetId = e.detail.id}></ref-select>
             </div>`
     }
 
@@ -264,7 +238,7 @@ export class AiWidgetsTraining extends LitElementWw {
 
         let inputs: Record<string, tf.SymbolicTensor> = {};
         for (let input_node of model.filter(l => l.type == "input")) {
-            let shape = dataset.featureMaps[input_node.select].size();
+            let shape = dataset.featureMaps[input_node.select.replaceAll("_"," ")].size();
             inputs[input_node.select] = tf.input({ shape: shape , name:"in_" + input_node.select});
         }
 
@@ -286,6 +260,7 @@ export class AiWidgetsTraining extends LitElementWw {
             case "MAE": return tf.metrics.meanAbsoluteError;
             case "Huber": return tf.losses.huberLoss;
             case "MSE": return tf.metrics.meanSquaredError;
+            case "Difference": return  tf.losses.absoluteDifference;
         }
     }
 
@@ -299,12 +274,13 @@ export class AiWidgetsTraining extends LitElementWw {
     }
 
     public async getModel(name) {
-        const model = await tf.loadLayersModel('indexeddb://' + name);
+        const model = await tf.loadLayersModel(name);
+        return model;
     }
 
     public async getAvailableModels() {
         const models = await tf.io.listModels();
-        console.log(models);
+        return models;
     }
 
     private async clearModels() {
@@ -313,6 +289,7 @@ export class AiWidgetsTraining extends LitElementWw {
             .filter(key => key.startsWith('indexeddb://'))
             .map(key => tf.io.removeModel(key));
         await Promise.all(deletions);
+        this.dispatchEvent(new CustomEvent('finished', {detail: {}}));
     }
 
     private isTraining = false;
@@ -320,7 +297,21 @@ export class AiWidgetsTraining extends LitElementWw {
     private currentEpoch = 0;
     private backendPriority = ["webgl","wasm","cpu"];
     private currentBackend = "webgl";
-    async resetModel() {
+    private resetModel() {
+        this.currentBackend = this.backendPriority[0];
+        if (this.currentTraining)
+            this.currentTraining.dispose();
+        this.currentTraining = null;
+        this.clearModels();
+        this.losses = {}
+        this.currentEpoch = 0;
+        this.insights = {min_val_loss: 100, min_val_loss_index: 0}; 
+        this.chart.removeAnnotation("lowest");
+        this.updateGraph();
+        this.setHyperParamsActive(true);
+        this.startTrainingBtn.innerText = "Start Training";
+    }
+    async initModel() {
         if (this.isTraining)
             return;
 
@@ -354,7 +345,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
 
         if (this.currentTraining == null) {
-            await this.resetModel();
+            await this.initModel();
         }
 
         this.startTrainingBtn.innerText = "Stop Training";
@@ -426,6 +417,8 @@ export class AiWidgetsTraining extends LitElementWw {
 
                         this.speed.innerText = (((Date.now() - lastEpoch) / 1000) * 0.7 + parseFloat(this.speed.innerText) * 0.3).toFixed(2);
                         lastEpoch = Date.now();
+
+                        this.dispatchEvent(new CustomEvent('epoch', {detail: {}}));
                     }
                 }
             }).then(function() {
@@ -444,13 +437,15 @@ export class AiWidgetsTraining extends LitElementWw {
                     console.error("no more backends left this probably means the model is broken");
                 console.warn("switching to backend " + that.backendPriority[index]);
                 that.currentBackend = that.backendPriority[index];
-                await that.resetModel();
+                await that.initModel();
                 await that.training();
             });
+            this.dispatchEvent(new CustomEvent('finished', {detail: {}}));
         }
     }
-    disconnectedCallback(): void {
+    async disconnectedCallback(): Promise<void> {
         tf.backend().dispose();
         tf.dispose();
     }
 }
+

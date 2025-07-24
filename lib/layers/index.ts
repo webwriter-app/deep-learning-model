@@ -1,5 +1,5 @@
 import Drawflow, { DrawflowConnection, DrawflowConnectionDetail } from 'drawflow'
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import * as tf from '@tensorflow/tfjs';
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
 
@@ -129,7 +129,17 @@ export class Editor {
                     if (layer.type == "input")
                         layer.update();
                 
-                res(null);
+                setTimeout(function() {
+                    for (let layer of layers) {
+                        for (let input in layer.inputConnections) {
+                            let connection = layer.inputConnections[input];
+                            if (connection != null) {
+                                that.editor.addConnection(connection.node, layer.id, connection.input, input)
+                            }
+                        }
+                    }
+                    res(null);
+                }, 100)
             }, 100)
         })
     }
@@ -220,7 +230,9 @@ export abstract class Layer {
             that.update();
         })
         this.on("disconnect", function ({ layer, output, input }) {
-            that.getNodeInputElement(input).innerText = "";
+            let inputElem = that.getNodeInputElement(input)
+            if (inputElem != null)
+                inputElem.innerText = "";
             that.update();
         })
     }
@@ -368,12 +380,18 @@ export abstract class Layer {
         elem.style.top = state.posY + "px";
     }
     public checkInputs() {
+        let that = this;
         let inputs = this.getNode().inputs
         for (let i in inputs) {
             let input = inputs[i];
-            if (input.connections.length == 0 || this.getNodeInputElement(i).innerText == "") {
-                this.getNodeInputElement(i).classList.remove("invalid");
-                this.getNodeInputElement(i).classList.remove("valid");
+            let inputName = i;
+            if (input.connections.length == 0 || this.getNodeInputElement(inputName).innerText == "") {
+                if (this.getNodeInputElement(inputName) == null)
+                    this.addInput();
+                setTimeout(function() {
+                    that.getNodeInputElement(inputName).classList.remove("invalid");
+                    that.getNodeInputElement(inputName).classList.remove("valid");
+                })
                 continue;
             }
             let layer = this.editor.getLayerFromNodeId(parseInt(input.connections[0].node));

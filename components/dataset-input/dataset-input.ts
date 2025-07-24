@@ -64,7 +64,7 @@ export class DatasetInput extends LitElementWw {
           name="fileInput"
           id="fileInput"
           type="file"
-          accept="text/csv, *"
+          accept="text/csv, application/json, text/json, *"
           @change=${this.handleFileInput}
           style="display: none;"
         />
@@ -111,6 +111,9 @@ export class DatasetInput extends LitElementWw {
         }
       });
     });
+  }
+  async readJSONFile(file: File): Promise<Array<Record<string, any>>> {
+    return JSON.parse(await file.text());
   }
 
 
@@ -176,6 +179,10 @@ export class DatasetInput extends LitElementWw {
       data = { data: content, errors, meta: { fields } };
     } else if (file.name.endsWith("csv")) {
       data = await this.readCSVFile(file);
+    } else if (file.name.endsWith("json")) {
+      data = {data: await this.readJSONFile(file)};
+      data.meta = {fields:Object.keys(data.data[0])};
+      data.errors = [];
     } else {
       console.error("Unsupported file type:", file.type);
     }

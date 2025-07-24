@@ -1,0 +1,60 @@
+import { LitElement, html, css, TemplateResult } from 'lit';
+import { property, customElement } from 'lit/decorators.js';
+import * as tf from '@tensorflow/tfjs';
+import { LitElementWw } from '@webwriter/lit';
+import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar } from "@shoelace-style/shoelace"
+import { InputElement, OutputElement } from './inference-interfaces';
+import ClassTransformation from '../../lib/dataset/class';
+
+export class ClassTable extends OutputElement {
+    static scopedElements = {
+        "sl-progress-bar": SlProgressBar
+    }
+
+  static styles = css`
+    :host {
+      position: relative;
+      display: inline-block;
+      touch-action: none;
+      width: 100%;
+    }
+    table {
+        width: 100%;
+    }
+    .class {
+        width: 30px;
+    }
+    canvas {
+      background: white;
+      border: 1px solid #ccc;
+      touch-action: none;
+      image-rendering: pixelated; /* Makes low-res canvas look better */
+    }
+  `;
+
+  private table: TemplateResult;
+
+  public async setTensor(tensor: tf.Tensor, transform: ClassTransformation) {
+    let probs = tf.tidy(() => {
+      return tensor.squeeze().arraySync();
+    })
+    let entries = [];
+    let classes = transform.getClasses();
+    for (let i = 0; i < classes.length; i++) {
+        entries.push({prob: probs[i], clazz: classes[i]});
+    }
+    entries.sort((e1, e2) => e2.prob - e1.prob);
+    entries = entries.slice(0, 20);
+
+    let rows = [];
+    for (let e of entries) {
+        rows.push(html`<tr><td class="class">${e.clazz}</td><td><sl-progress-bar value=${e.prob * 100}></sl-progress-bar></td></tr>`)
+    }
+    this.table = html`<table>${rows}</table>`
+    this.requestUpdate();
+  }
+
+  render() {
+    return html`${this.table}`;
+  }
+}

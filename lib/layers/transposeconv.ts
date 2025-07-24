@@ -1,5 +1,5 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../types/dataset';
+import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
 import * as tf from "@tensorflow/tfjs";
     
@@ -8,6 +8,7 @@ export class ExportLayer extends Layer {
     private strideInput: SlInput;
     private kernelNumInput: SlInput;
     private params: HTMLElement;
+    private numHeads: SlInput;
 
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Transpose Convolution", editor)
@@ -30,10 +31,12 @@ export class ExportLayer extends Layer {
         this.params = document.createElement("span");
         this.addTextElement("Parameters: ", this.params);
     }
+
     public getNumberOfParameters() {
         this.update();
         return parseInt(this.params.innerText);
     }
+
     update() {
         this.updateInputLabels();
         let numKernels = parseInt(this.kernelNumInput.value)
@@ -43,6 +46,7 @@ export class ExportLayer extends Layer {
         this.getNodeOutputElement("output_1").innerText = [Math.ceil(inDims[0] * parseInt(this.strideInput.value)), Math.ceil(inDims[1] * parseInt(this.strideInput.value)), numKernels].join(SIZE_SEP)
         this.notifyOutputChange();
     }
+
     getState() {
         let state = super.getState();
         state.kernel = this.kernelInput.value;
@@ -60,6 +64,7 @@ export class ExportLayer extends Layer {
         this.kernelNumInput.value = state.numkernels;
         this.kernelNumInput.onchange(null);
     }
+
     public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
         return { output_1: tf.layers.conv2dTranspose({ filters:parseInt(this.kernelNumInput.value), kernelSize:parseInt(this.kernelInput.value), strides:parseInt(this.strideInput.value) , padding:"same"}).apply(inputs.input_1) as tf.SymbolicTensor };
     }
