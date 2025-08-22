@@ -14,7 +14,7 @@ export class ExportLayer extends Layer {
         this.fields = fields;
         this.select = this.addSelect("Output", Object.keys(this.fields.featureMaps))
 
-        this.loss = this.addSelect("Loss Function", ["BCE", "MAE", "MSE", "Huber","Difference"])
+        this.loss = this.addSelect("Loss Function", ["BCE", "MAE", "MSE", "Huber","Difference","WL","CosDist"])
 
         let that = this;
         this.select.addEventListener("sl-change", function () {

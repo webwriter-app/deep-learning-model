@@ -16,8 +16,6 @@ import "../lib/dataset/image";
 import "../lib/dataset/linear";
 import { FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/dataset/feature"
 import * as tf from '@tensorflow/tfjs';
-await tf.setBackend("cpu");
-await tf.ready();
 import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -107,8 +105,17 @@ export class AiWidgetsFeatures extends LitElementWw {
   @property({ type: Number, attribute: true, reflect: true })
   accessor limit: number;
 
+  @property()
+  accessor isInitiated = false;
+
   constructor() {
     super();
+
+    tf.setBackend("cpu").then(() => {
+      tf.ready().then(() => {
+        this.isInitiated = true;
+      });
+    });
   }
 
   renderSelectDataset() {
@@ -124,6 +131,8 @@ export class AiWidgetsFeatures extends LitElementWw {
     for (let header of this.rawDataset.fields) {
       tabs.push(html`<sl-tab @click=${this.handleHeaderClick} slot="nav" ?active=${false}>${header}</sl-tab>`);
     }
+    if (this.activeHeader == "")
+      this.activeHeader = this.rawDataset.fields[0];
     return html`<sl-tab-group class="tabs" placement="top">${tabs}</sl-tab-group>`
   }
 
@@ -187,6 +196,8 @@ export class AiWidgetsFeatures extends LitElementWw {
   }
 
   render() {
+    if (!this.isInitiated)
+      return html`<p>Loading Tensorflow...</p>`
     if (this.samplesSave && !this.samples)
       this.samples = JSON.parse(this.samplesSave);
     if (this.samples == null)

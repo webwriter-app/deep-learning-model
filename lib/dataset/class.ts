@@ -116,6 +116,14 @@ export default class ClassTransformation extends FeatureTransformation {
             return this.aggrigatedInformation.multiClasses;
     }
 
+    public renderPredictionDifference(pred:tf.Tensor1D, label:tf.Tensor1D) {
+        return html`${until((async () => {
+            let predClass = await this.inverse(pred);
+            let labelClass = await this.inverse(label);
+            return html`${"Prediction:" + predClass + " ≠ Label:" + labelClass}`
+        })(), html`Visualizing Difference...`)}`;
+    }
+
     public getSettingElement(changeCallback): TemplateResult {
         let that = this;
         function typechange(e: Event) {

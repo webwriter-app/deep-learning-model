@@ -140,8 +140,7 @@ export class TransformedDataset {
         let keys: string[] = [];
         let promisses: Promise<tf.Tensor>[] = []
         for (let key in sample) {
-            let _key = key.replaceAll(" ", "_")
-            if (!inFields.has(_key) && !outFields.has(_key))
+            if (!inFields.has(key) && !outFields.has(key))
                 continue;
             let transformation = this.featureMaps[key];
             if (transformation) {
@@ -190,11 +189,10 @@ export class TransformedDataset {
             let outputs = {};
             let inputs = {};
             for (let field in sample) {
-                let _field = field.replaceAll(" ", "_")
-                if (inFields.has(_field))
-                    inputs["in_" + _field] = sample[field].clone();
-                if (outFields.has(_field))
-                    outputs["out_" + _field] = sample[field].clone();
+                if (inFields.has(field))
+                    inputs["in_" + field] = sample[field].clone();
+                if (outFields.has(field))
+                    outputs["out_" + field] = sample[field].clone();
             }
             return {inputs, outputs};
         }

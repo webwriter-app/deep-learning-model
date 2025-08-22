@@ -49,10 +49,14 @@
             "source": "./widgets/webwriter-inference.ts",
             "default": "./dist/widgets/webwriter-inference.*"
         },
+        "./widgets/webwriter-test.*": {
+            "source": "./widgets/webwriter-test.ts",
+            "default": "./dist/widgets/webwriter-test.*"
+        },
         "./snippets/MNIST.html": "./snippets/MNIST.html"
     },
     "editingConfig": {
-        "./widgets/webwriter-typeselect": {
+        ".": {
             "selectable": false,
             "label": {
                 "_": "AI Widgets"

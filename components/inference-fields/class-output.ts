@@ -36,7 +36,7 @@ export class ClassTable extends OutputElement {
 
   public async setTensor(tensor: tf.Tensor, transform: ClassTransformation) {
     let probs = tf.tidy(() => {
-      return tensor.squeeze().arraySync();
+      return tensor.clipByValue(0,1).squeeze().arraySync();
     })
     let entries = [];
     let classes = transform.getClasses();

@@ -66,7 +66,7 @@ export class ClassInput extends OutputElement {
     let clazz = await transform.inverse(tensor);
     if (clazz.startsWith("["))
       clazz = JSON.parse(clazz);
-    this.input.value = clazz.replaceAll(" ","_");
+    this.input.value = clazz;
   }
 
   public async getTensor(transform: ClassTransformation): Promise<tf.Tensor> {
@@ -75,6 +75,6 @@ export class ClassInput extends OutputElement {
   }
 
   render() {
-    return html`<sl-select id="input" value=${this.classes[0]}>${this.classes.map(c => html`<sl-option value=${c}>${c}</sl-option>`)}</sl-select>`;
+    return html`<sl-select id="input" multiple value=${this.classes[0]}>${this.classes.map(c => html`<sl-option value=${c}>${c}</sl-option>`)}</sl-select>`;
   }
 }

@@ -3,7 +3,6 @@ import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/l
 import { customElement, property, state, query } from "lit/decorators.js"
 import { ModelEditor } from "../components/model-editor"
 import * as tf from '@tensorflow/tfjs';
-import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
@@ -44,13 +43,20 @@ export class AiWidgetsDesigns extends LitElementWw {
         margin: 0px;
     }
     #add {
+        background-color:rgba(255,255,255,0.8);
+        position: absolute;
+        bottom: 25px;
+        left:3px;
+        width: calc(100% - 24px);
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: center;
         align-content: flex-end;
         gap: 5px 15px;
+        overflow: auto;
+        padding: 5px 10px;
     }
     #add > * {
         flex-grow:1;
@@ -61,6 +67,10 @@ export class AiWidgetsDesigns extends LitElementWw {
     .group {
         padding-top: 18px;
         position:relative;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        gap:5px;
     }
     .group p {
         position:absolute;
@@ -95,6 +105,12 @@ export class AiWidgetsDesigns extends LitElementWw {
             let params = that.currentCanvas.controler.getNumberOfParameters();
             that.shadowRoot.getElementById("params").innerText = String(params);
         }, 100);
+        this.addEventListener("keydown", function(e) {
+            if (e.key == "Delete") {
+                e.preventDefault();
+                return false;
+            }
+        })
     }
 
     private _handleRefChange(e:CustomEvent) {
@@ -136,47 +152,38 @@ export class AiWidgetsDesigns extends LitElementWw {
         </div>
     <div id="add">
         <div class="group">
-            <p>I/O</p>
-            <sl-button-group>
-                <sl-button @click=${() => this.addLayer("input")}>Input</sl-button>
-                <sl-button @click=${() => this.addLayer("output")}>Output</sl-button>
-            </sl-button-group>
+            <p>Add I/O Layer</p>
+            <sl-button @click=${() => this.addLayer("input")}>Input</sl-button>
+            <sl-button @click=${() => this.addLayer("output")}>Output</sl-button>
         </div>
         <div class="group">
-            <p>Deep Layers</p>
-            <sl-button-group>
+            <p>Add Trainable Layer</p>
             <sl-button @click=${() => this.addLayer("fcl")}>Linear</sl-button>
             <sl-button @click=${() => this.addLayer("conv")}>Convolution</sl-button>
             <sl-button @click=${() => this.addLayer("transposeconv")}>Transpose Convolution</sl-button>
-            </sl-button-group>
         </div>
         <div class="group">
-            <p>Misc</p>
-            <sl-button-group>
+            <p>Add misc. Layer</p>
             <sl-button @click=${() => this.addLayer("activation")}>Activation</sl-button>
             <sl-button @click=${() => this.addLayer("dropout")}>Dropout</sl-button>
             <sl-button @click=${() => this.addLayer("noise")}>Noise</sl-button>
-            </sl-button-group>
         </div>
         <div class="group">
-            <p>Shape</p>
-            <sl-button-group>
+            <p>Add Shaping Layer</p>
             <sl-button @click=${() => this.addLayer("flatten")}>Flatten</sl-button>
             <sl-button @click=${() => this.addLayer("concat")}>Concatination</sl-button>
             <sl-button @click=${() => this.addLayer("reshape")}>Reshape</sl-button>
-            </sl-button-group>
         </div>
         <div class="group">
-            <p>Combination</p>
-            <sl-button-group>
+            <p>Add Combinational Layer</p>
             <sl-button @click=${() => this.addLayer("add")}>Addition</sl-button>
-            </sl-button-group>
+            <sl-button @click=${() => this.addLayer("attention")}>Attention</sl-button>
         </div>
     </div>
     <div id="controls">
-        <sl-button @click=${() => this.zoomReset()}>reset</sl-button>
-        <sl-button @click=${() => this.zoomIn()}>+</sl-button>
-        <sl-button @click=${() => this.zoomOut()}>-</sl-button>
+        <sl-button @click=${() => this.zoomReset()}>Center View</sl-button>
+        <sl-tooltip content="Zoom In"><sl-button @click=${() => this.zoomIn()}>+</sl-button></sl-tooltip>
+        <sl-tooltip content="Zoom Out"><sl-button @click=${() => this.zoomOut()}>-</sl-button></sl-tooltip>
     </div>
     <div part="options">
         <p>Feature Source</p>

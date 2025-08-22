@@ -4,14 +4,13 @@ import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/l
 import { customElement, property, state, query } from "lit/decorators.js"
 import { Dataset, TransformedDataset } from "../lib/dataset/dataset"
 import * as tf from '@tensorflow/tfjs';
-import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
 import { AiWidgetsFeatures } from "./webwriter-features"
 import { AiWidgetsDesigns } from "./webwriter-design";
 import ApexCharts from "apexcharts";
-import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
+//import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
 import { DrawingCanvas } from '../components/inference-fields/image-input';
 import { AiWidgetsTraining } from './webwriter-training';
@@ -22,8 +21,8 @@ import { TensorImage } from '../components/inference-fields/image';
 import { ClassInput } from '../components/inference-fields/class-input';
 import { NumberOutput } from '../components/inference-fields/number-output';
 import { NumberInput } from '../components/inference-fields/number-input';
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
-setThreadsCount(4);
+//setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
+//setThreadsCount(4);
 
 async function waitFor(condition: Function, interval = 10) {
     if (condition())
@@ -73,6 +72,7 @@ export class AiWidgetsInference extends LitElementWw {
         #top {
             width: 100%;
             display: flex;
+            align-items: flex-end;
         }
         .input, .output {
             padding: 5px 10px;
@@ -109,9 +109,6 @@ export class AiWidgetsInference extends LitElementWw {
 
     private model:tf.LayersModel;
 
-    @query("#image")
-    accessor image: DrawingCanvas;
-
     constructor() {
         super();
         let that = this;
@@ -127,19 +124,18 @@ export class AiWidgetsInference extends LitElementWw {
         setTimeout(function() {
             that.selectedModelChange();
         })
-        return html`<sl-select id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model[0]}>${model[0].replace("indexeddb://","")}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label="Model version" id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model[0]}>${model[0].replace("indexeddb://","")}</sl-option>`)}</sl-select>`;
     }
 
     async getFeatureInputs() {
         let that = this;
         await waitFor(function() {return that.model != null});
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [];
+        let elements = [html`<div class="input"><p>🡺 Inputs</p></div>`];
         for (let input of this.model.inputNames) {
             let featureName = input.replace("in_","");
-            let fName = featureName.replaceAll("_", " ")
-            let transform = tensorDataset.featureMaps[fName];
-            elements.push(html`<div class="input"><p>${fName}</p>${transform.getInputElement(input)}</div>`);
+            let transform = tensorDataset.featureMaps[featureName];
+            elements.push(html`<div class="input"><p>${featureName}</p>${transform.getInputElement(input)}</div>`);
         }
         return html`<div id="inputs">${elements}</div>`
     }
@@ -148,12 +144,11 @@ export class AiWidgetsInference extends LitElementWw {
         let that = this;
         await waitFor(function() {return that.model != null});
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [];
+        let elements = [html`<div class="output"><p>Outputs 🡺</p></div>`];
         for (let input of this.model.outputNames) {
             let featureName = input.replace("out_","");
-            let fName = featureName.replaceAll("_", " ")
-            let transform = tensorDataset.featureMaps[fName];
-            elements.push(html`<div class="output"><p>${fName}</p>${transform.getOutputElement(input)}</div>`);
+            let transform = tensorDataset.featureMaps[featureName];
+            elements.push(html`<div class="output"><p>${featureName}</p>${transform.getOutputElement(input)}</div>`);
         }
         return html`<div id="outputs">${elements}</div>`
     }
@@ -215,7 +210,6 @@ export class AiWidgetsInference extends LitElementWw {
             this.model.dispose();
         } catch(e) {}
         this.model = await (this.modelSelect.getRefElement() as AiWidgetsTraining).getModel(name);
-        console.log(this.model);
     }
 
     private fillWithRandomSample() {
@@ -228,7 +222,7 @@ export class AiWidgetsInference extends LitElementWw {
         let sample = await tensorDataset.getSample(id);
         for (let input of this.model.inputNames) {
             let inElem = this.shadowRoot.getElementById(input) as InputElement;
-            let featureName = input.replace("in_","").replaceAll("_", " ");
+            let featureName = input.replace("in_","");
             inElem.setTensor(sample[featureName], tensorDataset.featureMaps[featureName]);
         }
     }
@@ -239,7 +233,7 @@ export class AiWidgetsInference extends LitElementWw {
         let inputs = [];
         for (let input of this.model.inputNames) {
             let inElem = this.shadowRoot.getElementById(input) as InputElement;
-            let tensor = await inElem.getTensor(tensorDataset.featureMaps[input.replace("in_","").replaceAll("_", " ")]);
+            let tensor = await inElem.getTensor(tensorDataset.featureMaps[input.replace("in_","")]);
             inputs.push(tensor.reshape([1, ...tensor.shape]))
             tensor.dispose();
         }
@@ -247,7 +241,7 @@ export class AiWidgetsInference extends LitElementWw {
         for (let i = 0; i < this.model.outputNames.length; i++) {
             let output = this.model.outputNames[i];
             let outElem = this.shadowRoot.getElementById(output) as OutputElement;
-            await outElem.setTensor(out, tensorDataset.featureMaps[output.replace("out_","").replaceAll("_", " ")]);
+            await outElem.setTensor(out, tensorDataset.featureMaps[output.replace("out_","")]);
         }
         for (let input of inputs)
             input.dispose();

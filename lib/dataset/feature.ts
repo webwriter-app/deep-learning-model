@@ -86,6 +86,11 @@ export abstract class FeatureTransformation {
      */
     public abstract renderTransformedValue(value: string): TemplateResult;
 
+    /**
+     * Returns an html element that will be displayed. Can be a simple text or an image etc.
+     */
+    public abstract renderPredictionDifference(pred: tf.Tensor, label: tf.Tensor): TemplateResult;
+
     public getSetting(name: string) {
         return this.settings[name];
     }

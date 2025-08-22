@@ -241,7 +241,7 @@ export abstract class Layer {
         input.type = "number";
         input.min = String(min);
         input.value = String(max);
-        input.addEventListener("input", function () {
+        input.addEventListener("sl-change", function () {
             if (parseInt(input.value) > max)
                 input.value = String(max);
             if (isNaN(parseInt(input.value)) || parseInt(input.value) < min)

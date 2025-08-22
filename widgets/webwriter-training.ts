@@ -9,10 +9,10 @@ import { AiWidgetsReferenceSelect } from "../components/refference-element-selec
 import { AiWidgetsFeatures } from "./webwriter-features"
 import { AiWidgetsDesigns } from "./webwriter-design";
 import ApexCharts from "apexcharts";
-import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
+//import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
-setThreadsCount(4);
+//setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
+//setThreadsCount(4);
 
 class NoOpLayer extends tf.layers.Layer {
   constructor(config) {
@@ -52,7 +52,6 @@ export class AiWidgetsTraining extends LitElementWw {
 
     static styles = css`
     :host {
-      min-height: 200px;
       display:block;
       font-size: 0.9rem;
     }
@@ -83,6 +82,9 @@ export class AiWidgetsTraining extends LitElementWw {
 
     @query('#reset-training')
     accessor resetTrainingBtn;
+
+    @query('#training-metrics')
+    accessor trainingMetricsDiv;
 
     @query("#speed")
     accessor speed:HTMLSpanElement;
@@ -121,15 +123,17 @@ export class AiWidgetsTraining extends LitElementWw {
                 <sl-button id="reset-training" @click=${this.resetModel}>Reset</sl-button>
                 </sl-button-group>
             </div>
-            ${this.chartContainer}
-            <p style="margin:0px"><span id="speed">0</span>s/epoch\ \ \ <span id="memory"></span>MB</p>
-            <sl-select id="metrics" value="loss acc" multiple clearable @sl-change=${this.updateGraph}>
-                <sl-option value="loss">Loss</sl-option>
-                <sl-option value="acc">Accuracy</sl-option>
-                <sl-option value="r2Score2">r2 Score</sl-option>
-                <sl-option value="precision2">Precision</sl-option>
-                <sl-option value="recall2">Recall</sl-option>
-            </sl-select>
+            <div id="training-metrics" style="display:none">
+                ${this.chartContainer}
+                <sl-select id="metrics" value="Loss Accuracy" multiple clearable @sl-change=${this.updateGraph}>
+                    <sl-option value="Loss">Loss</sl-option>
+                    <sl-option value="Accuracy">Accuracy</sl-option>
+                    <sl-option value="R2_Score">R2 Score</sl-option>
+                    <sl-option value="Percision">Precision</sl-option>
+                    <sl-option value="Recall">Recall</sl-option>
+                </sl-select>
+                <p style="margin:0px">Training Speed:<span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;Used Tensor Memory:<span id="memory"></span>MB</p>
+            </div>
             <div part="options">
                 <p>Feature Source</p>
                 <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${(e) => this.featureWidgetId = e.detail.id}></ref-select>
@@ -238,7 +242,7 @@ export class AiWidgetsTraining extends LitElementWw {
 
         let inputs: Record<string, tf.SymbolicTensor> = {};
         for (let input_node of model.filter(l => l.type == "input")) {
-            let shape = dataset.featureMaps[input_node.select.replaceAll("_"," ")].size();
+            let shape = dataset.featureMaps[input_node.select].size();
             inputs[input_node.select] = tf.input({ shape: shape , name:"in_" + input_node.select});
         }
 
@@ -261,6 +265,8 @@ export class AiWidgetsTraining extends LitElementWw {
             case "Huber": return tf.losses.huberLoss;
             case "MSE": return tf.metrics.meanSquaredError;
             case "Difference": return  tf.losses.absoluteDifference;
+            case "WL": return  tf.losses.computeWeightedLoss;
+            case "CosDist": return  tf.losses.cosineDistance;
         }
     }
 
@@ -269,7 +275,7 @@ export class AiWidgetsTraining extends LitElementWw {
         this.chart.updateSeries(
             Object.entries(this.losses).map(
                 function ([k, v]) { return { name: k, data: v } }
-            ).filter(e => metrics.indexOf(e.name) != -1 || metrics.indexOf(e.name.replace("val_", "")) != -1)
+            ).filter(e => metrics.indexOf(e.name.replace("Training_","").replace("Validation_", "")) != -1)
         )
     }
 
@@ -298,6 +304,7 @@ export class AiWidgetsTraining extends LitElementWw {
     private backendPriority = ["webgl","wasm","cpu"];
     private currentBackend = "webgl";
     private resetModel() {
+        this.trainingMetricsDiv.style.display = "none";
         this.currentBackend = this.backendPriority[0];
         if (this.currentTraining)
             this.currentTraining.dispose();
@@ -306,7 +313,7 @@ export class AiWidgetsTraining extends LitElementWw {
         this.losses = {}
         this.currentEpoch = 0;
         this.insights = {min_val_loss: 100, min_val_loss_index: 0}; 
-        this.chart.removeAnnotation("lowest");
+        this.chart.removeAnnotation("best");
         this.updateGraph();
         this.setHyperParamsActive(true);
         this.startTrainingBtn.innerText = "Start Training";
@@ -343,6 +350,7 @@ export class AiWidgetsTraining extends LitElementWw {
             console.log("stop training")
             return;
         }
+        this.trainingMetricsDiv.style.display = "";
 
         if (this.currentTraining == null) {
             await this.initModel();
@@ -381,9 +389,15 @@ export class AiWidgetsTraining extends LitElementWw {
                         if (this.currentTraining.stopTraining == true)
                             return;
                         for (let loss in logs) {
-                            if (this.losses[loss] == null)
-                                this.losses[loss] = [];
-                            this.losses[loss].push(Math.round(logs[loss] * 1000) / 1000);
+                            let label = loss.replace("loss","Loss").replace("acc","Accuracy").replace("r2Score2","R2_Score").replace("recall2","Recall").replace("percision2","Percision").replace("val_","Validation_");
+                            if (label.indexOf("Validation") == -1)
+                                label = "Training_" + label;
+
+                            //label = loss;
+
+                            if (this.losses[label] == null)
+                                this.losses[label] = [];
+                            this.losses[label].push(Math.round(logs[loss] * 1000) / 1000);
                             if (loss == "val_loss" && logs[loss] < this.insights.min_val_loss ) {
                                 this.insights.min_val_loss = logs[loss];
                                 this.insights.min_val_loss_index = epoch;
@@ -395,13 +409,13 @@ export class AiWidgetsTraining extends LitElementWw {
                             await this.currentTraining.save('indexeddb://epoch-' + epoch);
 
                         that.updateGraph();
-                        this.chart.removeAnnotation("lowest");
+                        this.chart.removeAnnotation("best");
                         this.chart.addPointAnnotation({
-                            id: "lowest",
+                            id: "best",
                             x: this.insights.min_val_loss_index,
                             y: this.insights.min_val_loss,
                             label: {
-                                text: "Lowest",
+                                text: "Best",
                                 style: {
                                 background: "#FF4560",
                                 color: "#fff"

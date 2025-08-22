@@ -15,7 +15,7 @@ export class ExportLayer extends Layer {
 
         let that = this;
         this.select.addEventListener("sl-change", function () {
-            that.getNodeOutputElement("output_1").innerText = fields.featureMaps[(that.select.value as string).replaceAll("_"," ")].size().join(SIZE_SEP);
+            that.getNodeOutputElement("output_1").innerText = fields.featureMaps[that.select.value as string].size().join(SIZE_SEP);
             that.update();
         });
     }

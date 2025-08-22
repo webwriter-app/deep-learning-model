@@ -21,6 +21,8 @@ function scaledDotProductAttention(q, k, v, mask = null) {
 }
 
 class AttentionLayer extends tf.layers.Layer {
+  static className = 'AttentionLayer'
+
   constructor(config) {
     super(config);
     this.supportsMasking = true;
@@ -34,11 +36,8 @@ class AttentionLayer extends tf.layers.Layer {
   computeOutputShape(inputShape) {
     return inputShape[0];
   }
-
-  getClassName() {
-    return 'AttentionLayer';
-  }
 }
+tf.serialization.registerClass(AttentionLayer);
     
 export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {

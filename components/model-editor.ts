@@ -65,6 +65,7 @@ export class ModelEditor extends LitElementWw {
         position:absolute;
         background:#fff;
         min-width:100px;
+        max-width:200px;
         min-height:20px;
         border-radius:4px;
         border:1px solid #000;
@@ -82,9 +83,14 @@ export class ModelEditor extends LitElementWw {
         padding:0px;
         margin: 0px;
     }
-    .drawflow .drawflow-node p, .drawflow .drawflow-node sl-input, .drawflow .drawflow-node sl-select {
+    .drawflow .drawflow-node sl-select {
         position: relative;
-        max-width: 100px;
+        width: 150px;
+        z-index: 10;
+    }
+    .drawflow .drawflow-node sl-input {
+        position: relative;
+        width: 100px;
         z-index: 10;
     }
     .drawflow .drawflow-node p {
