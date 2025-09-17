@@ -3,14 +3,15 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import { Dataset, TransformedDataset } from "../../lib/dataset/dataset"
-import * as tf from '@tensorflow/tfjs';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import ApexCharts from "apexcharts";
-import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { until } from 'lit-html/directives/until.js';
-import { AiWidgetsTest } from '../../widgets/webwriter-test';
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
-setThreadsCount(4);
+import { AiWidgetsTest } from '../../widgets/webwriter-model-evaluation';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 async function waitFor(condition: Function, interval = 10) {
     if (condition())
@@ -75,7 +76,7 @@ export class BadSamples extends LitElementWw {
     `
 
     @property()
-    accessor model:tf.LayersModel;
+    accessor model:TF.LayersModel;
 
     @property()
     accessor rawDataset: Dataset;

@@ -2,41 +2,68 @@ import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
-import * as tf from '@tensorflow/tfjs';
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-features"
-import { AiWidgetsDesigns } from "./webwriter-design";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
+import { AiWidgetsDesigns } from "./webwriter-model-designing";
 import ApexCharts from "apexcharts";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
-class NoOpLayer extends tf.layers.Layer {
-  constructor(config) {
-    super(config);
-    this.supportsMasking = true;
-  }
+import getTF from "../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
 
-  call(inputs, kwargs) {
-    return inputs;
-  }
-
-  computeOutputShape(inputShape) {
-    return inputShape;
-  }
-
-  static get className() {
-    return 'NoOpLayer';
-  }
+function uint8ToHex(uint8:Uint8Array) {
+  return Array.from(uint8, b => b.toString(16).padStart(2, '0')).join('');
 }
 
-tf.serialization.registerClass(NoOpLayer);
+function hexToUint8(hex:string) {
+  if (hex.length % 2 !== 0) {
+    throw new Error("Invalid hex string");
+  }
+  const len = hex.length / 2;
+  const result = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    result[i] = parseInt(hex.substr(i * 2, 2), 16);
+  }
+  return result;
+}
+
+(async () => {
+    tf = await getTF()
+
+    /**
+     * The NoOpLayer is important for designating an output name. This will be read by later widgets to connect the correct model output to the dataset labels.
+     */
+    class NoOpLayer extends tf.layers.Layer {
+        constructor(config) {
+            super(config);
+            this.supportsMasking = true;
+        }
+
+        call(inputs, kwargs) {
+            return inputs;
+        }
+
+        computeOutputShape(inputShape) {
+            return inputShape;
+        }
+
+        static get className() {
+            return 'NoOpLayer';
+        }
+    }
+    (window as any).NoOpLayer = NoOpLayer;
+
+    tf.serialization.registerClass(NoOpLayer);
+})()
 
 
-@customElement("webwriter-training")
+@customElement("webwriter-model-training")
 export class AiWidgetsTraining extends LitElementWw {
     static scopedElements = {
         "sl-button": SlButton,
@@ -55,6 +82,17 @@ export class AiWidgetsTraining extends LitElementWw {
       display:block;
       font-size: 0.9rem;
     }
+    :host([contenteditable][editmode="hidden"]) {
+      min-height: 30px;
+      background:lightgray;
+      font-size: inherit;
+    }
+    :host div[part='options'] {
+      display:none;
+    }
+    :host([contenteditable]) div[part='options'] {
+      display:block;
+    }
     :host .controls {
         display:flex;
         flex-direction: row;
@@ -63,7 +101,14 @@ export class AiWidgetsTraining extends LitElementWw {
         justify-content: flex-start;
         align-items: flex-end;
         gap: 10px;
-    }`
+    }
+    #error {
+        color:red;
+    }
+    #error:before {
+        content:"⚠";
+    }
+    `
 
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
@@ -92,21 +137,38 @@ export class AiWidgetsTraining extends LitElementWw {
     @query("#memory")
     accessor memory:HTMLSpanElement;
 
+    @query("#error")
+    accessor error:HTMLSpanElement;
+
+    /** Stores the model jsons with a name like "best" or "epoch-20" for loading by the inference and test widgets */
+    @property({ type: Object, attribute: true, reflect: true })
+    accessor modelVersions:Record<string, string> = {}
+
+    /** "edit" means that students can use the widget to train a model while "hidden" means the widget will be invisible to student but the trained models can be used by other widgets. */
+    @property({ type: String, attribute: true, reflect: true })
+    accessor editMode: "edit"|"hidden" = "edit";
+
     constructor() {
         super();
         let that = this;
         setInterval(function() {
             try {
-            that.memory.innerText = (tf.memory().numBytes / 1024 / 1024).toFixed(2);
+                that.memory.innerText = (tf.memory().numBytes / 1024 / 1024).toFixed(2);
             } catch(e) {}
         }, 50) 
     }
 
-    public options: Record<string, OptionDeclaration> = {}
     public render(): TemplateResult {
         let that = this;
         setTimeout(function () { that.chart.render() }, 100);
+
+        function editModeChanged(e: Event) {
+            const select = e.target as HTMLSelectElement;
+            this.editMode = select.value;
+        }
+
         return html`
+        <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <div class="controls">
                 <sl-select id="optimizer" value="adam" label="Optimizer" size="small" @sl-change=${this.changeOptimizer}>
                     <sl-option value="adam">Adam</sl-option>
@@ -123,6 +185,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 <sl-button id="reset-training" @click=${this.resetModel}>Reset</sl-button>
                 </sl-button-group>
             </div>
+            <p id="error" style="display:none"></p>
             <div id="training-metrics" style="display:none">
                 ${this.chartContainer}
                 <sl-select id="metrics" value="Loss Accuracy" multiple clearable @sl-change=${this.updateGraph}>
@@ -134,12 +197,26 @@ export class AiWidgetsTraining extends LitElementWw {
                 </sl-select>
                 <p style="margin:0px">Training Speed:<span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;Used Tensor Memory:<span id="memory"></span>MB</p>
             </div>
+        </div>
+        <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Training Widget hidden from students.</p>
             <div part="options">
                 <p>Feature Source</p>
-                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${(e) => this.featureWidgetId = e.detail.id}></ref-select>
+                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
                 <p>Design Source</p>
-                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-design" @refchange=${(e) => this.modelWidgetId = e.detail.id}></ref-select>
+                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-design" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+                <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
+                    <sl-option value="hidden">hide widget</sl-option>
+                    <sl-option value="edit">edit everything</sl-option>
+                </sl-select>
             </div>`
+    }
+
+    showError(err:string) {
+        this.error.innerHTML = err;
+        this.error.style.display = "block";
+    }
+    hideError() {
+        this.error.style.display = "none";
     }
 
     changeOptimizer() {
@@ -204,11 +281,17 @@ export class AiWidgetsTraining extends LitElementWw {
         },
     });
 
-    resolveOutput(layer: Layer, inputs: Record<string, tf.SymbolicTensor>, resolvedLayers: Record<number, any>): tf.SymbolicTensor {
+    /**
+     * Used to recursively connect the inputs via the layers to the output nodes.
+     * @param layer One output layer of the model to solve the dependencies for.
+     * @param inputs All the input tensors of the model with the "in_<feature>"" as the key.
+     * @param resolvedLayers A reffecence to an array storing the already resolved layers for later use when solving for other output layers.
+     * @returns Returns a NoOpLayer with an output name of "out_<feature>"
+     */
+    resolveOutput(layer: Layer, inputs: Record<string, TF.SymbolicTensor>, resolvedLayers: Record<number, any>): TF.SymbolicTensor {
         let visitedLayersInThisPath = [];
 
-        function resolveLayer(layer: Layer, input_layers: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
-            console.log("resolve", layer);
+        function resolveLayer(layer: Layer, input_layers: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
             if (resolvedLayers[layer.id] != null)
                 return resolvedLayers[layer.id];
 
@@ -231,29 +314,47 @@ export class AiWidgetsTraining extends LitElementWw {
             }
         }
 
-        return new NoOpLayer({name: "out_" + layer.getState().select}).apply(resolveDependencies(Object.values(layer.getInputLayers())[0].outputOfLayer).output_1) as tf.SymbolicTensor;
+        return new (window as any).NoOpLayer({name: "out_" + layer.getState().select}).apply(resolveDependencies(Object.values(layer.getInputLayers())[0].outputOfLayer).output_1) as TF.SymbolicTensor;
     }
+
+    /**
+     * Builds the complete tfjs model using the layers from the model design widget. It sets the correct input names for the input layers as "in_<feature>". The output layers dependency graph is build and the loss is applied to the output tensor for training.
+     * @returns Model and losses for training
+     */
     async buildModel() {
-        let model = (this.modelSelect.getRefElement() as AiWidgetsDesigns).getModel();
+        this.hideError();
+        let design = this.modelSelect.getRefElement() as AiWidgetsDesigns;
+        if (design.currentCanvas.controler.getNumberOfParameters() > design.maxModelParameters) {
+            this.showError("The Neural Network is to large. Reduce the overall number of parameters.")
+            return null;
+        }
+
+        let model = design.getModel();
         let dataset = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset;
 
-        let editor = new Editor(document.createElement("div"));
+        let editor = new Editor(document.createElement("div"), "read", design.maxModelParameters, design.maxLayerParameters);
         await editor.import(model, dataset)
 
-        let inputs: Record<string, tf.SymbolicTensor> = {};
+        for (let layer of model) {
+            if (!layer.valid) {
+                this.showError("A layer has an Invalid configuration.")
+                return null;
+            }
+        }
+
+        let inputs: Record<string, TF.SymbolicTensor> = {};
         for (let input_node of model.filter(l => l.type == "input")) {
             let shape = dataset.featureMaps[input_node.select].size();
             inputs[input_node.select] = tf.input({ shape: shape , name:"in_" + input_node.select});
         }
 
-        let outputs: Record<string, tf.SymbolicTensor> = {};
+        let outputs: Record<string, TF.SymbolicTensor> = {};
         let resolvedLayers = {};
         let losses = {};
         for (let output of editor.getOutputs()) {
             outputs[output.getState().select] = this.resolveOutput(output, inputs, resolvedLayers);
             losses["out_" + output.getState().select] = this.lossStringToFunction(output.getState().loss);
         }
-
 
         return {model:tf.model({ inputs: Object.values(inputs), outputs: Object.values(outputs) }), losses}
     }
@@ -279,31 +380,61 @@ export class AiWidgetsTraining extends LitElementWw {
         )
     }
 
+    /**
+     * Returns the model for named checkpoints for other widgets to use.
+     * @param name The checkpoint name like "best" or "epoch-20". All the available checkpoints can be retrieved via this.getAvailableModels().
+     * @returns The tf.LayersModel in an initialized state ready for use.
+     */
     public async getModel(name) {
-        const model = await tf.loadLayersModel(name);
+        if (this.modelVersions == null || this.modelVersions[name] == null)
+            return null;
+        const jsonObj = JSON.parse(this.modelVersions[name]);
+        const modelWeights = hexToUint8(jsonObj.weightData);
+        const handler = {
+            load: async () => {
+            const modelArtifacts = {
+                modelTopology: jsonObj.modelTopology,
+                weightSpecs: jsonObj.weightSpecs,
+                weightData: modelWeights,
+            };
+
+            return modelArtifacts;
+            }
+        };
+
+        const model = await tf.loadLayersModel(handler);
         return model;
     }
 
-    public async getAvailableModels() {
-        const models = await tf.io.listModels();
-        return models;
+    /** Returns the available model checkpoints */
+    public getAvailableModels() {
+        return Object.keys(this.modelVersions);
     }
 
-    private async clearModels() {
-        const models = await tf.io.listModels();
-        const deletions = Object.keys(models)
-            .filter(key => key.startsWith('indexeddb://'))
-            .map(key => tf.io.removeModel(key));
-        await Promise.all(deletions);
+    /** Deletes all model checkpoints */
+    private clearModels() {
+        this.modelVersions = {};
         this.dispatchEvent(new CustomEvent('finished', {detail: {}}));
     }
 
+    /** Is true, while tf is in the training process */
     private isTraining = false;
-    private currentTraining: tf.LayersModel;
+
+    /** contains the currently trained model */
+    private currentTraining: TF.LayersModel;
     private currentEpoch = 0;
-    private backendPriority = ["webgl","wasm","cpu"];
+
+    /** A list of available backends for tf to use. Could be expanded and are tried out in order. (Not all backends support all layer and operation types, but can provide better training speed) */
+    private backendPriority = ["webgl","cpu"];
+
+    /** The currently used backend */
     private currentBackend = "webgl";
+
+    /**
+     * Sets the state of this training widget back to the initial configuration and deletes previous training progress.
+     */
     private resetModel() {
+        this.hideError();
         this.trainingMetricsDiv.style.display = "none";
         this.currentBackend = this.backendPriority[0];
         if (this.currentTraining)
@@ -313,23 +444,30 @@ export class AiWidgetsTraining extends LitElementWw {
         this.losses = {}
         this.currentEpoch = 0;
         this.insights = {min_val_loss: 100, min_val_loss_index: 0}; 
-        this.chart.removeAnnotation("best");
+        if (this.chart != null)
+            this.chart.removeAnnotation("best");
         this.updateGraph();
         this.setHyperParamsActive(true);
         this.startTrainingBtn.innerText = "Start Training";
     }
+
+    /**
+     * Initializes the model for training and preps the UI.
+     */
     async initModel() {
         if (this.isTraining)
             return;
 
+        this.hideError();
         if (this.currentTraining)
             this.currentTraining.dispose();
-
-        this.setHyperParamsActive(false);
 
         await tf.setBackend(this.currentBackend); // cpu, webgl, wasm
         await tf.ready();
         let {model, losses} = await this.buildModel();
+        if (model == null || losses == null)
+            return;
+        this.setHyperParamsActive(false);
         this.currentTraining = model;
         let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
         let lr = parseFloat((this.shadowRoot.getElementById("lr") as SlInput).value);
@@ -340,8 +478,11 @@ export class AiWidgetsTraining extends LitElementWw {
             metrics: ["accuracy", tf.metrics.r2Score, tf.metrics.precision, tf.metrics.recall],
         });
         model.summary();
-        console.log(model.toJSON());
     }
+
+    /**
+     * Runs the tf training loop and keeps the UI up-to-date
+     */
     async training() {
         let that = this;
         if (this.currentTraining != null && this.isTraining) {
@@ -350,12 +491,12 @@ export class AiWidgetsTraining extends LitElementWw {
             console.log("stop training")
             return;
         }
-        this.trainingMetricsDiv.style.display = "";
 
         if (this.currentTraining == null) {
             await this.initModel();
         }
 
+        this.trainingMetricsDiv.style.display = "";
         this.startTrainingBtn.innerText = "Stop Training";
 
         if (this.currentTraining != null && !this.isTraining) {
@@ -401,12 +542,12 @@ export class AiWidgetsTraining extends LitElementWw {
                             if (loss == "val_loss" && logs[loss] < this.insights.min_val_loss ) {
                                 this.insights.min_val_loss = logs[loss];
                                 this.insights.min_val_loss_index = epoch;
-                                await this.currentTraining.save('indexeddb://best');
+                                await this.saveCurrentModel('best');
                             }
                         }
 
-                        if (epoch % 5 == 0)
-                            await this.currentTraining.save('indexeddb://epoch-' + epoch);
+                        //if (epoch % 5 == 0)
+                            //await this.saveCurrentModel('epoch-' + epoch);
 
                         that.updateGraph();
                         this.chart.removeAnnotation("best");
@@ -435,11 +576,13 @@ export class AiWidgetsTraining extends LitElementWw {
                         this.dispatchEvent(new CustomEvent('epoch', {detail: {}}));
                     }
                 }
-            }).then(function() {
+            }).then(async function() {
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
                 that.startTrainingBtn.innerText = "Continue Training";
                 that.isTraining = false;
+                await that.saveCurrentModel('epoch-' + that.currentEpoch);
+                that.modelVersions = JSON.parse(JSON.stringify(that.modelVersions));
             }).catch(async function(err) {
                 console.error(err);
                 that.resetTrainingBtn.disabled = false;
@@ -448,7 +591,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 that.isTraining = false;
                 let index = that.backendPriority.indexOf(tf.getBackend()) + 1
                 if (index == that.backendPriority.length)
-                    console.error("no more backends left this probably means the model is broken");
+                    console.error("The model is broken.");
                 console.warn("switching to backend " + that.backendPriority[index]);
                 that.currentBackend = that.backendPriority[index];
                 await that.initModel();
@@ -457,9 +600,33 @@ export class AiWidgetsTraining extends LitElementWw {
             this.dispatchEvent(new CustomEvent('finished', {detail: {}}));
         }
     }
+
+    /** This is called when the widget is removed from the UI (i.e. deleted by the user or reload) */
     async disconnectedCallback(): Promise<void> {
         tf.backend().dispose();
         tf.dispose();
+    }
+
+    /**
+     * Saves the current model as a checkpoint for other widgets to use later.
+     * @param name The checkpoint name.
+     */
+    async saveCurrentModel(name) {
+        let that = this;
+
+        async function handleSave(artifats) {
+            const weightData = new Uint8Array(artifats.weightData);
+            const b64encoded = uint8ToHex(weightData);
+
+            that.modelVersions[name] = JSON.stringify({
+                modelTopology: artifats.modelTopology,
+                weightSpecs: artifats.weightSpecs,
+                weightData: b64encoded
+            });
+            
+            return {} as TF.io.SaveResult;
+        }
+        await this.currentTraining.save(tf.io.withSaveHandler(handleSave));
     }
 }
 

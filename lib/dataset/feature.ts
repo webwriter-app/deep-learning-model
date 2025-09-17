@@ -1,5 +1,6 @@
 import { TemplateResult } from "lit/html.js";
-import * as tf from '@tensorflow/tfjs';
+
+import type * as tf from "@tensorflow/tfjs";
 
 export type NonEmptyArray<T> = [T, ...T[]];
 export type FeatureSettings = Record<string, any> | null;
@@ -79,7 +80,7 @@ export abstract class FeatureTransformation {
     /**
      * Returns the element that will be displayed and changes the settings of the transformation
      */
-    public abstract getSettingElement(changeCallback: (settings: FeatureSettings) => void): TemplateResult;
+    public abstract getSettingElement(changeCallback: (settings: FeatureSettings) => void, editMode: string): TemplateResult;
 
     /**
      * Returns an html element that will be displayed. Can be a simple text or an image etc.

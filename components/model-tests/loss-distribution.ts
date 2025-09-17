@@ -3,14 +3,15 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import { Dataset, TransformedDataset } from "../../lib/dataset/dataset"
-import * as tf from '@tensorflow/tfjs';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import ApexCharts from "apexcharts";
-import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { until } from 'lit-html/directives/until.js';
-import { AiWidgetsTest } from '../../widgets/webwriter-test';
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
-setThreadsCount(4);
+import { AiWidgetsTest } from '../../widgets/webwriter-model-evaluation';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 async function waitFor(condition: Function, interval = 10) {
     if (condition())
@@ -69,7 +70,7 @@ export class LossDistribution extends LitElementWw {
     `
 
     @property()
-    accessor model:tf.LayersModel;
+    accessor model:TF.LayersModel;
 
     @property()
     accessor rawDataset: Dataset;
@@ -94,7 +95,7 @@ export class LossDistribution extends LitElementWw {
             tf.tidy(() => {
                 let inputs = Object.entries(sample).filter(([s,v]) => model.inputNames.indexOf("in_" + s) != -1).map(([s,v]) => v)
                 inputs = inputs.map(i => i.reshape([1 , ...i.shape]))
-                let out = model.predict(inputs, {batchSize:1}) as tf.Tensor;
+                let out = model.predict(inputs, {batchSize:1}) as TF.Tensor;
                 let diff = sample[model.outputNames[0].replace("out_","")].sub(out);
                 let err = diff.abs().sum();
                 errors.push(err.arraySync())

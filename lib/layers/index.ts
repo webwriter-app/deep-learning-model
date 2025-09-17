@@ -1,7 +1,11 @@
 import Drawflow, { DrawflowConnection, DrawflowConnectionDetail } from 'drawflow'
 import { TransformedDataset } from '../dataset/dataset';
-import * as tf from '@tensorflow/tfjs';
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
+
+import getTF from "../tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 type NonEmptyArray<T> = [T, ...T[]];
 type Constructor<T> = new (...args: any[]) => T;
@@ -15,18 +19,32 @@ export async function createLayer(name, ...args) {
     return new LayerClass(...args);
 }
 
+/** Contains the model editor of the model design widget. Wrapper Class for easier control of Drawflow. */
 export class Editor {
     private editor: Drawflow;
     private layers: Record<number, Layer> = {};
 
-    constructor(container: HTMLDivElement) {
+    /** The editMode from the model design widget. */
+    public readonly editMode: string;
+
+    /** The max model params from the model design widget. */
+    public readonly maxModelParams: number;
+
+    /** The max layer params from the model design widget. */
+    public readonly maxLayerParams: number;
+
+    constructor(container: HTMLDivElement, editMode:string = "edit", maxModelParams:number, maxLayerParams:number) {
         let that = this;
+        this.editMode = editMode;
+        this.maxModelParams = maxModelParams;
+        this.maxLayerParams = maxLayerParams;
         this.editor = new Drawflow(container);
         this.editor.reroute = false;
         this.editor.start();
         this.editor.zoom_max = 1.6;
         this.editor.zoom_min = 0.5;
         this.editor.zoom_value = 0.5;
+        this.editor.editor_mode = editMode == "edit" ? "edit": "fixed";
         this.editor.on("connectionCreated", function ({ output_id, input_id, output_class, input_class }) {
             let outNode = that.editor.getNodeFromId(output_id);
             let inNode = that.editor.getNodeFromId(input_id);
@@ -57,6 +75,7 @@ export class Editor {
             delete that.layers[id];
         })
     }
+    /** Returns the average position of the layer nodes. Used to center the view. */
     getAveragePosition() {
         let pos: { x: number, y: number } = { x: 0, y: 0 };
         let count = 0;
@@ -84,6 +103,9 @@ export class Editor {
     public createLayer(name, fields) {
         createLayer(name, fields, this);
     }
+    /**
+     * Returns a list of layers with the dependencies for inputs.
+     */
     public export() {
         let layers = Object.values(this.layers).map(value => value.getState()).sort((a, b) => a.id - b.id)
         let currentId = 1;
@@ -104,6 +126,11 @@ export class Editor {
         return layers;
     }
 
+    /**
+     * Sets the model editor state to the layers of the input.
+     * @param layers The list of layers created by export.
+     * @param fields A tensor dataset which is used to get the names and input/output dimensions.
+     */
     public async import(layers:any[], fields:TransformedDataset) {
         let that = this;
         return new Promise(async function(res, rej) {
@@ -138,10 +165,18 @@ export class Editor {
                             }
                         }
                     }
+                    setTimeout(function() {
+                        for (let layer of layers) {
+                            that.updateConnectionNodes(layer);
+                        }
+                    })
                     res(null);
                 }, 100)
             }, 100)
         })
+    }
+    public updateConnectionNodes(layer: Layer) {
+        this.editor.updateConnectionNodes('node-'+layer.id);
     }
     public getOutputs():Array<Layer> {
         return Object.values(this.layers).filter(l => l.getState().type == "output");
@@ -196,7 +231,7 @@ export class Editor {
     }
 }
 
-
+/** Base Layer class */
 export abstract class Layer {
     public id: number;
     public elem: HTMLElement;
@@ -206,6 +241,13 @@ export abstract class Layer {
     public readonly type: string;
     public readonly editor: Editor;
 
+    /**
+     * Creates the drawflow node and sets the name and number of input/output fields
+     * @param inputs The number of possible input connections
+     * @param outputs The number of possible output connections
+     * @param name The name/type of the layer.
+     * @param editor Refference to the model editor used for settings.
+     */
     constructor(inputs: number, outputs: number, name: string, editor: Editor) {
         this.editor = editor;
         this.id = editor.addLayer(inputs, outputs);
@@ -236,22 +278,64 @@ export abstract class Layer {
             that.update();
         })
     }
+
+    /**
+     * Allows subclasses to add a number input field to the node.
+     * @param label Label of the sl-input element
+     * @param min Min possible value
+     * @param max Max possible value
+     * @returns sl-input element that was added to the drawflow node.
+     */
     protected addNumberInput(label:string, min: number, max:number):SlInput {
+        let that = this;
+
         let input = document.createElement("sl-input");
         input.type = "number";
         input.min = String(min);
         input.value = String(max);
         input.addEventListener("sl-change", function () {
-            if (parseInt(input.value) > max)
+            if (parseInt(input.value) > max) {
                 input.value = String(max);
-            if (isNaN(parseInt(input.value)) || parseInt(input.value) < min)
+                input.oninput(null);
+                input.onchange(null);
+            }
+            if (isNaN(parseInt(input.value)) || parseInt(input.value) < min) {
                 input.value = String(min);
+                input.oninput(null);
+                input.onchange(null);
+            }
         });
+        input.addEventListener("keypress", function(e) {
+            if (e.key == "Delete") {
+                e.stopPropagation()
+                return false;
+            }
+        })
+        input.addEventListener("keydown", function(e) {
+            if (e.key == "Delete") {
+                e.stopPropagation()
+                return false;
+            }
+        })
+        input.addEventListener("keyup", function(e) {
+            if (e.key == "Delete") {
+                e.stopPropagation()
+                return false;
+            }
+        })
         input.label = label;
         input.size = "small";
+        input.disabled = this.editor.editMode == "read"
         this.elem.append(input);
         return input;
     }
+
+    /**
+     * Allows subclasses to add a select field to the node.
+     * @param label Label of the sl-select element
+     * @param options list of sl-options
+     * @returns sl-select element that was added to the drawflow node.
+     */
     protected addSelect(label:string, options: string[]):SlSelect {
         let select = document.createElement("sl-select");
         for (let act of options) {
@@ -262,9 +346,16 @@ export abstract class Layer {
         }
         select.label = label;
         select.size = "small";
+        select.disabled = this.editor.editMode == "read"
         this.elem.append(select);
         return select;
     }
+
+    /**
+     * Allows subclasses to add a custom element to the node.
+     * @param label Label of the custom element
+     * @returns A paragraph wrapping the element that was added to the drawflow node.
+     */
     protected addCustomElement(label:string, elem: HTMLElement):HTMLParagraphElement {
         let p = document.createElement("p");
         p.classList.add("label");
@@ -273,6 +364,12 @@ export abstract class Layer {
         this.elem.append(p);
         return p;
     }
+
+    /**
+     * Allows subclasses to add a span element to the node.
+     * @param label Label of the span element
+     * @returns A paragraph wrapping the span that was added to the drawflow node.
+     */
     protected addTextElement(label:string, elem: HTMLSpanElement):HTMLParagraphElement {
         let p = document.createElement("p");
         p.innerHTML = label;
@@ -283,42 +380,77 @@ export abstract class Layer {
     public getNode() {
         return this.editor.getNodeFromId(this.id);
     }
-    public on(event: string, callback: Function) {
+    /**
+     * Allows to register a listener to an event for this layer
+     * @param event the name of the event
+     * @param callback listener
+     */
+    public on(event: string | "connect" | "disconnect", callback: Function) {
         if (this.events[event] == null)
             this.events[event] = [];
         this.events[event].push(callback);
     }
+    /**
+     * Triggers all listeners for the event
+     * @param event the name of the event
+     * @param params event data
+     */
     public trigger(event: string, params: Record<string, any>) {
         if (this.events[event] == null)
             return;
         for (let cb of this.events[event])
             cb(params);
     }
+    /**
+     * Adds a node on the left side of the layer for an input.
+     */
     protected addInput() {
         this.editor.addNodeInput(this.id);
     }
+    /**
+     * Adds a node on the right side of the layer for an output.
+     */
     protected addOutput() {
         this.editor.addNodeOutput(this.id);
     }
+    /**
+     * Removes all the inputs on the left side of the layer.
+     */
     protected removeInputs() {
         let node = this.getNode();
         for (let input in node.inputs)
             this.editor.removeNodeInput(node.id, "input_1");
     }
+    /**
+     * Removes all the outputs on the right side of the layer.
+     */
     protected removeOutputs() {
         let node = this.getNode();
         for (let output in node.outputs)
             this.editor.removeNodeOutput(node.id, "output_1");
     }
+    /**
+     * @returns the html element that wraps the entire layer.
+     */
     protected getNodeElement() {
         return this.elem.parentElement.parentElement;
     }
+    /**
+     * @param input Typically named "input_1", "input_2", ...
+     * @returns the html element where the shape of the input with the name of the input.
+     */
     protected getNodeInputElement(input: string) {
         return this.inputsDiv.getElementsByClassName(input)[0] as HTMLElement;
     }
+    /**
+     * @returns all the html elements where the shape of the inputs as innerHTML.
+     */
     protected getNodeInputElements() {
         return this.inputsDiv.children;
     }
+    /**
+     * @returns all the html elements of the outputs for the connected inputs.
+     */
     protected getConnectedInputElements() {
         let ret: Record<string, HTMLElement> = {};
         let inputs = this.getNodeInputElements();
@@ -330,6 +462,9 @@ export abstract class Layer {
         }
         return ret;
     }
+    /**
+     * @returns all the layers and the name of the output for the connected inputs.
+     */
     public getInputLayers() {
         let ret: Record<string, {outputField: string, outputOfLayer: Layer}> = {};
         let inputs = this.getNodeInputElements();
@@ -341,12 +476,23 @@ export abstract class Layer {
         }
         return ret;
     }
+    /**
+     * @param output Typically named "output_1", "output_2", ...
+     * @returns the html element of the output node. 
+     */
     protected getNodeOutputElement(output: string) {
         return this.outputsDiv.getElementsByClassName(output)[0] as HTMLElement;
     }
+    /**
+     * @returns all the html elements for the output nodes.
+     */
     protected getNodeOutputElements() {
         return this.outputsDiv.children;
     }
+    /**
+     * @param outputname name of the output node. Typically "output_1", "output_2", ...
+     * @returns all connected layers for that output node.
+     */
     protected getConnectedLayersForOutput(outputname: string) {
         let that = this;
         let output = this.getNode().outputs[outputname];
@@ -354,9 +500,15 @@ export abstract class Layer {
             return that.editor.getLayerFromNodeId(parseInt(value.node));
         })
     }
+    /**
+     * @returns the number of trainable parameters for trainable layers.
+     */
     public getNumberOfParameters(): number {
         return 0;
     }
+    /**
+     * @returns the save state for the layer. Used in the setState method when loading the design again.
+     */
     public getState(): Record<string, any> {
         let node = this.getNode();
         let elem = this.getNodeElement();
@@ -371,14 +523,23 @@ export abstract class Layer {
             posX: parseInt(elem.style.left),
             posY: parseInt(elem.style.top),
             inputConnections: keepInputs,
-            type: this.type
+            type: this.type,
+            valid: this.valid()
         }
     }
+    /**
+     * Uses the state produced by getState to restore the settings of the layer.
+     * @param state produced by getState when saving.
+     */
     public setState(state: Record<string, any>) {
         let elem = this.getNodeElement();
         elem.style.left = state.posX + "px";
         elem.style.top = state.posY + "px";
     }
+    /**
+     * Checks for all the inputs that the dimension in it's html is the same as the dimension of the connected output.
+     * @returns whether all dimension match.
+     */
     public checkInputs() {
         let that = this;
         let inputs = this.getNode().inputs
@@ -409,28 +570,65 @@ export abstract class Layer {
         }
         return true;
     }
+    /**
+     * Reads the dimensions of the connected output into the input for all the inputs.
+     */
     protected updateInputLabels() {
         let outputElems = this.getConnectedInputElements();
         for (let o in outputElems) {
             this.getNodeInputElement(o).innerText = outputElems[o].innerText;
         }
         this.checkInputs();
-
+        this.showValid();
     }
+    /**
+     * Calls the update method for all the connected output layers. This propagates changes in output dimension through the network.
+     */
     protected notifyOutputChange() {
+        this.showValid();
         let outputs = this.getNode().outputs
         for (let o in outputs) {
             let outputs = this.getConnectedLayersForOutput(o);
             for (let out of outputs) {
-                if (out != this)
+                if (out != this) {
                     out.update();
+                    out.editor.updateConnectionNodes(out);
+                }
             }
         }
     }
-    protected abstract update();
-    public abstract forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor>;
+    /**
+     * Uses the result of the valid() method to display it to the layer html.
+     */
+    protected showValid() {
+        let valid = this.valid();
+        if (!valid) {
+            this.getNodeElement().classList.add("invalid");
+        } else {
+            this.getNodeElement().classList.remove("invalid");
+        }
+    }
+    /**
+     * Contains any code that should run when any of the inputs is updated. 
+     * When you want to read the new input dimensions use updateInputLabels().
+     * When you have changed the output dimensions use notifyOutputChange to send the update through the network.
+     */
+    protected abstract update(): void;
+    /**
+     * Is called when a forward pass of the model is performed using tensorflow. Only called once during model building.
+     * @param inputs The Symbolic Tensors provided by the prevoious layers.
+     * @returns
+     */
+    public abstract forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor>;
+    /**
+     * Checks the state of the layer for inconsistencies and returns false when anything will cause an error when training.
+     */
+    public valid() {
+        return this.checkInputs();
+    }
 }
 
+/** Extends the Base Layer with management for a dynamic number of inputs. */
 export abstract class DynamicInputLayer extends Layer {
     constructor(outputs: number, name: string, editor:Editor) {
         super(1, outputs, name, editor);
@@ -447,6 +645,9 @@ export abstract class DynamicInputLayer extends Layer {
             this.getNodeOutputElement("output_" + (out + 1)).innerText = dims[out].join(SIZE_SEP)
         this.notifyOutputChange();
     }
+    /**
+     * @returns whether there is a node that is not connected.
+     */
     hasFreeInput() {
         let hasFreeInput = false;
         for (let input of this.getNodeInputElements()) {
@@ -455,6 +656,10 @@ export abstract class DynamicInputLayer extends Layer {
         }
         return hasFreeInput;
     }
+    /**
+     * Removes empty input nodes.
+     * @returns whether there was a node that is not connected.
+     */
     cleanEmptyInputs() {
         let hasFreeInput = false;
         for (let input of this.getNodeInputElements()) {
@@ -474,18 +679,8 @@ export abstract class DynamicInputLayer extends Layer {
         for (let i = 1; i < state.numberOfInputs; i++)
             this.addInput();
     }
+    /**
+     * @returns the combined output shapes for the layer operation on the inputs.
+     */
     abstract getOutputDim(): NonEmptyArray<number>[];
 }
-
-/*import { InputLayer } from './input'; 
-import { OutputLayer } from './output';
-import { ActivationLayer } from './activation';
-import { FCLLayer } from './fcl';
-import { FlattenLayer } from './flatten';
-const LAYER_TYPES = {
-    "input":InputLayer,
-    "output":OutputLayer,
-    "activation":ActivationLayer,
-    "linear":FCLLayer,
-    "flatten":FlattenLayer
-};*/

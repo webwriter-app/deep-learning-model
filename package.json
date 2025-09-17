@@ -33,33 +33,33 @@
             "source": "./widgets/webwriter-typeselect.ts",
             "default": "./dist/widgets/webwriter-typeselect.*"
         },
-        "./widgets/webwriter-features.*": {
-            "source": "./widgets/webwriter-features.ts",
-            "default": "./dist/widgets/webwriter-features.*"
+        "./widgets/webwriter-feature-engineering.*": {
+            "source": "./widgets/webwriter-feature-engineering.ts",
+            "default": "./dist/widgets/webwriter-feature-engineering.*"
         },
-        "./widgets/webwriter-design.*": {
-            "source": "./widgets/webwriter-design.ts",
-            "default": "./dist/widgets/webwriter-design.*"
+        "./widgets/webwriter-model-designing.*": {
+            "source": "./widgets/webwriter-model-designing.ts",
+            "default": "./dist/widgets/webwriter-model-designing.*"
         },
-        "./widgets/webwriter-training.*": {
-            "source": "./widgets/webwriter-training.ts",
-            "default": "./dist/widgets/webwriter-training.*"
+        "./widgets/webwriter-model-training.*": {
+            "source": "./widgets/webwriter-model-training.ts",
+            "default": "./dist/widgets/webwriter-model-training.*"
         },
-        "./widgets/webwriter-inference.*": {
-            "source": "./widgets/webwriter-inference.ts",
-            "default": "./dist/widgets/webwriter-inference.*"
+        "./widgets/webwriter-model-prediction.*": {
+            "source": "./widgets/webwriter-model-prediction.ts",
+            "default": "./dist/widgets/webwriter-model-prediction.*"
         },
-        "./widgets/webwriter-test.*": {
-            "source": "./widgets/webwriter-test.ts",
-            "default": "./dist/widgets/webwriter-test.*"
+        "./widgets/webwriter-model-evaluation.*": {
+            "source": "./widgets/webwriter-model-evaluation.ts",
+            "default": "./dist/widgets/webwriter-model-evaluation.*"
         },
-        "./snippets/MNIST.html": "./snippets/MNIST.html"
+        "./snippets/MNIST-Image-to-Number.html": "./snippets/MNIST.html"
     },
     "editingConfig": {
         ".": {
             "selectable": false,
             "label": {
-                "_": "AI Widgets"
+                "_": "Deep Learning Playground"
             },
             "uninsertable": false
         }

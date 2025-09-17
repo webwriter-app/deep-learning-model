@@ -1,7 +1,11 @@
 import {DynamicInputLayer, Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
-import * as tf from "@tensorflow/tfjs";
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 type NonEmptyArray<T> = [T, ...T[]];
     
@@ -37,7 +41,7 @@ export class ExportLayer extends DynamicInputLayer {
     setState(state) {
         super.setState(state);
     }
-    public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
-        return { output_1: tf.layers.concatenate().apply(Object.values(inputs)) as tf.SymbolicTensor };
+    public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
+        return { output_1: tf.layers.concatenate().apply(Object.values(inputs)) as TF.SymbolicTensor };
     }
 }

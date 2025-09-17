@@ -1,7 +1,11 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
-import * as tf from "@tensorflow/tfjs";
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
     
 export class ExportLayer extends Layer {
     private rate: SlInput;
@@ -30,7 +34,7 @@ export class ExportLayer extends Layer {
         super.setState(state);
         this.rate.value = state.rate;
     }
-    public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
-        return { output_1: tf.layers.dropout({rate: parseFloat(this.rate.value) }).apply(inputs.input_1) as tf.SymbolicTensor };
+    public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
+        return { output_1: tf.layers.dropout({rate: parseFloat(this.rate.value) }).apply(inputs.input_1) as TF.SymbolicTensor };
     }
 }

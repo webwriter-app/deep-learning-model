@@ -1,48 +1,55 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
-import * as tf from "@tensorflow/tfjs";
 
-function scaledDotProductAttention(q, k, v, mask = null) {
-  const matmulQK = tf.matMul(q, k, false, true);
-  const dk = tf.scalar(q.shape[q.shape.length - 1], 'float32');
-  const scaledScores = tf.div(matmulQK, tf.sqrt(dk));
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
 
-  if (mask !== null) {
-    const NEG_INF = tf.scalar(-1e9);
-    const maskedScores = scaledScores.add(mask.mul(NEG_INF));
-    return tf.softmax(maskedScores, -1).matMul(v); // Weighted sum
+let AttentionLayer;
+(async () => {
+  tf = await getTF()
+
+  function scaledDotProductAttention(q, k, v, mask = null) {
+    const matmulQK = tf.matMul(q, k, false, true);
+    const dk = tf.scalar(q.shape[q.shape.length - 1], 'float32');
+    const scaledScores = tf.div(matmulQK, tf.sqrt(dk));
+
+    if (mask !== null) {
+      const NEG_INF = tf.scalar(-1e9);
+      const maskedScores = scaledScores.add(mask.mul(NEG_INF));
+      return tf.softmax(maskedScores, -1).matMul(v); // Weighted sum
+    }
+
+    const attentionWeights = tf.softmax(scaledScores, -1);
+    const output = tf.matMul(attentionWeights, v);
+
+    return output;
   }
 
-  const attentionWeights = tf.softmax(scaledScores, -1);
-  const output = tf.matMul(attentionWeights, v);
+  AttentionLayer = class AttentionLayer extends tf.layers.Layer {
+    static className = 'AttentionLayer'
 
-  return output;
-}
+    constructor(config) {
+      super(config);
+      this.supportsMasking = true;
+    }
 
-class AttentionLayer extends tf.layers.Layer {
-  static className = 'AttentionLayer'
+    call(inputs, kwargs) {
+      const [q, k, v] = inputs;
+      return scaledDotProductAttention(q, k, v);
+    }
 
-  constructor(config) {
-    super(config);
-    this.supportsMasking = true;
+    computeOutputShape(inputShape) {
+      return inputShape[0];
+    }
   }
-
-  call(inputs, kwargs) {
-    const [q, k, v] = inputs;
-    return scaledDotProductAttention(q, k, v);
-  }
-
-  computeOutputShape(inputShape) {
-    return inputShape[0];
-  }
-}
-tf.serialization.registerClass(AttentionLayer);
+  tf.serialization.registerClass(AttentionLayer);
+})()
     
 export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(3, 1, "Attention", editor)
-
     }
     update() {
         this.updateInputLabels();
@@ -58,7 +65,7 @@ export class ExportLayer extends Layer {
     setState(state) {
         super.setState(state);
     }
-    public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
-        return { output_1: new AttentionLayer({}).apply(Object.values(inputs)) as tf.SymbolicTensor };
+    public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
+        return { output_1: new AttentionLayer({}).apply(Object.values(inputs)) as TF.SymbolicTensor };
     }
 }

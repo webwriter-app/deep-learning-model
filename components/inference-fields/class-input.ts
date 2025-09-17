@@ -1,10 +1,14 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
-import * as tf from '@tensorflow/tfjs';
 import { LitElementWw } from '@webwriter/lit';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar } from "@shoelace-style/shoelace"
 import { InputElement, OutputElement } from './inference-interfaces';
 import ClassTransformation from '../../lib/dataset/class';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 export class ClassInput extends OutputElement {
     static scopedElements = {
@@ -62,19 +66,19 @@ export class ClassInput extends OutputElement {
   @query("#input")
   accessor input: SlSelect;
 
-  public async setTensor(tensor: tf.Tensor1D, transform: ClassTransformation) {
+  public async setTensor(tensor: TF.Tensor1D, transform: ClassTransformation) {
     let clazz = await transform.inverse(tensor);
     if (clazz.startsWith("["))
       clazz = JSON.parse(clazz);
     this.input.value = clazz;
   }
 
-  public async getTensor(transform: ClassTransformation): Promise<tf.Tensor> {
+  public async getTensor(transform: ClassTransformation): Promise<TF.Tensor> {
     let tensor = await transform.transform(this.input.value as string);
     return tensor;
   }
 
   render() {
-    return html`<sl-select id="input" multiple value=${this.classes[0]}>${this.classes.map(c => html`<sl-option value=${c}>${c}</sl-option>`)}</sl-select>`;
+    return html`<sl-select id="input" ?multiple=${this.multi} value=${this.classes[0]}>${this.classes.map(c => html`<sl-option value=${c}>${c}</sl-option>`)}</sl-select>`;
   }
 }

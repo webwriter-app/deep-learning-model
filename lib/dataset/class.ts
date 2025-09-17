@@ -1,8 +1,12 @@
-import * as tf from '@tensorflow/tfjs';
 import { html, css, TemplateResult, PropertyValues } from "lit"
 import { until } from 'lit/directives/until.js';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar } from "@shoelace-style/shoelace"
 import { FeatureSettings, FeatureTransformation } from './feature';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 /**
 * This is the transformation from string values to a class encoding
@@ -56,7 +60,7 @@ export default class ClassTransformation extends FeatureTransformation {
             return [(this.aggrigatedInformation.multiClasses.length as number)];
     }
 
-    public async transform(value: string | Array<any>): Promise<tf.Tensor1D> {
+    public async transform(value: string | Array<any>): Promise<TF.Tensor1D> {
         if (this.getSetting("type") == "one-hot") {
             let classes = this.aggrigatedInformation.classes;
             let index = classes.indexOf(value);
@@ -84,7 +88,7 @@ export default class ClassTransformation extends FeatureTransformation {
         }
     }
 
-    public async inverse(tensor: tf.Tensor1D): Promise<string> {
+    public async inverse(tensor: TF.Tensor1D): Promise<string> {
         if (this.getSetting("type") == "one-hot") {
             return tf.tidy(() => {
                 let index = tf.argMax(tensor.reshape([1, tensor.shape[0]]), 1).arraySync()[0];
@@ -116,11 +120,14 @@ export default class ClassTransformation extends FeatureTransformation {
             return this.aggrigatedInformation.multiClasses;
     }
 
-    public renderPredictionDifference(pred:tf.Tensor1D, label:tf.Tensor1D) {
+    public renderPredictionDifference(pred:TF.Tensor1D, label:TF.Tensor1D) {
         return html`${until((async () => {
             let predClass = await this.inverse(pred);
             let labelClass = await this.inverse(label);
-            return html`${"Prediction:" + predClass + " ≠ Label:" + labelClass}`
+            let span = document.createElement("span");
+            span.style.fontFamily = "sans-serif";
+            span.innerText = predClass != labelClass ? "≠" : "="
+            return html`Prediction: ${predClass} ${span} Label: ${labelClass}`
         })(), html`Visualizing Difference...`)}`;
     }
 

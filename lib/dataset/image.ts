@@ -1,8 +1,12 @@
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
-import * as tf from '@tensorflow/tfjs';
 import { html, css, TemplateResult, PropertyValues } from "lit"
 import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation, NonEmptyArray} from './feature';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 /**
 * This is the transformation from string values to an image
@@ -61,7 +65,7 @@ export default class ImageTransformation extends FeatureTransformation {
         return [this.settings.width, this.settings.height, channels] as NonEmptyArray<number>;
     }
 
-    public async transform(value: string | number[]): Promise<tf.Tensor3D> {
+    public async transform(value: string | number[]): Promise<TF.Tensor3D> {
         if (typeof value == "string")
             value = JSON.parse(value) as number[];
 
@@ -76,7 +80,7 @@ export default class ImageTransformation extends FeatureTransformation {
         return html`<tensor-image id=${id}></tensor-image>`
     }
 
-    public async inverse(tensor: tf.Tensor3D): Promise<string> {
+    public async inverse(tensor: TF.Tensor3D): Promise<string> {
         const [height, width, channels] = tensor.shape;
         if (channels !== 3 && channels !== 4) {
             throw new Error('Tensor must have 3 (RGB) or 4 (RGBA) channels');
@@ -119,13 +123,13 @@ export default class ImageTransformation extends FeatureTransformation {
             let img = tf.browser.fromPixels(bitmap)
             .resizeBilinear([targetWidth, targetHeight])
             .toFloat()
-            .div<tf.Tensor3D>(tf.scalar(255));
+            .div<TF.Tensor3D>(tf.scalar(255));
             if (this.settings.transform == "grayscale")
                 img = tf.image.rgbToGrayscale(img);
             return img;
         });
 
-        return tensor as tf.Tensor3D;
+        return tensor as TF.Tensor3D;
     }
 
     private transformImage(img: HTMLImageElement, width: number, height: number) {
@@ -156,7 +160,7 @@ export default class ImageTransformation extends FeatureTransformation {
         return outImg;
     }
 
-    public getSettingElement(changeCallback): TemplateResult {
+    public getSettingElement(changeCallback, editMode:string): TemplateResult {
         let that = this;
         function typechange(e: Event) {
             let element = e.target as HTMLInputElement;
@@ -176,6 +180,7 @@ export default class ImageTransformation extends FeatureTransformation {
         this.widthElement.max = this.settings.width;
         this.widthElement.min = 1;
         this.widthElement.name = "width";
+        this.widthElement.disabled = editMode == "read"
 
         this.heightElement = document.createElement("sl-input");
         this.heightElement.type = "number"
@@ -185,14 +190,15 @@ export default class ImageTransformation extends FeatureTransformation {
         this.heightElement.max = this.settings.height;
         this.heightElement.min = 1;
         this.heightElement.name = "height";
+        this.heightElement.disabled = editMode == "read"
 
         return html`
-        <sl-select name="shema" value=${this.settings.shema} @sl-change=${typechange} label="Import Format">
+        <sl-select name="shema" value=${this.settings.shema} @sl-change=${typechange} label="Import Format" ?disabled=${editMode == "read"}>
             <sl-option value="binary">Binary String</sl-option>
             <sl-option value="base64">Base64 String</sl-option>
         </sl-select>
         ${this.widthElement}${this.heightElement}
-        <sl-select name="transform" value=${this.settings.transform} @sl-change=${typechange} label="Image Pre-Processing">
+        <sl-select name="transform" value=${this.settings.transform} @sl-change=${typechange} label="Image Pre-Processing" ?disabled=${editMode == "read"}>
             <sl-option value="identity">Identity</sl-option>
             <sl-option value="grayscale">Grayscale</sl-option>
         </sl-select>`;
@@ -226,6 +232,14 @@ export default class ImageTransformation extends FeatureTransformation {
                 }
             }, 10);
         })
+    }
+
+    public renderPredictionDifference(pred:TF.Tensor3D, label:TF.Tensor3D) {
+        return html`${until((async () => {
+            let predValue = this.renderTransformedValue(await this.inverse(pred));
+            let labelValue = this.renderTransformedValue(await this.inverse(label));
+            return html`Prediction: ${predValue},  Label: ${labelValue}`
+        })(), html`Visualizing Difference...`)}`;
     }
 
     public renderTransformedValue(value: string | number[]): TemplateResult {
