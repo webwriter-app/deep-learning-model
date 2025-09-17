@@ -3,7 +3,7 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
+import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlCheckbox, SlTooltip } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
 import { AiWidgetsDesigns } from "./webwriter-model-designing";
@@ -73,6 +73,8 @@ export class AiWidgetsTraining extends LitElementWw {
         "sl-input":SlInput,
         "sl-icon": SlIcon,
         "sl-icon-button": SlIconButton,
+        "sl-checkbox": SlCheckbox,
+        "sl-tooltip": SlTooltip,
         "ref-select": AiWidgetsReferenceSelect
     }
 
@@ -139,6 +141,9 @@ export class AiWidgetsTraining extends LitElementWw {
 
     @query("#error")
     accessor error:HTMLSpanElement;
+
+    @property({ type: Boolean, attribute: true, reflect: true })
+    accessor cache: boolean;
 
     /** Stores the model jsons with a name like "best" or "epoch-20" for loading by the inference and test widgets */
     @property({ type: Object, attribute: true, reflect: true })
@@ -208,6 +213,10 @@ export class AiWidgetsTraining extends LitElementWw {
                     <sl-option value="hidden">hide widget</sl-option>
                     <sl-option value="edit">edit everything</sl-option>
                 </sl-select>
+                <br>
+                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>Cache training samples</sl-checkbox>
+                <p> This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device. </p>
+                <p style="color:red"> (Warning: Too much tensor data can over fill the device RAM and crash during training and in the worst case lock-up the host system.) </p>
             </div>`
     }
 
@@ -515,8 +524,8 @@ export class AiWidgetsTraining extends LitElementWw {
 
 
             let batchsize = parseInt((this.shadowRoot.getElementById("batch") as SlInput).value)
-            const tfDataset = tf.data.generator(dataset.getTrainingDataGenerator(inputNames, outputNames)).batch(batchsize).prefetch(4)
-            const valDataset = tf.data.generator(dataset.getValidationDataGenerator(inputNames, outputNames)).batch(batchsize).prefetch(4)
+            const tfDataset = tf.data.generator(dataset.getTrainingDataGenerator(inputNames, outputNames, this.cache)).batch(batchsize).prefetch(4)
+            const valDataset = tf.data.generator(dataset.getValidationDataGenerator(inputNames, outputNames, this.cache)).batch(batchsize).prefetch(4)
 
             let lastEpoch = Date.now();
             let numEpochs = parseInt((this.shadowRoot.getElementById("epochs") as SlInput).value);
