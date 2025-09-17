@@ -1,9 +1,13 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import * as tf from '@tensorflow/tfjs';
 import { LitElementWw } from '@webwriter/lit';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import { InputElement } from './inference-interfaces';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 export class DrawingCanvas extends InputElement {
     static scopedElements = {
@@ -131,7 +135,7 @@ export class DrawingCanvas extends InputElement {
     this.ctx?.fillRect(0, 0, this.canvas!.width, this.canvas!.height);
   }
 
-  public async getTensor(): Promise<tf.Tensor<tf.Rank>> {
+  public async getTensor(): Promise<TF.Tensor<TF.Rank>> {
     const imgData = this.ctx!.getImageData(0, 0, this.canvas!.width, this.canvas!.height);
     const grayData = new Float32Array(this.canvas!.width * this.canvas!.height);
     for (let i = 0; i < grayData.length; i++) {
@@ -141,10 +145,10 @@ export class DrawingCanvas extends InputElement {
       const avg = (r + g + b) / 3;
       grayData[i] = (255 - avg) / 255;
     }
-    return tf.tensor(grayData, [this.canvas!.height, this.canvas!.width, 1]);
+    return tf.tensor(grayData, [this.canvas!.width, this.canvas!.height, 1]);
   }
 
-  public async setTensor(tensor: tf.Tensor) {
+  public async setTensor(tensor: TF.Tensor) {
     const [h, w, c] = tensor.shape;
 
     if (c !== 1) {

@@ -3,18 +3,16 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import { Dataset, TransformedDataset } from "../lib/dataset/dataset"
-import * as tf from '@tensorflow/tfjs';
-import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-features"
-import { AiWidgetsDesigns } from "./webwriter-design";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
+import { AiWidgetsDesigns } from "./webwriter-model-designing";
 import ApexCharts from "apexcharts";
-import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
+//import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
 import { DrawingCanvas } from '../components/inference-fields/image-input';
-import { AiWidgetsTraining } from './webwriter-training';
+import { AiWidgetsTraining } from './webwriter-model-training';
 import { until } from 'lit-html/directives/until.js';
 import { InputElement, OutputElement } from '../components/inference-fields/inference-interfaces';
 import { ClassTable } from '../components/inference-fields/class-output';
@@ -22,8 +20,13 @@ import { TensorImage } from '../components/inference-fields/image';
 import { ClassInput } from '../components/inference-fields/class-input';
 import { NumberOutput } from '../components/inference-fields/number-output';
 import { NumberInput } from '../components/inference-fields/number-input';
-setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
-setThreadsCount(4);
+//setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
+//setThreadsCount(4);
+
+import getTF from "../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 async function waitFor(condition: Function, interval = 10) {
     if (condition())
@@ -38,7 +41,7 @@ async function waitFor(condition: Function, interval = 10) {
     });
 }
 
-@customElement("webwriter-inference")
+@customElement("webwriter-model-prediction")
 export class AiWidgetsInference extends LitElementWw {
     static scopedElements = {
         "sl-button": SlButton,
@@ -58,6 +61,12 @@ export class AiWidgetsInference extends LitElementWw {
     }
 
     static styles = css`
+        :host div[part='options'] {
+            display:none;
+        }
+        :host([contenteditable]) div[part='options'] {
+            display:block;
+        }
         #container {
             display: flex;
             flex-direction: row;
@@ -73,6 +82,7 @@ export class AiWidgetsInference extends LitElementWw {
         #top {
             width: 100%;
             display: flex;
+            align-items: flex-end;
         }
         .input, .output {
             padding: 5px 10px;
@@ -86,6 +96,12 @@ export class AiWidgetsInference extends LitElementWw {
         .input > p, .output > p {
             margin: 0px;
             font-size: 16px;
+        }
+        #inputs, #outputs {
+            max-width: 50%;
+        }
+        p {
+            margin: 5px 0px;
         }
     `
 
@@ -107,10 +123,7 @@ export class AiWidgetsInference extends LitElementWw {
     @property({ type: String, attribute: true, reflect: true })
     accessor selectedModelName: string;
 
-    private model:tf.LayersModel;
-
-    @query("#image")
-    accessor image: DrawingCanvas;
+    private model:TF.LayersModel;
 
     constructor() {
         super();
@@ -120,47 +133,53 @@ export class AiWidgetsInference extends LitElementWw {
         }, 200);
     }
 
+    /**
+     * Renders the model select field allowing the user to change the model checkpoint that is used for inference.
+     */
     async getModelSelect() {
         let that = this;
         await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels != null});
-        let models = Object.entries(await (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels()).sort((m1, m2) => m1[1].dateSaved.getTime() - m2[1].dateSaved.getTime());
-        setTimeout(function() {
-            that.selectedModelChange();
-        })
-        return html`<sl-select id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model[0]}>${model[0].replace("indexeddb://","")}</sl-option>`)}</sl-select>`;
+        let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
+        if (this.model == null)
+            setTimeout(function() {
+                that.selectedModelChange();
+            })
+        return html`<sl-select label="Model version" id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
-    async getFeatureInputs() {
+    /** Renders the left input fields which the user can edit and which values are fed into the model periodically. */
+    getFeatureInputs() {
+        if (this.model == null)
+            return html`<p>No Model avaiable.</p>`;
         let that = this;
-        await waitFor(function() {return that.model != null});
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [];
+        let elements = [html`<div class="input"><p>🡺 Inputs</p></div>`];
         for (let input of this.model.inputNames) {
             let featureName = input.replace("in_","");
-            let fName = featureName.replaceAll("_", " ")
-            let transform = tensorDataset.featureMaps[fName];
-            elements.push(html`<div class="input"><p>${fName}</p>${transform.getInputElement(input)}</div>`);
+            let transform = tensorDataset.featureMaps[featureName];
+            elements.push(html`<div class="input"><p>${featureName}</p>${transform.getInputElement(input)}</div>`);
         }
         return html`<div id="inputs">${elements}</div>`
     }
 
-    async getFeatureOutputs() {
+    /** Renders the right output fields which are generated by the model output periodically. */
+    getFeatureOutputs() {
+        if (this.model == null)
+            return html``;
         let that = this;
-        await waitFor(function() {return that.model != null});
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [];
+        let elements = [html`<div class="output"><p>Outputs 🡺</p></div>`];
         for (let input of this.model.outputNames) {
             let featureName = input.replace("out_","");
-            let fName = featureName.replaceAll("_", " ")
-            let transform = tensorDataset.featureMaps[fName];
-            elements.push(html`<div class="output"><p>${fName}</p>${transform.getOutputElement(input)}</div>`);
+            let transform = tensorDataset.featureMaps[featureName];
+            elements.push(html`<div class="output"><p>${featureName}</p>${transform.getOutputElement(input)}</div>`);
         }
         return html`<div id="outputs">${elements}</div>`
     }
 
     public render(): TemplateResult {
         if (this.selectedModelName == null || this.selectedModelName == "")
-            this.selectedModelName = "indexeddb://best";
+            this.selectedModelName = "best";
 
         let that = this;
         setTimeout(function() {
@@ -171,22 +190,24 @@ export class AiWidgetsInference extends LitElementWw {
         ${until(this.getModelSelect(), html`Loading models...`)}
         <sl-button @click=${this.fillWithRandomSample}>Show Random Test Sample</sl-button>
         </div>
-        ${until(this.getFeatureInputs(), html`Preparing Inputs...`)}
-        ${until(this.getFeatureOutputs(), html`Preparing Outputs...`)}
+        ${this.getFeatureInputs()}
+        ${this.getFeatureOutputs()}
         </div>
         <div part="options">
             <p>Feature Source</p>
-            <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${this.featureRefChange}></ref-select>
+            <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
             <p>Model Source</p>
-            <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-training" @refchange=${this.modelRefChange}></ref-select>
+            <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }
 
     private modelRefChange(e:CustomEvent) {
         this.modelWidgetId = e.detail.id;
+        this.model = null;
 
         let that = this;
         function modelUpdate() {
+            that.model = null;
             that.requestUpdate();
         }
 
@@ -215,39 +236,50 @@ export class AiWidgetsInference extends LitElementWw {
             this.model.dispose();
         } catch(e) {}
         this.model = await (this.modelSelect.getRefElement() as AiWidgetsTraining).getModel(name);
-        console.log(this.model);
+        this.requestUpdate()
     }
+
 
     private fillWithRandomSample() {
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset()
         this.fillWithSample(Math.floor(Math.random() * (rawDataset.validationEnd - rawDataset.length()) + rawDataset.validationEnd))
     }
 
+    /**
+     * Sets the state of the input fields to the value of a sample.
+     * @param id The id of the sample in the dataset.
+     */
     private async fillWithSample(id:number) {
+        if (this.model == null)
+            return;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset()
         let sample = await tensorDataset.getSample(id);
         for (let input of this.model.inputNames) {
             let inElem = this.shadowRoot.getElementById(input) as InputElement;
-            let featureName = input.replace("in_","").replaceAll("_", " ");
+            let featureName = input.replace("in_","");
             inElem.setTensor(sample[featureName], tensorDataset.featureMaps[featureName]);
         }
     }
 
+    /** Is periodically called and will invoke the input fields values on the model to update the output fields. */
     private async predict() {
+        if (this.model == null)
+            return;
+
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset()
         let inputs = [];
         for (let input of this.model.inputNames) {
             let inElem = this.shadowRoot.getElementById(input) as InputElement;
-            let tensor = await inElem.getTensor(tensorDataset.featureMaps[input.replace("in_","").replaceAll("_", " ")]);
+            let tensor = await inElem.getTensor(tensorDataset.featureMaps[input.replace("in_","")]);
             inputs.push(tensor.reshape([1, ...tensor.shape]))
             tensor.dispose();
         }
-        let out = that.model.predict(inputs, {batchSize:1}) as tf.Tensor;
+        let out = that.model.predict(inputs, {batchSize:1}) as TF.Tensor;
         for (let i = 0; i < this.model.outputNames.length; i++) {
             let output = this.model.outputNames[i];
             let outElem = this.shadowRoot.getElementById(output) as OutputElement;
-            await outElem.setTensor(out, tensorDataset.featureMaps[output.replace("out_","").replaceAll("_", " ")]);
+            await outElem.setTensor(out, tensorDataset.featureMaps[output.replace("out_","")]);
         }
         for (let input of inputs)
             input.dispose();

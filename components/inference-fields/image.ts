@@ -1,10 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement, query } from 'lit/decorators.js';
-import * as tf from '@tensorflow/tfjs';
 import { LitElementWw } from '@webwriter/lit';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
 import { InputElement, OutputElement } from './inference-interfaces';
 import ImageTransformation from '../../lib/dataset/image';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 export class TensorImage extends OutputElement {
     static scopedElements = {}
@@ -33,7 +37,7 @@ export class TensorImage extends OutputElement {
   @query("#img")
   accessor image: HTMLCanvasElement;
 
-  public async setTensor(tensor: tf.Tensor3D, transform: ImageTransformation) {
+  public async setTensor(tensor: TF.Tensor3D, transform: ImageTransformation) {
       tf.tidy(() => {
         tensor = tensor.squeeze();
         const [height, width, channels] = tensor.shape;

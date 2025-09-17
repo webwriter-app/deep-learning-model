@@ -38,9 +38,18 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
     @property({ type: String, attribute: true })
     accessor typeName: string;
 
+    @property({ type: String }) ownerId;
+
     private lastRef:HTMLElement;
 
     firstUpdated() {
+        if (this.elemId == "" || this.elemId == null) {
+            let testSibblingForElementType = document.getElementById(this.ownerId);
+            while (testSibblingForElementType != null && testSibblingForElementType.tagName.toLowerCase() != this.elementType) {
+                testSibblingForElementType = testSibblingForElementType.previousElementSibling as HTMLElement;
+            }
+            this.elemId = testSibblingForElementType.id;
+        }
         this.dispatchEvent(new CustomEvent('refchange', {
             detail: {
                 id: this.elemId

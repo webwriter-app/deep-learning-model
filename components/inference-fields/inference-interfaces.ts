@@ -1,11 +1,15 @@
-import * as tf from '@tensorflow/tfjs';
 import { LitElementWw } from '@webwriter/lit';
 import { FeatureTransformation } from '../../lib/dataset/feature';
 
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
+
 export abstract class OutputElement extends LitElementWw {
-    abstract setTensor(tensor:tf.Tensor, transform: FeatureTransformation): Promise<void>;
+    abstract setTensor(tensor:TF.Tensor, transform: FeatureTransformation): Promise<void>;
 }
 
 export abstract class InputElement extends OutputElement {
-    abstract getTensor(transform: FeatureTransformation) : Promise<tf.Tensor<tf.Rank>>;
+    abstract getTensor(transform: FeatureTransformation) : Promise<TF.Tensor<TF.Rank>>;
 }
