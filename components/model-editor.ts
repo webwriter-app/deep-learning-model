@@ -3,7 +3,6 @@ import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/l
 import { customElement, property, state, query } from "lit/decorators.js"
 import { DatasetInput } from "../components/dataset-input/dataset-input"
 import * as tf from '@tensorflow/tfjs';
-import { setupLayerRenderer } from "../lib/types/layers"
 import Drawflow from "drawflow";
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
 import { Editor } from "../lib/layers"
@@ -65,6 +64,7 @@ export class ModelEditor extends LitElementWw {
         position:absolute;
         background:#fff;
         min-width:100px;
+        max-width:200px;
         min-height:20px;
         border-radius:4px;
         border:1px solid #000;
@@ -82,17 +82,26 @@ export class ModelEditor extends LitElementWw {
         padding:0px;
         margin: 0px;
     }
-    .drawflow .drawflow-node p, .drawflow .drawflow-node sl-input, .drawflow .drawflow-node sl-select {
+    .drawflow .drawflow-node sl-select {
         position: relative;
-        max-width: 100px;
+        width: 150px;
         z-index: 10;
+    }
+    .drawflow .drawflow-node sl-input {
+        position: relative;
+        width: 100px;
+        z-index: 10;
+    }
+    .drawflow .drawflow-node sl-select[open], .drawflow .drawflow-node sl-input[open] {
+        z-index: 100;
     }
     .drawflow .drawflow-node p {
         position: relative;
         margin: 0px;
     }
     .drawflow .drawflow-node.selected {
-        background:#ddd
+        background:#ddd;
+        z-index: 1000;
     }
     .drawflow .drawflow-node:hover {
         cursor:move
@@ -137,15 +146,21 @@ export class ModelEditor extends LitElementWw {
     .drawflow .drawflow-node .input {
         left:-30px;
         top:2px;
-        background:#000;
+        background:#999;
     }
     .drawflow .drawflow-node .output {
         right:-2px;
         top:2px;
         background:#fff;
     }
+    .drawflow .drawflow-node.invalid {
+        background:#ff7;
+    }
+    .drawflow .drawflow-node.invalid p span {
+        color:#f00;
+    }
     .drawflow .drawflow-node .invalid {
-        background:#f00;
+        background:#f77;
     }
     .drawflow .drawflow-node .valid {
         background:#fff;
@@ -215,6 +230,10 @@ export class ModelEditor extends LitElementWw {
 
     public controler: Editor;
 
+    @property({ type: String, attribute:true }) accessor editmode = "edit";
+    @property({ type: Number, attribute:true }) accessor modelparams;
+    @property({ type: Number, attribute:true }) accessor layerparams;
+
     private state;
     public setState(state) {
         this.state = state;
@@ -234,7 +253,7 @@ export class ModelEditor extends LitElementWw {
     public render(): TemplateResult {
         let canvas = document.createElement("div");
         canvas.id = "drawflow";
-        this.controler = new Editor(canvas);
+        this.controler = new Editor(canvas, this.editmode, this.modelparams, this.layerparams);
         this.controler.import(this.state || [], this.fields);
         let that = this;
         canvas.addEventListener("mouseup", function () {
@@ -245,6 +264,12 @@ export class ModelEditor extends LitElementWw {
                 }
             }));
         });
+        canvas.addEventListener("keydown", function (e) {
+            if (e.key == "Delete") {
+                e.preventDefault();
+                return false;
+            }
+        })
         return html`${canvas}`
     }
 }

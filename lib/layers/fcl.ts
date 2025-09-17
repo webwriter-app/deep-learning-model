@@ -1,8 +1,12 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
-import * as tf from "@tensorflow/tfjs";
-    
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
+
 export class ExportLayer extends Layer {
     private dimInput: SlInput;
     private params: HTMLElement;
@@ -10,13 +14,14 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Linear", editor)
 
-        this.dimInput = this.addNumberInput("Output Nodes", 1, 30000);
+        this.dimInput = this.addNumberInput("Output Nodes", 1, 500);
         let that = this;
         this.dimInput.oninput = function () {
             that.getNodeOutputElement("output_1").innerText = that.dimInput.value;
             that.update();
             that.notifyOutputChange();
         }
+        this.dimInput.value = "50"
 
         this.params = document.createElement("span");
         this.addTextElement("Parameters: ", this.params);
@@ -32,6 +37,13 @@ export class ExportLayer extends Layer {
         this.params.innerText = String(inDim * outDim + outDim);
         this.notifyOutputChange();
     }
+    valid() {
+        let inDim = parseInt(this.getNodeInputElement("input_1").innerText)
+        let outDim = parseInt(this.dimInput.value)
+        let params = inDim * outDim + outDim
+        this.params.title = params > this.editor.maxLayerParams ? "Layer has to many trainable parameters. Try reducing the input size or the tunable properties." : "";
+        return super.valid() && params <= this.editor.maxLayerParams;
+    }
     getState() {
         let state = super.getState();
         state.dim = parseInt(this.dimInput.value);
@@ -44,7 +56,7 @@ export class ExportLayer extends Layer {
         this.dimInput.value = state.dim;
         this.dimInput.oninput(null);
     }
-    public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
-        return { output_1: tf.layers.dense({ units: parseInt(this.dimInput.value) }).apply(inputs.input_1) as tf.SymbolicTensor };
+    public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
+        return { output_1: tf.layers.dense({ units: parseInt(this.dimInput.value) }).apply(inputs.input_1) as TF.SymbolicTensor };
     }
 }

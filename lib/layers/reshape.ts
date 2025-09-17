@@ -1,8 +1,12 @@
 import {Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from "@shoelace-style/shoelace";
-import * as tf from "@tensorflow/tfjs";
-    
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
+
 export class ExportLayer extends Layer {
     private shapeInputs: SlInput[] = [];
     private error: HTMLSpanElement;
@@ -16,6 +20,7 @@ export class ExportLayer extends Layer {
         }
 
         this.error = document.createElement("span");
+        this.error.style.color="red";
         this.addTextElement("", this.error);
     }
     update() {
@@ -39,6 +44,9 @@ export class ExportLayer extends Layer {
         this.getNodeOutputElement("output_1").innerText = outputDims.join(SIZE_SEP)
         this.notifyOutputChange();
     }
+    valid() {
+        return super.valid() && this.error.innerText == "";
+    }
     getState() {
         let state = super.getState();
         state.shape = this.shapeInputs.map(input => input.value)
@@ -52,13 +60,13 @@ export class ExportLayer extends Layer {
             this.shapeInputs[i].value = state.shape[i];
         }
     }
-    public forward(inputs: Record<string, tf.SymbolicTensor>): Record<string, tf.SymbolicTensor> {
+    public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         let outputDims = [];
         for (let i = 0; i < this.shapeInputs.length; i++) {
             let value = parseInt(this.shapeInputs[i].value)
             if (value > 0)
                 outputDims.push(parseInt(this.shapeInputs[i].value));
         }
-        return { output_1: tf.layers.reshape({ targetShape: outputDims}).apply(inputs.input_1) as tf.SymbolicTensor };
+        return { output_1: tf.layers.reshape({ targetShape: outputDims}).apply(inputs.input_1) as TF.SymbolicTensor };
     }
 }

@@ -1,8 +1,12 @@
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
-import * as tf from '@tensorflow/tfjs';
 import { html, css, TemplateResult, PropertyValues } from "lit"
 import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 /**
 * This is the transformation from string values to a class encoding
@@ -45,7 +49,7 @@ export default class LinearTransformation extends FeatureTransformation {
         return [1] as NonEmptyArray<number>;
     }
 
-    public async transform(value: string): Promise<tf.Tensor1D> {
+    public async transform(value: string): Promise<TF.Tensor1D> {
         if (typeof value == "string")
             value = JSON.parse(value);
         let min = this.aggrigatedInformation.min;
@@ -64,7 +68,7 @@ export default class LinearTransformation extends FeatureTransformation {
         return tf.tensor(tensor);
     }
 
-    public async inverse(tensor: tf.Tensor): Promise<string> {
+    public async inverse(tensor: TF.Tensor): Promise<string> {
         let min = this.aggrigatedInformation.min;
         let max = this.aggrigatedInformation.max;
 
@@ -82,6 +86,14 @@ export default class LinearTransformation extends FeatureTransformation {
     }
     public getOutputElement(id: string): TemplateResult {
         return html`<number-output id=${id}></number-output>`
+    }
+
+    public renderPredictionDifference(pred:TF.Tensor1D, label:TF.Tensor1D) {
+        return html`${until((async () => {
+            let predValue = await this.inverse(pred);
+            let labelValue = await this.inverse(label);
+            return html`Prediction: ${predValue} - Label: ${labelValue} = Delta: ${parseFloat(predValue) - parseFloat(labelValue)}`
+        })(), html`Visualizing Difference...`)}`;
     }
 
     public getSettingElement(changeCallback): TemplateResult {

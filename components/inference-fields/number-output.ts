@@ -1,11 +1,15 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import * as tf from '@tensorflow/tfjs';
 import { LitElementWw } from '@webwriter/lit';
 import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar,SlRange } from "@shoelace-style/shoelace"
 import { InputElement, OutputElement } from './inference-interfaces';
 import ClassTransformation from '../../lib/dataset/class';
 import LinearTransformation from '../../lib/dataset/linear';
+
+import getTF from "../../lib/tflib";
+import type * as TF from "@tensorflow/tfjs";
+let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+(async () => {tf = await getTF()})()
 
 export class NumberOutput extends OutputElement {
     static scopedElements = {
@@ -39,12 +43,12 @@ export class NumberOutput extends OutputElement {
 
   private input: TemplateResult;
 
-  public async setTensor(tensor: tf.Tensor, transform: LinearTransformation) {
+  public async setTensor(tensor: TF.Tensor, transform: LinearTransformation) {
     let that = this;
     let probs = tf.tidy(() => {
         return tensor.squeeze();
     })
-    let value = parseFloat(await transform.inverse(probs as tf.Tensor1D));
+    let value = parseFloat(await transform.inverse(probs as TF.Tensor1D));
     that.input = html`<table><tr><td>${value.toFixed(3)}</td><td><sl-range min=${transform.aggrigatedInformation.min} max=${transform.aggrigatedInformation.max} value=${value} disabled></sl-range></td></tr></table>`
     this.requestUpdate();
   }
