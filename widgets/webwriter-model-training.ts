@@ -145,6 +145,10 @@ export class AiWidgetsTraining extends LitElementWw {
     @property({ type: Boolean, attribute: true, reflect: true })
     accessor cache: boolean;
 
+    /** The prefered tfjs backend */
+     @property({ type: String, attribute: true, reflect: true })
+    accessor currentBackend: "webgl" | "cpu" = "webgl";
+
     /** Stores the model jsons with a name like "best" or "epoch-20" for loading by the inference and test widgets */
     @property({ type: Object, attribute: true, reflect: true })
     accessor modelVersions:Record<string, string> = {}
@@ -212,6 +216,11 @@ export class AiWidgetsTraining extends LitElementWw {
                 <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
                     <sl-option value="hidden">hide widget</sl-option>
                     <sl-option value="edit">edit everything</sl-option>
+                </sl-select>
+                <br>
+                <sl-select label="Prefered Backend" value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
+                    <sl-option value="cpu">CPU</sl-option>
+                    <sl-option value="webgl">WebGL (GPU)</sl-option>
                 </sl-select>
                 <br>
                 <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>Cache training samples</sl-checkbox>
@@ -301,11 +310,14 @@ export class AiWidgetsTraining extends LitElementWw {
         let visitedLayersInThisPath = [];
 
         function resolveLayer(layer: Layer, input_layers: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
+            if (visitedLayersInThisPath.indexOf(layer.id) != -1)
+                throw Error("cyclic dependency in network")
             if (resolvedLayers[layer.id] != null)
                 return resolvedLayers[layer.id];
 
             let outputTensor = layer.forward(input_layers)
             resolvedLayers[layer.id] = outputTensor;
+            visitedLayersInThisPath.push(layer.id);
             return outputTensor;
         }
 
@@ -401,13 +413,13 @@ export class AiWidgetsTraining extends LitElementWw {
         const modelWeights = hexToUint8(jsonObj.weightData);
         const handler = {
             load: async () => {
-            const modelArtifacts = {
-                modelTopology: jsonObj.modelTopology,
-                weightSpecs: jsonObj.weightSpecs,
-                weightData: modelWeights,
-            };
+                const modelArtifacts = {
+                    modelTopology: jsonObj.modelTopology,
+                    weightSpecs: jsonObj.weightSpecs,
+                    weightData: modelWeights,
+                };
 
-            return modelArtifacts;
+                return modelArtifacts;
             }
         };
 
@@ -436,16 +448,12 @@ export class AiWidgetsTraining extends LitElementWw {
     /** A list of available backends for tf to use. Could be expanded and are tried out in order. (Not all backends support all layer and operation types, but can provide better training speed) */
     private backendPriority = ["webgl","cpu"];
 
-    /** The currently used backend */
-    private currentBackend = "webgl";
-
     /**
      * Sets the state of this training widget back to the initial configuration and deletes previous training progress.
      */
     private resetModel() {
         this.hideError();
         this.trainingMetricsDiv.style.display = "none";
-        this.currentBackend = this.backendPriority[0];
         if (this.currentTraining)
             this.currentTraining.dispose();
         this.currentTraining = null;
@@ -602,7 +610,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 if (index == that.backendPriority.length)
                     console.error("The model is broken.");
                 console.warn("switching to backend " + that.backendPriority[index]);
-                that.currentBackend = that.backendPriority[index];
+                that.currentBackend = that.backendPriority[index] as ("cpu" | "webgl");
                 await that.initModel();
                 await that.training();
             });

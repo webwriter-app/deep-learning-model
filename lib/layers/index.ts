@@ -240,6 +240,8 @@ export abstract class Layer {
     private events = {};
     public readonly type: string;
     public readonly editor: Editor;
+    private hasCyclicReference = false;
+    private hasUpdatedOutputsThisUpdate = false;
 
     /**
      * Creates the drawflow node and sets the name and number of input/output fields
@@ -585,6 +587,12 @@ export abstract class Layer {
      * Calls the update method for all the connected output layers. This propagates changes in output dimension through the network.
      */
     protected notifyOutputChange() {
+        if (this.hasUpdatedOutputsThisUpdate) {
+            this.hasCyclicReference = true;
+            this.showValid();
+            return;
+        }
+        this.hasUpdatedOutputsThisUpdate = true;
         this.showValid();
         let outputs = this.getNode().outputs
         for (let o in outputs) {
@@ -593,9 +601,13 @@ export abstract class Layer {
                 if (out != this) {
                     out.update();
                     out.editor.updateConnectionNodes(out);
+                } else {
+                    this.hasCyclicReference = true;
                 }
             }
         }
+        this.hasUpdatedOutputsThisUpdate = false;
+        this.hasCyclicReference = false;
     }
     /**
      * Uses the result of the valid() method to display it to the layer html.
@@ -604,6 +616,8 @@ export abstract class Layer {
         let valid = this.valid();
         if (!valid) {
             this.getNodeElement().classList.add("invalid");
+            if (this.hasCyclicReference)
+                this.getNodeElement().setAttribute("title", "Has a cyclic reference.")
         } else {
             this.getNodeElement().classList.remove("invalid");
         }
@@ -624,7 +638,7 @@ export abstract class Layer {
      * Checks the state of the layer for inconsistencies and returns false when anything will cause an error when training.
      */
     public valid() {
-        return this.checkInputs();
+        return this.checkInputs() && !this.hasCyclicReference;
     }
 }
 
