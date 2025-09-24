@@ -195,9 +195,9 @@ export class AiWidgetsInference extends LitElementWw {
         </div>
         <div part="options">
             <p>Feature Source</p>
-            <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
+            <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
             <p>Model Source</p>
-            <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
+            <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }
 

@@ -45,8 +45,10 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
     firstUpdated() {
         if (this.elemId == "" || this.elemId == null) {
             let testSibblingForElementType = document.getElementById(this.ownerId);
+            console.log(testSibblingForElementType, this.elementType);
             while (testSibblingForElementType != null && testSibblingForElementType.tagName.toLowerCase() != this.elementType) {
                 testSibblingForElementType = testSibblingForElementType.previousElementSibling as HTMLElement;
+                console.log(testSibblingForElementType);
             }
             this.elemId = testSibblingForElementType.id;
         }

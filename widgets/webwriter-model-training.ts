@@ -210,9 +210,9 @@ export class AiWidgetsTraining extends LitElementWw {
         <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Training Widget hidden from students.</p>
             <div part="options">
                 <p>Feature Source</p>
-                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
                 <p>Design Source</p>
-                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-design" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
                 <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
                     <sl-option value="hidden">hide widget</sl-option>
                     <sl-option value="edit">edit everything</sl-option>
