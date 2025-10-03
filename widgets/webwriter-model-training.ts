@@ -157,6 +157,21 @@ export class AiWidgetsTraining extends LitElementWw {
     @property({ type: String, attribute: true, reflect: true })
     accessor editMode: "edit"|"hidden" = "edit";
 
+    @query("#optimizer")
+    accessor optimizer: SlSelect;
+
+    @query("#lr")
+    accessor lr: SlInput;
+
+    @query("#momentum")
+    accessor momentum: SlInput;
+
+    @query("#batch")
+    accessor batch: SlInput;
+
+    @query("#epochs")
+    accessor epochs: SlInput;
+
     constructor() {
         super();
         let that = this;
@@ -247,10 +262,10 @@ export class AiWidgetsTraining extends LitElementWw {
     }
 
     setHyperParamsActive(active:boolean) {
-        (this.shadowRoot.getElementById("optimizer") as SlSelect).disabled = !active;
-        (this.shadowRoot.getElementById("lr") as SlInput).disabled = !active;
-        (this.shadowRoot.getElementById("momentum") as SlInput).disabled = !active;
-        (this.shadowRoot.getElementById("batch") as SlInput).disabled = !active;
+        this.optimizer.disabled = !active;
+        this.lr.disabled = !active;
+        this.momentum.disabled = !active;
+        this.batch.disabled = !active;
     }
 
     private chartContainer = document.createElement("div")
@@ -487,8 +502,8 @@ export class AiWidgetsTraining extends LitElementWw {
         this.setHyperParamsActive(false);
         this.currentTraining = model;
         let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
-        let lr = parseFloat((this.shadowRoot.getElementById("lr") as SlInput).value);
-        let momentum = parseFloat((this.shadowRoot.getElementById("momentum") as SlInput).value);
+        let lr = parseFloat(this.lr.value);
+        let momentum = parseFloat(this.momentum.value);
         model.compile({
             optimizer: optimizer != "momentum" ? tf.train[optimizer](lr) : tf.train["momentum"](lr, momentum),
             loss: losses,
@@ -530,13 +545,12 @@ export class AiWidgetsTraining extends LitElementWw {
             for (let output_node of model.filter(l => l.type == "output"))
                 outputNames.add(output_node.select);
 
-
-            let batchsize = parseInt((this.shadowRoot.getElementById("batch") as SlInput).value)
+            let batchsize = parseInt(this.batch.value)
             const tfDataset = tf.data.generator(dataset.getTrainingDataGenerator(inputNames, outputNames, this.cache)).batch(batchsize).prefetch(4)
             const valDataset = tf.data.generator(dataset.getValidationDataGenerator(inputNames, outputNames, this.cache)).batch(batchsize).prefetch(4)
 
             let lastEpoch = Date.now();
-            let numEpochs = parseInt((this.shadowRoot.getElementById("epochs") as SlInput).value);
+            let numEpochs = parseInt(this.epochs.value);
 
             await this.currentTraining.fitDataset(tfDataset, {
                 epochs: this.currentEpoch + numEpochs + 1,
