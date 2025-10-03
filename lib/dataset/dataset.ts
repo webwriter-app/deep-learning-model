@@ -150,7 +150,6 @@ export class TransformedDataset {
             if (transformation) {
                 keys.push(key);
                 promisses.push(transformation.transform(sample[key]));
-                tensors[key] = await transformation.transform(sample[key])
             }
         }
         let finished = await Promise.all(promisses);
@@ -165,22 +164,27 @@ export class TransformedDataset {
      * (note: the dataset is shuffled)
      * @param id The id of the sample
      */
-    async getSample(id: number): Promise<TensorSample> {
-        function cloneSample(sample){
-            let out = {};
-            for (let field in sample) {
-                out[field] = sample[field].clone();
+    async getSample(id: number, enableCache=false): Promise<TensorSample> {
+        if (enableCache) {
+            function cloneSample(sample){
+                let out = {};
+                for (let field in sample) {
+                    out[field] = sample[field].clone();
+                }
+                return out;
             }
-            return out;
-        }
-        
-        if (this.cache[id] != null) {
-            return cloneSample(this.cache[id])
-        }
+            
+            if (this.cache[id] != null) {
+                return cloneSample(this.cache[id])
+            }
 
-        let sample = this.dataset.getSample(id);
-        this.cache[id] = await this.transformSample(sample);
-        return cloneSample(this.cache[id]);
+            let sample = this.dataset.getSample(id);
+            this.cache[id] = await this.transformSample(sample);
+            return cloneSample(this.cache[id]);
+        } else {
+            let sample = this.dataset.getSample(id);
+            return await this.transformSample(sample);
+        }
     }
 
     /**
@@ -188,38 +192,56 @@ export class TransformedDataset {
      * (note: the dataset is shuffled)
      * @param id The id of the sample
      */
-    async getSampleAsInputsOutputs(id: number, inFields: Set<string>, outFields: Set<string>): Promise<{inputs:TensorSample, outputs:TensorSample}> {
-        function cloneSample(sample){
-            let outputs = {};
-            let inputs = {};
-            for (let field in sample) {
-                if (inFields.has(field))
-                    inputs["in_" + field] = sample[field].clone();
-                if (outFields.has(field))
-                    outputs["out_" + field] = sample[field].clone();
+    async getSampleAsInputsOutputs(id: number, inFields: Set<string>, outFields: Set<string>, enableCache=false): Promise<{inputs:TensorSample, outputs:TensorSample}> {
+        if (enableCache) {
+            function cloneSample(sample){
+                let outputs = {};
+                let inputs = {};
+                for (let field in sample) {
+                    if (inFields.has(field))
+                        inputs["in_" + field] = sample[field].clone();
+                    if (outFields.has(field))
+                        outputs["out_" + field] = sample[field].clone();
+                }
+                return {inputs, outputs};
             }
-            return {inputs, outputs};
-        }
-        
-        if (this.cache[id] != null) {
-            return cloneSample(this.cache[id])
-        }
+            
+            if (this.cache[id] != null) {
+                return cloneSample(this.cache[id])
+            }
 
-        let sample = this.dataset.getSample(id);
-        this.cache[id] = await this.transformAndFilterSample(sample, inFields, outFields);
-        return cloneSample(this.cache[id]);
+            let sample = this.dataset.getSample(id);
+            this.cache[id] = await this.transformAndFilterSample(sample, inFields, outFields);
+            return cloneSample(this.cache[id]);
+        } else {
+            function mapSample(sample){
+                let outputs = {};
+                let inputs = {};
+                for (let field in sample) {
+                    if (inFields.has(field))
+                        inputs["in_" + field] = sample[field];
+                    if (outFields.has(field))
+                        outputs["out_" + field] = sample[field];
+                }
+                return {inputs, outputs};
+            }
+
+            let sample = this.dataset.getSample(id);
+            return mapSample(await this.transformAndFilterSample(sample, inFields, outFields));
+        }
     }
 
     /**
      * Returns a generator for the training portion of the dataset
      */
-    getTrainingDataGenerator(inFields: Set<string>, outFields: Set<string>): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
+    getTrainingDataGenerator(inFields: Set<string>, outFields: Set<string>, enableCache=false): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
         let that = this;
         async function* dataGenerator() {
             const numElements = that.dataset.trainingEnd;
             let index = 0;
+
             while (index < numElements) {
-                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields);
+                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields, enableCache);
                 yield {xs:sample.inputs, ys: sample.outputs};
                 index++;
             }
@@ -230,13 +252,13 @@ export class TransformedDataset {
     /**
      * Returns a generator for the training portion of the dataset
      */
-    getValidationDataGenerator(inFields: Set<string>, outFields: Set<string>): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
+    getValidationDataGenerator(inFields: Set<string>, outFields: Set<string>, enableCache=false): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
         let that = this;
         async function* dataGenerator() {
             const numElements = that.dataset.validationEnd;
             let index = that.dataset.trainingEnd;
             while (index < numElements) {
-                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields);
+                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields, enableCache);
                 yield {xs:sample.inputs, ys: sample.outputs};
                 index++;
             }
@@ -247,13 +269,13 @@ export class TransformedDataset {
     /**
      * Returns a generator for the training portion of the dataset
      */
-    getTestDataGenerator(inFields: Set<string>, outFields: Set<string>): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
+    getTestDataGenerator(inFields: Set<string>, outFields: Set<string>, enableCache=false): () => AsyncGenerator<{ xs: TensorSample; ys: TensorSample }> {
         let that = this;
         async function* dataGenerator() {
             const numElements = that.dataset.length();
             let index = that.dataset.validationEnd;
             while (index < numElements) {
-                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields);
+                const sample = await that.getSampleAsInputsOutputs(index, inFields, outFields, enableCache);
                 yield {xs:sample.inputs, ys: sample.outputs};
                 index++;
             }

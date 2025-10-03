@@ -249,7 +249,7 @@ export class AiWidgetsDesigns extends LitElementWw {
         <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Design Widget hidden from students.</p>
         <div part="options">
             <p>Feature Source</p>
-            <ref-select id="feature-select" elementType="webwriter-features" elemId=${this.featureWidgetId} typeName="Features" @refchange=${this._handleRefChange} ownerId=${this.id}></ref-select>
+            <ref-select id="feature-select" elementType="webwriter-feature-engineering" elemId=${this.featureWidgetId} typeName="Features" @refchange=${this._handleRefChange} ownerId=${this.id}></ref-select>
             <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
                 <sl-option value="hidden">hide widget</sl-option>
                 <sl-option value="read">read only</sl-option>

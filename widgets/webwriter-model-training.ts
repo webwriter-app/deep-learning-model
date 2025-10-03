@@ -3,7 +3,7 @@ import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
 import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
 import { customElement, property, state, query } from "lit/decorators.js"
 import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
+import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlCheckbox, SlTooltip } from "@shoelace-style/shoelace"
 import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
 import { AiWidgetsDesigns } from "./webwriter-model-designing";
@@ -73,6 +73,8 @@ export class AiWidgetsTraining extends LitElementWw {
         "sl-input":SlInput,
         "sl-icon": SlIcon,
         "sl-icon-button": SlIconButton,
+        "sl-checkbox": SlCheckbox,
+        "sl-tooltip": SlTooltip,
         "ref-select": AiWidgetsReferenceSelect
     }
 
@@ -140,6 +142,13 @@ export class AiWidgetsTraining extends LitElementWw {
     @query("#error")
     accessor error:HTMLSpanElement;
 
+    @property({ type: Boolean, attribute: true, reflect: true })
+    accessor cache: boolean;
+
+    /** The prefered tfjs backend */
+     @property({ type: String, attribute: true, reflect: true })
+    accessor currentBackend: "webgl" | "cpu" = "webgl";
+
     /** Stores the model jsons with a name like "best" or "epoch-20" for loading by the inference and test widgets */
     @property({ type: Object, attribute: true, reflect: true })
     accessor modelVersions:Record<string, string> = {}
@@ -147,6 +156,21 @@ export class AiWidgetsTraining extends LitElementWw {
     /** "edit" means that students can use the widget to train a model while "hidden" means the widget will be invisible to student but the trained models can be used by other widgets. */
     @property({ type: String, attribute: true, reflect: true })
     accessor editMode: "edit"|"hidden" = "edit";
+
+    @query("#optimizer")
+    accessor optimizer: SlSelect;
+
+    @query("#lr")
+    accessor lr: SlInput;
+
+    @query("#momentum")
+    accessor momentum: SlInput;
+
+    @query("#batch")
+    accessor batch: SlInput;
+
+    @query("#epochs")
+    accessor epochs: SlInput;
 
     constructor() {
         super();
@@ -201,13 +225,22 @@ export class AiWidgetsTraining extends LitElementWw {
         <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Training Widget hidden from students.</p>
             <div part="options">
                 <p>Feature Source</p>
-                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-features" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
                 <p>Design Source</p>
-                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-design" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
                 <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
                     <sl-option value="hidden">hide widget</sl-option>
                     <sl-option value="edit">edit everything</sl-option>
                 </sl-select>
+                <br>
+                <sl-select label="Prefered Backend" value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
+                    <sl-option value="cpu">CPU</sl-option>
+                    <sl-option value="webgl">WebGL (GPU)</sl-option>
+                </sl-select>
+                <br>
+                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>Cache training samples</sl-checkbox>
+                <p> This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device. </p>
+                <p style="color:red"> (Warning: Too much tensor data can over fill the device RAM and crash during training and in the worst case lock-up the host system.) </p>
             </div>`
     }
 
@@ -229,10 +262,10 @@ export class AiWidgetsTraining extends LitElementWw {
     }
 
     setHyperParamsActive(active:boolean) {
-        (this.shadowRoot.getElementById("optimizer") as SlSelect).disabled = !active;
-        (this.shadowRoot.getElementById("lr") as SlInput).disabled = !active;
-        (this.shadowRoot.getElementById("momentum") as SlInput).disabled = !active;
-        (this.shadowRoot.getElementById("batch") as SlInput).disabled = !active;
+        this.optimizer.disabled = !active;
+        this.lr.disabled = !active;
+        this.momentum.disabled = !active;
+        this.batch.disabled = !active;
     }
 
     private chartContainer = document.createElement("div")
@@ -292,11 +325,14 @@ export class AiWidgetsTraining extends LitElementWw {
         let visitedLayersInThisPath = [];
 
         function resolveLayer(layer: Layer, input_layers: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
+            if (visitedLayersInThisPath.indexOf(layer.id) != -1)
+                throw Error("cyclic dependency in network")
             if (resolvedLayers[layer.id] != null)
                 return resolvedLayers[layer.id];
 
             let outputTensor = layer.forward(input_layers)
             resolvedLayers[layer.id] = outputTensor;
+            visitedLayersInThisPath.push(layer.id);
             return outputTensor;
         }
 
@@ -392,13 +428,13 @@ export class AiWidgetsTraining extends LitElementWw {
         const modelWeights = hexToUint8(jsonObj.weightData);
         const handler = {
             load: async () => {
-            const modelArtifacts = {
-                modelTopology: jsonObj.modelTopology,
-                weightSpecs: jsonObj.weightSpecs,
-                weightData: modelWeights,
-            };
+                const modelArtifacts = {
+                    modelTopology: jsonObj.modelTopology,
+                    weightSpecs: jsonObj.weightSpecs,
+                    weightData: modelWeights,
+                };
 
-            return modelArtifacts;
+                return modelArtifacts;
             }
         };
 
@@ -427,16 +463,12 @@ export class AiWidgetsTraining extends LitElementWw {
     /** A list of available backends for tf to use. Could be expanded and are tried out in order. (Not all backends support all layer and operation types, but can provide better training speed) */
     private backendPriority = ["webgl","cpu"];
 
-    /** The currently used backend */
-    private currentBackend = "webgl";
-
     /**
      * Sets the state of this training widget back to the initial configuration and deletes previous training progress.
      */
     private resetModel() {
         this.hideError();
         this.trainingMetricsDiv.style.display = "none";
-        this.currentBackend = this.backendPriority[0];
         if (this.currentTraining)
             this.currentTraining.dispose();
         this.currentTraining = null;
@@ -470,8 +502,8 @@ export class AiWidgetsTraining extends LitElementWw {
         this.setHyperParamsActive(false);
         this.currentTraining = model;
         let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
-        let lr = parseFloat((this.shadowRoot.getElementById("lr") as SlInput).value);
-        let momentum = parseFloat((this.shadowRoot.getElementById("momentum") as SlInput).value);
+        let lr = parseFloat(this.lr.value);
+        let momentum = parseFloat(this.momentum.value);
         model.compile({
             optimizer: optimizer != "momentum" ? tf.train[optimizer](lr) : tf.train["momentum"](lr, momentum),
             loss: losses,
@@ -513,13 +545,12 @@ export class AiWidgetsTraining extends LitElementWw {
             for (let output_node of model.filter(l => l.type == "output"))
                 outputNames.add(output_node.select);
 
-
-            let batchsize = parseInt((this.shadowRoot.getElementById("batch") as SlInput).value)
-            const tfDataset = tf.data.generator(dataset.getTrainingDataGenerator(inputNames, outputNames)).batch(batchsize).prefetch(4)
-            const valDataset = tf.data.generator(dataset.getValidationDataGenerator(inputNames, outputNames)).batch(batchsize).prefetch(4)
+            let batchsize = parseInt(this.batch.value)
+            const tfDataset = tf.data.generator(dataset.getTrainingDataGenerator(inputNames, outputNames, this.cache)).batch(batchsize).prefetch(4)
+            const valDataset = tf.data.generator(dataset.getValidationDataGenerator(inputNames, outputNames, this.cache)).batch(batchsize).prefetch(4)
 
             let lastEpoch = Date.now();
-            let numEpochs = parseInt((this.shadowRoot.getElementById("epochs") as SlInput).value);
+            let numEpochs = parseInt(this.epochs.value);
 
             await this.currentTraining.fitDataset(tfDataset, {
                 epochs: this.currentEpoch + numEpochs + 1,
@@ -593,7 +624,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 if (index == that.backendPriority.length)
                     console.error("The model is broken.");
                 console.warn("switching to backend " + that.backendPriority[index]);
-                that.currentBackend = that.backendPriority[index];
+                that.currentBackend = that.backendPriority[index] as ("cpu" | "webgl");
                 await that.initModel();
                 await that.training();
             });
