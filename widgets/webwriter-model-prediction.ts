@@ -2,7 +2,7 @@ import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSel
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select";
+import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { until } from 'lit-html/directives/until.js';

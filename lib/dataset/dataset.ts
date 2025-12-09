@@ -87,7 +87,7 @@ export class Dataset {
 }
 
 /**
-* This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
+* This class is a wrapper that references the original dataset and any accessed Sample will be transformed and delivered as tensors
 */
 export class TransformedDataset {
     public readonly dataset: Dataset;
@@ -95,7 +95,7 @@ export class TransformedDataset {
     private cache: Array<TensorSample> = [];
 
     /**
-    * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
+    * This class is a wrapper that references the original dataset and any accessed Sample will be transformed and delivered as tensors
     */
     constructor(dataset: Dataset, featureMaps: Record<string, Constructor<FeatureTransformation>>, settings: Record<string, FeatureSettings>) {
         this.dataset = dataset;

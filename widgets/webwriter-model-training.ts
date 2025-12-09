@@ -3,7 +3,7 @@ import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select";
+import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 import { AiWidgetsDesigns } from "./webwriter-model-designing";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
@@ -316,7 +316,7 @@ export class AiWidgetsTraining extends LitElementWw {
      * Used to recursively connect the inputs via the layers to the output nodes.
      * @param layer One output layer of the model to solve the dependencies for.
      * @param inputs All the input tensors of the model with the "in_<feature>"" as the key.
-     * @param resolvedLayers A reffecence to an array storing the already resolved layers for later use when solving for other output layers.
+     * @param resolvedLayers A reference to an array storing the already resolved layers for later use when solving for other output layers.
      * @returns Returns a NoOpLayer with an output name of "out_<feature>"
      */
     resolveOutput(layer: Layer, inputs: Record<string, TF.SymbolicTensor>, resolvedLayers: Record<number, any>): TF.SymbolicTensor {

@@ -248,7 +248,7 @@ export abstract class Layer {
      * @param inputs The number of possible input connections
      * @param outputs The number of possible output connections
      * @param name The name/type of the layer.
-     * @param editor Refference to the model editor used for settings.
+     * @param editor Reference to the model editor used for settings.
      */
     constructor(inputs: number, outputs: number, name: string, editor: Editor) {
         this.editor = editor;

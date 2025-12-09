@@ -3,7 +3,7 @@ import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ModelEditor } from "../components/model-editor";
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select";
+import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 
 @customElement("webwriter-model-designing")
@@ -102,7 +102,7 @@ export class AiWidgetsDesigns extends LitElementWw {
     accessor state: string;
 
     /**
-     * Stores the refference id of the widget where the dataset is used from
+     * Stores the reference id of the widget where the dataset is used from
      */
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
