@@ -1,20 +1,18 @@
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlCheckbox, SlTooltip } from "@shoelace-style/shoelace"
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
-import { AiWidgetsDesigns } from "./webwriter-model-designing";
+import { SlButton, SlButtonGroup, SlCheckbox, SlIcon, SlIconButton, SlInput, SlOption, SlSelect, SlTooltip } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
+import { css, html, TemplateResult } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
+import { AiWidgetsReferenceSelect } from "../components/refference-element-select";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
+import { AiWidgetsDesigns } from "./webwriter-model-designing";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
-import getTF from "../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../lib/tflib";
 let tf: typeof TF;
 
 function uint8ToHex(uint8:Uint8Array) {

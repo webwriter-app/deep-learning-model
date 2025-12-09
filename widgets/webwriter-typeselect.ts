@@ -1,7 +1,7 @@
-import { html, css, TemplateResult, PropertyValues } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state } from "lit/decorators.js"
 import "@shoelace-style/shoelace/dist/themes/light.css";
+import { LitElementWw, OptionDeclaration } from "@webwriter/lit";
+import { css, html, TemplateResult } from "lit";
+import { customElement } from "lit/decorators.js";
 
 @customElement("webwriter-typeselect")
 export class AiWidgetsTypeSelect extends LitElementWw {

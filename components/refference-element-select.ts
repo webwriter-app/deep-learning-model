@@ -1,10 +1,10 @@
-import { html, css, TemplateResult, PropertyValues } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, eventOptions, property, state } from "lit/decorators.js"
+import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
+import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
+import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
-import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
-import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
+import { LitElementWw, OptionDeclaration } from "@webwriter/lit";
+import { css, html, TemplateResult } from "lit";
+import { property } from "lit/decorators.js";
 
 export class AiWidgetsReferenceSelect extends LitElementWw {
     static scopedElements = {

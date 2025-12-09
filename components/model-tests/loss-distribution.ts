@@ -1,15 +1,13 @@
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import { Dataset, TransformedDataset } from "../../lib/dataset/dataset"
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
+import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
+import { css, html, TemplateResult } from "lit";
 import { until } from 'lit-html/directives/until.js';
-import { AiWidgetsTest } from '../../widgets/webwriter-model-evaluation';
+import { property } from "lit/decorators.js";
+import { Dataset, TransformedDataset } from "../../lib/dataset/dataset";
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../../lib/tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 

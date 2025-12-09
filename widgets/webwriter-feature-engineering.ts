@@ -1,23 +1,23 @@
-import { html, css, TemplateResult, PropertyValues } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state } from "lit/decorators.js"
+import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js";
+import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
+import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
+import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
+import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
+import SlTabGroup from "@shoelace-style/shoelace/dist/components/tab-group/tab-group.component.js";
+import SlTab from "@shoelace-style/shoelace/dist/components/tab/tab.component.js";
+import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.component.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js"
-import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
-import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js"
-import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js"
-import SlTab from "@shoelace-style/shoelace/dist/components/tab/tab.component.js"
-import SlTabGroup from "@shoelace-style/shoelace/dist/components/tab-group/tab-group.component.js"
-import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.component.js"
-import { DatasetInput } from "../components/dataset-input/dataset-input"
-import { Dataset, TransformedDataset, } from "../lib/dataset/dataset"
+import { LitElementWw } from "@webwriter/lit";
+import { css, html, PropertyValues, TemplateResult } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { DatasetInput } from "../components/dataset-input/dataset-input";
 import "../lib/dataset/class";
+import { Dataset, TransformedDataset, } from "../lib/dataset/dataset";
+import { FeatureTransformation, getFeatureTransformation, getFeatureTransformations } from "../lib/dataset/feature";
 import "../lib/dataset/image";
 import "../lib/dataset/linear";
-import { FeatureTransformation, getFeatureTransformations, getFeatureTransformation } from "../lib/dataset/feature"
-import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
-type Constructor<T> = new (...args: any[]) => T;
 import getTF from "../lib/tflib";
+type Constructor<T> = new (...args: any[]) => T;
 
 BigInt.prototype["toJSON"] = function () {
   return this.toString();

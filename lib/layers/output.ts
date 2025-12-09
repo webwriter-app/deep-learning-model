@@ -1,9 +1,9 @@
-import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../dataset/dataset';
 import { SlSelect } from "@shoelace-style/shoelace";
+import { TransformedDataset } from '../dataset/dataset';
+import { Editor, Layer, SIZE_SEP } from "./index";
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../../lib/tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 

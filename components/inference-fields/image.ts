@@ -1,12 +1,10 @@
-import { LitElement, html, css } from 'lit';
-import { property, customElement, query } from 'lit/decorators.js';
-import { LitElementWw } from '@webwriter/lit';
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
-import { InputElement, OutputElement } from './inference-interfaces';
+import { css, html } from 'lit';
+import { query } from 'lit/decorators.js';
 import ImageTransformation from '../../lib/dataset/image';
+import { OutputElement } from './inference-interfaces';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../../lib/tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 

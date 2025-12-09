@@ -1,22 +1,20 @@
-import { html, css, LitElement, PropertyValues } from "lit";
+import { html } from "lit";
 
 import { LitElementWw } from "@webwriter/lit";
-import { customElement, property, query } from "lit/decorators.js";
-import Papa from "papaparse";
 import { asyncBufferFromUrl, parquetReadObjects } from 'hyparquet';
+import Papa from "papaparse";
 
 import {
-  SlCheckbox,
-  SlInput,
-  SlIcon,
   SlButton,
+  SlCheckbox,
+  SlIcon,
+  SlInput,
 } from "@shoelace-style/shoelace";
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
 import styles from "./dataset-input.styles";
 
 //Tabler
-import worldWWW from "@tabler/icons/outline/world-www.svg";
 import file from "@tabler/icons/outline/file.svg";
 
 export class DatasetInput extends LitElementWw {

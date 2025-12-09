@@ -1,11 +1,10 @@
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import { ModelEditor } from "../components/model-editor"
-import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
+import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
+import { css, html, TemplateResult } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
+import { ModelEditor } from "../components/model-editor";
+import { AiWidgetsReferenceSelect } from "../components/refference-element-select";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 
 @customElement("webwriter-model-designing")
 export class AiWidgetsDesigns extends LitElementWw {

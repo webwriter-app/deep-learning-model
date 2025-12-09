@@ -1,9 +1,9 @@
-import Drawflow, { DrawflowConnection, DrawflowConnectionDetail } from 'drawflow'
-import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
+import Drawflow, { DrawflowConnectionDetail } from 'drawflow';
+import { TransformedDataset } from '../dataset/dataset';
 
-import getTF from "../tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 

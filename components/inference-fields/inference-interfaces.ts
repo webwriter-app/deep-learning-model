@@ -1,8 +1,8 @@
 import { LitElementWw } from '@webwriter/lit';
 import { FeatureTransformation } from '../../lib/dataset/feature';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../../lib/tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 

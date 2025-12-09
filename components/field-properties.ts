@@ -1,10 +1,9 @@
-import {html, css} from "lit"
-import {LitElementWw} from "@webwriter/lit"
-import {customElement, property} from "lit/decorators.js"
+import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js";
+import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
 import "@shoelace-style/shoelace/dist/themes/light.css";
-import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js"
-import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js"
-
+import { LitElementWw } from "@webwriter/lit";
+import { css, html } from "lit";
+import { customElement } from "lit/decorators.js";
 
 @customElement("matthiasschaefer-aiwidgets")
 export class MatthiasschaeferAiwidgets extends LitElementWw {

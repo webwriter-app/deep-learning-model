@@ -1,10 +1,10 @@
-import { html, css, TemplateResult, PropertyValues } from "lit"
+import { SlSelect } from "@shoelace-style/shoelace";
+import { html, TemplateResult } from "lit";
 import { until } from 'lit/directives/until.js';
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar } from "@shoelace-style/shoelace"
 import { FeatureSettings, FeatureTransformation } from './feature';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../../lib/tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 

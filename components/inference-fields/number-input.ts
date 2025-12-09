@@ -1,12 +1,10 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
-import { LitElementWw } from '@webwriter/lit';
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar,SlRange } from "@shoelace-style/shoelace"
-import { InputElement, OutputElement } from './inference-interfaces';
+import { SlRange } from "@shoelace-style/shoelace";
+import { css, html, TemplateResult } from 'lit';
 import LinearTransformation from '../../lib/dataset/linear';
+import { OutputElement } from './inference-interfaces';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
+import getTF from "../../lib/tflib";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
