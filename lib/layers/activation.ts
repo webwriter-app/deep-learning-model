@@ -4,7 +4,7 @@ import { SlInput, SlSelect } from "@shoelace-style/shoelace";
 
 import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 type ActivationIdentifier = 'elu'|'hardSigmoid'|'linear'|'relu'|'relu6'|'selu'|'sigmoid'|'softmax'|'softplus'|'softsign'|'tanh'|'swish'|'mish'|'gelu'|'gelu_new';

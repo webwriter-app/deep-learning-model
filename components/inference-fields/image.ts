@@ -7,7 +7,7 @@ import ImageTransformation from '../../lib/dataset/image';
 
 import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 export class TensorImage extends OutputElement {

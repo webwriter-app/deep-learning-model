@@ -5,7 +5,7 @@ import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature
 
 import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 /**

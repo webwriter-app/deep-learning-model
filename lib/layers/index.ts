@@ -4,7 +4,7 @@ import { SlInput, SlSelect } from '@shoelace-style/shoelace';
 
 import getTF from "../tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 type NonEmptyArray<T> = [T, ...T[]];

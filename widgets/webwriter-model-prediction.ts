@@ -25,7 +25,7 @@ import { NumberInput } from '../components/inference-fields/number-input';
 
 import getTF from "../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 async function waitFor(condition: Function, interval = 10) {

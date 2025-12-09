@@ -15,7 +15,7 @@ import { Editor, Layer } from "../lib/layers";
 
 import getTF from "../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+let tf: typeof TF;
 
 function uint8ToHex(uint8:Uint8Array) {
   return Array.from(uint8, b => b.toString(16).padStart(2, '0')).join('');
