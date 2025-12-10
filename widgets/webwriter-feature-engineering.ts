@@ -33,6 +33,7 @@ type FieldProp = {
 
 @customElement("webwriter-feature-engineering")
 export class AiWidgetsFeatures extends LitElementWw {
+  /** @internal */
   static scopedElements = {
     "sl-button": SlButton,
     "sl-button-group": SlButtonGroup,

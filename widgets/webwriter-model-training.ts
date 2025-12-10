@@ -63,6 +63,7 @@ function hexToUint8(hex:string) {
 
 @customElement("webwriter-model-training")
 export class AiWidgetsTraining extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,

@@ -37,6 +37,7 @@ async function waitFor(condition: Function, interval = 10) {
 
 @customElement("webwriter-model-prediction")
 export class AiWidgetsInference extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,

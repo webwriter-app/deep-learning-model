@@ -8,6 +8,7 @@ import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 
 @customElement("webwriter-model-designing")
 export class AiWidgetsDesigns extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,

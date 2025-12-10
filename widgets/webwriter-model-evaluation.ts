@@ -32,6 +32,7 @@ async function waitFor(condition: Function, interval = 10) {
 
 @customElement("webwriter-model-evaluation")
 export class AiWidgetsTest extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
