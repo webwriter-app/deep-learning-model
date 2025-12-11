@@ -8,7 +8,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "A widget that allows feature engineering on a dataset",
           "name": "AiWidgetsFeatures",
           "members": [
             {
@@ -82,6 +82,7 @@
               "type": {
                 "text": "boolean"
               },
+              "privacy": "protected",
               "default": "false",
               "attribute": "isInitiated"
             },
@@ -98,15 +99,18 @@
             },
             {
               "kind": "method",
-              "name": "renderSelectDataset"
+              "name": "renderSelectDataset",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "renderTableHeader"
+              "name": "renderTableHeader",
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "renderFieldValues",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "fieldName",
@@ -119,6 +123,7 @@
             {
               "kind": "method",
               "name": "renderFieldTypeSelector",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "fieldName",
@@ -131,6 +136,7 @@
             {
               "kind": "method",
               "name": "handleDataset",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "data",
@@ -158,16 +164,19 @@
             },
             {
               "kind": "method",
-              "name": "getDataset"
+              "name": "getDataset",
+              "description": "Returns the current dataset in both raw and tensor form"
             },
             {
               "kind": "method",
               "name": "updateTensorDataset",
+              "privacy": "private",
               "description": "Called everytime settings change to generate the new tensor dataset."
             },
             {
               "kind": "method",
               "name": "handleHeaderClick",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "e",
@@ -181,16 +190,19 @@
             },
             {
               "kind": "method",
-              "name": "deleteDataset"
+              "name": "deleteDataset",
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "handleSizeChange",
+              "privacy": "private",
               "description": "Called when the limit is chanded"
             },
             {
               "kind": "method",
               "name": "handleFeatureSettingsChange",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "settings",
@@ -205,12 +217,19 @@
             {
               "kind": "method",
               "name": "_triggerChanged",
+              "privacy": "private",
               "description": "Tells listening widgets when the dataset changed"
             },
             {
               "kind": "method",
               "name": "isReady",
-              "privacy": "public"
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Checks whether the dataset is ready to be used"
             }
           ],
           "events": [
@@ -218,7 +237,8 @@
               "name": "change",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "Fired when the dataset changes. Detail contains { dataset: Dataset, tensorDataset: TransformedDataset }"
             }
           ],
           "attributes": [
@@ -300,7 +320,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "A widget to design AI models using a visual editor.",
           "name": "AiWidgetsDesigns",
           "members": [
             {
@@ -328,7 +348,8 @@
               "name": "refSelect",
               "type": {
                 "text": "AiWidgetsReferenceSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -383,7 +404,8 @@
               "name": "currentCanvas",
               "type": {
                 "text": "ModelEditor"
-              }
+              },
+              "description": "Reference to the current model editor canvas"
             },
             {
               "kind": "method",
@@ -402,21 +424,30 @@
             {
               "kind": "method",
               "name": "zoomIn",
-              "privacy": "public"
+              "privacy": "public",
+              "description": "Zoom the canvas in"
             },
             {
               "kind": "method",
               "name": "zoomOut",
-              "privacy": "public"
+              "privacy": "public",
+              "description": "Zoom the canvas out"
             },
             {
               "kind": "method",
               "name": "zoomReset",
-              "privacy": "public"
+              "privacy": "public",
+              "description": "Reset the zoom of the canvas"
             },
             {
               "kind": "method",
-              "name": "getModel"
+              "name": "getModel",
+              "description": "Exports the current model design",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
             }
           ],
           "attributes": [
@@ -499,7 +530,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "A widget that allows evaluating a trained model using various tests.",
           "name": "AiWidgetsTest",
           "members": [
             {
@@ -508,6 +539,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the feature engineering widget to use as feature source.",
               "attribute": "featureWidgetId",
               "reflects": true
             },
@@ -516,7 +548,8 @@
               "name": "featureSelect",
               "type": {
                 "text": "AiWidgetsReferenceSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -524,6 +557,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the model training widget to use as model source.",
               "attribute": "modelWidgetId",
               "reflects": true
             },
@@ -532,28 +566,32 @@
               "name": "modelSelect",
               "type": {
                 "text": "AiWidgetsReferenceSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "modelName",
               "type": {
                 "text": "SlSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "testSelect",
               "type": {
                 "text": "SlSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "testContainer",
               "type": {
                 "text": "HTMLDivElement"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -569,6 +607,7 @@
               "type": {
                 "text": "string"
               },
+              "privacy": "private",
               "attribute": "selectedModelName",
               "reflects": true
             },
@@ -629,6 +668,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the feature engineering widget to use as feature source.",
               "fieldName": "featureWidgetId"
             },
             {
@@ -636,6 +676,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the model training widget to use as model source.",
               "fieldName": "modelWidgetId"
             },
             {
@@ -681,7 +722,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "A widget to run inference using a trained model and features created in the feature engineering widget.",
           "name": "AiWidgetsInference",
           "members": [
             {
@@ -690,6 +731,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the feature engineering widget to use as input.",
               "attribute": "featureWidgetId",
               "reflects": true
             },
@@ -698,7 +740,8 @@
               "name": "featureSelect",
               "type": {
                 "text": "AiWidgetsReferenceSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -706,6 +749,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the model training widget to use as model source.",
               "attribute": "modelWidgetId",
               "reflects": true
             },
@@ -714,14 +758,16 @@
               "name": "modelSelect",
               "type": {
                 "text": "AiWidgetsReferenceSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "modelName",
               "type": {
                 "text": "SlSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -729,6 +775,7 @@
               "type": {
                 "text": "string"
               },
+              "privacy": "private",
               "attribute": "selectedModelName",
               "reflects": true
             },
@@ -743,16 +790,19 @@
             {
               "kind": "method",
               "name": "getModelSelect",
+              "privacy": "private",
               "description": "Renders the model select field allowing the user to change the model checkpoint that is used for inference."
             },
             {
               "kind": "method",
               "name": "getFeatureInputs",
+              "privacy": "private",
               "description": "Renders the left input fields which the user can edit and which values are fed into the model periodically."
             },
             {
               "kind": "method",
               "name": "getFeatureOutputs",
+              "privacy": "private",
               "description": "Renders the right output fields which are generated by the model output periodically."
             },
             {
@@ -819,6 +869,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the feature engineering widget to use as input.",
               "fieldName": "featureWidgetId"
             },
             {
@@ -826,6 +877,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The id of the model training widget to use as model source.",
               "fieldName": "modelWidgetId"
             },
             {
@@ -871,7 +923,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.",
           "name": "AiWidgetsTraining",
           "members": [
             {
@@ -880,12 +932,14 @@
               "type": {
                 "text": "string"
               },
+              "description": "The feature engineering widget to use as data source for training the model.",
               "attribute": "featureWidgetId",
               "reflects": true
             },
             {
               "kind": "field",
-              "name": "featureSelect"
+              "name": "featureSelect",
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -893,45 +947,53 @@
               "type": {
                 "text": "string"
               },
+              "description": "The model design widget to use as model source for training.",
               "attribute": "modelWidgetId",
               "reflects": true
             },
             {
               "kind": "field",
-              "name": "modelSelect"
+              "name": "modelSelect",
+              "privacy": "private"
             },
             {
               "kind": "field",
-              "name": "startTrainingBtn"
+              "name": "startTrainingBtn",
+              "privacy": "private"
             },
             {
               "kind": "field",
-              "name": "resetTrainingBtn"
+              "name": "resetTrainingBtn",
+              "privacy": "private"
             },
             {
               "kind": "field",
-              "name": "trainingMetricsDiv"
+              "name": "trainingMetricsDiv",
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "speed",
               "type": {
                 "text": "HTMLSpanElement"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "memory",
               "type": {
                 "text": "HTMLSpanElement"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "error",
               "type": {
                 "text": "HTMLSpanElement"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -939,6 +1001,7 @@
               "type": {
                 "text": "boolean"
               },
+              "description": "If true, the transformed training samples will be cached for faster training.",
               "attribute": "cache",
               "reflects": true
             },
@@ -980,39 +1043,45 @@
               "name": "optimizer",
               "type": {
                 "text": "SlSelect"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "lr",
               "type": {
                 "text": "SlInput"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "momentum",
               "type": {
                 "text": "SlInput"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "batch",
               "type": {
                 "text": "SlInput"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "epochs",
               "type": {
                 "text": "SlInput"
-              }
+              },
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "showError",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "err",
@@ -1024,15 +1093,18 @@
             },
             {
               "kind": "method",
-              "name": "hideError"
+              "name": "hideError",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "changeOptimizer"
+              "name": "changeOptimizer",
+              "privacy": "private"
             },
             {
               "kind": "method",
               "name": "setHyperParamsActive",
+              "privacy": "private",
               "parameters": [
                 {
                   "name": "active",
@@ -1122,13 +1194,21 @@
                   "name": "loss",
                   "type": {
                     "text": "string"
-                  }
+                  },
+                  "description": "The loss string like \"MSE\" or \"BCE\""
                 }
-              ]
+              ],
+              "description": "Converts a loss string to the corresponding tfjs loss function.",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
             },
             {
               "kind": "method",
-              "name": "updateGraph"
+              "name": "updateGraph",
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -1230,13 +1310,15 @@
               "name": "finished",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "Fired when the training process has finished."
             },
             {
               "name": "epoch",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "Fired after each epoch during training."
             }
           ],
           "attributes": [
@@ -1245,6 +1327,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The feature engineering widget to use as data source for training the model.",
               "fieldName": "featureWidgetId"
             },
             {
@@ -1252,6 +1335,7 @@
               "type": {
                 "text": "string"
               },
+              "description": "The model design widget to use as model source for training.",
               "fieldName": "modelWidgetId"
             },
             {
@@ -1259,6 +1343,7 @@
               "type": {
                 "text": "boolean"
               },
+              "description": "If true, the transformed training samples will be cached for faster training.",
               "fieldName": "cache"
             },
             {

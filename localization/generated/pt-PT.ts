@@ -9,6 +9,6 @@
     /* eslint-disable @typescript-eslint/no-explicit-any */
 
     export const templates = {
-      
+      's6610206d0ad97d60': `Colunas de características do conjunto de dados:`,
     };
   

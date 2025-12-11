@@ -30,7 +30,7 @@
       "pt-BR": "Área de testes de Deep Learning",
       "tr": "Derin Öğrenme Oyun Alanı",
       "ja": "ディープラーニング・プレイグラウンド",
-      "id": "Lapangan Uji Deep Learning",
+      "id": "Lapangan Uji Coba Deep Learning",
       "ko": "딥 러닝 플레이그라운드",
       "zh-hans": "深度学习实验场",
       "zh-hant": "深度學習實作平台"
@@ -63,7 +63,7 @@
       "uk": "Набір блоків для створення, навчання та оцінки моделей глибокого навчання.",
       "pt-BR": "Um conjunto de blocos para criar, treinar e avaliar modelos de aprendizado profundo.",
       "tr": "Derin öğrenme modellerini oluşturmak, eğitmek ve değerlendirmek için bir dizi blok.",
-      "ja": "深層学習モデルを作成、学習、評価するための一連のブロック。",
+      "ja": "深層学習モデルの作成、学習、評価を行うためのブロック群。",
       "id": "Sebuah kumpulan alat untuk membuat, melatih, dan mengevaluasi model pembelajaran mendalam.",
       "ko": "딥 러닝 모델을 생성, 훈련 및 평가하기 위한 블록 세트.",
       "zh-hans": "一套用于创建、训练和评估深度学习模型的工具集。",

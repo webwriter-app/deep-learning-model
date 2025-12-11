@@ -30,6 +30,9 @@ async function waitFor(condition: Function, interval = 10) {
     });
 }
 
+/**
+ * A widget that allows evaluating a trained model using various tests.
+ */
 @customElement("webwriter-model-evaluation")
 export class AiWidgetsTest extends LitElementWw {
     /** @internal */
@@ -84,31 +87,37 @@ export class AiWidgetsTest extends LitElementWw {
         }
     `
 
+    /**
+     * The id of the feature engineering widget to use as feature source.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
     @query("#feature-select")
-    accessor featureSelect: AiWidgetsReferenceSelect;
+    private accessor featureSelect: AiWidgetsReferenceSelect;
 
+    /**
+     * The id of the model training widget to use as model source.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor modelWidgetId: string;
 
     @query("#model-select")
-    accessor modelSelect: AiWidgetsReferenceSelect;
+    private accessor modelSelect: AiWidgetsReferenceSelect;
 
     @query("#epoch-select")
-    accessor modelName: SlSelect;
+    private accessor modelName: SlSelect;
 
     @query("#test-select")
-    accessor testSelect: SlSelect;
+    private accessor testSelect: SlSelect;
 
     @query("#test-container")
-    accessor testContainer: HTMLDivElement;
+    private accessor testContainer: HTMLDivElement;
     
     private testElem: TemplateResult;
 
     @property({ type: String, attribute: true, reflect: true })
-    accessor selectedModelName: string;
+    private accessor selectedModelName: string;
 
     private model:TF.LayersModel;
 

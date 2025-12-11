@@ -60,7 +60,12 @@ function hexToUint8(hex:string) {
     tf.serialization.registerClass(NoOpLayer);
 })()
 
-
+/**
+ * A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.
+ * 
+ * @event finished - Fired when the training process has finished.
+ * @event epoch - Fired after each epoch during training.
+ */
 @customElement("webwriter-model-training")
 export class AiWidgetsTraining extends LitElementWw {
     /** @internal */
@@ -111,36 +116,45 @@ export class AiWidgetsTraining extends LitElementWw {
     }
     `
 
+    /**
+     * The feature engineering widget to use as data source for training the model.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
     @query('#feature-select')
-    accessor featureSelect;
+    private accessor featureSelect;
 
+    /**
+     * The model design widget to use as model source for training.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor modelWidgetId: string;
 
     @query('#design-select')
-    accessor modelSelect;
+    private accessor modelSelect;
 
     @query('#start-training')
-    accessor startTrainingBtn;
+    private accessor startTrainingBtn;
 
     @query('#reset-training')
-    accessor resetTrainingBtn;
+    private accessor resetTrainingBtn;
 
     @query('#training-metrics')
-    accessor trainingMetricsDiv;
+    private accessor trainingMetricsDiv;
 
     @query("#speed")
-    accessor speed:HTMLSpanElement;
+    private accessor speed:HTMLSpanElement;
 
     @query("#memory")
-    accessor memory:HTMLSpanElement;
+    private accessor memory:HTMLSpanElement;
 
     @query("#error")
-    accessor error:HTMLSpanElement;
+    private accessor error:HTMLSpanElement;
 
+    /**
+     * If true, the transformed training samples will be cached for faster training.
+     */
     @property({ type: Boolean, attribute: true, reflect: true })
     accessor cache: boolean;
 
@@ -157,19 +171,19 @@ export class AiWidgetsTraining extends LitElementWw {
     accessor editMode: "edit"|"hidden" = "edit";
 
     @query("#optimizer")
-    accessor optimizer: SlSelect;
+    private accessor optimizer: SlSelect;
 
     @query("#lr")
-    accessor lr: SlInput;
+    private accessor lr: SlInput;
 
     @query("#momentum")
-    accessor momentum: SlInput;
+    private accessor momentum: SlInput;
 
     @query("#batch")
-    accessor batch: SlInput;
+    private accessor batch: SlInput;
 
     @query("#epochs")
-    accessor epochs: SlInput;
+    private accessor epochs: SlInput;
 
     constructor() {
         super();
@@ -243,15 +257,15 @@ export class AiWidgetsTraining extends LitElementWw {
             </div>`
     }
 
-    showError(err:string) {
+    private showError(err:string) {
         this.error.innerHTML = err;
         this.error.style.display = "block";
     }
-    hideError() {
+    private hideError() {
         this.error.style.display = "none";
     }
 
-    changeOptimizer() {
+    private changeOptimizer() {
         let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
         if (optimizer == "momentum") {
             this.shadowRoot.getElementById("momentum").style.display = "";
@@ -260,7 +274,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
     }
 
-    setHyperParamsActive(active:boolean) {
+    private setHyperParamsActive(active:boolean) {
         this.optimizer.disabled = !active;
         this.lr.disabled = !active;
         this.momentum.disabled = !active;
@@ -394,6 +408,11 @@ export class AiWidgetsTraining extends LitElementWw {
         return {model:tf.model({ inputs: Object.values(inputs), outputs: Object.values(outputs) }), losses}
     }
 
+    /**
+     * Converts a loss string to the corresponding tfjs loss function.
+     * @param loss The loss string like "MSE" or "BCE"
+     * @returns The tfjs loss function
+     */
     lossStringToFunction(loss: string) {
         switch(loss) {
             case "BCE": return tf.metrics.binaryCrossentropy;
@@ -406,7 +425,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
     }
 
-    updateGraph() {
+    private updateGraph() {
         let metrics = (this.shadowRoot.getElementById("metrics") as SlSelect).value as string[]
         this.chart.updateSeries(
             Object.entries(this.losses).map(

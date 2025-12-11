@@ -6,6 +6,9 @@ import { ModelEditor } from "../components/model-editor";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 
+/**
+ * A widget to design AI models using a visual editor.
+ */
 @customElement("webwriter-model-designing")
 export class AiWidgetsDesigns extends LitElementWw {
     /** @internal */
@@ -109,7 +112,7 @@ export class AiWidgetsDesigns extends LitElementWw {
     accessor featureWidgetId: string;
 
     @query("#feature-select")
-    accessor refSelect: AiWidgetsReferenceSelect;
+    private accessor refSelect: AiWidgetsReferenceSelect;
 
     /**
      * What students will be able to edit in the explorable. Ranging from "edit" = everything, "layer" = only layer settings, "read" = read only, to "hidden" = invisible to the students.
@@ -175,6 +178,9 @@ export class AiWidgetsDesigns extends LitElementWw {
             this.currentCanvas.setState(JSON.parse(this.state));
     }
 
+    /**
+     * Reference to the current model editor canvas
+     */
     @query("#model-editor")
     accessor currentCanvas: ModelEditor;
 
@@ -261,16 +267,29 @@ export class AiWidgetsDesigns extends LitElementWw {
         </div>`
     }
     
+    /**
+     * Zoom the canvas in
+     */
     public zoomIn() {
         this.currentCanvas.controler.zoomIn();
     }
+    /**
+     * Zoom the canvas out
+     */
     public zoomOut() {
         this.currentCanvas.controler.zoomOut();
     }
+    /**
+     * Reset the zoom of the canvas
+     */
     public zoomReset() {
         this.currentCanvas.controler.zoomReset();
     }
 
+    /**
+     * Exports the current model design
+     * @returns The model design
+     */
     getModel() {
         return this.currentCanvas.controler.export();
     }

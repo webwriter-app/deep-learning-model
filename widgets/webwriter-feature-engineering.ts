@@ -17,6 +17,8 @@ import { FeatureTransformation, getFeatureTransformation, getFeatureTransformati
 import "../lib/dataset/image";
 import "../lib/dataset/linear";
 import getTF from "../lib/tflib";
+import { msg } from "@lit/localize";
+import LOCALIZE from "../localization/generated";
 type Constructor<T> = new (...args: any[]) => T;
 
 BigInt.prototype["toJSON"] = function () {
@@ -31,6 +33,11 @@ type FieldProp = {
   settings:any
 }
 
+/**
+ * A widget that allows feature engineering on a dataset
+ * 
+ * @event change - Fired when the dataset changes. Detail contains { dataset: Dataset, tensorDataset: TransformedDataset }
+ */
 @customElement("webwriter-feature-engineering")
 export class AiWidgetsFeatures extends LitElementWw {
   /** @internal */
@@ -45,6 +52,8 @@ export class AiWidgetsFeatures extends LitElementWw {
     "sl-tab-group":SlTabGroup,
     "sl-tooltip":SlTooltip
   }
+
+  protected localize = LOCALIZE;
 
   static styles = css`
     .table-fields {
@@ -142,7 +151,7 @@ export class AiWidgetsFeatures extends LitElementWw {
 
 
   @property({ type: Boolean })
-  accessor isInitiated = false;
+  protected accessor isInitiated = false;
 
   /**
    * What students will be able to edit in the explorable. Ranging from "edit" = everything, "feat" = only feature settings, "read" = read only, to "hidden" = invisible to the students.
@@ -162,7 +171,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     })
   }
 
-  renderSelectDataset() {
+  private renderSelectDataset() {
     return html`
       <dataset-input
         @readDataset=${(e: CustomEvent) => this.handleDataset(e.detail.data, e.detail.errors, e.detail.meta)}
@@ -170,17 +179,17 @@ export class AiWidgetsFeatures extends LitElementWw {
     `
   }
 
-  renderTableHeader() {
+  private renderTableHeader() {
     if (this.activeHeader == "")
       this.activeHeader = this.rawDataset.fields[0];
     let tabs = new Array<TemplateResult>();
     for (let header of this.rawDataset.fields) {
       tabs.push(html`<sl-button @click=${this.handleHeaderClick} variant=${header == this.activeHeader ? "primary": "default"}>${header}</sl-button>`);
     }
-    return html`<p>Dataset Feature Colums:</p><sl-button-group>${tabs}</sl-button-group>`
+    return html`<p>${msg("Dataset Feature Colums:")}</p><sl-button-group>${tabs}</sl-button-group>`
   }
 
-  renderFieldValues(fieldName: string) {
+  private renderFieldValues(fieldName: string) {
     if (fieldName == "")
       return html`<div class="props"><p>Wähle eine Tabellenspalte um sie zu formatieren</p></div>`
 
@@ -213,7 +222,7 @@ export class AiWidgetsFeatures extends LitElementWw {
     }
   }
 
-  renderFieldTypeSelector(fieldName: string) {
+  private renderFieldTypeSelector(fieldName: string) {
     if (fieldName == "")
       return html``;
 
@@ -289,7 +298,7 @@ export class AiWidgetsFeatures extends LitElementWw {
    * @param errors Possible errors from loading the dataset
    * @param meta Should at least contain a list of feature column names in meta.fields
    */
-  handleDataset(data: Array<Record<string, string>>, errors: Array<any>, meta: any) {
+  private handleDataset(data: Array<Record<string, string>>, errors: Array<any>, meta: any) {
     console.log("handle")
     this.samplesSave = JSON.stringify(data);
     this.samples = data;
@@ -303,6 +312,9 @@ export class AiWidgetsFeatures extends LitElementWw {
   }
 
 
+  /**   
+   * Returns the current dataset in both raw and tensor form
+   */
   getDataset() {
     return { rawDataset: this.rawDataset, tensorDataset: this.tensorDataset }
   }
@@ -310,7 +322,7 @@ export class AiWidgetsFeatures extends LitElementWw {
   /**
    * Called everytime settings change to generate the new tensor dataset.
    */
-  updateTensorDataset() {
+  private updateTensorDataset() {
     let transformations: Record<string, Constructor<FeatureTransformation>> = {}
     let settings: Record<string, Constructor<FeatureTransformation>> = {};
     for (let field in this.fieldProps) {
@@ -328,13 +340,13 @@ export class AiWidgetsFeatures extends LitElementWw {
    * Switches to the clicked tab
    * @param e The event from the button of the tab
    */
-  handleHeaderClick(e: Event) {
+  private handleHeaderClick(e: Event) {
     let field = (e.currentTarget as HTMLElement).innerText
     this.activeHeader = field;
     this.requestUpdate();
   }
 
-  deleteDataset() {
+  private deleteDataset() {
     this.samplesSave = null;
     this.samples = null;
     this.rawDataset = null;
@@ -346,7 +358,7 @@ export class AiWidgetsFeatures extends LitElementWw {
   /**
    * Called when the limit is chanded
    */
-  handleSizeChange() {
+  private handleSizeChange() {
     this.rawDataset = new Dataset(this.samples, 0.7, 0.2, this.limit);
     this.updateTensorDataset();
     this._triggerChanged();
@@ -356,7 +368,7 @@ export class AiWidgetsFeatures extends LitElementWw {
    * Called when the user changes the feature settings
    * @param settings New settings
    */
-  handleFeatureSettingsChange(settings: Record<string, any>) {
+  private handleFeatureSettingsChange(settings: Record<string, any>) {
     this.fieldProps[this.activeHeader] = { ...this.fieldProps[this.activeHeader], settings };
     this.fieldProps = Object.assign({}, this.fieldProps);
     this.tensorDataset.clearCache();
@@ -368,7 +380,7 @@ export class AiWidgetsFeatures extends LitElementWw {
   /**
    * Tells listening widgets when the dataset changed
    */
-  _triggerChanged() {
+  private _triggerChanged() {
     this.dispatchEvent(new CustomEvent('change', {
       detail: {
         dataset: this.rawDataset,
@@ -377,7 +389,11 @@ export class AiWidgetsFeatures extends LitElementWw {
     }));
   }
 
-  public isReady() {
+  /**
+   * Checks whether the dataset is ready to be used
+   * @returns True if both raw and tensor dataset are available
+   */
+  public isReady(): boolean {
     return this.rawDataset != null && this.tensorDataset != null;
   }
 }

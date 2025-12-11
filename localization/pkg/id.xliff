@@ -2,6 +2,6 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="id">
 <file id="." original=".">
 <unit id="description"><segment><source>A set of blocks to create, train and evaluate deep learning models.</source><target>Sebuah kumpulan alat untuk membuat, melatih, dan mengevaluasi model pembelajaran mendalam.</target></segment></unit>
-<unit id="label"><segment><source>Deep Learning Playground</source><target>Lapangan Uji Deep Learning</target></segment></unit>
+<unit id="label"><segment><source>Deep Learning Playground</source><target>Lapangan Uji Coba Deep Learning</target></segment></unit>
 </file>
 </xliff>
