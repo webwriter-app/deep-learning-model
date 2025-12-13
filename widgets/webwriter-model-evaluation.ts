@@ -1,6 +1,7 @@
 import { SlButton, SlButtonGroup, SlIcon, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
+import { msg } from "@lit/localize";
 import { customElement, property, query } from "lit/decorators.js";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
@@ -8,6 +9,7 @@ import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 import { until } from 'lit-html/directives/until.js';
 import { BadSamples } from '../components/model-tests/bad-samples';
 import { LossDistribution } from '../components/model-tests/loss-distribution';
+import LOCALIZE from "../localization/generated";
 import { AiWidgetsTraining } from './webwriter-model-training';
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
@@ -47,6 +49,8 @@ export class AiWidgetsTest extends LitElementWw {
         "loss-dist": LossDistribution,
         "bad-samples": BadSamples
     }
+
+    protected localize = LOCALIZE;
 
     static styles = css`
         #container {
@@ -136,7 +140,7 @@ export class AiWidgetsTest extends LitElementWw {
         let that = this;
         await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels != null});
         let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
-        return html`<sl-select label="Model version" id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label=${msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
     public render(): TemplateResult {
@@ -144,18 +148,18 @@ export class AiWidgetsTest extends LitElementWw {
             this.selectedModelName = "best";
 
         return html`
-        ${until(this.getModelSelect(), html`Loading models...`)}
-        <sl-select label="Test / Evaluation" id="test-select" @sl-change=${this.testChange}>
-            <sl-option value="loss-dist">Loss Distribution</sl-option>
-            <sl-option value="bad-samples">Worst Samples</sl-option>
+        ${until(this.getModelSelect(), html`${msg("Loading models...")}`)}
+        <sl-select label=${msg("Test / Evaluation")} id="test-select" @sl-change=${this.testChange}>
+            <sl-option value="loss-dist">${msg("Loss Distribution")}</sl-option>
+            <sl-option value="bad-samples">${msg("Worst Samples")}</sl-option>
         </sl-select>
         <div id="test-container">
             ${this.testElem}
         </div>
         <div part="options">
-            <p>Feature Source</p>
+            <p>${msg("Feature Source")}</p>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
-            <p>Model Source</p>
+            <p>${msg("Model Source")}</p>
             <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }

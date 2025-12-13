@@ -5,6 +5,445 @@
         <source>Dataset Feature Colums:</source>
         <target>Coloane caracteristice ale setului de date:</target>
       </trans-unit>
+      <trans-unit id="s5687c76f8638e9a5">
+        <source>Select Dataset</source>
+        <target>Selectați setul de date</target>
+      </trans-unit>
+      <trans-unit id="se2b0409cadbd0a9e">
+        <source>Select Source Element</source>
+        <target>Selectați elementul sursă</target>
+      </trans-unit>
+      <trans-unit id="s412b62989fc26d3a">
+        <source>Show selection</source>
+        <target>Afișare selecție</target>
+      </trans-unit>
+      <trans-unit id="sa812ba9ded26aa98">
+        <source>Loading model...</source>
+        <target>Se încarcă modelul...</target>
+      </trans-unit>
+      <trans-unit id="sa4ef4c5175793d6f">
+        <source>Calculating Loss For Samples...</source>
+        <target>Calcularea pierderii pentru eșantioane...</target>
+      </trans-unit>
+      <trans-unit id="s62cecbd4b16886e7">
+        <source>Calculating Loss Distribution...</source>
+        <target>Calcularea distribuției pierderilor...</target>
+      </trans-unit>
+      <trans-unit id="sabf86f32eba45ad4">
+        <source>Choose a column to format it</source>
+        <target>Alegeți o coloană pentru a o formata</target>
+      </trans-unit>
+      <trans-unit id="scb42b9cdc2ad49e4">
+        <source>Tensor</source>
+        <target>Tensor</target>
+      </trans-unit>
+      <trans-unit id="sa8082d7f7ef02f42">
+        <source>This Transformation is not applicable for the values</source>
+        <target>Această transformare nu se aplică valorilor</target>
+      </trans-unit>
+      <trans-unit id="s6f0c402dbc70cade">
+        <source>Select how you want the string to be interpreted.</source>
+        <target>Selectați modul în care doriți să fie interpretat șirul.</target>
+      </trans-unit>
+      <trans-unit id="saf01d58ece3a1e02">
+        <source>Loading Tensorflow...</source>
+        <target>Se încarcă Tensorflow...</target>
+      </trans-unit>
+      <trans-unit id="s731e8d25df7b1886">
+        <source>Delete dataset</source>
+        <target>Ștergeți setul de date</target>
+      </trans-unit>
+      <trans-unit id="s5da30fd688d05a35">
+        <source>Edit Permissions</source>
+        <target>Editați permisiunile</target>
+      </trans-unit>
+      <trans-unit id="s162c56231b25e6ff">
+        <source>hide widget</source>
+        <target>ascunde widgetul</target>
+      </trans-unit>
+      <trans-unit id="s166d284a7cbc6181">
+        <source>read only</source>
+        <target>numai pentru citire</target>
+      </trans-unit>
+      <trans-unit id="s2b28da40a8490a78">
+        <source>feature settings only</source>
+        <target>numai setări caracteristici</target>
+      </trans-unit>
+      <trans-unit id="s34af392b321cbfa6">
+        <source>edit everything</source>
+        <target>editează totul</target>
+      </trans-unit>
+      <trans-unit id="s26b5b115b8b61794">
+        <source>Feature Engineering Widget hidden from students.</source>
+        <target>Widgetul Feature Engineering ascuns de studenți.</target>
+      </trans-unit>
+      <trans-unit id="s018f0f27bee12bb9">
+        <source>Number of Operations:</source>
+        <target>Număr de operațiuni:</target>
+      </trans-unit>
+      <trans-unit id="sc6d31f0cce31ddcf">
+        <source>Total Parameters:</source>
+        <target>Parametri totali:</target>
+      </trans-unit>
+      <trans-unit id="s1c3cbd3cbaee4368">
+        <source>Add I/O Layer</source>
+        <target>Adăugați stratul I/O</target>
+      </trans-unit>
+      <trans-unit id="sdb1595f5c742dfbb">
+        <source>Input</source>
+        <target>Intrare</target>
+      </trans-unit>
+      <trans-unit id="sfd77270c3f54f664">
+        <source>Output</source>
+        <target>Ieșire</target>
+      </trans-unit>
+      <trans-unit id="sa68f184fe626daf3">
+        <source>Add Trainable Layer</source>
+        <target>Adăugați stratul antrenabil</target>
+      </trans-unit>
+      <trans-unit id="se7a532063ef7b740">
+        <source>Linear</source>
+        <target>Liniar</target>
+      </trans-unit>
+      <trans-unit id="sa8d9304ef4eefbd5">
+        <source>Convolution</source>
+        <target>Convoluție</target>
+      </trans-unit>
+      <trans-unit id="s9eac77171764efaa">
+        <source>Transpose Convolution</source>
+        <target>Transpunere convoluție</target>
+      </trans-unit>
+      <trans-unit id="s56eedda42b0bb66f">
+        <source>Add misc. Layer</source>
+        <target>Adăugați diverse. Strat</target>
+      </trans-unit>
+      <trans-unit id="sf1674aeb3dc2d55d">
+        <source>Activation</source>
+        <target>Activare</target>
+      </trans-unit>
+      <trans-unit id="sc6bff481def13d70">
+        <source>Dropout</source>
+        <target>Abandon școlar</target>
+      </trans-unit>
+      <trans-unit id="s2bc80ed8441b0831">
+        <source>Noise</source>
+        <target>Zgomot</target>
+      </trans-unit>
+      <trans-unit id="s1703372e9470522b">
+        <source>Add Shaping Layer</source>
+        <target>Adăugați stratul de modelare</target>
+      </trans-unit>
+      <trans-unit id="s975087a831353889">
+        <source>Flatten</source>
+        <target>Aplatiza</target>
+      </trans-unit>
+      <trans-unit id="sbc2e8c67c3498707">
+        <source>Concatination</source>
+        <target>Concatinare</target>
+      </trans-unit>
+      <trans-unit id="sbfe9518a1fe4f185">
+        <source>Reshape</source>
+        <target>Remodelare</target>
+      </trans-unit>
+      <trans-unit id="se13c154abb1c1cff">
+        <source>Add Combinational Layer</source>
+        <target>Adăugați strat combinat</target>
+      </trans-unit>
+      <trans-unit id="s58bee799432dbc69">
+        <source>Addition</source>
+        <target>Adăugare</target>
+      </trans-unit>
+      <trans-unit id="s76b14a5034f53fd9">
+        <source>Attention</source>
+        <target>Atenție</target>
+      </trans-unit>
+      <trans-unit id="s6c5b5757b7756775">
+        <source>Center View</source>
+        <target>Vedere centrală</target>
+      </trans-unit>
+      <trans-unit id="s22fde937cb709859">
+        <source>Zoom In</source>
+        <target>Mărire</target>
+      </trans-unit>
+      <trans-unit id="sb05582ce916894da">
+        <source>Zoom Out</source>
+        <target>Mărire</target>
+      </trans-unit>
+      <trans-unit id="sdab07807ff1b6b12">
+        <source>Model Design Widget hidden from students.</source>
+        <target>Widgetul Model Design ascuns de studenți.</target>
+      </trans-unit>
+      <trans-unit id="s026fba1543d336b2">
+        <source>Feature Source</source>
+        <target>Sursă caracteristică</target>
+      </trans-unit>
+      <trans-unit id="s32f2fa78e3267c4e">
+        <source>properties only</source>
+        <target>numai proprietăți</target>
+      </trans-unit>
+      <trans-unit id="s9b5ec9d0b70a0fac">
+        <source>Max Model Parameters</source>
+        <target>Parametrii modelului maxim</target>
+      </trans-unit>
+      <trans-unit id="s39e9054ae5edaf30">
+        <source>Max Layer Parameters</source>
+        <target>Parametri maximi ai stratului</target>
+      </trans-unit>
+      <trans-unit id="sf99503650274b914">
+        <source>Optimizer</source>
+        <target>Optimizator</target>
+      </trans-unit>
+      <trans-unit id="s7a1c71b249a86643">
+        <source>Learning Rate</source>
+        <target>Rata de învățare</target>
+      </trans-unit>
+      <trans-unit id="s446eb2b422b286af">
+        <source>Momentum</source>
+        <target>Impuls</target>
+      </trans-unit>
+      <trans-unit id="s5561b945c8cd59b0">
+        <source>Batch Size</source>
+        <target>Dimensiunea lotului</target>
+      </trans-unit>
+      <trans-unit id="s900c980bdb200fcf">
+        <source>Epochs</source>
+        <target>Epocile</target>
+      </trans-unit>
+      <trans-unit id="s1e0afe8020901f1f">
+        <source>Start training</source>
+        <target>Începe antrenamentul</target>
+      </trans-unit>
+      <trans-unit id="s255857544a9d5ec0">
+        <source>Reset</source>
+        <target>Resetare</target>
+      </trans-unit>
+      <trans-unit id="s4f5eeeb48a97ea9a">
+        <source>Loss</source>
+        <target>Pierdere</target>
+      </trans-unit>
+      <trans-unit id="s6c02f2ec8c3f52a4">
+        <source>Accuracy</source>
+        <target>Precizie</target>
+      </trans-unit>
+      <trans-unit id="s12126d92849e3b53">
+        <source>R2 Score</source>
+        <target>Scorul R2</target>
+      </trans-unit>
+      <trans-unit id="s2454d1f117573457">
+        <source>Precision</source>
+        <target>Precizie</target>
+      </trans-unit>
+      <trans-unit id="s99456cbda3e05fb0">
+        <source>Recall</source>
+        <target>Reamintiți</target>
+      </trans-unit>
+      <trans-unit id="s15371f7ebfb1ad5e">
+        <source>Training Speed:</source>
+        <target>Viteza de antrenament:</target>
+      </trans-unit>
+      <trans-unit id="sf5290513fc7b466a">
+        <source>Used Tensor Memory:</source>
+        <target>Memorie Tensor utilizată:</target>
+      </trans-unit>
+      <trans-unit id="s56a6aa2100291b96">
+        <source>Model Training Widget hidden from students.</source>
+        <target>Widgetul de instruire a modelelor ascuns de studenți.</target>
+      </trans-unit>
+      <trans-unit id="sd6b72022c37e1ae0">
+        <source>Design Source</source>
+        <target>Sursa designului</target>
+      </trans-unit>
+      <trans-unit id="s410415ac2406c84e">
+        <source>Preferred Backend</source>
+        <target>Backend preferat</target>
+      </trans-unit>
+      <trans-unit id="s0b453a19aa0f85a9">
+        <source>CPU</source>
+        <target>procesor</target>
+      </trans-unit>
+      <trans-unit id="s61f8c4b6c5f2ae63">
+        <source>WebGL (GPU)</source>
+        <target>WebGL (GPU)</target>
+      </trans-unit>
+      <trans-unit id="s559e9b10ba86261e">
+        <source>Cache training samples</source>
+        <target>Eșantioane de antrenament cache</target>
+      </trans-unit>
+      <trans-unit id="s1ca51d37e3dae07a">
+        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
+        <target>Acest lucru permite ca probele transformate să fie stocate în memoria cache a dispozitivului de calcul, crescând astfel considerabil viteza de antrenare, dar necesitând mult mai mult spațiu de stocare pe dispozitiv.</target>
+      </trans-unit>
+      <trans-unit id="s19a2ee331d08ad42">
+        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
+        <target>(Avertisment: prea multe date tensoriale pot supraîncărca memoria RAM a dispozitivului și pot provoca blocarea acestuia în timpul antrenamentului și, în cel mai rău caz, blocarea sistemului gazdă.)</target>
+      </trans-unit>
+      <trans-unit id="s1bb08bff53933452">
+        <source>Model version</source>
+        <target>Versiunea modelului</target>
+      </trans-unit>
+      <trans-unit id="s2d0ac2f4cbd7b867">
+        <source>Loading models...</source>
+        <target>Se încarcă modele...</target>
+      </trans-unit>
+      <trans-unit id="s0aedd465cb4737b2">
+        <source>Test / Evaluation</source>
+        <target>Testare / Evaluare</target>
+      </trans-unit>
+      <trans-unit id="s17ce2eafdc840624">
+        <source>Loss Distribution</source>
+        <target>Distribuirea pierderilor</target>
+      </trans-unit>
+      <trans-unit id="sf84bd835fc5a52ef">
+        <source>Worst Samples</source>
+        <target>Cele mai proaste mostre</target>
+      </trans-unit>
+      <trans-unit id="s4c08da5f7528a7e3">
+        <source>Model Source</source>
+        <target>Sursa modelului</target>
+      </trans-unit>
+      <trans-unit id="s8a73af950772f702">
+        <source>No Model avaiable.</source>
+        <target>Nu există model disponibil.</target>
+      </trans-unit>
+      <trans-unit id="s888d98a196a240d8">
+        <source>Inputs</source>
+        <target>Intrări</target>
+      </trans-unit>
+      <trans-unit id="s066d70cf9d5e2915">
+        <source>Outputs</source>
+        <target>Rezultate</target>
+      </trans-unit>
+      <trans-unit id="sfb3198d46e57af91">
+        <source>Show Random Test Sample</source>
+        <target>Afișează eșantion aleatoriu de testare</target>
+      </trans-unit>
+      <trans-unit id="s70027acd13cd9df8">
+        <source>Class Encoding</source>
+        <target>Codificare clasă</target>
+      </trans-unit>
+      <trans-unit id="s7b59301169d2cc3d">
+        <source>Number Encoding</source>
+        <target>Codificare numerică</target>
+      </trans-unit>
+      <trans-unit id="s547a4465533a6f5f">
+        <source>Image Encoding</source>
+        <target>Codificare imagine</target>
+      </trans-unit>
+      <trans-unit id="s917734d83f35efa3">
+        <source>Ignore</source>
+        <target>Ignorați</target>
+      </trans-unit>
+      <trans-unit id="sb405f0898c39ca67">
+        <source>Data Type</source>
+        <target>Tipul datelor</target>
+      </trans-unit>
+      <trans-unit id="s334f9922638204ab">
+        <source>Dataset using</source>
+        <target>Set de date utilizat</target>
+      </trans-unit>
+      <trans-unit id="sb03650788f41c135">
+        <source>of 
+          <x id="0" equiv-text="${this.samples.length}"/> Samples
+        </source>
+        <target>din 
+          Eșantioane 
+          <x id="0" equiv-text="${this.samples.length}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sc3727a4fc25d7500">
+        <source>Prediction: 
+          <x id="0" equiv-text="${predClass} ${span}"/> Label: 
+          <x id="1" equiv-text="${labelClass}"/>
+        </source>
+        <target>Predicție: 
+          <x id="0" equiv-text="${predClass} ${span}"/> Etichetă: 
+          <x id="1" equiv-text="${labelClass}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sc3d8f37ea5f4bd79">
+        <source>Visualizing Difference...</source>
+        <target>Vizualizarea diferenței...</target>
+      </trans-unit>
+      <trans-unit id="sd2223afb7d6b100d">
+        <source>Type</source>
+        <target>Tip</target>
+      </trans-unit>
+      <trans-unit id="sce4efb732b98f946">
+        <source>One Class per Sample</source>
+        <target>O clasă per eșantion</target>
+      </trans-unit>
+      <trans-unit id="s6557e193c4f15b9c">
+        <source>Multiple Classes per Sample</source>
+        <target>Mai multe clase per eșantion</target>
+      </trans-unit>
+      <trans-unit id="s49730f3d5751a433">
+        <source>Loading...</source>
+        <target>Se încarcă...</target>
+      </trans-unit>
+      <trans-unit id="sb4f1dffbb6be6302">
+        <source>Clear</source>
+        <target>Clar</target>
+      </trans-unit>
+      <trans-unit id="sf21fb4f4b9e8911f">
+        <source>Width</source>
+        <target>Lățime</target>
+      </trans-unit>
+      <trans-unit id="sffdadf0a576fd802">
+        <source>Height</source>
+        <target>Înălțime</target>
+      </trans-unit>
+      <trans-unit id="s7098a15dd248ce2f">
+        <source>Import Format</source>
+        <target>Format de import</target>
+      </trans-unit>
+      <trans-unit id="sa91ddb7330d86835">
+        <source>Binary String</source>
+        <target>Șir binar</target>
+      </trans-unit>
+      <trans-unit id="s6b0e650acd025eff">
+        <source>Base64 String</source>
+        <target>Șir Base64</target>
+      </trans-unit>
+      <trans-unit id="s1fa03b3ccbfc66a5">
+        <source>Image Pre-Processing</source>
+        <target>Prelucrarea prealabilă a imaginilor</target>
+      </trans-unit>
+      <trans-unit id="s94d63573d312fe9b">
+        <source>Identity</source>
+        <target>Identitate</target>
+      </trans-unit>
+      <trans-unit id="s82caaf657b01a4d0">
+        <source>Grayscale</source>
+        <target>Scala de gri</target>
+      </trans-unit>
+      <trans-unit id="se1c4d8107171ecb2">
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/> - Label: 
+          <x id="1" equiv-text="${labelValue}"/> = Delta: 
+          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
+        </source>
+        <target>Predicție: 
+          <x id="0" equiv-text="${predValue}"/> - Etichetă: 
+          <x id="1" equiv-text="${labelValue}"/> = Delta: 
+          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="se2b49a41b39653fc">
+        <source>Value Scale</source>
+        <target>Scala valorică</target>
+      </trans-unit>
+      <trans-unit id="sc2e0d19ed54560c8">
+        <source>Exponential</source>
+        <target>Exponențial</target>
+      </trans-unit>
+      <trans-unit id="s5732d2277d736ba1">
+        <source>Quadratic</source>
+        <target>Cuadratică</target>
+      </trans-unit>
+      <trans-unit id="sb59d68ed12d46377">
+        <source>Loading</source>
+        <target>Încărcare</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

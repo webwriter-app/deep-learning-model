@@ -5,6 +5,7 @@ import { InputElement } from './inference-interfaces';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
+import { msg } from "@lit/localize";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
@@ -176,6 +177,6 @@ export class DrawingCanvas extends InputElement {
   }
 
   render() {
-    return html`<canvas></canvas><sl-button @click=${this.clear}>Clear</sl-button>`;
+    return html`<canvas></canvas><sl-button @click=${this.clear}>${msg("Clear")}</sl-button>`;
   }
 }

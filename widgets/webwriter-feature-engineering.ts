@@ -17,7 +17,7 @@ import { FeatureTransformation, getFeatureTransformation, getFeatureTransformati
 import "../lib/dataset/image";
 import "../lib/dataset/linear";
 import getTF from "../lib/tflib";
-import { msg } from "@lit/localize";
+import { msg, str } from "@lit/localize";
 import LOCALIZE from "../localization/generated";
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -191,7 +191,7 @@ export class AiWidgetsFeatures extends LitElementWw {
 
   private renderFieldValues(fieldName: string) {
     if (fieldName == "")
-      return html`<div class="props"><p>Wähle eine Tabellenspalte um sie zu formatieren</p></div>`
+      return html`<div class="props"><p>${msg("Choose a column to format it")}</p></div>`
 
     let that = this;
     let rows;
@@ -201,7 +201,7 @@ export class AiWidgetsFeatures extends LitElementWw {
           return html`<tr><td><p>${JSON.stringify(v[fieldName])}</p></td></tr>`
         }
       )
-      return html`<div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
+      return html`<div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
     } else {
       let Transformation = getFeatureTransformation(this.fieldProps[fieldName].type).constructor;
       try {
@@ -214,10 +214,10 @@ export class AiWidgetsFeatures extends LitElementWw {
             return html`<tr><td><p>${value}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
           }
         )
-        return html`<div class="settings">${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) }, this.editMode)}</div><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead><tbody>${rows}</tbody></table></div>`
+        return html`<div class="settings">${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) }, this.editMode)}</div><div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
       } catch (e) {
         console.log(e);
-        return html`<p style="background: red">This Transformation is not applicable for the values</p><div class="props"><table><thead><td>${fieldName}</td><td>Tensor</td></thead></table></div>`
+        return html`<p style="background: red">${msg("This Transformation is not applicable for the values")}</p><div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead></table></div>`
       }
     }
   }
@@ -228,7 +228,24 @@ export class AiWidgetsFeatures extends LitElementWw {
 
     let options = new Array<TemplateResult>();
     for (let option of getFeatureTransformations()) {
-      options.push(html`<sl-option value=${option.name.replaceAll(" ", "_")}>${option.name}</sl-option>`)
+      let optionName;
+      switch (option.name) {
+        case "Class Encoding":
+          optionName = msg("Class Encoding");
+          break;
+        case "Number Encoding":
+          optionName = msg("Number Encoding");
+          break;
+        case "Image Encoding":
+          optionName = msg("Image Encoding");
+          break;
+        case "Ignore":
+          optionName = msg("Ignore");
+          break;
+        default:
+          optionName = option.name;
+      }
+      options.push(html`<sl-option value=${option.name.replaceAll(" ", "_")}>${optionName}</sl-option>`)
     }
 
     let that = this;
@@ -241,7 +258,7 @@ export class AiWidgetsFeatures extends LitElementWw {
       that._triggerChanged();
     }
 
-    return html`<sl-tooltip content="Select how you want the string to be interpreted."><sl-select label="Data Type" @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")} ?disabled=${!(this.editMode == "edit")}>${options}</sl-select></sl-tooltip>`
+    return html`<sl-tooltip content=${msg("Select how you want the string to be interpreted.")}><sl-select label=${msg("Data Type")} @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")} ?disabled=${!(this.editMode == "edit")}>${options}</sl-select></sl-tooltip>`
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
@@ -250,7 +267,7 @@ export class AiWidgetsFeatures extends LitElementWw {
 
   render() {
     if (!this.isInitiated)
-      return html`<p>Loading Tensorflow...</p>`
+      return html`<p>${msg("Loading Tensorflow...")}</p>`
     if (this.samplesSave && !this.samples)
       this.samples = JSON.parse(this.samplesSave);
     if (this.samples == null)
@@ -273,17 +290,17 @@ export class AiWidgetsFeatures extends LitElementWw {
 
       return html`
       <div part="options">
-        <sl-button id="reset" variant="warning" @click=${this.deleteDataset}>Dataset löschen</sl-button>
-        <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
-          <sl-option value="hidden">hide widget</sl-option>
-          <sl-option value="read">read only</sl-option>
-          <sl-option value="feat">feature settings only</sl-option>
-          <sl-option value="edit">edit everything</sl-option>
+        <sl-button id="reset" variant="warning" @click=${this.deleteDataset}>${msg("Delete dataset")}</sl-button>
+        <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
+          <sl-option value="hidden">${msg("hide widget")}</sl-option>
+          <sl-option value="read">${msg("read only")}</sl-option>
+          <sl-option value="feat">${msg("feature settings only")}</sl-option>
+          <sl-option value="edit">${msg("edit everything")}</sl-option>
         </sl-select>
       </div>
-      <p style=${this.editMode != "hidden" ? "display:none" : ""}>Feature Engineering Widget hidden from students.</p>
+      <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Feature Engineering Widget hidden from students.")}</p>
       <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
-        <p>Dataset using <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000; this.handleSizeChange()}} style="display:inline-block" ?disabled=${this.editMode != "edit"}></sl-input> of ${this.samples.length} Samples</p>
+        <p>${msg("Dataset using")} <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000; this.handleSizeChange()}} style="display:inline-block" ?disabled=${this.editMode != "edit"}></sl-input> ${msg(str`of ${this.samples.length} Samples`)}</p>
         ${this.renderTableHeader()}
         ${this.renderFieldTypeSelector(this.activeHeader)}
         ${this.renderFieldValues(this.activeHeader)}

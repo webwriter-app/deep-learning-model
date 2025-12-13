@@ -5,6 +5,7 @@ import { FeatureSettings, FeatureTransformation } from './feature';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
+import { msg, str } from "@lit/localize";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
@@ -127,8 +128,8 @@ export default class ClassTransformation extends FeatureTransformation {
             let span = document.createElement("span");
             span.style.fontFamily = "sans-serif";
             span.innerText = predClass != labelClass ? "≠" : "="
-            return html`Prediction: ${predClass} ${span} Label: ${labelClass}`
-        })(), html`Visualizing Difference...`)}`;
+            return html`${msg(str`Prediction: ${predClass} ${span} Label: ${labelClass}`)}`;
+        })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
     public getSettingElement(changeCallback): TemplateResult {
@@ -140,9 +141,9 @@ export default class ClassTransformation extends FeatureTransformation {
             changeCallback(that.settings);
         }
         return html`
-            <sl-select label="Type" @sl-change=${typechange} value=${this.settings.type}>
-                <sl-option value="one-hot">One Class per Sample</sl-option>
-                <sl-option value="multi-hot">Multiple Classes per Sample</sl-option>
+            <sl-select label=${msg("Type")} @sl-change=${typechange} value=${this.settings.type}>
+                <sl-option value="one-hot">${msg("One Class per Sample")}</sl-option>
+                <sl-option value="multi-hot">${msg("Multiple Classes per Sample")}</sl-option>
             </sl-select>`
     }
 
@@ -151,6 +152,6 @@ export default class ClassTransformation extends FeatureTransformation {
             (async () => {
                 let transformed = (await this.transform(value)).arraySync();
                 return html`${transformed.join(", ")}`;
-            })(), html`Loading...`)}`;
+            })(), html`${msg("Loading...")}`)}`;
     }
 }

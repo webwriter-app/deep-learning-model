@@ -5,6 +5,7 @@ import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
+import { msg } from '@lit/localize';
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
@@ -174,7 +175,7 @@ export default class ImageTransformation extends FeatureTransformation {
         //This is needed because the global sl-input class is broken...
         this.widthElement = document.createElement("sl-input");
         this.widthElement.type = "number"
-        this.widthElement.label = "Width";
+        this.widthElement.label = msg("Width");
         this.widthElement.value = this.settings.width;
         this.widthElement.addEventListener("sl-change", typechange);
         this.widthElement.max = this.settings.width;
@@ -184,7 +185,7 @@ export default class ImageTransformation extends FeatureTransformation {
 
         this.heightElement = document.createElement("sl-input");
         this.heightElement.type = "number"
-        this.heightElement.label = "Height";
+        this.heightElement.label = msg("Height");
         this.heightElement.value = this.settings.height;
         this.heightElement.addEventListener("sl-change", typechange);
         this.heightElement.max = this.settings.height;
@@ -193,14 +194,14 @@ export default class ImageTransformation extends FeatureTransformation {
         this.heightElement.disabled = editMode == "read"
 
         return html`
-        <sl-select name="shema" value=${this.settings.shema} @sl-change=${typechange} label="Import Format" ?disabled=${editMode == "read"}>
-            <sl-option value="binary">Binary String</sl-option>
-            <sl-option value="base64">Base64 String</sl-option>
+        <sl-select name="shema" value=${this.settings.shema} @sl-change=${typechange} label=${msg("Import Format")} ?disabled=${editMode == "read"}>
+            <sl-option value="binary">${msg("Binary String")}</sl-option>
+            <sl-option value="base64">${msg("Base64 String")}</sl-option>
         </sl-select>
         ${this.widthElement}${this.heightElement}
-        <sl-select name="transform" value=${this.settings.transform} @sl-change=${typechange} label="Image Pre-Processing" ?disabled=${editMode == "read"}>
-            <sl-option value="identity">Identity</sl-option>
-            <sl-option value="grayscale">Grayscale</sl-option>
+        <sl-select name="transform" value=${this.settings.transform} @sl-change=${typechange} label=${msg("Image Pre-Processing")} ?disabled=${editMode == "read"}>
+            <sl-option value="identity">${msg("Identity")}</sl-option>
+            <sl-option value="grayscale">${msg("Grayscale")}</sl-option>
         </sl-select>`;
     }
 

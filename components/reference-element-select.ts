@@ -1,3 +1,4 @@
+import { msg } from "@lit/localize";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
@@ -91,10 +92,10 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
                 elem.style.boxShadow = "";
             }, 1000);
         }
-        return html`<sl-select id="elemselect" value=${this.elemId} placeholder="Select Source Element" @sl-focus=${highlight} @sl-change=${changeElem}>
+        return html`<sl-select id="elemselect" value=${this.elemId} placeholder=${msg("Select Source Element")} @sl-focus=${highlight} @sl-change=${changeElem}>
             ${options}
         </sl-select>
-        <sl-button @click=${highlight} id="btn">Show selection</sl-button>
+        <sl-button @click=${highlight} id="btn">${msg("Show selection")}</sl-button>
         `
     }
 

@@ -1,9 +1,11 @@
+import { msg } from "@lit/localize";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ModelEditor } from "../components/model-editor";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
+import LOCALIZE from "../localization/generated";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 
 /**
@@ -23,6 +25,8 @@ export class AiWidgetsDesigns extends LitElementWw {
         "sl-icon-button": SlIconButton,
         "ref-select": AiWidgetsReferenceSelect
     }
+
+    protected localize = LOCALIZE;
 
     static styles = css`
     :host {
@@ -213,57 +217,57 @@ export class AiWidgetsDesigns extends LitElementWw {
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <model-editor id="model-editor" @modelchange=${this._editorChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
             <div id="stats">
-                <p>Number of Operation: <span id="numberNodes"></span></p>
-                <p>Total Parameters: <span id="params"></span></p>
+                <p>${msg("Number of Operations:")} <span id="numberNodes"></span></p>
+                <p>${msg("Total Parameters:")} <span id="params"></span></p>
             </div>
             <div id="add" style="display:${this.editMode == "edit" ? "" : "none"}">
                 <div class="group">
-                    <p>Add I/O Layer</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("input")}>Input</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("output")}>Output</sl-button>
+                    <p>${msg("Add I/O Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("input")}>${msg("Input")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("output")}>${msg("Output")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>Add Trainable Layer</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("fcl")}>Linear</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("conv")}>Convolution</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("transposeconv")}>Transpose Convolution</sl-button>
+                    <p>${msg("Add Trainable Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("fcl")}>${msg("Linear")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("conv")}>${msg("Convolution")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("transposeconv")}>${msg("Transpose Convolution")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>Add misc. Layer</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("activation")}>Activation</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("dropout")}>Dropout</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("noise")}>Noise</sl-button>
+                    <p>${msg("Add misc. Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("activation")}>${msg("Activation")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("dropout")}>${msg("Dropout")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("noise")}>${msg("Noise")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>Add Shaping Layer</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("flatten")}>Flatten</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("concat")}>Concatination</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("reshape")}>Reshape</sl-button>
+                    <p>${msg("Add Shaping Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("flatten")}>${msg("Flatten")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("concat")}>${msg("Concatination")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("reshape")}>${msg("Reshape")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>Add Combinational Layer</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("add")}>Addition</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("attention")}>Attention</sl-button>
+                    <p>${msg("Add Combinational Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("add")}>${msg("Addition")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("attention")}>${msg("Attention")}</sl-button>
                 </div>
             </div>
             <div id="controls">
-                <sl-button @click=${() => this.zoomReset()}>Center View</sl-button>
-                <sl-tooltip content="Zoom In"><sl-button @click=${() => this.zoomIn()}>+</sl-button></sl-tooltip>
-                <sl-tooltip content="Zoom Out"><sl-button @click=${() => this.zoomOut()}>-</sl-button></sl-tooltip>
+                <sl-button @click=${() => this.zoomReset()}>${msg("Center View")}</sl-button>
+                <sl-tooltip content=${msg("Zoom In")}><sl-button @click=${() => this.zoomIn()}>+</sl-button></sl-tooltip>
+                <sl-tooltip content=${msg("Zoom Out")}><sl-button @click=${() => this.zoomOut()}>-</sl-button></sl-tooltip>
             </div>
         </div>
-        <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Design Widget hidden from students.</p>
+        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Design Widget hidden from students.")}</p>
         <div part="options">
-            <p>Feature Source</p>
+            <p>${msg("Feature Source")}</p>
             <ref-select id="feature-select" elementType="webwriter-feature-engineering" elemId=${this.featureWidgetId} typeName="Features" @refchange=${this._handleRefChange} ownerId=${this.id}></ref-select>
-            <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
-                <sl-option value="hidden">hide widget</sl-option>
-                <sl-option value="read">read only</sl-option>
-                <sl-option value="layer">properties only</sl-option>
-                <sl-option value="edit">edit everything</sl-option>
+            <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
+                <sl-option value="hidden">${msg("hide widget")}</sl-option>
+                <sl-option value="read">${msg("read only")}</sl-option>
+                <sl-option value="layer">${msg("properties only")}</sl-option>
+                <sl-option value="edit">${msg("edit everything")}</sl-option>
             </sl-select>
-            <sl-input label="Max Model Parameters" type="number" step="100" value=${this.maxModelParameters} min="1" max="1000000" @sl-change=${modelParametersChanged}></sl-input>
-            <sl-input label="Max Layer Parameters" type="number" step="10" value=${this.maxLayerParameters} min="1" max="100000" @sl-change=${layerParametersChanged}></sl-input>
+            <sl-input label=${msg("Max Model Parameters")} type="number" step="100" value=${this.maxModelParameters} min="1" max="1000000" @sl-change=${modelParametersChanged}></sl-input>
+            <sl-input label=${msg("Max Layer Parameters")} type="number" step="10" value=${this.maxLayerParameters} min="1" max="100000" @sl-change=${layerParametersChanged}></sl-input>
         </div>`
     }
     

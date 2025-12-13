@@ -1,6 +1,7 @@
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
+import { msg } from "@lit/localize";
 import { customElement, property, query } from "lit/decorators.js";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
@@ -14,6 +15,7 @@ import { InputElement, OutputElement } from '../components/inference-fields/infe
 import { NumberInput } from '../components/inference-fields/number-input';
 import { NumberOutput } from '../components/inference-fields/number-output';
 import { AiWidgetsTraining } from './webwriter-model-training';
+import LOCALIZE from "../localization/generated";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
@@ -57,6 +59,8 @@ export class AiWidgetsInference extends LitElementWw {
         "number-output": NumberOutput,
         "number-input": NumberInput
     }
+
+    protected localize = LOCALIZE;
 
     static styles = css`
         :host div[part='options'] {
@@ -148,16 +152,16 @@ export class AiWidgetsInference extends LitElementWw {
             setTimeout(function() {
                 that.selectedModelChange();
             })
-        return html`<sl-select label="Model version" id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label=${msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
     /** Renders the left input fields which the user can edit and which values are fed into the model periodically. */
     private getFeatureInputs() {
         if (this.model == null)
-            return html`<p>No Model avaiable.</p>`;
+            return html`<p>${msg("No Model avaiable.")}</p>`;
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [html`<div class="input"><p>🡺 Inputs</p></div>`];
+        let elements = [html`<div class="input"><p>🡺 ${msg("Inputs")}</p></div>`];
         for (let input of this.model.inputNames) {
             let featureName = input.replace("in_","");
             let transform = tensorDataset.featureMaps[featureName];
@@ -172,7 +176,7 @@ export class AiWidgetsInference extends LitElementWw {
             return html``;
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [html`<div class="output"><p>Outputs 🡺</p></div>`];
+        let elements = [html`<div class="output"><p>${msg("Outputs")} 🡺</p></div>`];
         for (let input of this.model.outputNames) {
             let featureName = input.replace("out_","");
             let transform = tensorDataset.featureMaps[featureName];
@@ -191,16 +195,16 @@ export class AiWidgetsInference extends LitElementWw {
         }, 1000);
         return html`<div id="container">
         <div id="top">
-        ${until(this.getModelSelect(), html`Loading models...`)}
-        <sl-button @click=${this.fillWithRandomSample}>Show Random Test Sample</sl-button>
+        ${until(this.getModelSelect(), html`${msg("Loading models...")}`)}
+        <sl-button @click=${this.fillWithRandomSample}>${msg("Show Random Test Sample")}</sl-button>
         </div>
         ${this.getFeatureInputs()}
         ${this.getFeatureOutputs()}
         </div>
         <div part="options">
-            <p>Feature Source</p>
+            <p>${msg("Feature Source")}</p>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
-            <p>Model Source</p>
+            <p>${msg("Model Source")}</p>
             <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }

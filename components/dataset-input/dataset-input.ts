@@ -1,3 +1,4 @@
+import { msg } from "@lit/localize";
 import { html } from "lit";
 
 import { LitElementWw } from "@webwriter/lit";
@@ -57,7 +58,7 @@ export class DatasetInput extends LitElementWw {
         @drop=${this.handleDropOnFileInputArea}
       >
         <sl-icon slot="prefix" src=${file}></sl-icon>
-        Select Dataset
+        ${msg("Select Dataset")}
         <input
           name="fileInput"
           id="fileInput"

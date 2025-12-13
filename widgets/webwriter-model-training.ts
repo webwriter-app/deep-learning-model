@@ -2,12 +2,14 @@ import { SlButton, SlButtonGroup, SlCheckbox, SlIcon, SlIconButton, SlInput, SlO
 import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
 import { css, html, TemplateResult } from "lit";
+import { msg } from "@lit/localize";
 import { customElement, property, query } from "lit/decorators.js";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 import { AiWidgetsDesigns } from "./webwriter-model-designing";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
+import LOCALIZE from "../localization/generated";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
@@ -82,6 +84,7 @@ export class AiWidgetsTraining extends LitElementWw {
         "ref-select": AiWidgetsReferenceSelect
     }
 
+    protected localize = LOCALIZE;
 
     static styles = css`
     :host {
@@ -207,53 +210,53 @@ export class AiWidgetsTraining extends LitElementWw {
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <div class="controls">
-                <sl-select id="optimizer" value="adam" label="Optimizer" size="small" @sl-change=${this.changeOptimizer}>
+                <sl-select id="optimizer" value="adam" label=${msg("Optimizer")} size="small" @sl-change=${this.changeOptimizer}>
                     <sl-option value="adam">Adam</sl-option>
                     <sl-option value="momentum">Momentum</sl-option>
                     <sl-option value="rmsprop">RMSProp</sl-option>
                     <sl-option value="sgd">SGD</sl-option>
                 </sl-select>
-                <sl-input id="lr" type="number" label="Learning Rate" min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
-                <sl-input style="display:none" id="momentum" type="number" label="Momentum" min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="batch" type="number" label="Batch Size" min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="epochs" type="number" label="Epochs" min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="lr" type="number" label=${msg("Learning Rate")} min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
+                <sl-input style="display:none" id="momentum" type="number" label=${msg("Momentum")} min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="batch" type="number" label=${msg("Batch Size")} min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="epochs" type="number" label=${msg("Epochs")} min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
                 <sl-button-group>
-                <sl-button id="start-training" @click=${this.training}>Start training</sl-button>
-                <sl-button id="reset-training" @click=${this.resetModel}>Reset</sl-button>
+                <sl-button id="start-training" @click=${this.training}>${msg("Start training")}</sl-button>
+                <sl-button id="reset-training" @click=${this.resetModel}>${msg("Reset")}</sl-button>
                 </sl-button-group>
             </div>
             <p id="error" style="display:none"></p>
             <div id="training-metrics" style="display:none">
                 ${this.chartContainer}
                 <sl-select id="metrics" value="Loss Accuracy" multiple clearable @sl-change=${this.updateGraph}>
-                    <sl-option value="Loss">Loss</sl-option>
-                    <sl-option value="Accuracy">Accuracy</sl-option>
-                    <sl-option value="R2_Score">R2 Score</sl-option>
-                    <sl-option value="Percision">Precision</sl-option>
-                    <sl-option value="Recall">Recall</sl-option>
+                    <sl-option value="Loss">${msg("Loss")}</sl-option>
+                    <sl-option value="Accuracy">${msg("Accuracy")}</sl-option>
+                    <sl-option value="R2_Score">${msg("R2 Score")}</sl-option>
+                    <sl-option value="Percision">${msg("Precision")}</sl-option>
+                    <sl-option value="Recall">${msg("Recall")}</sl-option>
                 </sl-select>
-                <p style="margin:0px">Training Speed:<span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;Used Tensor Memory:<span id="memory"></span>MB</p>
+                <p style="margin:0px">${msg("Training Speed:")} <span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;${msg("Used Tensor Memory:")} <span id="memory"></span>MB</p>
             </div>
         </div>
-        <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Training Widget hidden from students.</p>
+        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Training Widget hidden from students.")}</p>
             <div part="options">
-                <p>Feature Source</p>
+                <p>${msg("Feature Source")}</p>
                 <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
-                <p>Design Source</p>
+                <p>${msg("Design Source")}</p>
                 <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
-                <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
-                    <sl-option value="hidden">hide widget</sl-option>
-                    <sl-option value="edit">edit everything</sl-option>
+                <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
+                    <sl-option value="hidden">${msg("hide widget")}</sl-option>
+                    <sl-option value="edit">${msg("edit everything")}</sl-option>
                 </sl-select>
                 <br>
-                <sl-select label="Prefered Backend" value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
-                    <sl-option value="cpu">CPU</sl-option>
-                    <sl-option value="webgl">WebGL (GPU)</sl-option>
+                <sl-select label=${msg("Preferred Backend")} value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
+                    <sl-option value="cpu">${msg("CPU")}</sl-option>
+                    <sl-option value="webgl">${msg("WebGL (GPU)")}</sl-option>
                 </sl-select>
                 <br>
-                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>Cache training samples</sl-checkbox>
-                <p> This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device. </p>
-                <p style="color:red"> (Warning: Too much tensor data can over fill the device RAM and crash during training and in the worst case lock-up the host system.) </p>
+                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>${msg("Cache training samples")}</sl-checkbox>
+                <p>${msg("This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.")}</p>
+                <p style="color:red">${msg("(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)")}</p>
             </div>`
     }
 

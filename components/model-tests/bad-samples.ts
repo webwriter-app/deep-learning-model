@@ -1,3 +1,4 @@
+import { msg } from "@lit/localize";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
@@ -144,8 +145,8 @@ export class BadSamples extends LitElementWw {
 
     public render(): TemplateResult {
         if (this.model == null)
-            return html`<p>Loading model...</p>`
+            return html`<p>${msg("Loading model...")}</p>`
 
-        return html`${until(this.getBadSamples(), html`<p>Calculating Loss For Samples...</p>`)}`
+        return html`${until(this.getBadSamples(), html`<p>${msg("Calculating Loss For Samples...")}</p>`)}`
     }
 }

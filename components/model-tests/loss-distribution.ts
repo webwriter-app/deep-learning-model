@@ -1,3 +1,4 @@
+import { msg } from "@lit/localize";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
@@ -166,8 +167,8 @@ export class LossDistribution extends LitElementWw {
 
     public render(): TemplateResult {
         if (this.model == null)
-            return html`<p>Loading model...</p>`
+            return html`<p>${msg("Loading model...")}</p>`
 
-        return html`${until(this.getDiagram(), html`<p>Calculating Loss Distribution...</p>`)}`
+        return html`${until(this.getDiagram(), html`<p>${msg("Calculating Loss Distribution...")}</p>`)}`
     }
 }

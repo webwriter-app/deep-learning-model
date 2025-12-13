@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ko">
 <file id="." original=".">
 <unit id="description"><segment><source>A set of blocks to create, train and evaluate deep learning models.</source><target>딥 러닝 모델을 생성, 훈련 및 평가하기 위한 블록 세트.</target></segment></unit>
