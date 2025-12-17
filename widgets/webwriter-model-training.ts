@@ -452,7 +452,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 const modelArtifacts = {
                     modelTopology: jsonObj.modelTopology,
                     weightSpecs: jsonObj.weightSpecs,
-                    weightData: modelWeights,
+                    weightData: modelWeights.buffer,
                 };
 
                 return modelArtifacts;

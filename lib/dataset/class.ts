@@ -125,10 +125,8 @@ export default class ClassTransformation extends FeatureTransformation {
         return html`${until((async () => {
             let predClass = await this.inverse(pred);
             let labelClass = await this.inverse(label);
-            let span = document.createElement("span");
-            span.style.fontFamily = "sans-serif";
-            span.innerText = predClass != labelClass ? "≠" : "="
-            return html`${msg(str`Prediction: ${predClass} ${span} Label: ${labelClass}`)}`;
+            const relation = predClass != labelClass ? "≠" : "="
+            return html`${msg(str`Prediction: ${predClass} ${relation} Label: ${labelClass}`)}`;
         })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
