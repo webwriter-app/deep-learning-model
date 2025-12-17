@@ -1,5 +1,5 @@
 {
-  "name": "@webwriter/ai-blocks",
+  "name": "@webwriter/deep-learning-model",
   "version": "0.0.1",
   "description": "A set of blocks to create, train and evaluate deep learning models.",
   "keywords": [
@@ -99,6 +99,5 @@
   },
   "editingConfig": {
     ".": {}
-  },
-  "customElements": "custom-elements.json"
+  }
 }
