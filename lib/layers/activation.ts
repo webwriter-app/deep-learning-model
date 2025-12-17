@@ -1,6 +1,7 @@
 import { SlSelect } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
+import { msg } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -15,7 +16,7 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Activation", editor)
 
-        this.typeSelect = this.addSelect("Function", ["Identity", "relu", "tanh", "sigmoid", "Softmax", "normalize"])
+        this.typeSelect = this.addSelect(msg("Function"), ["Identity", "relu", "tanh", "sigmoid", "Softmax", "normalize"])
         this.typeSelect.value = "relu";
     }
     update() {
@@ -40,5 +41,8 @@ export class ExportLayer extends Layer {
         else if (this.typeSelect.value == "normalize")
             return { output_1: tf.layers.layerNormalization().apply(inputs.input_1) as TF.SymbolicTensor};
         else return { output_1: tf.layers.activation({ activation: this.typeSelect.value as ActivationIdentifier}).apply(inputs.input_1) as TF.SymbolicTensor };
+    }
+    protected getDisplayName(): string {
+        return msg("Activation");
     }
 }

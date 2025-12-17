@@ -1,6 +1,7 @@
 import { SlInput } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer } from "./index";
+import { msg } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -14,7 +15,7 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Linear", editor)
 
-        this.dimInput = this.addNumberInput("Output Nodes", 1, 500);
+        this.dimInput = this.addNumberInput(msg("Output Nodes"), 1, 500);
         let that = this;
         this.dimInput.oninput = function () {
             that.getNodeOutputElement("output_1").innerText = that.dimInput.value;
@@ -24,7 +25,7 @@ export class ExportLayer extends Layer {
         this.dimInput.value = "50"
 
         this.params = document.createElement("span");
-        this.addTextElement("Parameters: ", this.params);
+        this.addTextElement(msg("Parameters: "), this.params);
     }
     public getNumberOfParameters() {
         this.update();
@@ -41,7 +42,7 @@ export class ExportLayer extends Layer {
         let inDim = parseInt(this.getNodeInputElement("input_1").innerText)
         let outDim = parseInt(this.dimInput.value)
         let params = inDim * outDim + outDim
-        this.params.title = params > this.editor.maxLayerParams ? "Layer has to many trainable parameters. Try reducing the input size or the tunable properties." : "";
+        this.params.title = params > this.editor.maxLayerParams ? msg("Layer has to many trainable parameters. Try reducing the input size or the tunable properties.") : "";
         return super.valid() && params <= this.editor.maxLayerParams;
     }
     getState() {
@@ -58,5 +59,8 @@ export class ExportLayer extends Layer {
     }
     public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         return { output_1: tf.layers.dense({ units: parseInt(this.dimInput.value) }).apply(inputs.input_1) as TF.SymbolicTensor };
+    }
+    protected getDisplayName(): string {
+        return msg("Linear");
     }
 }

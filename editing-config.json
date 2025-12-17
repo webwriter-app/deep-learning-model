@@ -30,10 +30,10 @@
       "pt-BR": "Área de testes de Deep Learning",
       "tr": "Derin Öğrenme Oyun Alanı",
       "ja": "ディープラーニング・プレイグラウンド",
-      "id": "Lapangan Uji Coba Deep Learning",
+      "id": "Lapangan Uji Deep Learning",
       "ko": "딥 러닝 플레이그라운드",
       "zh-hans": "深度学习实验场",
-      "zh-hant": "深度學習實驗室"
+      "zh-hant": "深度學習實作平台"
     },
     "uninsertable": false,
     "description": {

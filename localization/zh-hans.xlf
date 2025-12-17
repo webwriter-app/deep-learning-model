@@ -443,6 +443,110 @@
         <source>Loading</source>
         <target>正在加载</target>
       </trans-unit>
+      <trans-unit id="seffcca34b918ddc0">
+        <source>Has a cyclic reference.</source>
+        <target>存在循环引用。</target>
+      </trans-unit>
+      <trans-unit id="s07da69ddbc0d4c69">
+        <source>Function</source>
+        <target>功能</target>
+      </trans-unit>
+      <trans-unit id="sdde16b9126492f79">
+        <source>Kernel Size</source>
+        <target>内核大小</target>
+      </trans-unit>
+      <trans-unit id="s58d6b1ecd5084538">
+        <source>Stride</source>
+        <target>步伐</target>
+      </trans-unit>
+      <trans-unit id="scfd25318edb1ebb1">
+        <source># of Kernels</source>
+        <target>内核数量</target>
+      </trans-unit>
+      <trans-unit id="s96d63527efafa81b">
+        <source>Parameters: </source>
+        <target>参数： </target>
+      </trans-unit>
+      <trans-unit id="sb633a04ba54b2dc0">
+        <source>Layer has to many trainable parameters. Try reducing the input size or the tunable properties.</source>
+        <target>该层可训练参数过多。请尝试缩小输入尺寸或减少可调参数。</target>
+      </trans-unit>
+      <trans-unit id="s981f232bd33ec927">
+        <source>Rate</source>
+        <target>费率</target>
+      </trans-unit>
+      <trans-unit id="seb198c12be265d61">
+        <source>Output Nodes</source>
+        <target>输出节点</target>
+      </trans-unit>
+      <trans-unit id="s3aba710c340e1059">
+        <source>No Feature Data avaliable</source>
+        <target>无可用特征数据</target>
+      </trans-unit>
+      <trans-unit id="s06471a3c2aed9b4b">
+        <source>Input field</source>
+        <target>输入框</target>
+      </trans-unit>
+      <trans-unit id="s82c21acdbcd6e830">
+        <source>Strength</source>
+        <target>力量</target>
+      </trans-unit>
+      <trans-unit id="s66a5898632280fe2">
+        <source>Loss Function</source>
+        <target>损失函数</target>
+      </trans-unit>
+      <trans-unit id="s38ddf839c081bbaf">
+        <source>
+          <x id="0" equiv-text="${(i + 1)}"/>th dim
+        </source>
+        <target>
+          <x id="0" equiv-text="${(i + 1)}"/> 第 dim
+        </target>
+      </trans-unit>
+      <trans-unit id="s2c48e68704ff98c2">
+        <source>Output shape invalid: 
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </source>
+        <target>输出形状无效：
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sc0e01e8b4662bec2">
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/>,  Label: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </source>
+        <target>预测：
+          <x id="0" equiv-text="${predValue}"/> ,  标签： 
+          <x id="1" equiv-text="${labelValue}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sab09aa21c8921bea">
+        <source>Loading image</source>
+        <target>正在加载图片</target>
+      </trans-unit>
+      <trans-unit id="s0c5410258e1a4144">
+        <source>Elementwise Add</source>
+        <target>元素级加法</target>
+      </trans-unit>
+      <trans-unit id="s02bee65dc3f21363">
+        <source>Concatenation</source>
+        <target>连接</target>
+      </trans-unit>
+      <trans-unit id="sc9d11ba788fd6aff">
+        <source>Start Training</source>
+        <target>开始训练</target>
+      </trans-unit>
+      <trans-unit id="s61ac82c68c336bb1">
+        <source>Stop Training</source>
+        <target>停止训练</target>
+      </trans-unit>
+      <trans-unit id="s2b6d43596140ef3a">
+        <source>Continue Training</source>
+        <target>继续培训</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

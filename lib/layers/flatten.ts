@@ -1,5 +1,6 @@
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
+import { msg } from '@lit/localize';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -40,5 +41,8 @@ export class ExportLayer extends Layer {
     }
     public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         return { output_1: tf.layers.flatten().apply(inputs.input_1) as TF.SymbolicTensor };
+    }
+    protected getDisplayName(): string {
+        return msg("Flatten");
     }
 }

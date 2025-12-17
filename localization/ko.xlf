@@ -443,6 +443,110 @@
         <source>Loading</source>
         <target>로딩 중</target>
       </trans-unit>
+      <trans-unit id="seffcca34b918ddc0">
+        <source>Has a cyclic reference.</source>
+        <target>순환 참조가 있습니다.</target>
+      </trans-unit>
+      <trans-unit id="s07da69ddbc0d4c69">
+        <source>Function</source>
+        <target>기능</target>
+      </trans-unit>
+      <trans-unit id="sdde16b9126492f79">
+        <source>Kernel Size</source>
+        <target>커널 크기</target>
+      </trans-unit>
+      <trans-unit id="s58d6b1ecd5084538">
+        <source>Stride</source>
+        <target>스트라이드</target>
+      </trans-unit>
+      <trans-unit id="scfd25318edb1ebb1">
+        <source># of Kernels</source>
+        <target>커널 수</target>
+      </trans-unit>
+      <trans-unit id="s96d63527efafa81b">
+        <source>Parameters: </source>
+        <target>매개변수: </target>
+      </trans-unit>
+      <trans-unit id="sb633a04ba54b2dc0">
+        <source>Layer has to many trainable parameters. Try reducing the input size or the tunable properties.</source>
+        <target>레이어의 학습 가능한 매개변수가 너무 많습니다. 입력 크기나 조정 가능한 속성을 줄여 보십시오.</target>
+      </trans-unit>
+      <trans-unit id="s981f232bd33ec927">
+        <source>Rate</source>
+        <target>평가</target>
+      </trans-unit>
+      <trans-unit id="seb198c12be265d61">
+        <source>Output Nodes</source>
+        <target>출력 노드</target>
+      </trans-unit>
+      <trans-unit id="s3aba710c340e1059">
+        <source>No Feature Data avaliable</source>
+        <target>사용 가능한 기능 데이터 없음</target>
+      </trans-unit>
+      <trans-unit id="s06471a3c2aed9b4b">
+        <source>Input field</source>
+        <target>입력 필드</target>
+      </trans-unit>
+      <trans-unit id="s82c21acdbcd6e830">
+        <source>Strength</source>
+        <target>힘</target>
+      </trans-unit>
+      <trans-unit id="s66a5898632280fe2">
+        <source>Loss Function</source>
+        <target>손실 함수</target>
+      </trans-unit>
+      <trans-unit id="s38ddf839c081bbaf">
+        <source>
+          <x id="0" equiv-text="${(i + 1)}"/>th dim
+        </source>
+        <target>
+          <x id="0" equiv-text="${(i + 1)}"/> th 차원
+        </target>
+      </trans-unit>
+      <trans-unit id="s2c48e68704ff98c2">
+        <source>Output shape invalid: 
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </source>
+        <target>출력 형식이 잘못되었습니다:
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sc0e01e8b4662bec2">
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/>,  Label: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </source>
+        <target>예측:
+          <x id="0" equiv-text="${predValue}"/> ,  라벨: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sab09aa21c8921bea">
+        <source>Loading image</source>
+        <target>이미지 로딩 중</target>
+      </trans-unit>
+      <trans-unit id="s0c5410258e1a4144">
+        <source>Elementwise Add</source>
+        <target>요소별 덧셈</target>
+      </trans-unit>
+      <trans-unit id="s02bee65dc3f21363">
+        <source>Concatenation</source>
+        <target>연결</target>
+      </trans-unit>
+      <trans-unit id="sc9d11ba788fd6aff">
+        <source>Start Training</source>
+        <target>훈련 시작</target>
+      </trans-unit>
+      <trans-unit id="s61ac82c68c336bb1">
+        <source>Stop Training</source>
+        <target>훈련 중단</target>
+      </trans-unit>
+      <trans-unit id="s2b6d43596140ef3a">
+        <source>Continue Training</source>
+        <target>훈련 계속하기</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

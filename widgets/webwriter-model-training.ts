@@ -501,7 +501,7 @@ export class AiWidgetsTraining extends LitElementWw {
             this.chart.removeAnnotation("best");
         this.updateGraph();
         this.setHyperParamsActive(true);
-        this.startTrainingBtn.innerText = "Start Training";
+        this.startTrainingBtn.innerText = msg("Start Training");
     }
 
     /**
@@ -550,7 +550,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
 
         this.trainingMetricsDiv.style.display = "";
-        this.startTrainingBtn.innerText = "Stop Training";
+        this.startTrainingBtn.innerText = msg("Stop Training");
 
         if (this.currentTraining != null && !this.isTraining) {
             this.isTraining = true;
@@ -631,7 +631,7 @@ export class AiWidgetsTraining extends LitElementWw {
             }).then(async function() {
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
-                that.startTrainingBtn.innerText = "Continue Training";
+                that.startTrainingBtn.innerText = msg("Continue Training");
                 that.isTraining = false;
                 await that.saveCurrentModel('epoch-' + that.currentEpoch);
                 that.modelVersions = JSON.parse(JSON.stringify(that.modelVersions));
@@ -639,7 +639,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 console.error(err);
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
-                that.startTrainingBtn.innerText = "Continue Training";
+                that.startTrainingBtn.innerText = msg("Continue Training");
                 that.isTraining = false;
                 let index = that.backendPriority.indexOf(tf.getBackend()) + 1
                 if (index == that.backendPriority.length)

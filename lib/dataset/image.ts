@@ -2,10 +2,10 @@ import { SlInput } from '@shoelace-style/shoelace';
 import { html, TemplateResult } from "lit";
 import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature';
+import { msg, str } from '@lit/localize';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
-import { msg } from '@lit/localize';
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
@@ -239,8 +239,8 @@ export default class ImageTransformation extends FeatureTransformation {
         return html`${until((async () => {
             let predValue = this.renderTransformedValue(await this.inverse(pred));
             let labelValue = this.renderTransformedValue(await this.inverse(label));
-            return html`Prediction: ${predValue},  Label: ${labelValue}`
-        })(), html`Visualizing Difference...`)}`;
+            return html`${msg(str`Prediction: ${predValue},  Label: ${labelValue}`)}`;
+        })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
     public renderTransformedValue(value: string | number[]): TemplateResult {
@@ -252,7 +252,7 @@ export default class ImageTransformation extends FeatureTransformation {
                 let img = await this.getImage(value);
                 return img;
             })(),
-            html`Loading image`)
+            html`${msg("Loading image")}`)
             }`;
     }
 }

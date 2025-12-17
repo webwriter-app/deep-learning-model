@@ -444,6 +444,110 @@
         <source>Loading</source>
         <target>Caricamento in corso</target>
       </trans-unit>
+      <trans-unit id="seffcca34b918ddc0">
+        <source>Has a cyclic reference.</source>
+        <target>Ha un riferimento ciclico.</target>
+      </trans-unit>
+      <trans-unit id="s07da69ddbc0d4c69">
+        <source>Function</source>
+        <target>Funzione</target>
+      </trans-unit>
+      <trans-unit id="sdde16b9126492f79">
+        <source>Kernel Size</source>
+        <target>Dimensione del kernel</target>
+      </trans-unit>
+      <trans-unit id="s58d6b1ecd5084538">
+        <source>Stride</source>
+        <target>Passo</target>
+      </trans-unit>
+      <trans-unit id="scfd25318edb1ebb1">
+        <source># of Kernels</source>
+        <target>Numero di kernel</target>
+      </trans-unit>
+      <trans-unit id="s96d63527efafa81b">
+        <source>Parameters: </source>
+        <target>Parametri: </target>
+      </trans-unit>
+      <trans-unit id="sb633a04ba54b2dc0">
+        <source>Layer has to many trainable parameters. Try reducing the input size or the tunable properties.</source>
+        <target>Il livello ha troppi parametri addestrabili. Prova a ridurre la dimensione dell'input o le proprietà regolabili.</target>
+      </trans-unit>
+      <trans-unit id="s981f232bd33ec927">
+        <source>Rate</source>
+        <target>Tasso</target>
+      </trans-unit>
+      <trans-unit id="seb198c12be265d61">
+        <source>Output Nodes</source>
+        <target>Nodi di uscita</target>
+      </trans-unit>
+      <trans-unit id="s3aba710c340e1059">
+        <source>No Feature Data avaliable</source>
+        <target>Nessun dato disponibile</target>
+      </trans-unit>
+      <trans-unit id="s06471a3c2aed9b4b">
+        <source>Input field</source>
+        <target>Campo di immissione</target>
+      </trans-unit>
+      <trans-unit id="s82c21acdbcd6e830">
+        <source>Strength</source>
+        <target>Forza</target>
+      </trans-unit>
+      <trans-unit id="s66a5898632280fe2">
+        <source>Loss Function</source>
+        <target>Funzione di perdita</target>
+      </trans-unit>
+      <trans-unit id="s38ddf839c081bbaf">
+        <source>
+          <x id="0" equiv-text="${(i + 1)}"/>th dim
+        </source>
+        <target>
+          <x id="0" equiv-text="${(i + 1)}"/> la dimensione
+        </target>
+      </trans-unit>
+      <trans-unit id="s2c48e68704ff98c2">
+        <source>Output shape invalid: 
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </source>
+        <target>Forma dell'output non valida: 
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sc0e01e8b4662bec2">
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/>,  Label: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </source>
+        <target>Previsione: 
+          <x id="0" equiv-text="${predValue}"/> ,  Etichetta: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </target>
+      </trans-unit>
+      <trans-unit id="sab09aa21c8921bea">
+        <source>Loading image</source>
+        <target>Caricamento immagine</target>
+      </trans-unit>
+      <trans-unit id="s0c5410258e1a4144">
+        <source>Elementwise Add</source>
+        <target>Aggiungi elemento per elemento</target>
+      </trans-unit>
+      <trans-unit id="s02bee65dc3f21363">
+        <source>Concatenation</source>
+        <target>Concatenazione</target>
+      </trans-unit>
+      <trans-unit id="sc9d11ba788fd6aff">
+        <source>Start Training</source>
+        <target>Inizia l'allenamento</target>
+      </trans-unit>
+      <trans-unit id="s61ac82c68c336bb1">
+        <source>Stop Training</source>
+        <target>Interrompi l'allenamento</target>
+      </trans-unit>
+      <trans-unit id="s2b6d43596140ef3a">
+        <source>Continue Training</source>
+        <target>Continua la formazione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

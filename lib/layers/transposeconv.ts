@@ -1,6 +1,7 @@
 import { SlInput } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
+import { msg } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -18,17 +19,17 @@ export class ExportLayer extends Layer {
         super(1, 1, "Transpose Convolution", editor)
 
         let that = this;
-        this.kernelInput = this.addNumberInput("Kernel Size", 1, 9);
+        this.kernelInput = this.addNumberInput(msg("Kernel Size"), 1, 9);
         this.kernelInput.value = "3";
 
-        this.strideInput = this.addNumberInput("Stride", 1, 7);
+        this.strideInput = this.addNumberInput(msg("Stride"), 1, 7);
         this.strideInput.onchange = function () {
             that.update();
             that.notifyOutputChange();
         }
         this.strideInput.value = "2";
 
-        this.kernelNumInput = this.addNumberInput("# of Kernels", 1, 20);
+        this.kernelNumInput = this.addNumberInput(msg("# of Kernels"), 1, 20);
         this.kernelNumInput.onchange = function () {
             that.update();
             that.notifyOutputChange();
@@ -36,7 +37,7 @@ export class ExportLayer extends Layer {
         this.kernelNumInput.value = "4";
 
         this.params = document.createElement("span");
-        this.addTextElement("Parameters: ", this.params);
+        this.addTextElement(msg("Parameters: "), this.params);
     }
 
     public getNumberOfParameters() {
@@ -57,7 +58,7 @@ export class ExportLayer extends Layer {
     valid() {
         let numKernels = parseInt(this.kernelNumInput.value)
         let params = parseInt(this.kernelInput.value) ** 2 * numKernels + numKernels
-        this.params.title = params > this.editor.maxLayerParams ? "Layer has to many trainable parameters. Try reducing the input size or the tunable properties." : "";
+        this.params.title = params > this.editor.maxLayerParams ? msg("Layer has to many trainable parameters. Try reducing the input size or the tunable properties.") : "";
         return super.valid() && params <= this.editor.maxLayerParams;
     }
 
@@ -81,5 +82,9 @@ export class ExportLayer extends Layer {
 
     public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         return { output_1: tf.layers.conv2dTranspose({ filters:parseInt(this.kernelNumInput.value), kernelSize:parseInt(this.kernelInput.value), strides:parseInt(this.strideInput.value) , padding:"same"}).apply(inputs.input_1) as TF.SymbolicTensor };
+    }
+
+    protected getDisplayName(): string {
+        return msg("Transpose Convolution");
     }
 }
