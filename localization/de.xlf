@@ -55,7 +55,7 @@
       </trans-unit>
       <trans-unit id="s5da30fd688d05a35">
         <source>Edit Permissions</source>
-        <target>Bearbeiten Berechtigungen</target>
+        <target>Bearbeitungs-Berechtigungen</target>
       </trans-unit>
       <trans-unit id="s162c56231b25e6ff">
         <source>hide widget</source>
@@ -63,7 +63,7 @@
       </trans-unit>
       <trans-unit id="s166d284a7cbc6181">
         <source>read only</source>
-        <target>Nur-Lese</target>
+        <target>nur lesen</target>
       </trans-unit>
       <trans-unit id="s2b28da40a8490a78">
         <source>feature settings only</source>
@@ -115,7 +115,7 @@
       </trans-unit>
       <trans-unit id="s56eedda42b0bb66f">
         <source>Add misc. Layer</source>
-        <target>Verschiedenes hinzufügen. Ebene</target>
+        <target>Sonstige Schicht hinzufügen</target>
       </trans-unit>
       <trans-unit id="sf1674aeb3dc2d55d">
         <source>Activation</source>
@@ -123,11 +123,11 @@
       </trans-unit>
       <trans-unit id="sc6bff481def13d70">
         <source>Dropout</source>
-        <target>Abbrecher</target>
+        <target>Dropout</target>
       </trans-unit>
       <trans-unit id="s2bc80ed8441b0831">
         <source>Noise</source>
-        <target>Lärm</target>
+        <target>Rauschen</target>
       </trans-unit>
       <trans-unit id="s1703372e9470522b">
         <source>Add Shaping Layer</source>
@@ -135,15 +135,11 @@
       </trans-unit>
       <trans-unit id="s975087a831353889">
         <source>Flatten</source>
-        <target>Abflachen</target>
-      </trans-unit>
-      <trans-unit id="sbc2e8c67c3498707">
-        <source>Concatination</source>
-        <target>Verkettung</target>
+        <target>Abflachung</target>
       </trans-unit>
       <trans-unit id="sbfe9518a1fe4f185">
         <source>Reshape</source>
-        <target>Umformen</target>
+        <target>Umformung</target>
       </trans-unit>
       <trans-unit id="se13c154abb1c1cff">
         <source>Add Combinational Layer</source>
@@ -155,11 +151,11 @@
       </trans-unit>
       <trans-unit id="s76b14a5034f53fd9">
         <source>Attention</source>
-        <target>Achtung</target>
+        <target>Aufmerksamkeit</target>
       </trans-unit>
       <trans-unit id="s6c5b5757b7756775">
         <source>Center View</source>
-        <target>Zentralansicht</target>
+        <target>Ansicht zentrieren</target>
       </trans-unit>
       <trans-unit id="s22fde937cb709859">
         <source>Zoom In</source>
@@ -203,7 +199,7 @@
       </trans-unit>
       <trans-unit id="s5561b945c8cd59b0">
         <source>Batch Size</source>
-        <target>Losgröße</target>
+        <target>Batch-Größe</target>
       </trans-unit>
       <trans-unit id="s900c980bdb200fcf">
         <source>Epochs</source>
@@ -211,7 +207,7 @@
       </trans-unit>
       <trans-unit id="s1e0afe8020901f1f">
         <source>Start training</source>
-        <target>Mit dem Training beginnen</target>
+        <target>Training starten</target>
       </trans-unit>
       <trans-unit id="s255857544a9d5ec0">
         <source>Reset</source>
@@ -319,7 +315,7 @@
       </trans-unit>
       <trans-unit id="s70027acd13cd9df8">
         <source>Class Encoding</source>
-        <target>Klassen-Kodierung</target>
+        <target>Klassencodierung</target>
       </trans-unit>
       <trans-unit id="s7b59301169d2cc3d">
         <source>Number Encoding</source>
@@ -327,7 +323,7 @@
       </trans-unit>
       <trans-unit id="s547a4465533a6f5f">
         <source>Image Encoding</source>
-        <target>Bildkodierung</target>
+        <target>Bildcodierung</target>
       </trans-unit>
       <trans-unit id="s917734d83f35efa3">
         <source>Ignore</source>
@@ -342,20 +338,15 @@
         <target>Datensatz unter Verwendung von</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of 
-          <x id="0" equiv-text="${this.samples.length}"/> Samples
-        </source>
+        <source>of <x id="0" equiv-text="${this.samples.length}"/> Samples</source>
         <target>von 
-          <x id="0" equiv-text="${this.samples.length}"/> -Proben
+          <x id="0" equiv-text="${this.samples.length}"/> Proben
         </target>
       </trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predClass} ${span}"/> Label: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </source>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${span}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
         <target>Vorhersage: 
-          <x id="0" equiv-text="${predClass} ${span}"/> -Label: 
+          <x id="0" equiv-text="${predClass} ${span}"/> Bezeichnung: 
           <x id="1" equiv-text="${labelClass}"/>
         </target>
       </trans-unit>
@@ -381,7 +372,7 @@
       </trans-unit>
       <trans-unit id="sb4f1dffbb6be6302">
         <source>Clear</source>
-        <target>Klar</target>
+        <target>Löschen</target>
       </trans-unit>
       <trans-unit id="sf21fb4f4b9e8911f">
         <source>Width</source>
@@ -416,11 +407,7 @@
         <target>Graustufen</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/> - Label: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </source>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
         <target>Vorhersage: 
           <x id="0" equiv-text="${predValue}"/> - Bezeichnung: 
           <x id="1" equiv-text="${labelValue}"/> = Delta: 
@@ -437,7 +424,7 @@
       </trans-unit>
       <trans-unit id="s5732d2277d736ba1">
         <source>Quadratic</source>
-        <target>quadratisch</target>
+        <target>Quadratisch</target>
       </trans-unit>
       <trans-unit id="sb59d68ed12d46377">
         <source>Loading</source>
@@ -473,7 +460,7 @@
       </trans-unit>
       <trans-unit id="s981f232bd33ec927">
         <source>Rate</source>
-        <target>Preis</target>
+        <target>Rate</target>
       </trans-unit>
       <trans-unit id="seb198c12be265d61">
         <source>Output Nodes</source>
@@ -496,30 +483,22 @@
         <target>Verlustfunktion</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source>
-          <x id="0" equiv-text="${(i + 1)}"/>th dim
-        </source>
+        <source><x id="0" equiv-text="${(i + 1)}"/>th dim</source>
         <target>
-          <x id="0" equiv-text="${(i + 1)}"/> th dim
+          <x id="0" equiv-text="${(i + 1)}"/> Dim.
         </target>
       </trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </source>
+        <source>Output shape invalid: <x id="0" equiv-text="${inDim}"/> != <x id="1" equiv-text="${outDim}"/></source>
         <target>Ausgangsform ungültig: 
           <x id="0" equiv-text="${inDim}"/> != 
           <x id="1" equiv-text="${outDim}"/>
         </target>
       </trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/>,  Label: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </source>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
         <target>Vorhersage: 
-          <x id="0" equiv-text="${predValue}"/> , Label: 
+          <x id="0" equiv-text="${predValue}"/> - Label: 
           <x id="1" equiv-text="${labelValue}"/>
         </target>
       </trans-unit>
@@ -545,7 +524,7 @@
       </trans-unit>
       <trans-unit id="s2b6d43596140ef3a">
         <source>Continue Training</source>
-        <target>Weiterbildung fortsetzen</target>
+        <target>Training fortsetzen</target>
       </trans-unit>
     </body>
   </file>

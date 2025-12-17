@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Claro`,
 'sb59d68ed12d46377': `Cargando`,
 'sb633a04ba54b2dc0': `La capa tiene demasiados parámetros entrenables. Intenta reducir el tamaño de la entrada o las propiedades ajustables.`,
-'sbc2e8c67c3498707': `Concatenación`,
 'sbfe9518a1fe4f185': `Remodelar`,
 'sc0e01e8b4662bec2': str`Predicción: 
           ${0} ,  Etiqueta: 

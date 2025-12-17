@@ -137,10 +137,6 @@
         <source>Flatten</source>
         <target>Düzleştir</target>
       </trans-unit>
-      <trans-unit id="sbc2e8c67c3498707">
-        <source>Concatination</source>
-        <target>Birleştirme</target>
-      </trans-unit>
       <trans-unit id="sbfe9518a1fe4f185">
         <source>Reshape</source>
         <target>Yeniden şekillendirme</target>
@@ -342,18 +338,13 @@
         <target>Kullanılan veri kümesi</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of 
-          <x id="0" equiv-text="${this.samples.length}"/> Samples
-        </source>
+        <source>of <x id="0" equiv-text="${this.samples.length}"/> Samples</source>
         <target>
           <x id="0" equiv-text="${this.samples.length}"/> Örnekleri
         </target>
       </trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predClass} ${span}"/> Label: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </source>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${span}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
         <target>Tahmin: 
           <x id="0" equiv-text="${predClass} ${span}"/> Etiket: 
           <x id="1" equiv-text="${labelClass}"/>
@@ -416,11 +407,7 @@
         <target>Gri tonlama</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/> - Label: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </source>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
         <target>Tahmin: 
           <x id="0" equiv-text="${predValue}"/> - Etiket: 
           <x id="1" equiv-text="${labelValue}"/> = Delta: 
@@ -496,28 +483,20 @@
         <target>Kayıp Fonksiyonu</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source>
-          <x id="0" equiv-text="${(i + 1)}"/>th dim
-        </source>
+        <source><x id="0" equiv-text="${(i + 1)}"/>th dim</source>
         <target>
           <x id="0" equiv-text="${(i + 1)}"/> th dim
         </target>
       </trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </source>
+        <source>Output shape invalid: <x id="0" equiv-text="${inDim}"/> != <x id="1" equiv-text="${outDim}"/></source>
         <target>Çıktı şekli geçersiz: 
           <x id="0" equiv-text="${inDim}"/> != 
           <x id="1" equiv-text="${outDim}"/>
         </target>
       </trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/>,  Label: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </source>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
         <target>Tahmin: 
           <x id="0" equiv-text="${predValue}"/> , Etiket: 
           <x id="1" equiv-text="${labelValue}"/>

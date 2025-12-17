@@ -21,22 +21,22 @@
 's12126d92849e3b53': `R2-Wert`,
 's15371f7ebfb1ad5e': `Trainingsgeschwindigkeit:`,
 's162c56231b25e6ff': `Widget ausblenden`,
-'s166d284a7cbc6181': `Nur-Lese`,
+'s166d284a7cbc6181': `nur lesen`,
 's1703372e9470522b': `Formungsebene hinzufügen`,
 's17ce2eafdc840624': `Verlustverteilung`,
 's19a2ee331d08ad42': `(Warnung: Zu viele Tensordaten können den RAM-Speicher des Geräts überlasten und während des Trainings zum Absturz führen und im schlimmsten Fall das Host-System blockieren.)`,
 's1bb08bff53933452': `Modellversion`,
 's1c3cbd3cbaee4368': `I/O-Schicht hinzufügen`,
 's1ca51d37e3dae07a': `Dadurch können die transformierten Samples auf dem Rechner zwischengespeichert werden, was die Trainingsgeschwindigkeit erheblich erhöht, jedoch deutlich mehr Speicherplatz auf dem Gerät erfordert.`,
-'s1e0afe8020901f1f': `Mit dem Training beginnen`,
+'s1e0afe8020901f1f': `Training starten`,
 's1fa03b3ccbfc66a5': `Bildvorverarbeitung`,
 's22fde937cb709859': `Vergrößern`,
 's2454d1f117573457': `Präzision`,
 's255857544a9d5ec0': `Zurücksetzen`,
 's26b5b115b8b61794': `Feature Engineering Widget für Schüler ausgeblendet.`,
 's2b28da40a8490a78': `nur Funktionseinstellungen`,
-'s2b6d43596140ef3a': `Weiterbildung fortsetzen`,
-'s2bc80ed8441b0831': `Lärm`,
+'s2b6d43596140ef3a': `Training fortsetzen`,
+'s2bc80ed8441b0831': `Rauschen`,
 's2c48e68704ff98c2': str`Ausgangsform ungültig: 
           ${0} != 
           ${1}
@@ -46,7 +46,7 @@
 's334f9922638204ab': `Datensatz unter Verwendung von`,
 's34af392b321cbfa6': `alles bearbeiten`,
 's38ddf839c081bbaf': str`
-          ${0} th dim
+          ${0} Dim.
         `,
 's39e9054ae5edaf30': `Maximale Schichtparameter`,
 's3aba710c340e1059': `Keine Feature-Daten verfügbar`,
@@ -56,16 +56,16 @@
 's49730f3d5751a433': `Wird geladen...`,
 's4c08da5f7528a7e3': `Modellquelle`,
 's4f5eeeb48a97ea9a': `Verlust`,
-'s547a4465533a6f5f': `Bildkodierung`,
-'s5561b945c8cd59b0': `Losgröße`,
+'s547a4465533a6f5f': `Bildcodierung`,
+'s5561b945c8cd59b0': `Batch-Größe`,
 's559e9b10ba86261e': `Cache-Trainingsbeispiele`,
 's5687c76f8638e9a5': `Datensatz auswählen`,
 's56a6aa2100291b96': `Modell-Trainings-Widget für Schüler ausgeblendet.`,
-'s56eedda42b0bb66f': `Verschiedenes hinzufügen. Ebene`,
-'s5732d2277d736ba1': `quadratisch`,
+'s56eedda42b0bb66f': `Sonstige Schicht hinzufügen`,
+'s5732d2277d736ba1': `Quadratisch`,
 's58bee799432dbc69': `Addition`,
 's58d6b1ecd5084538': `Schritt`,
-'s5da30fd688d05a35': `Bearbeiten Berechtigungen`,
+'s5da30fd688d05a35': `Bearbeitungs-Berechtigungen`,
 's61ac82c68c336bb1': `Training beenden`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
 's62cecbd4b16886e7': `Berechnung der Verlustverteilung...`,
@@ -74,12 +74,12 @@
 's66a5898632280fe2': `Verlustfunktion`,
 's6b0e650acd025eff': `Base64-Zeichenfolge`,
 's6c02f2ec8c3f52a4': `Genauigkeit`,
-'s6c5b5757b7756775': `Zentralansicht`,
+'s6c5b5757b7756775': `Ansicht zentrieren`,
 's6f0c402dbc70cade': `Wählen Sie aus, wie die Zeichenfolge interpretiert werden soll.`,
-'s70027acd13cd9df8': `Klassen-Kodierung`,
+'s70027acd13cd9df8': `Klassencodierung`,
 's7098a15dd248ce2f': `Importformat`,
 's731e8d25df7b1886': `Datensatz löschen`,
-'s76b14a5034f53fd9': `Achtung`,
+'s76b14a5034f53fd9': `Aufmerksamkeit`,
 's7a1c71b249a86643': `Lernrate`,
 's7b59301169d2cc3d': `Zahlcodierung`,
 's82c21acdbcd6e830': `Stärke`,
@@ -90,8 +90,8 @@
 's917734d83f35efa3': `Ignorieren`,
 's94d63573d312fe9b': `Identität`,
 's96d63527efafa81b': `Parameter: `,
-'s975087a831353889': `Abflachen`,
-'s981f232bd33ec927': `Preis`,
+'s975087a831353889': `Abflachung`,
+'s981f232bd33ec927': `Rate`,
 's99456cbda3e05fb0': `Rückruf`,
 's9b5ec9d0b70a0fac': `Maximale Modellparameter`,
 's9eac77171764efaa': `Transponierte Faltung`,
@@ -105,26 +105,25 @@
 'sabf86f32eba45ad4': `Wählen Sie eine Spalte aus, um sie zu formatieren.`,
 'saf01d58ece3a1e02': `Tensorflow wird geladen...`,
 'sb03650788f41c135': str`von 
-          ${0} -Proben
+          ${0} Proben
         `,
 'sb05582ce916894da': `Verkleinern`,
 'sb405f0898c39ca67': `Datentyp`,
-'sb4f1dffbb6be6302': `Klar`,
+'sb4f1dffbb6be6302': `Löschen`,
 'sb59d68ed12d46377': `Laden`,
 'sb633a04ba54b2dc0': `Die Schicht hat zu viele trainierbare Parameter. Versuchen Sie, die Eingabegröße oder die einstellbaren Eigenschaften zu reduzieren.`,
-'sbc2e8c67c3498707': `Verkettung`,
-'sbfe9518a1fe4f185': `Umformen`,
+'sbfe9518a1fe4f185': `Umformung`,
 'sc0e01e8b4662bec2': str`Vorhersage: 
-          ${0} , Label: 
+          ${0} - Label: 
           ${1}
         `,
 'sc2e0d19ed54560c8': `Exponentiell`,
 'sc3727a4fc25d7500': str`Vorhersage: 
-          ${0} ${1} -Label: 
+          ${0} ${1} Bezeichnung: 
           ${2}
         `,
 'sc3d8f37ea5f4bd79': `Unterschiede sichtbar machen...`,
-'sc6bff481def13d70': `Abbrecher`,
+'sc6bff481def13d70': `Dropout`,
 'sc6d31f0cce31ddcf': `Gesamtparameter:`,
 'sc9d11ba788fd6aff': `Training starten`,
 'scb42b9cdc2ad49e4': `Tensor`,

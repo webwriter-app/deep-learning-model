@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Effacer`,
 'sb59d68ed12d46377': `Chargement`,
 'sb633a04ba54b2dc0': `La couche comporte trop de paramètres entraînables. Essayez de réduire la taille de l'entrée ou les propriétés réglables.`,
-'sbc2e8c67c3498707': `Concaténation`,
 'sbfe9518a1fe4f185': `Remodeler`,
 'sc0e01e8b4662bec2': str`Prédiction : 
           ${0} ,  Étiquette : 

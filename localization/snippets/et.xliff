@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="et">
 <file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
-<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST – numbrite lugemine</target></segment></unit>
+<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST – Numbrite lugemine</target></segment></unit>
 <unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>Funktsioonide inseneritöö</target></segment></unit>
 <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1"><segment><source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source><target>Esmalt impordime ja eeltöötleme andmekogu. Peame arvutile ütlema, kuidas tõlgendada andmekogu teksti tensoritena.</target></segment></unit>
 <unit id="Model Designing#1"><segment><source>Model Designing</source><target>Mudelite projekteerimine</target></segment></unit>
@@ -11,6 +11,6 @@
 <unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>Mudeli ennustus</target></segment></unit>
 <unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>Pärast koolitust saame mudelit kasutada uute numbrite klassifitseerimiseks.</target></segment></unit>
 <unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>Mudeli hindamine</target></segment></unit>
-<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>Mudeli kvaliteedi hindamiseks ja teiste mudelitega võrdlemiseks viime tavaliselt läbi rea teste, mis annavad meile ülevaate mudeli toimivusest.</target></segment></unit>
+<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>Mudeli kvaliteedi hindamiseks ja teistega võrdlemiseks viime tavaliselt läbi rea teste, mis annavad meile ülevaate mudeli toimivusest.</target></segment></unit>
 </file>
 </xliff>

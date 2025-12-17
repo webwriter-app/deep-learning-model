@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Temizle`,
 'sb59d68ed12d46377': `Yükleniyor`,
 'sb633a04ba54b2dc0': `Katman çok fazla eğitilebilir parametreye sahiptir. Giriş boyutunu veya ayarlanabilir özellikleri azaltmayı deneyin.`,
-'sbc2e8c67c3498707': `Birleştirme`,
 'sbfe9518a1fe4f185': `Yeniden şekillendirme`,
 'sc0e01e8b4662bec2': str`Tahmin: 
           ${0} , Etiket: 

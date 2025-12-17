@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ko">
 <file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
 <unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST - 숫자 읽기</target></segment></unit>
@@ -11,6 +11,6 @@
 <unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>모델 예측</target></segment></unit>
 <unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>훈련 후에는 모델을 사용하여 새로운 숫자를 분류할 수 있습니다.</target></segment></unit>
 <unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>모델 평가</target></segment></unit>
-<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>모델의 품질을 평가하고 다른 모델과 비교하기 위해 우리는 일반적으로 모델의 성능에 대한 감을 잡을 수 있는 일련의 테스트를 통해 모델을 실행합니다.</target></segment></unit>
+<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>모델의 품질을 평가하고 다른 모델과 비교하기 위해 우리는 일반적으로 모델의 성능에 대한 감을 얻을 수 있는 일련의 테스트를 통해 모델을 실행합니다.</target></segment></unit>
 </file>
 </xliff>

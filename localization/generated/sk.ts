@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Vymazať`,
 'sb59d68ed12d46377': `Načítanie`,
 'sb633a04ba54b2dc0': `Vrstva má príliš veľa trénovateľných parametrov. Skúste znížiť veľkosť vstupu alebo nastaviteľné vlastnosti.`,
-'sbc2e8c67c3498707': `Zlučovanie`,
 'sbfe9518a1fe4f185': `Preformovať`,
 'sc0e01e8b4662bec2': str`Predikcia: 
           ${0} ,  Označenie: 

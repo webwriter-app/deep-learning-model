@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Selkeä`,
 'sb59d68ed12d46377': `Lataus`,
 'sb633a04ba54b2dc0': `Kerroksessa on liikaa koulutettavia parametreja. Yritä pienentää syötteen kokoa tai säädettäviä ominaisuuksia.`,
-'sbc2e8c67c3498707': `Yhdistelmä`,
 'sbfe9518a1fe4f185': `Muotoile uudelleen`,
 'sc0e01e8b4662bec2': str`Ennuste: 
           ${0} ,  Tunniste: 

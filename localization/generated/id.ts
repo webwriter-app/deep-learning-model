@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Jelas`,
 'sb59d68ed12d46377': `Sedang memuat`,
 'sb633a04ba54b2dc0': `Lapisan memiliki terlalu banyak parameter yang dapat dilatih. Coba kurangi ukuran input atau properti yang dapat disesuaikan.`,
-'sbc2e8c67c3498707': `Konkatenasi`,
 'sbfe9518a1fe4f185': `Bentuk ulang`,
 'sc0e01e8b4662bec2': str`Prediksi: 
           ${0} ,  Label: 

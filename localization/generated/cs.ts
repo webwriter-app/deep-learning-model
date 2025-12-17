@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Jasné`,
 'sb59d68ed12d46377': `Načítání`,
 'sb633a04ba54b2dc0': `Vrstva má příliš mnoho trénovatelných parametrů. Zkuste zmenšit velikost vstupu nebo laditelné vlastnosti.`,
-'sbc2e8c67c3498707': `Spojení`,
 'sbfe9518a1fe4f185': `Přetvořit`,
 'sc0e01e8b4662bec2': str`Předpověď: 
           ${0} ,  Štítek: 

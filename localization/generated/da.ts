@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Klar`,
 'sb59d68ed12d46377': `Indlæser`,
 'sb633a04ba54b2dc0': `Laget har for mange træningsparametre. Prøv at reducere inputstørrelsen eller de justerbare egenskaber.`,
-'sbc2e8c67c3498707': `Sammenkædning`,
 'sbfe9518a1fe4f185': `Omforme`,
 'sc0e01e8b4662bec2': str`Forudsigelse: 
           ${0} ,  Etikette: 

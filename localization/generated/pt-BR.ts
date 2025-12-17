@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Limpar`,
 'sb59d68ed12d46377': `Carregando`,
 'sb633a04ba54b2dc0': `A camada tem muitos parâmetros treináveis. Tente reduzir o tamanho da entrada ou as propriedades ajustáveis.`,
-'sbc2e8c67c3498707': `Concatenação`,
 'sbfe9518a1fe4f185': `Remodelar`,
 'sc0e01e8b4662bec2': str`Previsão: 
           ${0} ,  Rótulo: 

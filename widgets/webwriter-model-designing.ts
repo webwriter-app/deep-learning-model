@@ -241,7 +241,7 @@ export class AiWidgetsDesigns extends LitElementWw {
                 <div class="group">
                     <p>${msg("Add Shaping Layer")}</p>
                     <sl-button @click=${() => this.currentCanvas.createLayer("flatten")}>${msg("Flatten")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("concat")}>${msg("Concatination")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("concat")}>${msg("Concatenation")}</sl-button>
                     <sl-button @click=${() => this.currentCanvas.createLayer("reshape")}>${msg("Reshape")}</sl-button>
                 </div>
                 <div class="group">

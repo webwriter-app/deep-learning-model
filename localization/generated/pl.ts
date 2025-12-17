@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Wyraźne`,
 'sb59d68ed12d46377': `Ładowanie`,
 'sb633a04ba54b2dc0': `Warstwa ma zbyt wiele parametrów, które można trenować. Spróbuj zmniejszyć rozmiar danych wejściowych lub właściwości, które można dostosować.`,
-'sbc2e8c67c3498707': `Łączenie`,
 'sbfe9518a1fe4f185': `Przekształcić`,
 'sc0e01e8b4662bec2': str`Prognoza: 
           ${0} ,  Etykieta: 

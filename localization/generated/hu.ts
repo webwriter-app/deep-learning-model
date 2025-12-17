@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Tiszta`,
 'sb59d68ed12d46377': `Betöltés`,
 'sb633a04ba54b2dc0': `A rétegnek túl sok edzhető paramétere van. Próbálja meg csökkenteni a bemeneti méretet vagy a hangolható tulajdonságokat.`,
-'sbc2e8c67c3498707': `Összekapcsolás`,
 'sbfe9518a1fe4f185': `Átalakítás`,
 'sc0e01e8b4662bec2': str`Előrejelzés: 
           ${0} ,  Címke: 

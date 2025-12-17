@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Chiaro`,
 'sb59d68ed12d46377': `Caricamento in corso`,
 'sb633a04ba54b2dc0': `Il livello ha troppi parametri addestrabili. Prova a ridurre la dimensione dell'input o le proprietà regolabili.`,
-'sbc2e8c67c3498707': `Concatena`,
 'sbfe9518a1fe4f185': `Rimodellare`,
 'sc0e01e8b4662bec2': str`Previsione: 
           ${0} ,  Etichetta: 

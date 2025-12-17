@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Jasno`,
 'sb59d68ed12d46377': `Nalaganje`,
 'sb633a04ba54b2dc0': `Sloj ima preveč parametrov, ki jih je mogoče trenirati. Poskusite zmanjšati velikost vnosa ali nastavljive lastnosti.`,
-'sbc2e8c67c3498707': `Konkateniranje`,
 'sbfe9518a1fe4f185': `Preoblikovanje`,
 'sc0e01e8b4662bec2': str`Napoved: 
           ${0} ,  Oznaka: 

@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Tydelig`,
 'sb59d68ed12d46377': `Laster`,
 'sb633a04ba54b2dc0': `Laget har for mange trenbare parametere. Prøv å redusere inngangsstørrelsen eller de justerbare egenskapene.`,
-'sbc2e8c67c3498707': `Konkatenering`,
 'sbfe9518a1fe4f185': `Omforme`,
 'sc0e01e8b4662bec2': str`Prediksjon: 
           ${0} ,  Etikett: 

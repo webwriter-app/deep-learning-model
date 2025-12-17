@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Weg`,
 'sb59d68ed12d46377': `Bezig met laden`,
 'sb633a04ba54b2dc0': `De laag heeft te veel trainbare parameters. Probeer de invoergrootte of de afstelbare eigenschappen te verminderen.`,
-'sbc2e8c67c3498707': `Concatination`,
 'sbfe9518a1fe4f185': `Hervorm`,
 'sc0e01e8b4662bec2': str`Voorspelling: 
           ${0} ,  Label: 

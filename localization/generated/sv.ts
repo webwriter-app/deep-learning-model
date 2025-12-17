@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Tydligt`,
 'sb59d68ed12d46377': `Laddar`,
 'sb633a04ba54b2dc0': `Lager har för många träningsbara parametrar. Försök minska ingångsstorleken eller de justerbara egenskaperna.`,
-'sbc2e8c67c3498707': `Konkatenering`,
 'sbfe9518a1fe4f185': `Omforma`,
 'sc0e01e8b4662bec2': str`Förutsägelse: 
           ${0} ,  Etikett: 

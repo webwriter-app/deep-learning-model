@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Aišku`,
 'sb59d68ed12d46377': `Įkėlimas`,
 'sb633a04ba54b2dc0': `Sluoksnis turi per daug mokomų parametrų. Pabandykite sumažinti įvesties dydį arba reguliuojamas savybes.`,
-'sbc2e8c67c3498707': `Sujungimas`,
 'sbfe9518a1fe4f185': `Performuoti`,
 'sc0e01e8b4662bec2': str`Prognozė: 
           ${0} ,  Žymė: 

@@ -112,7 +112,6 @@
 'sb4f1dffbb6be6302': `Skaidrs`,
 'sb59d68ed12d46377': `Ielādējas`,
 'sb633a04ba54b2dc0': `Slānim ir pārāk daudz apmācāmu parametru. Mēģiniet samazināt ievades izmēru vai regulējamos parametrus.`,
-'sbc2e8c67c3498707': `Konkatinācija`,
 'sbfe9518a1fe4f185': `Pārveidot`,
 'sc0e01e8b4662bec2': str`Prognoze: 
           ${0} ,  Etiķete: 

@@ -91,7 +91,6 @@
 'sa68f184fe626daf3': `Add Trainable Layer`,
 's56eedda42b0bb66f': `Add misc. Layer`,
 's1703372e9470522b': `Add Shaping Layer`,
-'sbc2e8c67c3498707': `Concatination`,
 'se13c154abb1c1cff': `Add Combinational Layer`,
 's58bee799432dbc69': `Addition`,
 's6c5b5757b7756775': `Center View`,

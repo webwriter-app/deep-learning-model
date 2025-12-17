@@ -113,7 +113,6 @@
 'sb4f1dffbb6be6302': `Clar`,
 'sb59d68ed12d46377': `Încărcare`,
 'sb633a04ba54b2dc0': `Stratul are prea mulți parametri care pot fi antrenați. Încercați să reduceți dimensiunea intrării sau proprietățile reglabile.`,
-'sbc2e8c67c3498707': `Concatinare`,
 'sbfe9518a1fe4f185': `Remodelare`,
 'sc0e01e8b4662bec2': str`Predicție: 
           ${0} ,  Etichetă: 
