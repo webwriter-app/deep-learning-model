@@ -1,5 +1,5 @@
-# Ai,Blocks (`@webwriter/ai-blocks@0.0.1`)
-[License: MIT](LICENSE) | Version: 0.0.1
+# Deep Learning Model (`@webwriter/deep-learning-model@1.0.0`)
+[License: MIT](LICENSE) | Version: 1.0.0
 
 A set of blocks to create, train and evaluate deep learning models.
 
@@ -8,7 +8,7 @@ A set of blocks to create, train and evaluate deep learning models.
 
 | Name | Import Path |
 | :--: | :---------: |
-| MNIST Image To Number | `@webwriter/ai-blocks/snippets/MNIST-Image-to-Number.html` |
+| MNIST Image To Number | `@webwriter/deep-learning-model/snippets/MNIST-Image-to-Number.html` |
 
 
 
@@ -19,20 +19,20 @@ A widget that allows feature engineering on a dataset
 
 Use with a CDN (e.g. [jsdelivr](https://jsdelivr.com)):
 ```html
-<link href="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-feature-engineering.css" rel="stylesheet">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-feature-engineering.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-feature-engineering.css" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-feature-engineering.js"></script>
 <webwriter-feature-engineering></webwriter-feature-engineering>
 ```
 
 Or use with a bundler (e.g. [Vite](https://vite.dev)):
 
 ```
-npm install @webwriter/ai-blocks
+npm install @webwriter/deep-learning-model
 ```
 
 ```html
-<link href="@webwriter/ai-blocks/widgets/webwriter-feature-engineering.css" rel="stylesheet">
-<script type="module" src="@webwriter/ai-blocks/widgets/webwriter-feature-engineering.js"></script>
+<link href="@webwriter/deep-learning-model/widgets/webwriter-feature-engineering.css" rel="stylesheet">
+<script type="module" src="@webwriter/deep-learning-model/widgets/webwriter-feature-engineering.js"></script>
 <webwriter-feature-engineering></webwriter-feature-engineering>
 ```
 
@@ -78,20 +78,20 @@ A widget to design AI models using a visual editor.
 
 Use with a CDN (e.g. [jsdelivr](https://jsdelivr.com)):
 ```html
-<link href="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-designing.css" rel="stylesheet">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-designing.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-designing.css" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-designing.js"></script>
 <webwriter-model-designing></webwriter-model-designing>
 ```
 
 Or use with a bundler (e.g. [Vite](https://vite.dev)):
 
 ```
-npm install @webwriter/ai-blocks
+npm install @webwriter/deep-learning-model
 ```
 
 ```html
-<link href="@webwriter/ai-blocks/widgets/webwriter-model-designing.css" rel="stylesheet">
-<script type="module" src="@webwriter/ai-blocks/widgets/webwriter-model-designing.js"></script>
+<link href="@webwriter/deep-learning-model/widgets/webwriter-model-designing.css" rel="stylesheet">
+<script type="module" src="@webwriter/deep-learning-model/widgets/webwriter-model-designing.js"></script>
 <webwriter-model-designing></webwriter-model-designing>
 ```
 
@@ -134,20 +134,20 @@ A widget to train models designed in the model designing widget using datasets c
 
 Use with a CDN (e.g. [jsdelivr](https://jsdelivr.com)):
 ```html
-<link href="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-training.css" rel="stylesheet">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-training.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-training.css" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-training.js"></script>
 <webwriter-model-training></webwriter-model-training>
 ```
 
 Or use with a bundler (e.g. [Vite](https://vite.dev)):
 
 ```
-npm install @webwriter/ai-blocks
+npm install @webwriter/deep-learning-model
 ```
 
 ```html
-<link href="@webwriter/ai-blocks/widgets/webwriter-model-training.css" rel="stylesheet">
-<script type="module" src="@webwriter/ai-blocks/widgets/webwriter-model-training.js"></script>
+<link href="@webwriter/deep-learning-model/widgets/webwriter-model-training.css" rel="stylesheet">
+<script type="module" src="@webwriter/deep-learning-model/widgets/webwriter-model-training.js"></script>
 <webwriter-model-training></webwriter-model-training>
 ```
 
@@ -202,20 +202,20 @@ A widget to run inference using a trained model and features created in the feat
 
 Use with a CDN (e.g. [jsdelivr](https://jsdelivr.com)):
 ```html
-<link href="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-prediction.css" rel="stylesheet">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-prediction.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-prediction.css" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-prediction.js"></script>
 <webwriter-model-prediction></webwriter-model-prediction>
 ```
 
 Or use with a bundler (e.g. [Vite](https://vite.dev)):
 
 ```
-npm install @webwriter/ai-blocks
+npm install @webwriter/deep-learning-model
 ```
 
 ```html
-<link href="@webwriter/ai-blocks/widgets/webwriter-model-prediction.css" rel="stylesheet">
-<script type="module" src="@webwriter/ai-blocks/widgets/webwriter-model-prediction.js"></script>
+<link href="@webwriter/deep-learning-model/widgets/webwriter-model-prediction.css" rel="stylesheet">
+<script type="module" src="@webwriter/deep-learning-model/widgets/webwriter-model-prediction.js"></script>
 <webwriter-model-prediction></webwriter-model-prediction>
 ```
 
@@ -244,20 +244,20 @@ A widget that allows evaluating a trained model using various tests.
 
 Use with a CDN (e.g. [jsdelivr](https://jsdelivr.com)):
 ```html
-<link href="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-evaluation.css" rel="stylesheet">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/ai-blocks/widgets/webwriter-model-evaluation.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-evaluation.css" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@webwriter/deep-learning-model/widgets/webwriter-model-evaluation.js"></script>
 <webwriter-model-evaluation></webwriter-model-evaluation>
 ```
 
 Or use with a bundler (e.g. [Vite](https://vite.dev)):
 
 ```
-npm install @webwriter/ai-blocks
+npm install @webwriter/deep-learning-model
 ```
 
 ```html
-<link href="@webwriter/ai-blocks/widgets/webwriter-model-evaluation.css" rel="stylesheet">
-<script type="module" src="@webwriter/ai-blocks/widgets/webwriter-model-evaluation.js"></script>
+<link href="@webwriter/deep-learning-model/widgets/webwriter-model-evaluation.css" rel="stylesheet">
+<script type="module" src="@webwriter/deep-learning-model/widgets/webwriter-model-evaluation.js"></script>
 <webwriter-model-evaluation></webwriter-model-evaluation>
 ```
 

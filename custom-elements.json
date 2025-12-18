@@ -13,6 +13,12 @@
           "members": [
             {
               "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
               "name": "samplesSave",
               "type": {
                 "text": "string"
@@ -325,6 +331,12 @@
           "members": [
             {
               "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
               "name": "state",
               "type": {
                 "text": "string"
@@ -535,6 +547,12 @@
           "members": [
             {
               "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
               "name": "featureWidgetId",
               "type": {
                 "text": "string"
@@ -725,6 +743,12 @@
           "description": "A widget to run inference using a trained model and features created in the feature engineering widget.",
           "name": "AiWidgetsInference",
           "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
             {
               "kind": "field",
               "name": "featureWidgetId",
@@ -926,6 +950,12 @@
           "description": "A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.",
           "name": "AiWidgetsTraining",
           "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
             {
               "kind": "field",
               "name": "featureWidgetId",

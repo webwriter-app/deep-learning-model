@@ -1,6 +1,6 @@
 {
   "name": "@webwriter/deep-learning-model",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A set of blocks to create, train and evaluate deep learning models.",
   "keywords": [
     "webwriter-widget",
@@ -99,5 +99,6 @@
   },
   "editingConfig": {
     ".": {}
-  }
+  },
+  "customElements": "custom-elements.json"
 }
