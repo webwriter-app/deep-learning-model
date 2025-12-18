@@ -1,21 +1,21 @@
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlCheckbox, SlTooltip } from "@shoelace-style/shoelace"
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
-import { AiWidgetsDesigns } from "./webwriter-model-designing";
+import { SlButton, SlButtonGroup, SlCheckbox, SlIcon, SlIconButton, SlInput, SlOption, SlSelect, SlTooltip } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
+import { css, html, TemplateResult } from "lit";
+import { msg } from "@lit/localize";
+import { customElement, property, query } from "lit/decorators.js";
+import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
+import { AiWidgetsDesigns } from "./webwriter-model-designing";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
+import LOCALIZE from "../localization/generated";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
-import getTF from "../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../lib/tflib";
+let tf: typeof TF;
 
 function uint8ToHex(uint8:Uint8Array) {
   return Array.from(uint8, b => b.toString(16).padStart(2, '0')).join('');
@@ -62,9 +62,15 @@ function hexToUint8(hex:string) {
     tf.serialization.registerClass(NoOpLayer);
 })()
 
-
+/**
+ * A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.
+ * 
+ * @event finished - Fired when the training process has finished.
+ * @event epoch - Fired after each epoch during training.
+ */
 @customElement("webwriter-model-training")
 export class AiWidgetsTraining extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
@@ -78,6 +84,7 @@ export class AiWidgetsTraining extends LitElementWw {
         "ref-select": AiWidgetsReferenceSelect
     }
 
+    protected localize = LOCALIZE;
 
     static styles = css`
     :host {
@@ -112,36 +119,45 @@ export class AiWidgetsTraining extends LitElementWw {
     }
     `
 
+    /**
+     * The feature engineering widget to use as data source for training the model.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
     @query('#feature-select')
-    accessor featureSelect;
+    private accessor featureSelect;
 
+    /**
+     * The model design widget to use as model source for training.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor modelWidgetId: string;
 
     @query('#design-select')
-    accessor modelSelect;
+    private accessor modelSelect;
 
     @query('#start-training')
-    accessor startTrainingBtn;
+    private accessor startTrainingBtn;
 
     @query('#reset-training')
-    accessor resetTrainingBtn;
+    private accessor resetTrainingBtn;
 
     @query('#training-metrics')
-    accessor trainingMetricsDiv;
+    private accessor trainingMetricsDiv;
 
     @query("#speed")
-    accessor speed:HTMLSpanElement;
+    private accessor speed:HTMLSpanElement;
 
     @query("#memory")
-    accessor memory:HTMLSpanElement;
+    private accessor memory:HTMLSpanElement;
 
     @query("#error")
-    accessor error:HTMLSpanElement;
+    private accessor error:HTMLSpanElement;
 
+    /**
+     * If true, the transformed training samples will be cached for faster training.
+     */
     @property({ type: Boolean, attribute: true, reflect: true })
     accessor cache: boolean;
 
@@ -158,19 +174,19 @@ export class AiWidgetsTraining extends LitElementWw {
     accessor editMode: "edit"|"hidden" = "edit";
 
     @query("#optimizer")
-    accessor optimizer: SlSelect;
+    private accessor optimizer: SlSelect;
 
     @query("#lr")
-    accessor lr: SlInput;
+    private accessor lr: SlInput;
 
     @query("#momentum")
-    accessor momentum: SlInput;
+    private accessor momentum: SlInput;
 
     @query("#batch")
-    accessor batch: SlInput;
+    private accessor batch: SlInput;
 
     @query("#epochs")
-    accessor epochs: SlInput;
+    private accessor epochs: SlInput;
 
     constructor() {
         super();
@@ -194,65 +210,65 @@ export class AiWidgetsTraining extends LitElementWw {
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <div class="controls">
-                <sl-select id="optimizer" value="adam" label="Optimizer" size="small" @sl-change=${this.changeOptimizer}>
+                <sl-select id="optimizer" value="adam" label=${msg("Optimizer")} size="small" @sl-change=${this.changeOptimizer}>
                     <sl-option value="adam">Adam</sl-option>
                     <sl-option value="momentum">Momentum</sl-option>
                     <sl-option value="rmsprop">RMSProp</sl-option>
                     <sl-option value="sgd">SGD</sl-option>
                 </sl-select>
-                <sl-input id="lr" type="number" label="Learning Rate" min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
-                <sl-input style="display:none" id="momentum" type="number" label="Momentum" min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="batch" type="number" label="Batch Size" min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="epochs" type="number" label="Epochs" min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="lr" type="number" label=${msg("Learning Rate")} min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
+                <sl-input style="display:none" id="momentum" type="number" label=${msg("Momentum")} min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="batch" type="number" label=${msg("Batch Size")} min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="epochs" type="number" label=${msg("Epochs")} min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
                 <sl-button-group>
-                <sl-button id="start-training" @click=${this.training}>Start training</sl-button>
-                <sl-button id="reset-training" @click=${this.resetModel}>Reset</sl-button>
+                <sl-button id="start-training" @click=${this.training}>${msg("Start training")}</sl-button>
+                <sl-button id="reset-training" @click=${this.resetModel}>${msg("Reset")}</sl-button>
                 </sl-button-group>
             </div>
             <p id="error" style="display:none"></p>
             <div id="training-metrics" style="display:none">
                 ${this.chartContainer}
                 <sl-select id="metrics" value="Loss Accuracy" multiple clearable @sl-change=${this.updateGraph}>
-                    <sl-option value="Loss">Loss</sl-option>
-                    <sl-option value="Accuracy">Accuracy</sl-option>
-                    <sl-option value="R2_Score">R2 Score</sl-option>
-                    <sl-option value="Percision">Precision</sl-option>
-                    <sl-option value="Recall">Recall</sl-option>
+                    <sl-option value="Loss">${msg("Loss")}</sl-option>
+                    <sl-option value="Accuracy">${msg("Accuracy")}</sl-option>
+                    <sl-option value="R2_Score">${msg("R2 Score")}</sl-option>
+                    <sl-option value="Percision">${msg("Precision")}</sl-option>
+                    <sl-option value="Recall">${msg("Recall")}</sl-option>
                 </sl-select>
-                <p style="margin:0px">Training Speed:<span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;Used Tensor Memory:<span id="memory"></span>MB</p>
+                <p style="margin:0px">${msg("Training Speed:")} <span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;${msg("Used Tensor Memory:")} <span id="memory"></span>MB</p>
             </div>
         </div>
-        <p style=${this.editMode != "hidden" ? "display:none" : ""}>Model Training Widget hidden from students.</p>
+        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Training Widget hidden from students.")}</p>
             <div part="options">
-                <p>Feature Source</p>
+                <p>${msg("Feature Source")}</p>
                 <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
-                <p>Design Source</p>
+                <p>${msg("Design Source")}</p>
                 <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
-                <sl-select label="Edit Permissions" value=${this.editMode} @sl-change=${editModeChanged}>
-                    <sl-option value="hidden">hide widget</sl-option>
-                    <sl-option value="edit">edit everything</sl-option>
+                <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
+                    <sl-option value="hidden">${msg("hide widget")}</sl-option>
+                    <sl-option value="edit">${msg("edit everything")}</sl-option>
                 </sl-select>
                 <br>
-                <sl-select label="Prefered Backend" value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
-                    <sl-option value="cpu">CPU</sl-option>
-                    <sl-option value="webgl">WebGL (GPU)</sl-option>
+                <sl-select label=${msg("Preferred Backend")} value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
+                    <sl-option value="cpu">${msg("CPU")}</sl-option>
+                    <sl-option value="webgl">${msg("WebGL (GPU)")}</sl-option>
                 </sl-select>
                 <br>
-                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>Cache training samples</sl-checkbox>
-                <p> This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device. </p>
-                <p style="color:red"> (Warning: Too much tensor data can over fill the device RAM and crash during training and in the worst case lock-up the host system.) </p>
+                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>${msg("Cache training samples")}</sl-checkbox>
+                <p>${msg("This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.")}</p>
+                <p style="color:red">${msg("(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)")}</p>
             </div>`
     }
 
-    showError(err:string) {
+    private showError(err:string) {
         this.error.innerHTML = err;
         this.error.style.display = "block";
     }
-    hideError() {
+    private hideError() {
         this.error.style.display = "none";
     }
 
-    changeOptimizer() {
+    private changeOptimizer() {
         let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
         if (optimizer == "momentum") {
             this.shadowRoot.getElementById("momentum").style.display = "";
@@ -261,7 +277,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
     }
 
-    setHyperParamsActive(active:boolean) {
+    private setHyperParamsActive(active:boolean) {
         this.optimizer.disabled = !active;
         this.lr.disabled = !active;
         this.momentum.disabled = !active;
@@ -318,7 +334,7 @@ export class AiWidgetsTraining extends LitElementWw {
      * Used to recursively connect the inputs via the layers to the output nodes.
      * @param layer One output layer of the model to solve the dependencies for.
      * @param inputs All the input tensors of the model with the "in_<feature>"" as the key.
-     * @param resolvedLayers A reffecence to an array storing the already resolved layers for later use when solving for other output layers.
+     * @param resolvedLayers A reference to an array storing the already resolved layers for later use when solving for other output layers.
      * @returns Returns a NoOpLayer with an output name of "out_<feature>"
      */
     resolveOutput(layer: Layer, inputs: Record<string, TF.SymbolicTensor>, resolvedLayers: Record<number, any>): TF.SymbolicTensor {
@@ -395,6 +411,11 @@ export class AiWidgetsTraining extends LitElementWw {
         return {model:tf.model({ inputs: Object.values(inputs), outputs: Object.values(outputs) }), losses}
     }
 
+    /**
+     * Converts a loss string to the corresponding tfjs loss function.
+     * @param loss The loss string like "MSE" or "BCE"
+     * @returns The tfjs loss function
+     */
     lossStringToFunction(loss: string) {
         switch(loss) {
             case "BCE": return tf.metrics.binaryCrossentropy;
@@ -407,7 +428,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
     }
 
-    updateGraph() {
+    private updateGraph() {
         let metrics = (this.shadowRoot.getElementById("metrics") as SlSelect).value as string[]
         this.chart.updateSeries(
             Object.entries(this.losses).map(
@@ -431,7 +452,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 const modelArtifacts = {
                     modelTopology: jsonObj.modelTopology,
                     weightSpecs: jsonObj.weightSpecs,
-                    weightData: modelWeights,
+                    weightData: modelWeights.buffer,
                 };
 
                 return modelArtifacts;
@@ -480,7 +501,7 @@ export class AiWidgetsTraining extends LitElementWw {
             this.chart.removeAnnotation("best");
         this.updateGraph();
         this.setHyperParamsActive(true);
-        this.startTrainingBtn.innerText = "Start Training";
+        this.startTrainingBtn.innerText = msg("Start Training");
     }
 
     /**
@@ -529,7 +550,7 @@ export class AiWidgetsTraining extends LitElementWw {
         }
 
         this.trainingMetricsDiv.style.display = "";
-        this.startTrainingBtn.innerText = "Stop Training";
+        this.startTrainingBtn.innerText = msg("Stop Training");
 
         if (this.currentTraining != null && !this.isTraining) {
             this.isTraining = true;
@@ -610,7 +631,7 @@ export class AiWidgetsTraining extends LitElementWw {
             }).then(async function() {
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
-                that.startTrainingBtn.innerText = "Continue Training";
+                that.startTrainingBtn.innerText = msg("Continue Training");
                 that.isTraining = false;
                 await that.saveCurrentModel('epoch-' + that.currentEpoch);
                 that.modelVersions = JSON.parse(JSON.stringify(that.modelVersions));
@@ -618,7 +639,7 @@ export class AiWidgetsTraining extends LitElementWw {
                 console.error(err);
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
-                that.startTrainingBtn.innerText = "Continue Training";
+                that.startTrainingBtn.innerText = msg("Continue Training");
                 that.isTraining = false;
                 let index = that.backendPriority.indexOf(tf.getBackend()) + 1
                 if (index == that.backendPriority.length)

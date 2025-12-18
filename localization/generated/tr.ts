@@ -1,0 +1,157 @@
+
+    // Do not modify this file by hand!
+    // Re-generate this file by running lit-localize
+
+    
+    import {str} from '@lit/localize';
+
+    /* eslint-disable no-irregular-whitespace */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+
+    export const templates = {
+      's018f0f27bee12bb9': `İşlem Sayısı:`,
+'s026fba1543d336b2': `Özellik Kaynağı`,
+'s02bee65dc3f21363': `Birleştirme`,
+'s06471a3c2aed9b4b': `Giriş alanı`,
+'s066d70cf9d5e2915': `Çıktılar`,
+'s07da69ddbc0d4c69': `İşlev`,
+'s0aedd465cb4737b2': `Test / Değerlendirme`,
+'s0b453a19aa0f85a9': `CPU`,
+'s0c5410258e1a4144': `Öğe bazında ekle`,
+'s12126d92849e3b53': `R2 Puanı`,
+'s15371f7ebfb1ad5e': `Eğitim Hızı:`,
+'s162c56231b25e6ff': `widget'ı gizle`,
+'s166d284a7cbc6181': `salt okunur`,
+'s1703372e9470522b': `Şekillendirme Katmanı Ekle`,
+'s17ce2eafdc840624': `Kayıp Dağılımı`,
+'s19a2ee331d08ad42': `(Uyarı: Çok fazla tensör verisi, cihazın RAM'ini aşırı doldurabilir ve eğitim sırasında çökmeye neden olabilir ve en kötü durumda ana sistemi kilitleyebilir.)`,
+'s1bb08bff53933452': `Model versiyonu`,
+'s1c3cbd3cbaee4368': `G/Ç Katmanı Ekle`,
+'s1ca51d37e3dae07a': `Bu, dönüştürülen örneklerin hesaplama cihazında önbelleğe alınmasına olanak tanır, böylece eğitim hızını önemli ölçüde artırır, ancak cihazda önemli ölçüde daha fazla depolama alanı gerektirir.`,
+'s1e0afe8020901f1f': `Eğitime başla`,
+'s1fa03b3ccbfc66a5': `Görüntü Ön İşleme`,
+'s22fde937cb709859': `Yakınlaştır`,
+'s2454d1f117573457': `Hassasiyet`,
+'s255857544a9d5ec0': `Sıfırla`,
+'s26b5b115b8b61794': `Özellik Mühendisliği Widget'ı öğrencilerden gizlendi.`,
+'s2b28da40a8490a78': `sadece özellik ayarları`,
+'s2b6d43596140ef3a': `Eğitime Devam Et`,
+'s2bc80ed8441b0831': `Gürültü`,
+'s2c48e68704ff98c2': str`Çıktı şekli geçersiz: 
+          ${0} != 
+          ${1}
+        `,
+'s2d0ac2f4cbd7b867': `Modeller yükleniyor...`,
+'s32f2fa78e3267c4e': `sadece özellikler`,
+'s334f9922638204ab': `Kullanılan veri kümesi`,
+'s34af392b321cbfa6': `her şeyi düzenle`,
+'s38ddf839c081bbaf': str`
+          ${0} th dim
+        `,
+'s39e9054ae5edaf30': `Maksimum Katman Parametreleri`,
+'s3aba710c340e1059': `Özellik verisi mevcut değil`,
+'s410415ac2406c84e': `Tercih Edilen Arka Uç`,
+'s412b62989fc26d3a': `Seçimi göster`,
+'s446eb2b422b286af': `Momentum`,
+'s49730f3d5751a433': `Yükleniyor...`,
+'s4c08da5f7528a7e3': `Model Kaynağı`,
+'s4f5eeeb48a97ea9a': `Kayıp`,
+'s547a4465533a6f5f': `Görüntü Kodlama`,
+'s5561b945c8cd59b0': `Parti Boyutu`,
+'s559e9b10ba86261e': `Önbellek eğitim örnekleri`,
+'s5687c76f8638e9a5': `Veri kümesini seçin`,
+'s56a6aa2100291b96': `Öğrencilerden gizlenen Model Eğitimi Widget'ı.`,
+'s56eedda42b0bb66f': `Çeşitli katman ekle`,
+'s5732d2277d736ba1': `Kare`,
+'s58bee799432dbc69': `Ek`,
+'s58d6b1ecd5084538': `Adım`,
+'s5da30fd688d05a35': `Düzenleme İzinleri`,
+'s61ac82c68c336bb1': `Eğitimi Durdur`,
+'s61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s62cecbd4b16886e7': `Kayıp Dağılımını Hesaplıyor...`,
+'s6557e193c4f15b9c': `Örnek başına birden fazla sınıf`,
+'s6610206d0ad97d60': `Veri Kümesi Özellik Sütunları:`,
+'s66a5898632280fe2': `Kayıp Fonksiyonu`,
+'s6b0e650acd025eff': `Base64 Dizesi`,
+'s6c02f2ec8c3f52a4': `Doğruluk`,
+'s6c5b5757b7756775': `Merkez Görünümü`,
+'s6f0c402dbc70cade': `Dizgenin nasıl yorumlanmasını istediğinizi seçin.`,
+'s70027acd13cd9df8': `Sınıf Kodlaması`,
+'s7098a15dd248ce2f': `İçe Aktarma Biçimi`,
+'s731e8d25df7b1886': `Veri kümesini sil`,
+'s76b14a5034f53fd9': `Dikkat`,
+'s7a1c71b249a86643': `Öğrenme Hızı`,
+'s7b59301169d2cc3d': `Sayı Kodlaması`,
+'s82c21acdbcd6e830': `Güç`,
+'s82caaf657b01a4d0': `Gri tonlama`,
+'s888d98a196a240d8': `Girdiler`,
+'s8a73af950772f702': `Model mevcut değil.`,
+'s900c980bdb200fcf': `Çağlar`,
+'s917734d83f35efa3': `Yoksay`,
+'s94d63573d312fe9b': `Kimlik`,
+'s96d63527efafa81b': `Parametreler: `,
+'s975087a831353889': `Düzleştir`,
+'s981f232bd33ec927': `Oran`,
+'s99456cbda3e05fb0': `Hatırla`,
+'s9b5ec9d0b70a0fac': `Maksimum Model Parametreleri`,
+'s9eac77171764efaa': `Transpoz Convolution`,
+'sa4ef4c5175793d6f': `Örnekler için Kayıp Hesaplama...`,
+'sa68f184fe626daf3': `Eğitilebilir Katman Ekle`,
+'sa8082d7f7ef02f42': `Bu dönüşüm değerler için geçerli değildir.`,
+'sa812ba9ded26aa98': `Model yükleniyor...`,
+'sa8d9304ef4eefbd5': `Konvolüsyon`,
+'sa91ddb7330d86835': `İkili Dize`,
+'sab09aa21c8921bea': `Görüntü yükleniyor`,
+'sabf86f32eba45ad4': `Biçimlendirmek için bir sütun seçin`,
+'saf01d58ece3a1e02': `Tensorflow yükleniyor...`,
+'sb03650788f41c135': str`
+          ${0} Örnekleri
+        `,
+'sb05582ce916894da': `Uzaklaştır`,
+'sb405f0898c39ca67': `Veri Türü`,
+'sb4f1dffbb6be6302': `Temizle`,
+'sb59d68ed12d46377': `Yükleniyor`,
+'sb633a04ba54b2dc0': `Katman çok fazla eğitilebilir parametreye sahiptir. Giriş boyutunu veya ayarlanabilir özellikleri azaltmayı deneyin.`,
+'sbfe9518a1fe4f185': `Yeniden şekillendirme`,
+'sc0e01e8b4662bec2': str`Tahmin: 
+          ${0} , Etiket: 
+          ${1}
+        `,
+'sc2e0d19ed54560c8': `Üstel`,
+'sc3727a4fc25d7500': str`Tahmin: 
+          ${0} ${1} Etiket: 
+          ${2}
+        `,
+'sc3d8f37ea5f4bd79': `Farklılığı Görselleştirmek...`,
+'sc6bff481def13d70': `Okulu bırakma`,
+'sc6d31f0cce31ddcf': `Toplam Parametreler:`,
+'sc9d11ba788fd6aff': `Eğitime Başla`,
+'scb42b9cdc2ad49e4': `Tensor`,
+'sce4efb732b98f946': `Örnek başına bir sınıf`,
+'scfd25318edb1ebb1': `Çekirdek sayısı`,
+'sd2223afb7d6b100d': `Tür`,
+'sd6b72022c37e1ae0': `Tasarım Kaynağı`,
+'sdab07807ff1b6b12': `Öğrencilerden gizlenen Model Tasarım Widget'ı.`,
+'sdb1595f5c742dfbb': `Giriş`,
+'sdde16b9126492f79': `Çekirdek Boyutu`,
+'se13c154abb1c1cff': `Kombinasyon Katmanı Ekle`,
+'se1c4d8107171ecb2': str`Tahmin: 
+          ${0} - Etiket: 
+          ${1} = Delta: 
+          ${2}
+        `,
+'se2b0409cadbd0a9e': `Kaynak Öğesini Seç`,
+'se2b49a41b39653fc': `Değer Ölçeği`,
+'se7a532063ef7b740': `Doğrusal`,
+'seb198c12be265d61': `Çıkış Düğümleri`,
+'seffcca34b918ddc0': `Döngüsel referans içerir.`,
+'sf1674aeb3dc2d55d': `Aktivasyon`,
+'sf21fb4f4b9e8911f': `Genişlik`,
+'sf5290513fc7b466a': `Kullanılan Tensor Belleği:`,
+'sf84bd835fc5a52ef': `En Kötü Örnekler`,
+'sf99503650274b914': `Optimize edici`,
+'sfb3198d46e57af91': `Rastgele Test Örneği Göster`,
+'sfd77270c3f54f664': `Çıktı`,
+'sffdadf0a576fd802': `Yükseklik`,
+    };
+  

@@ -1,31 +1,27 @@
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import { Dataset, TransformedDataset } from "../lib/dataset/dataset"
-import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
-import { AiWidgetsDesigns } from "./webwriter-model-designing";
-import ApexCharts from "apexcharts";
+import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
+import { css, html, TemplateResult } from "lit";
+import { msg } from "@lit/localize";
+import { customElement, property, query } from "lit/decorators.js";
+import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
-import { Editor, Layer } from "../lib/layers";
-import { DrawingCanvas } from '../components/inference-fields/image-input';
-import { AiWidgetsTraining } from './webwriter-model-training';
 import { until } from 'lit-html/directives/until.js';
-import { InputElement, OutputElement } from '../components/inference-fields/inference-interfaces';
+import { ClassInput } from '../components/inference-fields/class-input';
 import { ClassTable } from '../components/inference-fields/class-output';
 import { TensorImage } from '../components/inference-fields/image';
-import { ClassInput } from '../components/inference-fields/class-input';
-import { NumberOutput } from '../components/inference-fields/number-output';
+import { DrawingCanvas } from '../components/inference-fields/image-input';
+import { InputElement, OutputElement } from '../components/inference-fields/inference-interfaces';
 import { NumberInput } from '../components/inference-fields/number-input';
+import { NumberOutput } from '../components/inference-fields/number-output';
+import { AiWidgetsTraining } from './webwriter-model-training';
+import LOCALIZE from "../localization/generated";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
-import getTF from "../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 async function waitFor(condition: Function, interval = 10) {
@@ -41,8 +37,12 @@ async function waitFor(condition: Function, interval = 10) {
     });
 }
 
+/**
+ * A widget to run inference using a trained model and features created in the feature engineering widget.
+ */
 @customElement("webwriter-model-prediction")
 export class AiWidgetsInference extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
@@ -59,6 +59,8 @@ export class AiWidgetsInference extends LitElementWw {
         "number-output": NumberOutput,
         "number-input": NumberInput
     }
+
+    protected localize = LOCALIZE;
 
     static styles = css`
         :host div[part='options'] {
@@ -105,23 +107,29 @@ export class AiWidgetsInference extends LitElementWw {
         }
     `
 
+    /**
+     * The id of the feature engineering widget to use as input.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
     @query("#feature-select")
-    accessor featureSelect: AiWidgetsReferenceSelect;
+    private accessor featureSelect: AiWidgetsReferenceSelect;
 
+    /**
+     * The id of the model training widget to use as model source.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor modelWidgetId: string;
 
     @query("#model-select")
-    accessor modelSelect: AiWidgetsReferenceSelect;
+    private accessor modelSelect: AiWidgetsReferenceSelect;
 
     @query("#epoch-select")
-    accessor modelName: SlSelect;
+    private accessor modelName: SlSelect;
 
     @property({ type: String, attribute: true, reflect: true })
-    accessor selectedModelName: string;
+    private accessor selectedModelName: string;
 
     private model:TF.LayersModel;
 
@@ -136,7 +144,7 @@ export class AiWidgetsInference extends LitElementWw {
     /**
      * Renders the model select field allowing the user to change the model checkpoint that is used for inference.
      */
-    async getModelSelect() {
+    private async getModelSelect() {
         let that = this;
         await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels != null});
         let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
@@ -144,16 +152,16 @@ export class AiWidgetsInference extends LitElementWw {
             setTimeout(function() {
                 that.selectedModelChange();
             })
-        return html`<sl-select label="Model version" id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label=${msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
     /** Renders the left input fields which the user can edit and which values are fed into the model periodically. */
-    getFeatureInputs() {
+    private getFeatureInputs() {
         if (this.model == null)
-            return html`<p>No Model avaiable.</p>`;
+            return html`<p>${msg("No Model avaiable.")}</p>`;
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [html`<div class="input"><p>🡺 Inputs</p></div>`];
+        let elements = [html`<div class="input"><p>🡺 ${msg("Inputs")}</p></div>`];
         for (let input of this.model.inputNames) {
             let featureName = input.replace("in_","");
             let transform = tensorDataset.featureMaps[featureName];
@@ -163,12 +171,12 @@ export class AiWidgetsInference extends LitElementWw {
     }
 
     /** Renders the right output fields which are generated by the model output periodically. */
-    getFeatureOutputs() {
+    private getFeatureOutputs() {
         if (this.model == null)
             return html``;
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [html`<div class="output"><p>Outputs 🡺</p></div>`];
+        let elements = [html`<div class="output"><p>${msg("Outputs")} 🡺</p></div>`];
         for (let input of this.model.outputNames) {
             let featureName = input.replace("out_","");
             let transform = tensorDataset.featureMaps[featureName];
@@ -187,16 +195,16 @@ export class AiWidgetsInference extends LitElementWw {
         }, 1000);
         return html`<div id="container">
         <div id="top">
-        ${until(this.getModelSelect(), html`Loading models...`)}
-        <sl-button @click=${this.fillWithRandomSample}>Show Random Test Sample</sl-button>
+        ${until(this.getModelSelect(), html`${msg("Loading models...")}`)}
+        <sl-button @click=${this.fillWithRandomSample}>${msg("Show Random Test Sample")}</sl-button>
         </div>
         ${this.getFeatureInputs()}
         ${this.getFeatureOutputs()}
         </div>
         <div part="options">
-            <p>Feature Source</p>
+            <p>${msg("Feature Source")}</p>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
-            <p>Model Source</p>
+            <p>${msg("Model Source")}</p>
             <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }

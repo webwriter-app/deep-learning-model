@@ -1,33 +1,22 @@
-import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import { Dataset, TransformedDataset } from "../lib/dataset/dataset"
-import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
-import { AiWidgetsReferenceSelect } from "../components/refference-element-select"
-import { AiWidgetsFeatures } from "./webwriter-feature-engineering"
-import { AiWidgetsDesigns } from "./webwriter-model-designing";
-import ApexCharts from "apexcharts";
+import { SlButton, SlButtonGroup, SlIcon, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
+import { css, html, TemplateResult } from "lit";
+import { msg } from "@lit/localize";
+import { customElement, property, query } from "lit/decorators.js";
+import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
+import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
-import { Editor, Layer } from "../lib/layers";
-import { DrawingCanvas } from '../components/inference-fields/image-input';
-import { AiWidgetsTraining } from './webwriter-model-training';
 import { until } from 'lit-html/directives/until.js';
-import { InputElement, OutputElement } from '../components/inference-fields/inference-interfaces';
-import { ClassTable } from '../components/inference-fields/class-output';
-import { TensorImage } from '../components/inference-fields/image';
-import { ClassInput } from '../components/inference-fields/class-input';
-import { NumberOutput } from '../components/inference-fields/number-output';
-import { NumberInput } from '../components/inference-fields/number-input';
-import { LossDistribution } from '../components/model-tests/loss-distribution';
 import { BadSamples } from '../components/model-tests/bad-samples';
+import { LossDistribution } from '../components/model-tests/loss-distribution';
+import LOCALIZE from "../localization/generated";
+import { AiWidgetsTraining } from './webwriter-model-training';
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
-import getTF from "../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 async function waitFor(condition: Function, interval = 10) {
@@ -43,8 +32,12 @@ async function waitFor(condition: Function, interval = 10) {
     });
 }
 
+/**
+ * A widget that allows evaluating a trained model using various tests.
+ */
 @customElement("webwriter-model-evaluation")
 export class AiWidgetsTest extends LitElementWw {
+    /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
@@ -56,6 +49,8 @@ export class AiWidgetsTest extends LitElementWw {
         "loss-dist": LossDistribution,
         "bad-samples": BadSamples
     }
+
+    protected localize = LOCALIZE;
 
     static styles = css`
         #container {
@@ -96,31 +91,37 @@ export class AiWidgetsTest extends LitElementWw {
         }
     `
 
+    /**
+     * The id of the feature engineering widget to use as feature source.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor featureWidgetId: string;
 
     @query("#feature-select")
-    accessor featureSelect: AiWidgetsReferenceSelect;
+    private accessor featureSelect: AiWidgetsReferenceSelect;
 
+    /**
+     * The id of the model training widget to use as model source.
+     */
     @property({ type: String, attribute: true, reflect: true })
     accessor modelWidgetId: string;
 
     @query("#model-select")
-    accessor modelSelect: AiWidgetsReferenceSelect;
+    private accessor modelSelect: AiWidgetsReferenceSelect;
 
     @query("#epoch-select")
-    accessor modelName: SlSelect;
+    private accessor modelName: SlSelect;
 
     @query("#test-select")
-    accessor testSelect: SlSelect;
+    private accessor testSelect: SlSelect;
 
     @query("#test-container")
-    accessor testContainer: HTMLDivElement;
+    private accessor testContainer: HTMLDivElement;
     
     private testElem: TemplateResult;
 
     @property({ type: String, attribute: true, reflect: true })
-    accessor selectedModelName: string;
+    private accessor selectedModelName: string;
 
     private model:TF.LayersModel;
 
@@ -139,7 +140,7 @@ export class AiWidgetsTest extends LitElementWw {
         let that = this;
         await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels != null});
         let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
-        return html`<sl-select label="Model version" id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label=${msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
     public render(): TemplateResult {
@@ -147,18 +148,18 @@ export class AiWidgetsTest extends LitElementWw {
             this.selectedModelName = "best";
 
         return html`
-        ${until(this.getModelSelect(), html`Loading models...`)}
-        <sl-select label="Test / Evaluation" id="test-select" @sl-change=${this.testChange}>
-            <sl-option value="loss-dist">Loss Distribution</sl-option>
-            <sl-option value="bad-samples">Worst Samples</sl-option>
+        ${until(this.getModelSelect(), html`${msg("Loading models...")}`)}
+        <sl-select label=${msg("Test / Evaluation")} id="test-select" @sl-change=${this.testChange}>
+            <sl-option value="loss-dist">${msg("Loss Distribution")}</sl-option>
+            <sl-option value="bad-samples">${msg("Worst Samples")}</sl-option>
         </sl-select>
         <div id="test-container">
             ${this.testElem}
         </div>
         <div part="options">
-            <p>Feature Source</p>
+            <p>${msg("Feature Source")}</p>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
-            <p>Model Source</p>
+            <p>${msg("Model Source")}</p>
             <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }

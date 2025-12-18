@@ -1,10 +1,10 @@
-import {DynamicInputLayer, Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
-import { SlInput, SlSelect } from "@shoelace-style/shoelace";
+import { DynamicInputLayer, Editor, SIZE_SEP } from "./index";
+import { msg } from '@lit/localize';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 type NonEmptyArray<T> = [T, ...T[]];
@@ -43,5 +43,8 @@ export class ExportLayer extends DynamicInputLayer {
     }
     public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         return { output_1: tf.layers.concatenate().apply(Object.values(inputs)) as TF.SymbolicTensor };
+    }
+    protected getDisplayName(): string {
+        return msg("Concatenation");
     }
 }

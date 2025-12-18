@@ -1,10 +1,11 @@
-import Drawflow, { DrawflowConnection, DrawflowConnectionDetail } from 'drawflow'
-import { TransformedDataset } from '../dataset/dataset';
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
+import Drawflow, { DrawflowConnectionDetail } from 'drawflow';
+import { TransformedDataset } from '../dataset/dataset';
+import { msg } from '@lit/localize';
 
-import getTF from "../tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 type NonEmptyArray<T> = [T, ...T[]];
@@ -248,7 +249,7 @@ export abstract class Layer {
      * @param inputs The number of possible input connections
      * @param outputs The number of possible output connections
      * @param name The name/type of the layer.
-     * @param editor Refference to the model editor used for settings.
+     * @param editor Reference to the model editor used for settings.
      */
     constructor(inputs: number, outputs: number, name: string, editor: Editor) {
         this.editor = editor;
@@ -262,7 +263,7 @@ export abstract class Layer {
 
         let elem = document.createElement("div");
         let header = document.createElement("p");
-        header.innerText = this.type;
+        header.innerText = this.getDisplayName();
 
         let nodeContentElement = nodeElement.getElementsByClassName("drawflow_content_node")[0] as HTMLDivElement;
         nodeContentElement.append(header);
@@ -617,7 +618,7 @@ export abstract class Layer {
         if (!valid) {
             this.getNodeElement().classList.add("invalid");
             if (this.hasCyclicReference)
-                this.getNodeElement().setAttribute("title", "Has a cyclic reference.")
+                this.getNodeElement().setAttribute("title", msg("Has a cyclic reference."));
         } else {
             this.getNodeElement().classList.remove("invalid");
         }
@@ -639,6 +640,13 @@ export abstract class Layer {
      */
     public valid() {
         return this.checkInputs() && !this.hasCyclicReference;
+    }
+
+    /**
+     * @returns The display name of the layer shown in the node header.
+     */
+    protected getDisplayName(): string {
+        return this.type;
     }
 }
 

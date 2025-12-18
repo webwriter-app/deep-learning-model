@@ -1,11 +1,12 @@
-import { html, css, TemplateResult, PropertyValues } from "lit"
+import { SlSelect } from "@shoelace-style/shoelace";
+import { html, TemplateResult } from "lit";
 import { until } from 'lit/directives/until.js';
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar } from "@shoelace-style/shoelace"
 import { FeatureSettings, FeatureTransformation } from './feature';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+import { msg, str } from "@lit/localize";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 /**
@@ -124,11 +125,9 @@ export default class ClassTransformation extends FeatureTransformation {
         return html`${until((async () => {
             let predClass = await this.inverse(pred);
             let labelClass = await this.inverse(label);
-            let span = document.createElement("span");
-            span.style.fontFamily = "sans-serif";
-            span.innerText = predClass != labelClass ? "≠" : "="
-            return html`Prediction: ${predClass} ${span} Label: ${labelClass}`
-        })(), html`Visualizing Difference...`)}`;
+            const relation = predClass != labelClass ? "≠" : "="
+            return html`${msg(str`Prediction: ${predClass} ${relation} Label: ${labelClass}`)}`;
+        })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
     public getSettingElement(changeCallback): TemplateResult {
@@ -140,9 +139,9 @@ export default class ClassTransformation extends FeatureTransformation {
             changeCallback(that.settings);
         }
         return html`
-            <sl-select label="Type" @sl-change=${typechange} value=${this.settings.type}>
-                <sl-option value="one-hot">One Class per Sample</sl-option>
-                <sl-option value="multi-hot">Multiple Classes per Sample</sl-option>
+            <sl-select label=${msg("Type")} @sl-change=${typechange} value=${this.settings.type}>
+                <sl-option value="one-hot">${msg("One Class per Sample")}</sl-option>
+                <sl-option value="multi-hot">${msg("Multiple Classes per Sample")}</sl-option>
             </sl-select>`
     }
 
@@ -151,6 +150,6 @@ export default class ClassTransformation extends FeatureTransformation {
             (async () => {
                 let transformed = (await this.transform(value)).arraySync();
                 return html`${transformed.join(", ")}`;
-            })(), html`Loading...`)}`;
+            })(), html`${msg("Loading...")}`)}`;
     }
 }

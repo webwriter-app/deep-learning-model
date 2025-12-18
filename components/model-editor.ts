@@ -1,11 +1,9 @@
-import { html, css, TemplateResult, PropertyValues, unsafeCSS } from "lit"
-import { LitElementWw, OptionDeclaration, ActionDeclaration } from "@webwriter/lit"
-import { customElement, property, state, query } from "lit/decorators.js"
-import { DatasetInput } from "../components/dataset-input/dataset-input"
-import * as tf from '@tensorflow/tfjs';
-import Drawflow from "drawflow";
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton } from "@shoelace-style/shoelace"
-import { Editor } from "../lib/layers"
+import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlOption, SlSelect } from "@shoelace-style/shoelace";
+import { LitElementWw } from "@webwriter/lit";
+import { css, html, TemplateResult } from "lit";
+import { property } from "lit/decorators.js";
+import { DatasetInput } from "../components/dataset-input/dataset-input";
+import { Editor } from "../lib/layers";
 
 export class ModelEditor extends LitElementWw {
     static scopedElements = {

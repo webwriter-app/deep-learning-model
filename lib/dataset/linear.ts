@@ -1,11 +1,12 @@
-import { SlInput, SlSelect } from '@shoelace-style/shoelace';
-import { html, css, TemplateResult, PropertyValues } from "lit"
+import { SlSelect } from '@shoelace-style/shoelace';
+import { html, TemplateResult } from "lit";
+import { msg, str } from "@lit/localize";
 import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 /**
@@ -92,8 +93,8 @@ export default class LinearTransformation extends FeatureTransformation {
         return html`${until((async () => {
             let predValue = await this.inverse(pred);
             let labelValue = await this.inverse(label);
-            return html`Prediction: ${predValue} - Label: ${labelValue} = Delta: ${parseFloat(predValue) - parseFloat(labelValue)}`
-        })(), html`Visualizing Difference...`)}`;
+            return html`${msg(str`Prediction: ${predValue} - Label: ${labelValue} = Delta: ${parseFloat(predValue) - parseFloat(labelValue)}`)}`;
+        })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
     public getSettingElement(changeCallback): TemplateResult {
@@ -105,15 +106,15 @@ export default class LinearTransformation extends FeatureTransformation {
             changeCallback(that.settings);
         }
         return html`
-            <sl-select label="Value Scale" @sl-change=${typechange} value=${this.settings.type}>
-                <sl-option value="linear">Linear</sl-option>
-                <sl-option value="exp">Exponential</sl-option>
-                <sl-option value="quad">Quadratic</sl-option>
+            <sl-select label=${msg("Value Scale")} @sl-change=${typechange} value=${this.settings.type}>
+                <sl-option value="linear">${msg("Linear")}</sl-option>
+                <sl-option value="exp">${msg("Exponential")}</sl-option>
+                <sl-option value="quad">${msg("Quadratic")}</sl-option>
             </sl-select>`
     }
 
     public renderTransformedValue(value: string): TemplateResult {
         return html`${until(
-            (async () => { return (await this.transform(value)).arraySync()[0].toFixed(3) })(), html`Loading`)}`;
+            (async () => { return (await this.transform(value)).arraySync()[0].toFixed(3) })(), html`${msg("Loading")}`)}`;
     }
 }

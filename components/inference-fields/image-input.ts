@@ -1,12 +1,12 @@
-import { LitElement, html, css } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
-import { LitElementWw } from '@webwriter/lit';
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput } from "@shoelace-style/shoelace"
+import { SlButton } from "@shoelace-style/shoelace";
+import { css, html } from 'lit';
+import { property } from 'lit/decorators.js';
 import { InputElement } from './inference-interfaces';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+import { msg } from "@lit/localize";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 export class DrawingCanvas extends InputElement {
@@ -177,6 +177,6 @@ export class DrawingCanvas extends InputElement {
   }
 
   render() {
-    return html`<canvas></canvas><sl-button @click=${this.clear}>Clear</sl-button>`;
+    return html`<canvas></canvas><sl-button @click=${this.clear}>${msg("Clear")}</sl-button>`;
   }
 }

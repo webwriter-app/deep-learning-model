@@ -1,10 +1,10 @@
-import {Editor, Layer, SIZE_SEP} from "./index";
 import { TransformedDataset } from '../dataset/dataset';
-import { SlInput, SlSelect } from "@shoelace-style/shoelace";
+import { Editor, Layer, SIZE_SEP } from "./index";
+import { msg } from '@lit/localize';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 export class ExportLayer extends Layer {
@@ -41,5 +41,8 @@ export class ExportLayer extends Layer {
     }
     public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         return { output_1: tf.layers.flatten().apply(inputs.input_1) as TF.SymbolicTensor };
+    }
+    protected getDisplayName(): string {
+        return msg("Flatten");
     }
 }

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ko">
+<file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
+<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST - 숫자 읽기</target></segment></unit>
+<unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>특징 공학</target></segment></unit>
+<unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1"><segment><source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source><target>먼저 데이터셋을 불러와 전처리할 것입니다. 컴퓨터가 데이터셋의 텍스트를 텐서로 해석하는 방법을 알려줘야 합니다.</target></segment></unit>
+<unit id="Model Designing#1"><segment><source>Model Designing</source><target>모델 설계</target></segment></unit>
+<unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1"><segment><source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source><target>다음으로, 주어진 숫자 중 하나를 나타내는지 이미지를 분류하는 모델을 설계합니다. 이 경우, 클래스를 안정적으로 식별하기 위해 단순한 컨볼루션 레이어 뒤에 밀집 레이어를 연결합니다.</target></segment></unit>
+<unit id="Model Training#1"><segment><source>Model Training</source><target>모델 훈련</target></segment></unit>
+<unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1"><segment><source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source><target>모델 아키텍처를 사용하여 데이터셋에서 가장 낮은 손실을 생성하도록 모델 가중치를 최적화합니다. 각 배치 처리 후 모델 가중치가 최적화되며, 모든 훈련 샘플 처리가 완료되면 새로운 에포크를 시작하고 이 과정을 반복합니다.</target></segment></unit>
+<unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>모델 예측</target></segment></unit>
+<unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>훈련 후에는 모델을 사용하여 새로운 숫자를 분류할 수 있습니다.</target></segment></unit>
+<unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>모델 평가</target></segment></unit>
+<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>모델의 품질을 평가하고 다른 모델과 비교하기 위해 우리는 일반적으로 모델의 성능에 대한 감을 얻을 수 있는 일련의 테스트를 통해 모델을 실행합니다.</target></segment></unit>
+</file>
+</xliff>

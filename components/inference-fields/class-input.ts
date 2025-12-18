@@ -1,13 +1,12 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
-import { property, customElement, query } from 'lit/decorators.js';
-import { LitElementWw } from '@webwriter/lit';
-import { SlIcon, SlButtonGroup, SlButton, SlSelect, SlOption, SlIconButton, SlInput, SlProgressBar } from "@shoelace-style/shoelace"
-import { InputElement, OutputElement } from './inference-interfaces';
+import { SlOption, SlSelect } from "@shoelace-style/shoelace";
+import { css, html } from 'lit';
+import { property, query } from 'lit/decorators.js';
 import ClassTransformation from '../../lib/dataset/class';
+import { OutputElement } from './inference-interfaces';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 export class ClassInput extends OutputElement {

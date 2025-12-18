@@ -1,10 +1,11 @@
-import {Editor, Layer, SIZE_SEP} from "./index";
+import { SlSelect } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
-import { SlInput, SlSelect } from "@shoelace-style/shoelace";
+import { Editor, Layer, SIZE_SEP } from "./index";
+import { msg } from "@lit/localize";
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 type ActivationIdentifier = 'elu'|'hardSigmoid'|'linear'|'relu'|'relu6'|'selu'|'sigmoid'|'softmax'|'softplus'|'softsign'|'tanh'|'swish'|'mish'|'gelu'|'gelu_new';
@@ -15,7 +16,7 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Activation", editor)
 
-        this.typeSelect = this.addSelect("Function", ["Identity", "relu", "tanh", "sigmoid", "Softmax", "normalize"])
+        this.typeSelect = this.addSelect(msg("Function"), ["Identity", "relu", "tanh", "sigmoid", "Softmax", "normalize"])
         this.typeSelect.value = "relu";
     }
     update() {
@@ -40,5 +41,8 @@ export class ExportLayer extends Layer {
         else if (this.typeSelect.value == "normalize")
             return { output_1: tf.layers.layerNormalization().apply(inputs.input_1) as TF.SymbolicTensor};
         else return { output_1: tf.layers.activation({ activation: this.typeSelect.value as ActivationIdentifier}).apply(inputs.input_1) as TF.SymbolicTensor };
+    }
+    protected getDisplayName(): string {
+        return msg("Activation");
     }
 }

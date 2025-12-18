@@ -1,10 +1,11 @@
-import {Editor, Layer, SIZE_SEP} from "./index";
-import { TransformedDataset } from '../dataset/dataset';
 import { SlSelect } from "@shoelace-style/shoelace";
+import { TransformedDataset } from '../dataset/dataset';
+import { Editor, Layer, SIZE_SEP } from "./index";
+import { msg } from "@lit/localize";
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 export class ExportLayer extends Layer {
@@ -15,12 +16,12 @@ export class ExportLayer extends Layer {
         super(0, 1, "Input", editor)
         if (fields == null) {
             let span = document.createElement("span");
-            span.innerText = "No Feature Data avaliable"
+            span.innerText = msg("No Feature Data avaliable");
             this.addTextElement("",span)
             return;
         }
         this.fields = fields;
-        this.select = this.addSelect("Input field", Object.keys(this.fields.featureMaps))
+        this.select = this.addSelect(msg("Input field"), Object.keys(this.fields.featureMaps))
         this.select.disabled = editor.editMode != "edit";
 
         let that = this;
@@ -45,5 +46,8 @@ export class ExportLayer extends Layer {
     }
     public forward(inputs: Record<string, TF.SymbolicTensor>): Record<string, TF.SymbolicTensor> {
         return {output_1: inputs[this.select.value as string] };
+    }
+    protected getDisplayName(): string {
+        return msg("Input");
     }
 }

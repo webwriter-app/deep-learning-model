@@ -1,0 +1,158 @@
+
+    // Do not modify this file by hand!
+    // Re-generate this file by running lit-localize
+
+    
+    import {str} from '@lit/localize';
+
+    /* eslint-disable no-irregular-whitespace */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+
+    export const templates = {
+      's018f0f27bee12bb9': `Število operacij:`,
+'s026fba1543d336b2': `Vir funkcije`,
+'s02bee65dc3f21363': `Združevanje`,
+'s06471a3c2aed9b4b': `Vnosno polje`,
+'s066d70cf9d5e2915': `Izhodi`,
+'s07da69ddbc0d4c69': `Funkcija`,
+'s0aedd465cb4737b2': `Testiranje / ocenjevanje`,
+'s0b453a19aa0f85a9': `procesor`,
+'s0c5410258e1a4144': `Dodajanje po elementih`,
+'s12126d92849e3b53': `R2 rezultat`,
+'s15371f7ebfb1ad5e': `Hitrost treninga:`,
+'s162c56231b25e6ff': `skrij widget`,
+'s166d284a7cbc6181': `samo za branje`,
+'s1703372e9470522b': `Dodajte oblikovalni sloj`,
+'s17ce2eafdc840624': `Porazdelitev izgub`,
+'s19a2ee331d08ad42': `(Opozorilo: Preveč podatkov o tenzorjih lahko preobremeni RAM naprave in povzroči sesutje med usposabljanjem, v najslabšem primeru pa tudi blokado gostiteljskega sistema.)`,
+'s1bb08bff53933452': `Model različica`,
+'s1c3cbd3cbaee4368': `Dodajte sloj I/O`,
+'s1ca51d37e3dae07a': `To omogoča, da se preoblikovani vzorci shranijo v predpomnilnik računalniške naprave, kar znatno poveča hitrost usposabljanja, vendar zahteva precej več prostora za shranjevanje na napravi.`,
+'s1e0afe8020901f1f': `Začni s treningom`,
+'s1fa03b3ccbfc66a5': `Predobdelava slik`,
+'s22fde937cb709859': `Povečaj`,
+'s2454d1f117573457': `Natančnost`,
+'s255857544a9d5ec0': `Ponastavi`,
+'s26b5b115b8b61794': `Widget za oblikovanje funkcij je skrit pred študenti.`,
+'s2b28da40a8490a78': `samo nastavitve funkcij`,
+'s2b6d43596140ef3a': `Nadaljuj z usposabljanjem`,
+'s2bc80ed8441b0831': `Hrup`,
+'s2c48e68704ff98c2': str`Neveljavna oblika izhoda: 
+          ${0} != 
+          ${1}
+        `,
+'s2d0ac2f4cbd7b867': `Nalaganje modelov...`,
+'s32f2fa78e3267c4e': `samo lastnosti`,
+'s334f9922638204ab': `Podatkovna zbirka, ki uporablja`,
+'s34af392b321cbfa6': `uredi vse`,
+'s38ddf839c081bbaf': str`
+          ${0} th dim
+        `,
+'s39e9054ae5edaf30': `Parametri največjega sloja`,
+'s3aba710c340e1059': `Ni na voljo podatkov o značilnostih`,
+'s410415ac2406c84e': `Prednostni backend`,
+'s412b62989fc26d3a': `Pokaži izbor`,
+'s446eb2b422b286af': `Zagon`,
+'s49730f3d5751a433': `Nalaganje...`,
+'s4c08da5f7528a7e3': `Vir modela`,
+'s4f5eeeb48a97ea9a': `Izguba`,
+'s547a4465533a6f5f': `Kodiranje slik`,
+'s5561b945c8cd59b0': `Velikost serije`,
+'s559e9b10ba86261e': `Vzorci za usposabljanje predpomnilnika`,
+'s5687c76f8638e9a5': `Izberite niz podatkov`,
+'s56a6aa2100291b96': `Widget za usposabljanje modelov je skrit pred študenti.`,
+'s56eedda42b0bb66f': `Dodaj razno. Plast`,
+'s5732d2277d736ba1': `Kvadratni`,
+'s58bee799432dbc69': `Dodatek`,
+'s58d6b1ecd5084538': `Korak`,
+'s5da30fd688d05a35': `Uredi dovoljenja`,
+'s61ac82c68c336bb1': `Prenehajte s treningom`,
+'s61f8c4b6c5f2ae63': `WebGL (grafični procesor)`,
+'s62cecbd4b16886e7': `Izračun porazdelitve izgube...`,
+'s6557e193c4f15b9c': `Več razredov na vzorec`,
+'s6610206d0ad97d60': `Stolpci značilnosti podatkovnega niza:`,
+'s66a5898632280fe2': `Funkcija izgube`,
+'s6b0e650acd025eff': `Niz Base64`,
+'s6c02f2ec8c3f52a4': `Natančnost`,
+'s6c5b5757b7756775': `Pogled na center`,
+'s6f0c402dbc70cade': `Izberite, kako želite, da se niz interpretira.`,
+'s70027acd13cd9df8': `Kodiranje razreda`,
+'s7098a15dd248ce2f': `Uvozni format`,
+'s731e8d25df7b1886': `Izbriši niz podatkov`,
+'s76b14a5034f53fd9': `Pozor`,
+'s7a1c71b249a86643': `Hitrost učenja`,
+'s7b59301169d2cc3d': `Kodiranje številk`,
+'s82c21acdbcd6e830': `Moč`,
+'s82caaf657b01a4d0': `Siva lestvica`,
+'s888d98a196a240d8': `Vnosi`,
+'s8a73af950772f702': `Model ni na voljo.`,
+'s900c980bdb200fcf': `Epohe`,
+'s917734d83f35efa3': `Prezri`,
+'s94d63573d312fe9b': `Identiteta`,
+'s96d63527efafa81b': `Parametri: `,
+'s975087a831353889': `Površinski`,
+'s981f232bd33ec927': `Stopnja`,
+'s99456cbda3e05fb0': `Spomin`,
+'s9b5ec9d0b70a0fac': `Parametri modela Max`,
+'s9eac77171764efaa': `Transponirana konvolucija`,
+'sa4ef4c5175793d6f': `Izračun izgube za vzorce...`,
+'sa68f184fe626daf3': `Dodaj sloj, ki ga je mogoče trenirati`,
+'sa8082d7f7ef02f42': `Ta transformacija ne velja za vrednosti`,
+'sa812ba9ded26aa98': `Nalaganje modela...`,
+'sa8d9304ef4eefbd5': `Konvolucija`,
+'sa91ddb7330d86835': `Binarni niz`,
+'sab09aa21c8921bea': `Nalaganje slike`,
+'sabf86f32eba45ad4': `Izberite stolpec, ki ga želite oblikovati.`,
+'saf01d58ece3a1e02': `Nalaganje Tensorflow...`,
+'sb03650788f41c135': str`iz 
+          vzorcev 
+          ${0}
+        `,
+'sb05582ce916894da': `Pomanjšaj`,
+'sb405f0898c39ca67': `Vrsta podatkov`,
+'sb4f1dffbb6be6302': `Jasno`,
+'sb59d68ed12d46377': `Nalaganje`,
+'sb633a04ba54b2dc0': `Sloj ima preveč parametrov, ki jih je mogoče trenirati. Poskusite zmanjšati velikost vnosa ali nastavljive lastnosti.`,
+'sbfe9518a1fe4f185': `Preoblikovanje`,
+'sc0e01e8b4662bec2': str`Napoved: 
+          ${0} ,  Oznaka: 
+          ${1}
+        `,
+'sc2e0d19ed54560c8': `Eksponentna`,
+'sc3727a4fc25d7500': str`Napoved: 
+          ${0} ${1} Oznaka: 
+          ${2}
+        `,
+'sc3d8f37ea5f4bd79': `Vizualizacija razlik...`,
+'sc6bff481def13d70': `Osip`,
+'sc6d31f0cce31ddcf': `Skupni parametri:`,
+'sc9d11ba788fd6aff': `Začni s treningom`,
+'scb42b9cdc2ad49e4': `Tenzor`,
+'sce4efb732b98f946': `Ena razreda na vzorec`,
+'scfd25318edb1ebb1': `Število jeder`,
+'sd2223afb7d6b100d': `Tip`,
+'sd6b72022c37e1ae0': `Vir zasnove`,
+'sdab07807ff1b6b12': `Model Design Widget skrit pred študenti.`,
+'sdb1595f5c742dfbb': `Vnos`,
+'sdde16b9126492f79': `Velikost jedra`,
+'se13c154abb1c1cff': `Dodaj kombinirani sloj`,
+'se1c4d8107171ecb2': str`Napoved: 
+          ${0} - Oznaka: 
+          ${1} = Delta: 
+          ${2}
+        `,
+'se2b0409cadbd0a9e': `Izberi izvorni element`,
+'se2b49a41b39653fc': `Lestvica vrednosti`,
+'se7a532063ef7b740': `Linearni`,
+'seb198c12be265d61': `Izhodni vozli`,
+'seffcca34b918ddc0': `Ima ciklično referenco.`,
+'sf1674aeb3dc2d55d': `Aktiviranje`,
+'sf21fb4f4b9e8911f': `Širina`,
+'sf5290513fc7b466a': `Uporabljen spomin Tensor:`,
+'sf84bd835fc5a52ef': `Najslabši vzorci`,
+'sf99503650274b914': `Optimizator`,
+'sfb3198d46e57af91': `Pokaži naključni vzorec`,
+'sfd77270c3f54f664': `Izhod`,
+'sffdadf0a576fd802': `Višina`,
+    };
+  

@@ -1,0 +1,1437 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "widgets/webwriter-feature-engineering.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A widget that allows feature engineering on a dataset",
+          "name": "AiWidgetsFeatures",
+          "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "samplesSave",
+              "type": {
+                "text": "string"
+              },
+              "description": "The original decompressed data in a json string with format of RawSample[]",
+              "attribute": "samplesSave",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "samples",
+              "type": {
+                "text": "Array<Record<string, string>>"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "fieldProps",
+              "type": {
+                "text": "Record<string, FieldProp>"
+              },
+              "description": "Stores the settings of the feature columns",
+              "attribute": "fieldProps",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rawDataset",
+              "type": {
+                "text": "Dataset"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "tensorDataset",
+              "type": {
+                "text": "TransformedDataset"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "activeHeader",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "\"\"",
+              "description": "The selected feature column"
+            },
+            {
+              "kind": "field",
+              "name": "limit",
+              "type": {
+                "text": "number"
+              },
+              "default": "1000",
+              "description": "The number of samples used for the dataset",
+              "attribute": "limit",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "isInitiated",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "attribute": "isInitiated"
+            },
+            {
+              "kind": "field",
+              "name": "editMode",
+              "type": {
+                "text": "\"edit\"|\"feat\"|\"read\"|\"hidden\""
+              },
+              "default": "\"edit\"",
+              "description": "What students will be able to edit in the explorable. Ranging from \"edit\" = everything, \"feat\" = only feature settings, \"read\" = read only, to \"hidden\" = invisible to the students.",
+              "attribute": "editMode",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "renderSelectDataset",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "renderTableHeader",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "renderFieldValues",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "fieldName",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderFieldTypeSelector",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "fieldName",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleDataset",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": {
+                    "text": "Array<Record<string, string>>"
+                  },
+                  "description": "The dataset"
+                },
+                {
+                  "name": "errors",
+                  "type": {
+                    "text": "Array<any>"
+                  },
+                  "description": "Possible errors from loading the dataset"
+                },
+                {
+                  "name": "meta",
+                  "type": {
+                    "text": "any"
+                  },
+                  "description": "Should at least contain a list of feature column names in meta.fields"
+                }
+              ],
+              "description": "Called when a new dataset is provided"
+            },
+            {
+              "kind": "method",
+              "name": "getDataset",
+              "description": "Returns the current dataset in both raw and tensor form"
+            },
+            {
+              "kind": "method",
+              "name": "updateTensorDataset",
+              "privacy": "private",
+              "description": "Called everytime settings change to generate the new tensor dataset."
+            },
+            {
+              "kind": "method",
+              "name": "handleHeaderClick",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  },
+                  "description": "The event from the button of the tab"
+                }
+              ],
+              "description": "Switches to the clicked tab"
+            },
+            {
+              "kind": "method",
+              "name": "deleteDataset",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleSizeChange",
+              "privacy": "private",
+              "description": "Called when the limit is chanded"
+            },
+            {
+              "kind": "method",
+              "name": "handleFeatureSettingsChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "settings",
+                  "type": {
+                    "text": "Record<string, any>"
+                  },
+                  "description": "New settings"
+                }
+              ],
+              "description": "Called when the user changes the feature settings"
+            },
+            {
+              "kind": "method",
+              "name": "_triggerChanged",
+              "privacy": "private",
+              "description": "Tells listening widgets when the dataset changed"
+            },
+            {
+              "kind": "method",
+              "name": "isReady",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Checks whether the dataset is ready to be used"
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the dataset changes. Detail contains { dataset: Dataset, tensorDataset: TransformedDataset }"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "samplesSave",
+              "type": {
+                "text": "string"
+              },
+              "description": "The original decompressed data in a json string with format of RawSample[]",
+              "fieldName": "samplesSave"
+            },
+            {
+              "name": "fieldProps",
+              "type": {
+                "text": "Record<string, FieldProp>"
+              },
+              "description": "Stores the settings of the feature columns",
+              "fieldName": "fieldProps"
+            },
+            {
+              "name": "limit",
+              "type": {
+                "text": "number"
+              },
+              "default": "1000",
+              "description": "The number of samples used for the dataset",
+              "fieldName": "limit"
+            },
+            {
+              "name": "isInitiated",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "isInitiated"
+            },
+            {
+              "name": "editMode",
+              "type": {
+                "text": "\"edit\"|\"feat\"|\"read\"|\"hidden\""
+              },
+              "default": "\"edit\"",
+              "description": "What students will be able to edit in the explorable. Ranging from \"edit\" = everything, \"feat\" = only feature settings, \"read\" = read only, to \"hidden\" = invisible to the students.",
+              "fieldName": "editMode"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-feature-engineering",
+          "customElement": true,
+          "modulePath": "widgets/webwriter-feature-engineering.ts",
+          "definitionPath": "widgets/webwriter-feature-engineering.ts"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiWidgetsFeatures",
+          "declaration": {
+            "name": "AiWidgetsFeatures",
+            "module": "widgets/webwriter-feature-engineering.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-feature-engineering",
+          "declaration": {
+            "name": "AiWidgetsFeatures",
+            "module": "widgets/webwriter-feature-engineering.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "widgets/webwriter-model-designing.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A widget to design AI models using a visual editor.",
+          "name": "AiWidgetsDesigns",
+          "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "state",
+              "type": {
+                "text": "string"
+              },
+              "description": "Stores the state of the model editor as a json string",
+              "attribute": "state",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "Stores the reference id of the widget where the dataset is used from",
+              "attribute": "featureWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "refSelect",
+              "type": {
+                "text": "AiWidgetsReferenceSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "editMode",
+              "type": {
+                "text": "\"edit\"|\"layer\"|\"read\"|\"hidden\""
+              },
+              "default": "\"edit\"",
+              "description": "What students will be able to edit in the explorable. Ranging from \"edit\" = everything, \"layer\" = only layer settings, \"read\" = read only, to \"hidden\" = invisible to the students.",
+              "attribute": "editMode",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "maxModelParameters",
+              "type": {
+                "text": "number"
+              },
+              "default": "100000",
+              "description": "The maximum number of total parameters allowed for training the model. Only checked by the training widget.",
+              "attribute": "maxModelParameters",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "maxLayerParameters",
+              "type": {
+                "text": "number"
+              },
+              "default": "10000",
+              "description": "The maximum number of parameters allowed per layer to allow training the model.",
+              "attribute": "maxLayerParameters",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "_handleRefChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  },
+                  "description": "Contains e.detail.id for the new widget providing the dataset"
+                }
+              ],
+              "description": "Called when the feature dataset source widget is changed."
+            },
+            {
+              "kind": "field",
+              "name": "currentCanvas",
+              "type": {
+                "text": "ModelEditor"
+              },
+              "description": "Reference to the current model editor canvas"
+            },
+            {
+              "kind": "method",
+              "name": "_editorChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ],
+              "description": "Called when the model design inside the model editor was changed"
+            },
+            {
+              "kind": "method",
+              "name": "zoomIn",
+              "privacy": "public",
+              "description": "Zoom the canvas in"
+            },
+            {
+              "kind": "method",
+              "name": "zoomOut",
+              "privacy": "public",
+              "description": "Zoom the canvas out"
+            },
+            {
+              "kind": "method",
+              "name": "zoomReset",
+              "privacy": "public",
+              "description": "Reset the zoom of the canvas"
+            },
+            {
+              "kind": "method",
+              "name": "getModel",
+              "description": "Exports the current model design",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "state",
+              "type": {
+                "text": "string"
+              },
+              "description": "Stores the state of the model editor as a json string",
+              "fieldName": "state"
+            },
+            {
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "Stores the reference id of the widget where the dataset is used from",
+              "fieldName": "featureWidgetId"
+            },
+            {
+              "name": "editMode",
+              "type": {
+                "text": "\"edit\"|\"layer\"|\"read\"|\"hidden\""
+              },
+              "default": "\"edit\"",
+              "description": "What students will be able to edit in the explorable. Ranging from \"edit\" = everything, \"layer\" = only layer settings, \"read\" = read only, to \"hidden\" = invisible to the students.",
+              "fieldName": "editMode"
+            },
+            {
+              "name": "maxModelParameters",
+              "type": {
+                "text": "number"
+              },
+              "default": "100000",
+              "description": "The maximum number of total parameters allowed for training the model. Only checked by the training widget.",
+              "fieldName": "maxModelParameters"
+            },
+            {
+              "name": "maxLayerParameters",
+              "type": {
+                "text": "number"
+              },
+              "default": "10000",
+              "description": "The maximum number of parameters allowed per layer to allow training the model.",
+              "fieldName": "maxLayerParameters"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-model-designing",
+          "customElement": true,
+          "modulePath": "widgets/webwriter-model-designing.ts",
+          "definitionPath": "widgets/webwriter-model-designing.ts"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiWidgetsDesigns",
+          "declaration": {
+            "name": "AiWidgetsDesigns",
+            "module": "widgets/webwriter-model-designing.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-model-designing",
+          "declaration": {
+            "name": "AiWidgetsDesigns",
+            "module": "widgets/webwriter-model-designing.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "widgets/webwriter-model-evaluation.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A widget that allows evaluating a trained model using various tests.",
+          "name": "AiWidgetsTest",
+          "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the feature engineering widget to use as feature source.",
+              "attribute": "featureWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "featureSelect",
+              "type": {
+                "text": "AiWidgetsReferenceSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "modelWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the model training widget to use as model source.",
+              "attribute": "modelWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "modelSelect",
+              "type": {
+                "text": "AiWidgetsReferenceSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "modelName",
+              "type": {
+                "text": "SlSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "testSelect",
+              "type": {
+                "text": "SlSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "testContainer",
+              "type": {
+                "text": "HTMLDivElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "testElem",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "selectedModelName",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "attribute": "selectedModelName",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "model",
+              "type": {
+                "text": "TF.LayersModel"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getModelSelect",
+              "description": "Renders the model select field allowing the user to change the model checkpoint that is used for testing."
+            },
+            {
+              "kind": "method",
+              "name": "modelRefChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "featureRefChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "selectedModelChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "testChange",
+              "privacy": "private",
+              "description": "Renders the test results when the test changes."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the feature engineering widget to use as feature source.",
+              "fieldName": "featureWidgetId"
+            },
+            {
+              "name": "modelWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the model training widget to use as model source.",
+              "fieldName": "modelWidgetId"
+            },
+            {
+              "name": "selectedModelName",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "selectedModelName"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-model-evaluation",
+          "customElement": true,
+          "modulePath": "widgets/webwriter-model-evaluation.ts",
+          "definitionPath": "widgets/webwriter-model-evaluation.ts"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiWidgetsTest",
+          "declaration": {
+            "name": "AiWidgetsTest",
+            "module": "widgets/webwriter-model-evaluation.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-model-evaluation",
+          "declaration": {
+            "name": "AiWidgetsTest",
+            "module": "widgets/webwriter-model-evaluation.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "widgets/webwriter-model-prediction.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A widget to run inference using a trained model and features created in the feature engineering widget.",
+          "name": "AiWidgetsInference",
+          "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the feature engineering widget to use as input.",
+              "attribute": "featureWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "featureSelect",
+              "type": {
+                "text": "AiWidgetsReferenceSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "modelWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the model training widget to use as model source.",
+              "attribute": "modelWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "modelSelect",
+              "type": {
+                "text": "AiWidgetsReferenceSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "modelName",
+              "type": {
+                "text": "SlSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "selectedModelName",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "attribute": "selectedModelName",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "model",
+              "type": {
+                "text": "TF.LayersModel"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getModelSelect",
+              "privacy": "private",
+              "description": "Renders the model select field allowing the user to change the model checkpoint that is used for inference."
+            },
+            {
+              "kind": "method",
+              "name": "getFeatureInputs",
+              "privacy": "private",
+              "description": "Renders the left input fields which the user can edit and which values are fed into the model periodically."
+            },
+            {
+              "kind": "method",
+              "name": "getFeatureOutputs",
+              "privacy": "private",
+              "description": "Renders the right output fields which are generated by the model output periodically."
+            },
+            {
+              "kind": "method",
+              "name": "modelRefChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "featureRefChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "selectedModelChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "fillWithRandomSample",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "fillWithSample",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "number"
+                  },
+                  "description": "The id of the sample in the dataset."
+                }
+              ],
+              "description": "Sets the state of the input fields to the value of a sample."
+            },
+            {
+              "kind": "method",
+              "name": "predict",
+              "privacy": "private",
+              "description": "Is periodically called and will invoke the input fields values on the model to update the output fields."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the feature engineering widget to use as input.",
+              "fieldName": "featureWidgetId"
+            },
+            {
+              "name": "modelWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the model training widget to use as model source.",
+              "fieldName": "modelWidgetId"
+            },
+            {
+              "name": "selectedModelName",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "selectedModelName"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-model-prediction",
+          "customElement": true,
+          "modulePath": "widgets/webwriter-model-prediction.ts",
+          "definitionPath": "widgets/webwriter-model-prediction.ts"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiWidgetsInference",
+          "declaration": {
+            "name": "AiWidgetsInference",
+            "module": "widgets/webwriter-model-prediction.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-model-prediction",
+          "declaration": {
+            "name": "AiWidgetsInference",
+            "module": "widgets/webwriter-model-prediction.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "widgets/webwriter-model-training.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.",
+          "name": "AiWidgetsTraining",
+          "members": [
+            {
+              "kind": "field",
+              "name": "localize",
+              "privacy": "protected",
+              "default": "LOCALIZE"
+            },
+            {
+              "kind": "field",
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The feature engineering widget to use as data source for training the model.",
+              "attribute": "featureWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "featureSelect",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "modelWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The model design widget to use as model source for training.",
+              "attribute": "modelWidgetId",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "modelSelect",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "startTrainingBtn",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "resetTrainingBtn",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "trainingMetricsDiv",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "speed",
+              "type": {
+                "text": "HTMLSpanElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "memory",
+              "type": {
+                "text": "HTMLSpanElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "error",
+              "type": {
+                "text": "HTMLSpanElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "cache",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "If true, the transformed training samples will be cached for faster training.",
+              "attribute": "cache",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "currentBackend",
+              "type": {
+                "text": "\"webgl\" | \"cpu\""
+              },
+              "default": "\"webgl\"",
+              "description": "The prefered tfjs backend",
+              "attribute": "currentBackend",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "modelVersions",
+              "type": {
+                "text": "Record<string, string>"
+              },
+              "default": "{}",
+              "description": "Stores the model jsons with a name like \"best\" or \"epoch-20\" for loading by the inference and test widgets",
+              "attribute": "modelVersions",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "editMode",
+              "type": {
+                "text": "\"edit\"|\"hidden\""
+              },
+              "default": "\"edit\"",
+              "description": "\"edit\" means that students can use the widget to train a model while \"hidden\" means the widget will be invisible to student but the trained models can be used by other widgets.",
+              "attribute": "editMode",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "optimizer",
+              "type": {
+                "text": "SlSelect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "lr",
+              "type": {
+                "text": "SlInput"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "momentum",
+              "type": {
+                "text": "SlInput"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "batch",
+              "type": {
+                "text": "SlInput"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "epochs",
+              "type": {
+                "text": "SlInput"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "showError",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "err",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "hideError",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "changeOptimizer",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "setHyperParamsActive",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "active",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "chartContainer",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "losses",
+              "type": {
+                "text": "Record<string, Array<number>>"
+              },
+              "privacy": "private",
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "insights",
+              "type": {
+                "text": "Record<string, any>"
+              },
+              "privacy": "private",
+              "default": "{min_val_loss: 100, min_val_loss_index: 0}"
+            },
+            {
+              "kind": "field",
+              "name": "chart",
+              "privacy": "private",
+              "default": "new ApexCharts(this.chartContainer, { series: [], chart: { id: 'realtime', height: 200, type: 'line', animations: { enabled: false }, toolbar: { show: false }, zoom: { enabled: false } }, dataLabels: { enabled: false }, title: { text: 'Training Metrics', align: 'left' }, markers: { size: 0 }, xaxis: { type: 'number', labels: { rotate: -90, tickAmount: 10, hideOverlappingLabels: true, step: 5 } }, yaxis: { min: 0 }, legend: { show: false }, })"
+            },
+            {
+              "kind": "method",
+              "name": "resolveOutput",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "layer",
+                  "type": {
+                    "text": "Layer"
+                  },
+                  "description": "One output layer of the model to solve the dependencies for."
+                },
+                {
+                  "name": "inputs",
+                  "type": {
+                    "text": "Record<string, TF.SymbolicTensor>"
+                  },
+                  "description": "All the input tensors of the model with the \"in_<feature>\"\" as the key."
+                },
+                {
+                  "name": "resolvedLayers",
+                  "type": {
+                    "text": "Record<number, any>"
+                  },
+                  "description": "A reference to an array storing the already resolved layers for later use when solving for other output layers."
+                }
+              ],
+              "description": "Used to recursively connect the inputs via the layers to the output nodes."
+            },
+            {
+              "kind": "method",
+              "name": "buildModel",
+              "description": "Builds the complete tfjs model using the layers from the model design widget. It sets the correct input names for the input layers as \"in_<feature>\". The output layers dependency graph is build and the loss is applied to the output tensor for training.",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "lossStringToFunction",
+              "parameters": [
+                {
+                  "name": "loss",
+                  "type": {
+                    "text": "string"
+                  },
+                  "description": "The loss string like \"MSE\" or \"BCE\""
+                }
+              ],
+              "description": "Converts a loss string to the corresponding tfjs loss function.",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateGraph",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getModel",
+              "privacy": "public",
+              "parameters": [
+                {
+                  "name": "name",
+                  "description": "The checkpoint name like \"best\" or \"epoch-20\". All the available checkpoints can be retrieved via this.getAvailableModels()."
+                }
+              ],
+              "description": "Returns the model for named checkpoints for other widgets to use.",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getAvailableModels",
+              "privacy": "public",
+              "description": "Returns the available model checkpoints"
+            },
+            {
+              "kind": "method",
+              "name": "clearModels",
+              "privacy": "private",
+              "description": "Deletes all model checkpoints"
+            },
+            {
+              "kind": "field",
+              "name": "isTraining",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "Is true, while tf is in the training process"
+            },
+            {
+              "kind": "field",
+              "name": "currentTraining",
+              "type": {
+                "text": "TF.LayersModel"
+              },
+              "privacy": "private",
+              "description": "contains the currently trained model"
+            },
+            {
+              "kind": "field",
+              "name": "currentEpoch",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "backendPriority",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "private",
+              "default": "[\"webgl\",\"cpu\"]",
+              "description": "A list of available backends for tf to use. Could be expanded and are tried out in order. (Not all backends support all layer and operation types, but can provide better training speed)"
+            },
+            {
+              "kind": "method",
+              "name": "resetModel",
+              "privacy": "private",
+              "description": "Sets the state of this training widget back to the initial configuration and deletes previous training progress."
+            },
+            {
+              "kind": "method",
+              "name": "initModel",
+              "description": "Initializes the model for training and preps the UI."
+            },
+            {
+              "kind": "method",
+              "name": "training",
+              "description": "Runs the tf training loop and keeps the UI up-to-date"
+            },
+            {
+              "kind": "method",
+              "name": "saveCurrentModel",
+              "parameters": [
+                {
+                  "name": "name",
+                  "description": "The checkpoint name."
+                }
+              ],
+              "description": "Saves the current model as a checkpoint for other widgets to use later."
+            }
+          ],
+          "events": [
+            {
+              "name": "finished",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the training process has finished."
+            },
+            {
+              "name": "epoch",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired after each epoch during training."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "featureWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The feature engineering widget to use as data source for training the model.",
+              "fieldName": "featureWidgetId"
+            },
+            {
+              "name": "modelWidgetId",
+              "type": {
+                "text": "string"
+              },
+              "description": "The model design widget to use as model source for training.",
+              "fieldName": "modelWidgetId"
+            },
+            {
+              "name": "cache",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "If true, the transformed training samples will be cached for faster training.",
+              "fieldName": "cache"
+            },
+            {
+              "name": "currentBackend",
+              "type": {
+                "text": "\"webgl\" | \"cpu\""
+              },
+              "default": "\"webgl\"",
+              "description": "The prefered tfjs backend",
+              "fieldName": "currentBackend"
+            },
+            {
+              "name": "modelVersions",
+              "type": {
+                "text": "Record<string, string>"
+              },
+              "default": "{}",
+              "description": "Stores the model jsons with a name like \"best\" or \"epoch-20\" for loading by the inference and test widgets",
+              "fieldName": "modelVersions"
+            },
+            {
+              "name": "editMode",
+              "type": {
+                "text": "\"edit\"|\"hidden\""
+              },
+              "default": "\"edit\"",
+              "description": "\"edit\" means that students can use the widget to train a model while \"hidden\" means the widget will be invisible to student but the trained models can be used by other widgets.",
+              "fieldName": "editMode"
+            }
+          ],
+          "superclass": {
+            "name": "LitElementWw",
+            "package": "@webwriter/lit"
+          },
+          "tagName": "webwriter-model-training",
+          "customElement": true,
+          "modulePath": "widgets/webwriter-model-training.ts",
+          "definitionPath": "widgets/webwriter-model-training.ts"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiWidgetsTraining",
+          "declaration": {
+            "name": "AiWidgetsTraining",
+            "module": "widgets/webwriter-model-training.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "webwriter-model-training",
+          "declaration": {
+            "name": "AiWidgetsTraining",
+            "module": "widgets/webwriter-model-training.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

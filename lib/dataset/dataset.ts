@@ -1,11 +1,8 @@
-import { SlInput, SlSelect } from '@shoelace-style/shoelace';
-import { html, css, TemplateResult, PropertyValues } from "lit"
-import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation } from './feature';
 
-import getTF from "../../lib/tflib";
 import type * as TF from "@tensorflow/tfjs";
-let tf: typeof import("/home/spakkel/Dokumente/ai-blocks/node_modules/@tensorflow/tfjs");
+import getTF from "../../lib/tflib";
+let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 type RawSample = Record<string, string>
@@ -90,7 +87,7 @@ export class Dataset {
 }
 
 /**
-* This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
+* This class is a wrapper that references the original dataset and any accessed Sample will be transformed and delivered as tensors
 */
 export class TransformedDataset {
     public readonly dataset: Dataset;
@@ -98,7 +95,7 @@ export class TransformedDataset {
     private cache: Array<TensorSample> = [];
 
     /**
-    * This class is a wrapper that refferences the original dataset and any accessed Sample will be transformed and delivered as tensors
+    * This class is a wrapper that references the original dataset and any accessed Sample will be transformed and delivered as tensors
     */
     constructor(dataset: Dataset, featureMaps: Record<string, Constructor<FeatureTransformation>>, settings: Record<string, FeatureSettings>) {
         this.dataset = dataset;
