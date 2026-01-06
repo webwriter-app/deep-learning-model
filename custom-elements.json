@@ -812,6 +812,15 @@
               "privacy": "private"
             },
             {
+              "kind": "field",
+              "name": "predictionInterval",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "setInterval(function() { that.predict(); }, 200) as unknown"
+            },
+            {
               "kind": "method",
               "name": "getModelSelect",
               "privacy": "private",

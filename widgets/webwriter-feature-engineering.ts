@@ -25,7 +25,13 @@ BigInt.prototype["toJSON"] = function () {
   return this.toString();
 };
 Uint8Array.prototype["toJSON"] = function () {
-  return [...this]
+  // Convert Uint8Array to base64 for efficient storage
+  let binary = '';
+  const len = this.length;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(this[i]);
+  }
+  return btoa(binary);
 };
 
 type FieldProp = {
@@ -208,10 +214,9 @@ export class AiWidgetsFeatures extends LitElementWw {
         let transformation = new Transformation(this.samples.map(v => v[fieldName]), this.fieldProps[fieldName].settings)
         let rows = this.samples.slice(0, 10).map(
           function (v) {
-            let value = v[fieldName];
-            if (typeof value != "string")
-              value = JSON.stringify(value);
-            return html`<tr><td><p>${value}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
+            const value = v[fieldName];
+            const displayValue = transformation.renderOriginalValue(value);
+            return html`<tr><td><p>${displayValue}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
           }
         )
         return html`<div class="settings">${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) }, this.editMode)}</div><div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
