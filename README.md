@@ -1,5 +1,5 @@
-# Deep Learning Model (`@webwriter/deep-learning-model@1.0.0`)
-[License: MIT](LICENSE) | Version: 1.0.0
+# Deep Learning Model (`@webwriter/deep-learning-model@1.0.1`)
+[License: MIT](LICENSE) | Version: 1.0.1
 
 A set of blocks to create, train and evaluate deep learning models.
 
