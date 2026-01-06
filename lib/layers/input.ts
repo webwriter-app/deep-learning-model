@@ -41,6 +41,8 @@ export class ExportLayer extends Layer {
     }
     setState(state) {
         super.setState(state);
+        if (!this.select)
+            return;
         this.select.value = state.select;
         this.select.dispatchEvent(new Event('sl-change', { bubbles: true }))
     }

@@ -35,7 +35,8 @@ export class ExportLayer extends Layer {
         });
     }
     update() {
-        this.getNodeInputElement("input_1").innerText = this.fields.featureMaps[this.select.value as string].size().join(SIZE_SEP);
+        if (this.fields && this.select)
+            this.getNodeInputElement("input_1").innerText = this.fields.featureMaps[this.select.value as string].size().join(SIZE_SEP);
         super.checkInputs();
     }
     getState() {
@@ -47,6 +48,8 @@ export class ExportLayer extends Layer {
     }
     setState(state: Record<string, any>) {
         super.setState(state);
+        if (!this.select || !this.loss)
+            return;
         this.select.value = state.select;
         this.loss.value = state.loss;
         this.select.dispatchEvent(new Event('sl-change', { bubbles: true }))

@@ -132,13 +132,21 @@ export class AiWidgetsInference extends LitElementWw {
     private accessor selectedModelName: string;
 
     private model:TF.LayersModel;
+    private predictionInterval: number;
 
     constructor() {
         super();
         let that = this;
-        setInterval(function() {
+        this.predictionInterval = setInterval(function() {
             that.predict();
-        }, 200);
+        }, 200) as unknown as number;
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        if (this.predictionInterval) {
+            clearInterval(this.predictionInterval);
+        }
     }
 
     /**
@@ -249,6 +257,8 @@ export class AiWidgetsInference extends LitElementWw {
 
 
     private fillWithRandomSample() {
+        if (!this.featureSelect || !this.featureSelect.getRefElement())
+            return;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset()
         this.fillWithSample(Math.floor(Math.random() * (rawDataset.validationEnd - rawDataset.length()) + rawDataset.validationEnd))
     }
@@ -258,7 +268,7 @@ export class AiWidgetsInference extends LitElementWw {
      * @param id The id of the sample in the dataset.
      */
     private async fillWithSample(id:number) {
-        if (this.model == null)
+        if (this.model == null || !this.featureSelect || !this.featureSelect.getRefElement())
             return;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset()
         let sample = await tensorDataset.getSample(id);
@@ -271,7 +281,7 @@ export class AiWidgetsInference extends LitElementWw {
 
     /** Is periodically called and will invoke the input fields values on the model to update the output fields. */
     private async predict() {
-        if (this.model == null)
+        if (this.model == null || !this.featureSelect || !this.featureSelect.getRefElement())
             return;
 
         let that = this;
