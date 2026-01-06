@@ -92,6 +92,18 @@ export abstract class FeatureTransformation {
      */
     public abstract renderPredictionDifference(pred: tf.Tensor, label: tf.Tensor): TemplateResult;
 
+    /**
+     * Returns a string representation of the original value for display in the feature engineering widget.
+     * Can be overridden by subclasses to provide custom formatting (e.g., converting base64 to array format).
+     * @param value The original value from the dataset
+     * @returns A string representation for display
+     */
+    public renderOriginalValue(value: string | number[]): string {
+        if (typeof value != "string")
+            return JSON.stringify(value);
+        return value;
+    }
+
     public getSetting(name: string) {
         return this.settings[name];
     }

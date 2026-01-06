@@ -36,7 +36,7 @@ export default class ImageTransformation extends FeatureTransformation {
             this.settings.transform = "identity";
 
         let that = this;
-        this.getRawImage(samples[0] as number[]).onload = function (e: Event) {
+        this.getRawImage(samples[0]).onload = function (e: Event) {
             let img = e.target as HTMLImageElement;
             if (that.settings.width == 0) {
                 that.settings.width = img.width;
@@ -67,10 +67,24 @@ export default class ImageTransformation extends FeatureTransformation {
     }
 
     public async transform(value: string | number[]): Promise<TF.Tensor3D> {
-        if (typeof value == "string")
-            value = JSON.parse(value) as number[];
+        let bytes: Uint8Array;
 
-        return await this.pngBinaryToTensor(new Uint8Array(value), this.settings.width, this.settings.height);
+        if (typeof value == "string") {
+            if (value.trim().startsWith("[")) {
+                value = JSON.parse(value) as number[];
+                bytes = new Uint8Array(value);
+            } else {
+                const binaryString = atob(value);
+                bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+            }
+        } else {
+            bytes = new Uint8Array(value);
+        }
+
+        return await this.pngBinaryToTensor(bytes, this.settings.width, this.settings.height);
     }
 
     public getInputElement(id:string): TemplateResult {
@@ -205,7 +219,7 @@ export default class ImageTransformation extends FeatureTransformation {
         </sl-select>`;
     }
 
-    public async getImage(value: number[]): Promise<HTMLImageElement> {
+    public async getImage(value: string | number[]): Promise<HTMLImageElement> {
         let img = this.getRawImage(value);
         await (new Promise(function (res, rej) {
             img.onload = res;
@@ -214,9 +228,25 @@ export default class ImageTransformation extends FeatureTransformation {
         return scaled;
     }
 
-    public getRawImage(value: number[]): HTMLImageElement {
-        let bytes = new Uint8Array(value);
-        let blob = new Blob([bytes], { type: 'image/png' });
+    public getRawImage(value: string | number[]): HTMLImageElement {
+        let bytes: Uint8Array;
+
+        if (typeof value == "string") {
+            if (value.trim().startsWith("[")) {
+                const parsedValue = JSON.parse(value) as number[];
+                bytes = new Uint8Array(parsedValue);
+            } else {
+                const binaryString = atob(value);
+                bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+            }
+        } else {
+            bytes = new Uint8Array(value);
+        }
+
+        let blob = new Blob([bytes as any], { type: 'image/png' });
         let imageUrl = URL.createObjectURL(blob);
         let img = new Image();
         img.src = imageUrl;
@@ -247,12 +277,36 @@ export default class ImageTransformation extends FeatureTransformation {
         return html`${until(
             (async () => {
                 await this.waitUntilImageDimensionsAvailable();
-                if (typeof value == "string")
-                    value = JSON.parse(value) as number[];
                 let img = await this.getImage(value);
                 return img;
             })(),
             html`${msg("Loading image")}`)
             }`;
+    }
+
+    public renderOriginalValue(value: string | number[]): string {
+        if (typeof value == "string") {
+            if (value.trim().startsWith("[")) {
+                // Old format: already in array string format
+                return value;
+            } else {
+                // New format: base64 string
+                const binaryString = atob(value);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                // Show only first 9 and last 3 bytes for readability
+                const byteArray = Array.from(bytes);
+                if (byteArray.length > 20) {
+                    const first = byteArray.slice(0, 9);
+                    const last = byteArray.slice(-3);
+                    return `[${first.join(', ')}, ..., ${last.join(', ')}]`;
+                }
+                return JSON.stringify(byteArray);
+            }
+        } else {
+            return JSON.stringify(value);
+        }
     }
 }
