@@ -2,6 +2,7 @@
   "name": "@webwriter/deep-learning-model",
   "version": "1.0.1",
   "description": "A set of blocks to create, train and evaluate deep learning models.",
+  "repository": "github:webwriter-app/deep-learning-model",
   "keywords": [
     "webwriter-widget",
     "widget-simulational",
