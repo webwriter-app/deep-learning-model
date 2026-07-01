@@ -436,7 +436,7 @@ export abstract class Layer {
      * @returns the html element that wraps the entire layer.
      */
     protected getNodeElement() {
-        return this.elem.parentElement.parentElement;
+        return this.elem?.parentElement?.parentElement;
     }
     /**
      * @param input Typically named "input_1", "input_2", ...
@@ -549,26 +549,33 @@ export abstract class Layer {
         for (let i in inputs) {
             let input = inputs[i];
             let inputName = i;
-            if (input.connections.length == 0 || this.getNodeInputElement(inputName).innerText == "") {
-                if (this.getNodeInputElement(inputName) == null)
+            let inputElem = this.getNodeInputElement(inputName);
+            if (input.connections.length == 0 || inputElem == null || inputElem.innerText == "") {
+                if (inputElem == null)
                     this.addInput();
                 setTimeout(function() {
-                    that.getNodeInputElement(inputName).classList.remove("invalid");
-                    that.getNodeInputElement(inputName).classList.remove("valid");
+                    let elem = that.getNodeInputElement(inputName);
+                    if (elem == null)
+                        return;
+                    elem.classList.remove("invalid");
+                    elem.classList.remove("valid");
                 })
                 continue;
             }
             let layer = this.editor.getLayerFromNodeId(parseInt(input.connections[0].node));
             let output = input.connections[0].input;
-            if (layer.getNodeOutputElement(output).innerText != this.getNodeInputElement(i).innerText) {
-                this.getNodeInputElement(i).classList.add("invalid");
-                this.getNodeInputElement(i).classList.remove("valid");
-                this.getNodeInputElement(i).title = "data has wrong dimensions";
+            let outputElem = layer?.getNodeOutputElement(output);
+            if (outputElem == null)
+                continue;
+            if (outputElem.innerText != inputElem.innerText) {
+                inputElem.classList.add("invalid");
+                inputElem.classList.remove("valid");
+                inputElem.title = "data has wrong dimensions";
                 return false;
             } else {
-                this.getNodeInputElement(i).classList.remove("invalid");
-                this.getNodeInputElement(i).classList.add("valid");
-                this.getNodeInputElement(i).title = "";
+                inputElem.classList.remove("invalid");
+                inputElem.classList.add("valid");
+                inputElem.title = "";
             }
         }
         return true;
@@ -615,12 +622,15 @@ export abstract class Layer {
      */
     protected showValid() {
         let valid = this.valid();
+        let elem = this.getNodeElement();
+        if (elem == null)
+            return;
         if (!valid) {
-            this.getNodeElement().classList.add("invalid");
+            elem.classList.add("invalid");
             if (this.hasCyclicReference)
-                this.getNodeElement().setAttribute("title", msg("Has a cyclic reference."));
+                elem.setAttribute("title", msg("Has a cyclic reference."));
         } else {
-            this.getNodeElement().classList.remove("invalid");
+            elem.classList.remove("invalid");
         }
     }
     /**

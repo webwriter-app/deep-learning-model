@@ -376,16 +376,32 @@ export class AiWidgetsTraining extends LitElementWw {
     async buildModel() {
         this.hideError();
         let design = this.modelSelect.getRefElement() as AiWidgetsDesigns;
-        if (design.currentCanvas.controler.getNumberOfParameters() > design.maxModelParameters) {
-            this.showError("The Neural Network is to large. Reduce the overall number of parameters.")
+
+        let featureWidget = this.featureSelect.getRefElement() as AiWidgetsFeatures;
+        let dataset = featureWidget?.getDataset()?.tensorDataset;
+        if (dataset == null) {
+            this.showError("The feature data is not ready yet. Please wait a moment and try again.")
             return null;
         }
 
-        let model = design.getModel();
-        let dataset = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset().tensorDataset;
+        let model = null;
+        try { model = design.getModel(); } catch (e) { console.warn("Live model export failed, using saved state.", e); }
+        let missingSelection = !model || model.length == 0 || model.some(l => (l.type == "input" || l.type == "output") && (l.select == null || l.select == ""));
+        if (missingSelection && design.state)
+            model = JSON.parse(design.state);
+
+        if (model == null || model.length == 0) {
+            this.showError("No model design available.")
+            return null;
+        }
 
         let editor = new Editor(document.createElement("div"), "read", design.maxModelParameters, design.maxLayerParameters);
         await editor.import(model, dataset)
+
+        if (editor.getNumberOfParameters() > design.maxModelParameters) {
+            this.showError("The Neural Network is to large. Reduce the overall number of parameters.")
+            return null;
+        }
 
         for (let layer of model) {
             if (!layer.valid) {
@@ -515,22 +531,28 @@ export class AiWidgetsTraining extends LitElementWw {
         if (this.currentTraining)
             this.currentTraining.dispose();
 
-        await tf.setBackend(this.currentBackend); // cpu, webgl, wasm
-        await tf.ready();
-        let {model, losses} = await this.buildModel();
-        if (model == null || losses == null)
-            return;
-        this.setHyperParamsActive(false);
-        this.currentTraining = model;
-        let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
-        let lr = parseFloat(this.lr.value);
-        let momentum = parseFloat(this.momentum.value);
-        model.compile({
-            optimizer: optimizer != "momentum" ? tf.train[optimizer](lr) : tf.train["momentum"](lr, momentum),
-            loss: losses,
-            metrics: ["accuracy", tf.metrics.r2Score, tf.metrics.precision, tf.metrics.recall],
-        });
-        model.summary();
+        try {
+            await tf.setBackend(this.currentBackend); // cpu, webgl, wasm
+            await tf.ready();
+            let built = await this.buildModel();
+            if (built == null || built.model == null || built.losses == null)
+                return;
+            let {model, losses} = built;
+            this.setHyperParamsActive(false);
+            this.currentTraining = model;
+            let optimizer = (this.shadowRoot.getElementById("optimizer") as SlSelect).value as string;
+            let lr = parseFloat(this.lr.value);
+            let momentum = parseFloat(this.momentum.value);
+            model.compile({
+                optimizer: optimizer != "momentum" ? tf.train[optimizer](lr) : tf.train["momentum"](lr, momentum),
+                loss: losses,
+                metrics: ["accuracy", tf.metrics.r2Score, tf.metrics.precision, tf.metrics.recall],
+            });
+            model.summary();
+        } catch (e) {
+            console.error(e);
+            this.showError("Could not build the model. Please check the model design and feature data.")
+        }
     }
 
     /**
@@ -548,6 +570,9 @@ export class AiWidgetsTraining extends LitElementWw {
         if (this.currentTraining == null) {
             await this.initModel();
         }
+
+        if (this.currentTraining == null)
+            return;
 
         this.trainingMetricsDiv.style.display = "";
         this.startTrainingBtn.innerText = msg("Stop Training");
