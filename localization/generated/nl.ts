@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `alleen eigenschappen`,
 's334f9922638204ab': `Gebruikte dataset`,
 's34af392b321cbfa6': `alles bewerken`,
+'s38c7b3d048d88c07': `Geselecteerde items verwijderen`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

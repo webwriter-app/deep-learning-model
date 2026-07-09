@@ -338,13 +338,18 @@
         <target>데이터셋 사용</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of <x id="0" equiv-text="${this.samples.length}"/> Samples</source>
+        <source>of 
+          <x id="0" equiv-text="${this.samples.length}"/> Samples
+        </source>
         <target>of
           <x id="0" equiv-text="${this.samples.length}"/> Samples
         </target>
       </trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: <x id="0" equiv-text="${predClass} ${span}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+        <source>Prediction: 
+          <x id="0" equiv-text="${predClass} ${relation}"/> Label: 
+          <x id="1" equiv-text="${labelClass}"/>
+        </source>
         <target>예측:
           <x id="0" equiv-text="${predClass} ${span}"/> 라벨: 
           <x id="1" equiv-text="${labelClass}"/>
@@ -407,7 +412,11 @@
         <target>그레이스케일</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/> - Label: 
+          <x id="1" equiv-text="${labelValue}"/> = Delta: 
+          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
+        </source>
         <target>예측:
           <x id="0" equiv-text="${predValue}"/> - 레이블:
           <x id="1" equiv-text="${labelValue}"/> = 차이: 
@@ -483,20 +492,28 @@
         <target>손실 함수</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source><x id="0" equiv-text="${(i + 1)}"/>th dim</source>
+        <source>
+          <x id="0" equiv-text="${(i + 1)}"/>th dim
+        </source>
         <target>
           <x id="0" equiv-text="${(i + 1)}"/> th 차원
         </target>
       </trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: <x id="0" equiv-text="${inDim}"/> != <x id="1" equiv-text="${outDim}"/></source>
+        <source>Output shape invalid: 
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </source>
         <target>출력 형식이 잘못되었습니다:
           <x id="0" equiv-text="${inDim}"/> != 
           <x id="1" equiv-text="${outDim}"/>
         </target>
       </trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/>,  Label: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </source>
         <target>예측:
           <x id="0" equiv-text="${predValue}"/> ,  라벨: 
           <x id="1" equiv-text="${labelValue}"/>
@@ -525,6 +542,10 @@
       <trans-unit id="s2b6d43596140ef3a">
         <source>Continue Training</source>
         <target>훈련 계속하기</target>
+      </trans-unit>
+      <trans-unit id="s38c7b3d048d88c07">
+        <source>Delete selected</source>
+        <target>선택한 항목 삭제</target>
       </trans-unit>
     </body>
   </file>

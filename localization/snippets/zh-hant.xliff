@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-Hant">
+<?xml version="1.0" encoding="utf-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-hant">
 <file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
 <unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST - 讀取數字</target></segment></unit>
 <unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>特徵工程</target></segment></unit>

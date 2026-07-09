@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `samo lastnosti`,
 's334f9922638204ab': `Podatkovna zbirka, ki uporablja`,
 's34af392b321cbfa6': `uredi vse`,
+'s38c7b3d048d88c07': `Izbriši izbrano`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

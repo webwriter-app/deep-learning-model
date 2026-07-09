@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `tik savybės`,
 's334f9922638204ab': `Duomenų rinkinys, naudojantis`,
 's34af392b321cbfa6': `redaguoti viską`,
+'s38c7b3d048d88c07': `Ištrinti pažymėtus`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

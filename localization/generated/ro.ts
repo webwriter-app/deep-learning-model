@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `numai proprietăți`,
 's334f9922638204ab': `Set de date utilizat`,
 's34af392b321cbfa6': `editează totul`,
+'s38c7b3d048d88c07': `Șterge elementele selectate`,
 's38ddf839c081bbaf': str`
           ${0} dim
         `,

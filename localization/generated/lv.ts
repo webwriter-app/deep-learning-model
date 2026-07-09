@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `tikai īpašības`,
 's334f9922638204ab': `Datu kopa, izmantojot`,
 's34af392b321cbfa6': `rediģēt visu`,
+'s38c7b3d048d88c07': `Dzēst atlasīto`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

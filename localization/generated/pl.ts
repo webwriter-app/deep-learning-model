@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `tylko właściwości`,
 's334f9922638204ab': `Zbiór danych wykorzystujący`,
 's34af392b321cbfa6': `edytuj wszystko`,
+'s38c7b3d048d88c07': `Usuń zaznaczone`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

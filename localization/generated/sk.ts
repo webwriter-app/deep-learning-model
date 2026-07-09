@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `len vlastnosti`,
 's334f9922638204ab': `Dataset používajúci`,
 's34af392b321cbfa6': `upraviť všetko`,
+'s38c7b3d048d88c07': `Odstrániť vybrané`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

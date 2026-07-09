@@ -248,20 +248,35 @@ export class ModelEditor extends LitElementWw {
         this.controler.createLayer(name, this.fields);
     }
 
+    private persistState() {
+        this.state = this.controler.export();
+        this.dispatchEvent(new CustomEvent('modelchange', {
+            detail: {
+                state: this.controler.export()
+            }
+        }));
+    }
+
+    public removeSelectedNode() {
+        this.controler.removeSelectedNode();
+        this.persistState();
+    }
+
     public render(): TemplateResult {
         let canvas = document.createElement("div");
         canvas.id = "drawflow";
         this.controler = new Editor(canvas, this.editmode, this.modelparams, this.layerparams);
         this.controler.import(this.state || [], this.fields);
         let that = this;
-        canvas.addEventListener("mouseup", function () {
-            that.state = that.controler.export();
-            that.dispatchEvent(new CustomEvent('modelchange', {
-                detail: {
-                    state:that.controler.export()
-                }
-            }));
+        this.controler.onSelectionChanged = function (selected: boolean) {
+            that.dispatchEvent(new CustomEvent("selectionchange", { detail: { selected } }));
+        };
+        setTimeout(function () {
+            that.dispatchEvent(new CustomEvent("selectionchange", { detail: { selected: false } }));
         });
+        let persist = function () { that.persistState(); };
+        canvas.addEventListener("mouseup", persist);
+        canvas.addEventListener("touchend", persist);
         canvas.addEventListener("keydown", function (e) {
             if (e.key == "Delete") {
                 e.preventDefault();

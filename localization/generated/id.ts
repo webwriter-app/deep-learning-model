@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `hanya properti`,
 's334f9922638204ab': `Dataset yang menggunakan`,
 's34af392b321cbfa6': `edit semuanya`,
+'s38c7b3d048d88c07': `Hapus yang dipilih`,
 's38ddf839c081bbaf': str`
           ${0} dimensi ke-th
         `,
