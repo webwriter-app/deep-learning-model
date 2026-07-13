@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `csak tulajdonságok`,
 's334f9922638204ab': `Adatkészlet használata`,
 's34af392b321cbfa6': `mindent szerkeszteni`,
+'s38c7b3d048d88c07': `A kijelöltek törlése`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `nur Eigenschaften`,
 's334f9922638204ab': `Datensatz unter Verwendung von`,
 's34af392b321cbfa6': `alles bearbeiten`,
+'s38c7b3d048d88c07': `Ausgewähltes löschen`,
 's38ddf839c081bbaf': str`
           ${0} Dim.
         `,

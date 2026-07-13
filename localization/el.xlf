@@ -338,14 +338,19 @@
         <target>Χρήση συνόλου δεδομένων</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of <x id="0" equiv-text="${this.samples.length}"/> Samples</source>
+        <source>of 
+          <x id="0" equiv-text="${this.samples.length}"/> Samples
+        </source>
         <target>από 
           Δείγματα 
           <x id="0" equiv-text="${this.samples.length}"/>
         </target>
       </trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: <x id="0" equiv-text="${predClass} ${span}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+        <source>Prediction: 
+          <x id="0" equiv-text="${predClass} ${relation}"/> Label: 
+          <x id="1" equiv-text="${labelClass}"/>
+        </source>
         <target>Πρόβλεψη: 
           Ετικέτα 
           <x id="0" equiv-text="${predClass} ${span}"/>: 
@@ -409,7 +414,11 @@
         <target>Γκρίζα κλίμακα</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/> - Label: 
+          <x id="1" equiv-text="${labelValue}"/> = Delta: 
+          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
+        </source>
         <target>Πρόβλεψη: 
           <x id="0" equiv-text="${predValue}"/> - Ετικέτα: 
           <x id="1" equiv-text="${labelValue}"/> = Δέλτα: 
@@ -485,20 +494,28 @@
         <target>Συνάρτηση απώλειας</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source><x id="0" equiv-text="${(i + 1)}"/>th dim</source>
+        <source>
+          <x id="0" equiv-text="${(i + 1)}"/>th dim
+        </source>
         <target>
           <x id="0" equiv-text="${(i + 1)}"/> η διάσταση
         </target>
       </trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: <x id="0" equiv-text="${inDim}"/> != <x id="1" equiv-text="${outDim}"/></source>
+        <source>Output shape invalid: 
+          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="1" equiv-text="${outDim}"/>
+        </source>
         <target>Μη έγκυρο σχήμα εξόδου: 
           <x id="0" equiv-text="${inDim}"/> != 
           <x id="1" equiv-text="${outDim}"/>
         </target>
       </trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+        <source>Prediction: 
+          <x id="0" equiv-text="${predValue}"/>,  Label: 
+          <x id="1" equiv-text="${labelValue}"/>
+        </source>
         <target>Πρόβλεψη: 
           <x id="0" equiv-text="${predValue}"/> ,  Ετικέτα: 
           <x id="1" equiv-text="${labelValue}"/>
@@ -527,6 +544,10 @@
       <trans-unit id="s2b6d43596140ef3a">
         <source>Continue Training</source>
         <target>Συνέχεια εκπαίδευσης</target>
+      </trans-unit>
+      <trans-unit id="s38c7b3d048d88c07">
+        <source>Delete selected</source>
+        <target>Διαγραφή επιλεγμένων</target>
       </trans-unit>
     </body>
   </file>

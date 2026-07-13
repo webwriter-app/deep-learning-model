@@ -2,7 +2,7 @@ import { msg } from "@lit/localize";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property, query, state } from "lit/decorators.js";
 import { ModelEditor } from "../components/model-editor";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import LOCALIZE from "../localization/generated";
@@ -101,6 +101,12 @@ export class AiWidgetsDesigns extends LitElementWw {
         right: 5px;
         top: 5px;
         z-index: 10;
+    }
+    #delete-control {
+        position:absolute;
+        right: 5px;
+        bottom: 110px;
+        z-index: 10;
     }`
 
     /**
@@ -189,6 +195,20 @@ export class AiWidgetsDesigns extends LitElementWw {
     accessor currentCanvas: ModelEditor;
 
     /**
+     * Whether a layer or connection is currently selected in the model editor.
+     * Controls the visibility of the delete button.
+     */
+    @state()
+    private accessor hasSelection = false;
+
+    /**
+     * Called when the selection inside the model editor changed
+     */
+    private _selectionChange(e: CustomEvent) {
+        this.hasSelection = e.detail.selected;
+    }
+
+    /**
      * Called when the model design inside the model editor was changed
      * @param e 
      */
@@ -215,7 +235,7 @@ export class AiWidgetsDesigns extends LitElementWw {
 
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
-            <model-editor id="model-editor" @modelchange=${this._editorChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
+            <model-editor id="model-editor" @modelchange=${this._editorChange} @selectionchange=${this._selectionChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
             <div id="stats">
                 <p>${msg("Number of Operations:")} <span id="numberNodes"></span></p>
                 <p>${msg("Total Parameters:")} <span id="params"></span></p>
@@ -254,6 +274,9 @@ export class AiWidgetsDesigns extends LitElementWw {
                 <sl-button @click=${() => this.zoomReset()}>${msg("Center View")}</sl-button>
                 <sl-tooltip content=${msg("Zoom In")}><sl-button @click=${() => this.zoomIn()}>+</sl-button></sl-tooltip>
                 <sl-tooltip content=${msg("Zoom Out")}><sl-button @click=${() => this.zoomOut()}>-</sl-button></sl-tooltip>
+            </div>
+            <div id="delete-control" style="display:${this.editMode == "edit" && this.hasSelection ? "" : "none"}">
+                <sl-button variant="danger" @click=${() => this.currentCanvas.removeSelectedNode()}>${msg("Delete selected")}</sl-button>
             </div>
         </div>
         <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Design Widget hidden from students.")}</p>

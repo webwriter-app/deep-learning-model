@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `kun egenskaber`,
 's334f9922638204ab': `Dataset ved hjælp af`,
 's34af392b321cbfa6': `rediger alt`,
+'s38c7b3d048d88c07': `Slet det valgte`,
 's38ddf839c081bbaf': str`
           ${0} th dim
         `,

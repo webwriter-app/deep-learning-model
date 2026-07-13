@@ -45,6 +45,7 @@
 's32f2fa78e3267c4e': `solo propiedades`,
 's334f9922638204ab': `Conjunto de datos utilizando`,
 's34af392b321cbfa6': `editar todo`,
+'s38c7b3d048d88c07': `Eliminar los elementos seleccionados`,
 's38ddf839c081bbaf': str`
           ${0} la dimensión
         `,

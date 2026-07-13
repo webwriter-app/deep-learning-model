@@ -96,6 +96,7 @@
 's6c5b5757b7756775': `Center View`,
 's22fde937cb709859': `Zoom In`,
 'sb05582ce916894da': `Zoom Out`,
+'s38c7b3d048d88c07': `Delete selected`,
 'sdab07807ff1b6b12': `Model Design Widget hidden from students.`,
 's026fba1543d336b2': `Feature Source`,
 's32f2fa78e3267c4e': `properties only`,

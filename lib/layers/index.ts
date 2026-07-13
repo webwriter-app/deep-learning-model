@@ -34,6 +34,9 @@ export class Editor {
     /** The max layer params from the model design widget. */
     public readonly maxLayerParams: number;
 
+    /** Called with the new selection state whenever a layer or connection is selected or unselected. */
+    public onSelectionChanged: ((selected: boolean) => void) | null = null;
+
     constructor(container: HTMLDivElement, editMode:string = "edit", maxModelParams:number, maxLayerParams:number) {
         let that = this;
         this.editMode = editMode;
@@ -75,6 +78,55 @@ export class Editor {
         this.editor.on("nodeRemoved", function (id) {
             delete that.layers[id];
         })
+
+        const notifySelectionChanged = function () {
+            setTimeout(function () {
+                if (that.onSelectionChanged)
+                    that.onSelectionChanged(that.hasSelection());
+            });
+        };
+        this.editor.on("nodeSelected", notifySelectionChanged);
+        this.editor.on("nodeUnselected", notifySelectionChanged);
+        this.editor.on("connectionSelected", notifySelectionChanged);
+        this.editor.on("connectionUnselected", notifySelectionChanged);
+        this.editor.on("nodeRemoved", notifySelectionChanged);
+        this.editor.on("connectionRemoved", notifySelectionChanged);
+
+        // Workaround for the fact that Drawflow does not support shadow DOM. 
+        // This allows touch events to work correctly in the model design widget.
+        const nativeElementFromPoint = document.elementFromPoint.bind(document);
+        container.addEventListener("touchend", function () {
+            const root = container.getRootNode() as any;
+            if (root === document || typeof root.elementFromPoint !== "function")
+                return;
+            (document as any).elementFromPoint = function (x: number, y: number): Element {
+                let el = root.elementFromPoint(x, y) as Element | null;
+                while (el && (el as any).shadowRoot && (el as any).shadowRoot.elementFromPoint) {
+                    const inner = (el as any).shadowRoot.elementFromPoint(x, y) as Element | null;
+                    if (inner == null || inner === el)
+                        break;
+                    el = inner;
+                }
+                return el ?? nativeElementFromPoint(x, y);
+            };
+            setTimeout(function () { (document as any).elementFromPoint = nativeElementFromPoint; });
+        }, true);
+    }
+
+    /**
+     * Removes the currently selected node (layer) or connection from the editor.
+     */
+    public removeSelectedNode() {
+        let editor = this.editor as any;
+        if (editor.node_selected != null)
+            editor.removeNodeId(editor.node_selected.id);
+        else if (editor.connection_selected != null)
+            editor.removeConnection();
+    }
+    /** Whether something is currently selected in the editor. */
+    public hasSelection(): boolean {
+        let editor = this.editor as any;
+        return editor.node_selected != null || editor.connection_selected != null;
     }
     /** Returns the average position of the layer nodes. Used to center the view. */
     getAveragePosition() {
@@ -436,7 +488,7 @@ export abstract class Layer {
      * @returns the html element that wraps the entire layer.
      */
     protected getNodeElement() {
-        return this.elem.parentElement.parentElement;
+        return this.elem?.parentElement?.parentElement;
     }
     /**
      * @param input Typically named "input_1", "input_2", ...
@@ -549,26 +601,33 @@ export abstract class Layer {
         for (let i in inputs) {
             let input = inputs[i];
             let inputName = i;
-            if (input.connections.length == 0 || this.getNodeInputElement(inputName).innerText == "") {
-                if (this.getNodeInputElement(inputName) == null)
+            let inputElem = this.getNodeInputElement(inputName);
+            if (input.connections.length == 0 || inputElem == null || inputElem.innerText == "") {
+                if (inputElem == null)
                     this.addInput();
                 setTimeout(function() {
-                    that.getNodeInputElement(inputName).classList.remove("invalid");
-                    that.getNodeInputElement(inputName).classList.remove("valid");
+                    let elem = that.getNodeInputElement(inputName);
+                    if (elem == null)
+                        return;
+                    elem.classList.remove("invalid");
+                    elem.classList.remove("valid");
                 })
                 continue;
             }
             let layer = this.editor.getLayerFromNodeId(parseInt(input.connections[0].node));
             let output = input.connections[0].input;
-            if (layer.getNodeOutputElement(output).innerText != this.getNodeInputElement(i).innerText) {
-                this.getNodeInputElement(i).classList.add("invalid");
-                this.getNodeInputElement(i).classList.remove("valid");
-                this.getNodeInputElement(i).title = "data has wrong dimensions";
+            let outputElem = layer?.getNodeOutputElement(output);
+            if (outputElem == null)
+                continue;
+            if (outputElem.innerText != inputElem.innerText) {
+                inputElem.classList.add("invalid");
+                inputElem.classList.remove("valid");
+                inputElem.title = "data has wrong dimensions";
                 return false;
             } else {
-                this.getNodeInputElement(i).classList.remove("invalid");
-                this.getNodeInputElement(i).classList.add("valid");
-                this.getNodeInputElement(i).title = "";
+                inputElem.classList.remove("invalid");
+                inputElem.classList.add("valid");
+                inputElem.title = "";
             }
         }
         return true;
@@ -615,12 +674,15 @@ export abstract class Layer {
      */
     protected showValid() {
         let valid = this.valid();
+        let elem = this.getNodeElement();
+        if (elem == null)
+            return;
         if (!valid) {
-            this.getNodeElement().classList.add("invalid");
+            elem.classList.add("invalid");
             if (this.hasCyclicReference)
-                this.getNodeElement().setAttribute("title", msg("Has a cyclic reference."));
+                elem.setAttribute("title", msg("Has a cyclic reference."));
         } else {
-            this.getNodeElement().classList.remove("invalid");
+            elem.classList.remove("invalid");
         }
     }
     /**
