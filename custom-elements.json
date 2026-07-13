@@ -420,6 +420,30 @@
               "description": "Reference to the current model editor canvas"
             },
             {
+              "kind": "field",
+              "name": "hasSelection",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "Whether a layer or connection is currently selected in the model editor.\r\nControls the visibility of the delete button."
+            },
+            {
+              "kind": "method",
+              "name": "_selectionChange",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ],
+              "description": "Called when the selection inside the model editor changed"
+            },
+            {
               "kind": "method",
               "name": "_editorChange",
               "privacy": "private",

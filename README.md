@@ -1,5 +1,5 @@
-# Deep Learning Model (`@webwriter/deep-learning-model@1.0.1`)
-[License: MIT](LICENSE) | Version: 1.0.1
+# Deep Learning Model (`@webwriter/deep-learning-model@1.0.2`)
+[License: MIT](LICENSE) | Version: 1.0.2
 
 A set of blocks to create, train and evaluate deep learning models.
 
@@ -287,4 +287,4 @@ npm install @webwriter/deep-learning-model
 
 
 ---
-*Generated with @webwriter/build@1.9.0*
+*Generated with @webwriter/build@1.9.1*
