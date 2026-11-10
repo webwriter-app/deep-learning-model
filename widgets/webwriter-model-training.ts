@@ -1,3 +1,4 @@
+import { readData, writeData } from "../lib/data-block";
 import { SlButton, SlButtonGroup, SlCheckbox, SlIcon, SlIconButton, SlInput, SlOption, SlSelect, SlTooltip } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
@@ -70,6 +71,14 @@ function hexToUint8(hex:string) {
  */
 @customElement("webwriter-model-training")
 export class AiWidgetsTraining extends LitElementWw {
+    readonly options = {
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: {_: "Feature source", de: "Merkmalsquelle"}},
+        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-designing", label: {_: "Design source", de: "Entwurfsquelle"}},
+        editMode: {type: "select" as const, label: {_: "Edit permissions", de: "Bearbeitungsrechte"}, options: [{value: "edit", label: {_: "Edit everything", de: "Alles bearbeiten"}}, {value: "hidden", label: {_: "Hide widget", de: "Widget ausblenden"}}]},
+        currentBackend: {type: "select" as const, label: {_: "Preferred backend", de: "Bevorzugtes Backend"}, options: [{value: "cpu", label: {_: "CPU", de: "CPU"}}, {value: "webgl", label: {_: "WebGL (GPU)", de: "WebGL (GPU)"}}]},
+        cache: {type: Boolean, label: {_: "Cache training samples", de: "Trainingsdaten zwischenspeichern"}},
+    };
+
     /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
@@ -166,11 +175,30 @@ export class AiWidgetsTraining extends LitElementWw {
     accessor currentBackend: "webgl" | "cpu" = "webgl";
 
     /** Stores the model jsons with a name like "best" or "epoch-20" for loading by the inference and test widgets */
-    @property({ type: Object, attribute: true, reflect: true })
-    accessor modelVersions:Record<string, string> = {}
+    get modelVersions(): Record<string, string> {
+        const {modelVersions} = readData<{modelVersions: Record<string, string>}>(this);
+        return modelVersions ?? {};
+    }
+
+    set modelVersions(modelVersions: Record<string, string>) {
+        writeData(this, {modelVersions});
+    }
+
+    private notifyModelVersions() {
+        this.dispatchEvent(new CustomEvent("finished"));
+    }
+
+    private dataObserver = new MutationObserver(() => this.notifyModelVersions());
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.dataObserver.observe(this, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["type", "slot", "src"]});
+        this.notifyModelVersions();
+    }
+
 
     /** "edit" means that students can use the widget to train a model while "hidden" means the widget will be invisible to student but the trained models can be used by other widgets. */
-    @property({ type: String, attribute: true, reflect: true })
+    @property({ type: String, attribute: true, reflect: true, useDefault: true })
     accessor editMode: "edit"|"hidden" = "edit";
 
     @query("#optimizer")
@@ -201,11 +229,6 @@ export class AiWidgetsTraining extends LitElementWw {
     public render(): TemplateResult {
         let that = this;
         setTimeout(function () { that.chart.render() }, 100);
-
-        function editModeChanged(e: Event) {
-            const select = e.target as HTMLSelectElement;
-            this.editMode = select.value;
-        }
 
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
@@ -239,25 +262,10 @@ export class AiWidgetsTraining extends LitElementWw {
             </div>
         </div>
         <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Training Widget hidden from students.")}</p>
-            <div part="options">
-                <p>${msg("Feature Source")}</p>
-                <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
-                <p>${msg("Design Source")}</p>
-                <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
-                <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
-                    <sl-option value="hidden">${msg("hide widget")}</sl-option>
-                    <sl-option value="edit">${msg("edit everything")}</sl-option>
-                </sl-select>
-                <br>
-                <sl-select label=${msg("Preferred Backend")} value=${this.currentBackend} @sl-change=${(e) => this.currentBackend = (e.target as HTMLSelectElement).value as ("webgl" | "cpu")}>
-                    <sl-option value="cpu">${msg("CPU")}</sl-option>
-                    <sl-option value="webgl">${msg("WebGL (GPU)")}</sl-option>
-                </sl-select>
-                <br>
-                <sl-checkbox ?checked=${this.cache} @sl-change=${() => this.cache = !this.cache}>${msg("Cache training samples")}</sl-checkbox>
-                <p>${msg("This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.")}</p>
-                <p style="color:red">${msg("(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)")}</p>
-            </div>`
+            <div hidden>
+            <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+            <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
+        </div>`
     }
 
     private showError(err:string) {
@@ -659,7 +667,6 @@ export class AiWidgetsTraining extends LitElementWw {
                 that.startTrainingBtn.innerText = msg("Continue Training");
                 that.isTraining = false;
                 await that.saveCurrentModel('epoch-' + that.currentEpoch);
-                that.modelVersions = JSON.parse(JSON.stringify(that.modelVersions));
             }).catch(async function(err) {
                 console.error(err);
                 that.resetTrainingBtn.disabled = false;
@@ -680,6 +687,8 @@ export class AiWidgetsTraining extends LitElementWw {
 
     /** This is called when the widget is removed from the UI (i.e. deleted by the user or reload) */
     async disconnectedCallback(): Promise<void> {
+        this.dataObserver.disconnect();
+        super.disconnectedCallback();
         tf.backend().dispose();
         tf.dispose();
     }
@@ -695,12 +704,13 @@ export class AiWidgetsTraining extends LitElementWw {
             const weightData = new Uint8Array(artifats.weightData);
             const b64encoded = uint8ToHex(weightData);
 
-            that.modelVersions[name] = JSON.stringify({
+            const checkpoint = JSON.stringify({
                 modelTopology: artifats.modelTopology,
                 weightSpecs: artifats.weightSpecs,
                 weightData: b64encoded
             });
             
+            that.modelVersions = {...that.modelVersions, [name]: checkpoint};
             return {} as TF.io.SaveResult;
         }
         await this.currentTraining.save(tf.io.withSaveHandler(handleSave));

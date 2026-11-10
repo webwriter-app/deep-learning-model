@@ -42,6 +42,11 @@ async function waitFor(condition: Function, interval = 10) {
  */
 @customElement("webwriter-model-prediction")
 export class AiWidgetsInference extends LitElementWw {
+    readonly options = {
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: {_: "Feature source", de: "Merkmalsquelle"}},
+        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-training", label: {_: "Model source", de: "Modellquelle"}},
+    };
+
     /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
@@ -154,7 +159,7 @@ export class AiWidgetsInference extends LitElementWw {
      */
     private async getModelSelect() {
         let that = this;
-        await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels != null});
+        await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining)?.getAvailableModels != null});
         let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
         if (this.model == null)
             setTimeout(function() {
@@ -209,10 +214,8 @@ export class AiWidgetsInference extends LitElementWw {
         ${this.getFeatureInputs()}
         ${this.getFeatureOutputs()}
         </div>
-        <div part="options">
-            <p>${msg("Feature Source")}</p>
+        <div hidden>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
-            <p>${msg("Model Source")}</p>
             <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }
@@ -229,7 +232,7 @@ export class AiWidgetsInference extends LitElementWw {
 
         if (e.detail.lastRef != null)
             e.detail.lastRef.removeEventListener("finished", modelUpdate);
-        this.modelSelect.getRefElement().addEventListener("finished", modelUpdate);
+        this.modelSelect.getRefElement()?.addEventListener("finished", modelUpdate);
     }
 
     private featureRefChange(e:CustomEvent) {
@@ -242,7 +245,7 @@ export class AiWidgetsInference extends LitElementWw {
 
         if (e.detail.lastRef != null)
             e.detail.lastRef.removeEventListener("change", featuresUpdate);
-        this.modelSelect.getRefElement().addEventListener("change", featuresUpdate);
+        this.featureSelect.getRefElement()?.addEventListener("change", featuresUpdate);
     }
 
     private async selectedModelChange() {

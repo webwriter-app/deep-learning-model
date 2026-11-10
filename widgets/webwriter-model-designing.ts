@@ -1,3 +1,4 @@
+import { readData, writeData } from "../lib/data-block";
 import { msg } from "@lit/localize";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
@@ -13,6 +14,13 @@ import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
  */
 @customElement("webwriter-model-designing")
 export class AiWidgetsDesigns extends LitElementWw {
+    readonly options = {
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: {_: "Feature source", de: "Merkmalsquelle"}},
+        editMode: {type: "select" as const, label: {_: "Edit permissions", de: "Bearbeitungsrechte"}, options: [{value: "edit", label: {_: "Edit everything", de: "Alles bearbeiten"}}, {value: "read", label: {_: "Read only", de: "Nur lesen"}}, {value: "layer", label: {_: "Layer properties only", de: "Nur Ebeneneigenschaften"}}, {value: "hidden", label: {_: "Hide widget", de: "Widget ausblenden"}}]},
+        maxModelParameters: {type: Number, min: 1, max: 1000000, step: 100, label: {_: "Max model parameters", de: "Maximale Modellparameter"}},
+        maxLayerParameters: {type: Number, min: 1, max: 100000, step: 10, label: {_: "Max layer parameters", de: "Maximale Ebenenparameter"}},
+    };
+
     /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
@@ -112,8 +120,59 @@ export class AiWidgetsDesigns extends LitElementWw {
     /**
      * Stores the state of the model editor as a json string
      */
-    @property({ type: String, attribute: true, reflect: true })
-    accessor state: string;
+    private lastDesign: string | null = null;
+
+    get state() {
+        const {design} = readData<{design: unknown[]}>(this);
+        return design ? JSON.stringify(design) : "";
+    }
+
+    private set state(value: string) {
+        writeData(this, {design: JSON.parse(value)});
+        this.lastDesign = value;
+    }
+
+    private syncDesign() {
+        const value = this.state;
+        if (!this.currentCanvas || value === this.lastDesign) return;
+        this.lastDesign = value;
+        if (value) this.currentCanvas.setState(JSON.parse(value));
+        else this.currentCanvas.setState([]);
+    }
+
+    protected firstUpdated() {
+        this.syncDesign();
+        this.refreshStats();
+    }
+
+    private statsTimer?: ReturnType<typeof setInterval>;
+
+    private refreshStats() {
+        if (!this.currentCanvas || this.statsTimer) return;
+        this.statsTimer = setInterval(() => {
+            const control = this.currentCanvas?.controler;
+            if (!control) return;
+            this.renderRoot.querySelector("#numberNodes").textContent = String(control.getNumberOfOperations());
+            this.renderRoot.querySelector("#params").textContent = String(control.getNumberOfParameters());
+        }, 100);
+    }
+
+    private dataObserver = new MutationObserver(() => this.syncDesign());
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.dataObserver.observe(this, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["type", "slot", "src"]});
+        this.syncDesign();
+        if (this.hasUpdated) this.refreshStats();
+    }
+
+    disconnectedCallback() {
+        clearInterval(this.statsTimer);
+        this.statsTimer = undefined;
+        this.dataObserver.disconnect();
+        super.disconnectedCallback();
+    }
+
 
     /**
      * Stores the reference id of the widget where the dataset is used from
@@ -144,16 +203,6 @@ export class AiWidgetsDesigns extends LitElementWw {
 
     constructor() {
         super();
-        let that = this;
-
-        setInterval(function () {
-            let nodes = that.currentCanvas.controler.getNumberOfOperations();
-            that.shadowRoot.getElementById("numberNodes").innerText = String(nodes);
-
-            let params = that.currentCanvas.controler.getNumberOfParameters();
-            that.shadowRoot.getElementById("params").innerText = String(params);
-        }, 100);
-
         // Prevents the del hotkey from removing the widget
         this.addEventListener("keydown", function (e) {
             if (e.key == "Delete") {
@@ -180,12 +229,11 @@ export class AiWidgetsDesigns extends LitElementWw {
         that.featureWidgetId = e.detail.id;
         that.requestUpdate();
         featuresElem = (that.refSelect.getRefElement() as AiWidgetsFeatures)
-        featuresElem.addEventListener("change", datasetChangeListener);
-        if (featuresElem.isReady && featuresElem.isReady()) {
+        featuresElem?.addEventListener("change", datasetChangeListener);
+        if (featuresElem?.isReady && featuresElem.isReady()) {
             datasetChangeListener()
         }
-        if (this.state && this.state != "")
-            this.currentCanvas.setState(JSON.parse(this.state));
+        this.syncDesign();
     }
 
     /**
@@ -217,22 +265,6 @@ export class AiWidgetsDesigns extends LitElementWw {
     }
 
     public render(): TemplateResult {
-        let that = this;
-        function editModeChanged(e: Event) {
-            const select = e.target as HTMLSelectElement;
-            this.editMode = select.value;
-            that.currentCanvas.editmode = that.editMode;
-            that.currentCanvas.requestUpdate();
-        }
-        function modelParametersChanged(e: Event) {
-            const input = e.target as SlInput;
-            that.maxModelParameters = parseInt(input.value);
-        }
-        function layerParametersChanged(e: Event) {
-            const input = e.target as SlInput;
-            that.maxLayerParameters = parseInt(input.value);
-        }
-
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <model-editor id="model-editor" @modelchange=${this._editorChange} @selectionchange=${this._selectionChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
@@ -280,17 +312,8 @@ export class AiWidgetsDesigns extends LitElementWw {
             </div>
         </div>
         <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Design Widget hidden from students.")}</p>
-        <div part="options">
-            <p>${msg("Feature Source")}</p>
+        <div hidden>
             <ref-select id="feature-select" elementType="webwriter-feature-engineering" elemId=${this.featureWidgetId} typeName="Features" @refchange=${this._handleRefChange} ownerId=${this.id}></ref-select>
-            <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
-                <sl-option value="hidden">${msg("hide widget")}</sl-option>
-                <sl-option value="read">${msg("read only")}</sl-option>
-                <sl-option value="layer">${msg("properties only")}</sl-option>
-                <sl-option value="edit">${msg("edit everything")}</sl-option>
-            </sl-select>
-            <sl-input label=${msg("Max Model Parameters")} type="number" step="100" value=${this.maxModelParameters} min="1" max="1000000" @sl-change=${modelParametersChanged}></sl-input>
-            <sl-input label=${msg("Max Layer Parameters")} type="number" step="10" value=${this.maxLayerParameters} min="1" max="100000" @sl-change=${layerParametersChanged}></sl-input>
         </div>`
     }
     

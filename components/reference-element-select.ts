@@ -20,14 +20,6 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
     }
     `
 
-    constructor() {
-        super();
-        let that = this;
-        setInterval(function () {
-            that.requestUpdate();
-        }, 1000);
-    }
-
     public options: Record<string, OptionDeclaration> = {}
 
     @property({ type: String, attribute: true })
@@ -43,20 +35,12 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
 
     private lastRef:HTMLElement;
 
-    firstUpdated() {
-        if (this.elemId == "" || this.elemId == null) {
-            let testSibblingForElementType = document.getElementById(this.ownerId);
-            console.log(testSibblingForElementType, this.elementType);
-            while (testSibblingForElementType != null && testSibblingForElementType.tagName.toLowerCase() != this.elementType) {
-                testSibblingForElementType = testSibblingForElementType.previousElementSibling as HTMLElement;
-                console.log(testSibblingForElementType);
-            }
-            this.elemId = testSibblingForElementType.id;
-        }
-        this.dispatchEvent(new CustomEvent('refchange', {
-            detail: {
-                id: this.elemId
-            }
+    updated(changed: Map<string, unknown>) {
+        if (!changed.has("elemId")) return;
+        const previous = this.lastRef;
+        this.lastRef = this.getRefElement();
+        this.dispatchEvent(new CustomEvent("refchange", {
+            detail: {id: this.elemId || null, lastRef: previous},
         }));
     }
 
@@ -100,6 +84,6 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
     }
 
     public getRefElement() {
-        return document.querySelector("#" + this.elemId) as HTMLElement
+        return this.elemId ? this.ownerDocument.getElementById(this.elemId) : null
     }
 }
