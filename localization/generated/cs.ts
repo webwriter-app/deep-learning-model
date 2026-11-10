@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Počet operací:`,
-'s026fba1543d336b2': `Zdroj funkce`,
 's02bee65dc3f21363': `Zřetězení`,
 's06471a3c2aed9b4b': `Vstupní pole`,
 's066d70cf9d5e2915': `Výstupy`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Přidání prvků`,
 's12126d92849e3b53': `Skóre R2`,
 's15371f7ebfb1ad5e': `Rychlost tréninku:`,
-'s162c56231b25e6ff': `skrýt widget`,
-'s166d284a7cbc6181': `jen pro čtení`,
 's1703372e9470522b': `Přidat tvarovací vrstvu`,
 's17ce2eafdc840624': `Rozložení ztrát`,
-'s19a2ee331d08ad42': `(Upozornění: Příliš velké množství tenzorových dat může zaplnit RAM zařízení a způsobit jeho selhání během tréninku a v nejhorším případě i zablokování hostitelského systému.)`,
+'s1b7f4af051183fee': `Preferované výpočetní prostředí`,
 's1bb08bff53933452': `Verze modelu`,
 's1c3cbd3cbaee4368': `Přidat vrstvu I/O`,
-'s1ca51d37e3dae07a': `To umožňuje ukládání transformovaných vzorků do mezipaměti výpočetního zařízení, což výrazně zvyšuje rychlost trénování, ale vyžaduje podstatně více úložného prostoru na zařízení.`,
 's1e0afe8020901f1f': `Začít trénovat`,
 's1fa03b3ccbfc66a5': `Předběžné zpracování obrazu`,
 's22fde937cb709859': `Přiblížit`,
 's2454d1f117573457': `Přesnost`,
+'s250a7fc28124c361': `Pouze ke čtení`,
 's255857544a9d5ec0': `Resetovat`,
 's26b5b115b8b61794': `Widget Feature Engineering skrytý před studenty.`,
-'s2b28da40a8490a78': `pouze nastavení funkcí`,
 's2b6d43596140ef3a': `Pokračovat ve výcviku`,
 's2bc80ed8441b0831': `Hluk`,
-'s2c48e68704ff98c2': str`Neplatný tvar výstupu: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Neplatný tvar výstupu: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Načítání modelů...`,
-'s32f2fa78e3267c4e': `pouze vlastnosti`,
 's334f9922638204ab': `Dataset používající`,
-'s34af392b321cbfa6': `upravit vše`,
 's38c7b3d048d88c07': `Odstranit vybrané`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Parametry maximální vrstvy`,
+'s38ddf839c081bbaf': str`Rozměr ${0}`,
 's3aba710c340e1059': `Žádná data o funkcích nejsou k dispozici.`,
-'s410415ac2406c84e': `Preferovaný backend`,
+'s3c0b025716311430': `Maximální počet parametrů vrstvy`,
 's412b62989fc26d3a': `Zobrazit výběr`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Načítání...`,
-'s4c08da5f7528a7e3': `Zdroj modelu`,
 's4f5eeeb48a97ea9a': `Ztráta`,
 's547a4465533a6f5f': `Kódování obrazu`,
 's5561b945c8cd59b0': `Velikost dávky`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Kvadratický`,
 's58bee799432dbc69': `Přídavek`,
 's58d6b1ecd5084538': `Krok`,
-'s5da30fd688d05a35': `Upravit oprávnění`,
 's61ac82c68c336bb1': `Zastavit trénink`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Smazat tuto datovou sadu?`,
 's62cecbd4b16886e7': `Výpočet rozložení ztrát...`,
 's6557e193c4f15b9c': `Více tříd na vzorek`,
 's6610206d0ad97d60': `Sloupce vlastností datového souboru:`,
 's66a5898632280fe2': `Funkce ztráty`,
+'s679b3c0fcb1bdadf': `Skrýt widget`,
 's6b0e650acd025eff': `Řetězec Base64`,
 's6c02f2ec8c3f52a4': `Přesnost`,
 's6c5b5757b7756775': `Pohled na střed`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Kódování čísel`,
 's82c21acdbcd6e830': `Síla`,
 's82caaf657b01a4d0': `Šedá stupnice`,
+'s84536b272065202c': `Maximální počet parametrů modelu`,
+'s858e82f5fff9aac3': `Zdroj modelu`,
 's888d98a196a240d8': `Vstupy`,
 's8a73af950772f702': `Žádný model není k dispozici.`,
 's900c980bdb200fcf': `Epochy`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Zploštit`,
 's981f232bd33ec927': `Sazba`,
 's99456cbda3e05fb0': `Vzpomenout si`,
-'s9b5ec9d0b70a0fac': `Parametry modelu Max`,
 's9eac77171764efaa': `Transponovat konvoluci`,
 'sa4ef4c5175793d6f': `Výpočet ztráty u vzorků...`,
+'sa60f5f53cc29b8cf': `Pouze vlastnosti vrstev`,
 'sa68f184fe626daf3': `Přidat trénovatelnou vrstvu`,
 'sa8082d7f7ef02f42': `Tato transformace se nevztahuje na hodnoty`,
 'sa812ba9ded26aa98': `Načítání modelu...`,
@@ -105,25 +95,18 @@
 'sab09aa21c8921bea': `Načítání obrázku`,
 'sabf86f32eba45ad4': `Vyberte sloupec, který chcete formátovat.`,
 'saf01d58ece3a1e02': `Načítání Tensorflow...`,
-'sb03650788f41c135': str`z 
-          vzorků 
-          ${0}
-        `,
+'sb03650788f41c135': str`z celkem ${0} vzorků`,
 'sb05582ce916894da': `Zmenšit`,
 'sb405f0898c39ca67': `Typ dat`,
 'sb4f1dffbb6be6302': `Jasné`,
 'sb59d68ed12d46377': `Načítání`,
 'sb633a04ba54b2dc0': `Vrstva má příliš mnoho trénovatelných parametrů. Zkuste zmenšit velikost vstupu nebo laditelné vlastnosti.`,
+'sb850938497d0a395': `Oprávnění k úpravám`,
+'sbf1ff3369db980c0': `Zdroj návrhu`,
 'sbfe9518a1fe4f185': `Přetvořit`,
-'sc0e01e8b4662bec2': str`Předpověď: 
-          ${0} ,  Štítek: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Predikce: ${0}, štítek: ${1}`,
 'sc2e0d19ed54560c8': `Exponenciální`,
-'sc3727a4fc25d7500': str`Předpověď: 
-          ${0} ${1} Štítek: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Predikce: ${0} ${1}, štítek: ${2}`,
 'sc3d8f37ea5f4bd79': `Vizualizace rozdílu...`,
 'sc6bff481def13d70': `Odpadnutí`,
 'sc6d31f0cce31ddcf': `Celkový počet parametrů:`,
@@ -132,21 +115,19 @@
 'sce4efb732b98f946': `Jedna třída na vzorek`,
 'scfd25318edb1ebb1': `Počet jader`,
 'sd2223afb7d6b100d': `Typ`,
-'sd6b72022c37e1ae0': `Zdroj návrhu`,
 'sdab07807ff1b6b12': `Widget pro návrh modelu skrytý před studenty.`,
 'sdb1595f5c742dfbb': `Vstup`,
+'sdbaa4e0831238006': `Upravit vše`,
 'sdde16b9126492f79': `Velikost jádra`,
 'se13c154abb1c1cff': `Přidat kombinační vrstvu`,
-'se1c4d8107171ecb2': str`Predikce: 
-          ${0} - Štítek: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Predikce: ${0} − štítek: ${1} = rozdíl: ${2}`,
 'se2b0409cadbd0a9e': `Vyberte zdrojový prvek`,
 'se2b49a41b39653fc': `Hodnotová stupnice`,
+'se6c8329ea1c50858': `Pouze nastavení příznaků`,
 'se7a532063ef7b740': `Lineární`,
 'seb198c12be265d61': `Výstupní uzly`,
 'seffcca34b918ddc0': `Obsahuje cyklický odkaz.`,
+'sf02c84d2e8520b92': `Zdroj příznaků`,
 'sf1674aeb3dc2d55d': `Aktivace`,
 'sf21fb4f4b9e8911f': `Šířka`,
 'sf5290513fc7b466a': `Použitá paměť tenzoru:`,
@@ -156,4 +137,3 @@
 'sfd77270c3f54f664': `Výstup`,
 'sffdadf0a576fd802': `Výška`,
     };
-  

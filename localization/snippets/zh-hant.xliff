@@ -1,16 +1,71 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-hant">
-<file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
-<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST - 讀取數字</target></segment></unit>
-<unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>特徵工程</target></segment></unit>
-<unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1"><segment><source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source><target>首先我們將匯入並預處理資料集。我們需要告訴電腦如何將資料集中的文字解讀為張量。</target></segment></unit>
-<unit id="Model Designing#1"><segment><source>Model Designing</source><target>模型設計</target></segment></unit>
-<unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1"><segment><source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source><target>接下來我們設計一個模型，用於將圖像分類為顯示可用數字之一。在此情況下，採用簡單的卷積層後接稠密層，即可可靠地判別類別。</target></segment></unit>
-<unit id="Model Training#1"><segment><source>Model Training</source><target>模型訓練</target></segment></unit>
-<unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1"><segment><source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source><target>利用模型架構，我們對模型權重進行優化，以在數據集上產生最低的損失值。每處理完一批樣本後，模型權重即會進行優化；當所有訓練樣本處理完畢後，我們便開始新一個訓練週期並重複此流程。</target></segment></unit>
-<unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>模型預測</target></segment></unit>
-<unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>訓練完成後，我們便能運用該模型對新數字進行分類。</target></segment></unit>
-<unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>模型評估</target></segment></unit>
-<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>為評估模型品質並與其他模型進行比較，我們通常會讓模型通過一系列測試，藉此掌握模型的表現狀況。</target></segment></unit>
-</file>
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST - 讀取數字</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>特徵工程</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>首先我們將匯入並預處理資料集。我們需要告訴電腦如何將資料集中的文字解讀為張量。</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>模型設計</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>接下來我們設計一個模型，用於將圖像分類為顯示可用數字之一。在此情況下，採用簡單的卷積層後接稠密層，即可可靠地判別類別。</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>模型訓練</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>利用模型架構，我們對模型權重進行優化，以在數據集上產生最低的損失值。每處理完一批樣本後，模型權重即會進行優化；當所有訓練樣本處理完畢後，我們便開始新一個訓練週期並重複此流程。</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>模型預測</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>訓練完成後，我們便能運用該模型對新數字進行分類。</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>模型評估</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>為評估模型品質並與其他模型進行比較，我們通常會讓模型通過一系列測試，藉此掌握模型的表現狀況。</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Operāciju skaits:`,
-'s026fba1543d336b2': `Funkcijas avots`,
 's02bee65dc3f21363': `Konkatenācija`,
 's06471a3c2aed9b4b': `Ievades lauks`,
 's066d70cf9d5e2915': `Rezultāti`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Elementu pievienošana`,
 's12126d92849e3b53': `R2 rezultāts`,
 's15371f7ebfb1ad5e': `Apmācības ātrums:`,
-'s162c56231b25e6ff': `slēpt logrīku`,
-'s166d284a7cbc6181': `tikai lasīšanai`,
 's1703372e9470522b': `Pievienot veidošanas slāni`,
 's17ce2eafdc840624': `Zaudējumu sadale`,
-'s19a2ee331d08ad42': `(Brīdinājums: pārāk liels tenzoru datu apjoms var pārpildīt ierīces RAM un izraisīt kļūdas apmācības laikā, un sliktākajā gadījumā bloķēt uzņēmuma sistēmu.)`,
+'s1b7f4af051183fee': `Vēlamais skaitļošanas dzinis`,
 's1bb08bff53933452': `Modeļa versija`,
 's1c3cbd3cbaee4368': `Pievienot I/O slāni`,
-'s1ca51d37e3dae07a': `Tas ļauj pārveidotos paraugus saglabāt aprēķinu ierīces cache atmiņā, tādējādi ievērojami palielinot apmācības ātrumu, bet vienlaikus prasot ievērojami vairāk atmiņas ierīcē.`,
 's1e0afe8020901f1f': `Sākt apmācību`,
 's1fa03b3ccbfc66a5': `Attēlu priekšapstrāde`,
 's22fde937cb709859': `Palielināt`,
 's2454d1f117573457': `Precizitāte`,
+'s250a7fc28124c361': `Tikai lasīšanai`,
 's255857544a9d5ec0': `Atjaunot`,
 's26b5b115b8b61794': `Funkciju izstrādes logrīks, kas ir paslēpts no studentiem.`,
-'s2b28da40a8490a78': `tikai funkciju iestatījumi`,
 's2b6d43596140ef3a': `Turpināt apmācību`,
 's2bc80ed8441b0831': `Trokšņi`,
-'s2c48e68704ff98c2': str`Izvades forma nav derīga: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Izvades forma nav derīga: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Ielādē modeļus...`,
-'s32f2fa78e3267c4e': `tikai īpašības`,
 's334f9922638204ab': `Datu kopa, izmantojot`,
-'s34af392b321cbfa6': `rediģēt visu`,
 's38c7b3d048d88c07': `Dzēst atlasīto`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Maksimālie slāņa parametri`,
+'s38ddf839c081bbaf': str`${0}. dimensija`,
 's3aba710c340e1059': `Nav pieejami funkciju dati`,
-'s410415ac2406c84e': `Vēlamais backend`,
+'s3c0b025716311430': `Maksimālais slāņa parametru skaits`,
 's412b62989fc26d3a': `Rādīt izvēli`,
 's446eb2b422b286af': `Impulss`,
 's49730f3d5751a433': `Ielādējas...`,
-'s4c08da5f7528a7e3': `Modeļa avots`,
 's4f5eeeb48a97ea9a': `Zaudējums`,
 's547a4465533a6f5f': `Attēlu kodēšana`,
 's5561b945c8cd59b0': `Partijas lielums`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Kvadrātiskais`,
 's58bee799432dbc69': `Papildinājums`,
 's58d6b1ecd5084538': `Stride`,
-'s5da30fd688d05a35': `Rediģēt atļaujas`,
 's61ac82c68c336bb1': `Pārtraukt apmācību`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Vai dzēst šo datu kopu?`,
 's62cecbd4b16886e7': `Zaudējumu sadales aprēķināšana...`,
 's6557e193c4f15b9c': `Vairākas klases vienam paraugam`,
 's6610206d0ad97d60': `Datu kopas funkciju kolonnas:`,
 's66a5898632280fe2': `Zaudējumu funkcija`,
+'s679b3c0fcb1bdadf': `Paslēpt logrīku`,
 's6b0e650acd025eff': `Base64 virkne`,
 's6c02f2ec8c3f52a4': `Precizitāte`,
 's6c5b5757b7756775': `Centrs`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Skaitļu kodēšana`,
 's82c21acdbcd6e830': `Spēks`,
 's82caaf657b01a4d0': `Pelēkā skala`,
+'s84536b272065202c': `Maksimālais modeļa parametru skaits`,
+'s858e82f5fff9aac3': `Modeļa avots`,
 's888d98a196a240d8': `Ievades`,
 's8a73af950772f702': `Nav pieejams modelis.`,
 's900c980bdb200fcf': `Epochas`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Saplacināt`,
 's981f232bd33ec927': `Cena`,
 's99456cbda3e05fb0': `Atgādinājums`,
-'s9b5ec9d0b70a0fac': `Maksimālie modeļa parametri`,
 's9eac77171764efaa': `Transponēt konvolūciju`,
 'sa4ef4c5175793d6f': `Zaudējumu aprēķināšana paraugiem...`,
+'sa60f5f53cc29b8cf': `Tikai slāņu rekvizīti`,
 'sa68f184fe626daf3': `Pievienot apmācāmu slāni`,
 'sa8082d7f7ef02f42': `Šī transformācija nav piemērojama šādām vērtībām`,
 'sa812ba9ded26aa98': `Ielādējas modelis...`,
@@ -105,24 +95,18 @@
 'sab09aa21c8921bea': `Attēla ielāde`,
 'sabf86f32eba45ad4': `Izvēlieties kolonnu, lai to formatētu`,
 'saf01d58ece3a1e02': `Ielādē Tensorflow...`,
-'sb03650788f41c135': str`no 
-          ${0} paraugiem
-        `,
+'sb03650788f41c135': str`no ${0} paraugiem`,
 'sb05582ce916894da': `Samazināt`,
 'sb405f0898c39ca67': `Datu tips`,
 'sb4f1dffbb6be6302': `Skaidrs`,
 'sb59d68ed12d46377': `Ielādējas`,
 'sb633a04ba54b2dc0': `Slānim ir pārāk daudz apmācāmu parametru. Mēģiniet samazināt ievades izmēru vai regulējamos parametrus.`,
+'sb850938497d0a395': `Rediģēšanas atļaujas`,
+'sbf1ff3369db980c0': `Arhitektūras avots`,
 'sbfe9518a1fe4f185': `Pārveidot`,
-'sc0e01e8b4662bec2': str`Prognoze: 
-          ${0} ,  Etiķete: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Prognoze: ${0}, etiķete: ${1}`,
 'sc2e0d19ed54560c8': `Eksponenciāls`,
-'sc3727a4fc25d7500': str`Prognoze: 
-          ${0} ${1} Etiķete: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Prognoze: ${0} ${1}, etiķete: ${2}`,
 'sc3d8f37ea5f4bd79': `Atšķirību vizualizēšana...`,
 'sc6bff481def13d70': `Izslēgšana`,
 'sc6d31f0cce31ddcf': `Kopējie parametri:`,
@@ -131,21 +115,19 @@
 'sce4efb732b98f946': `Viena klase uz vienu paraugu`,
 'scfd25318edb1ebb1': `Kodolu skaits`,
 'sd2223afb7d6b100d': `Tips`,
-'sd6b72022c37e1ae0': `Dizaina avots`,
 'sdab07807ff1b6b12': `Model Design Widget ir paslēpts no studentiem.`,
 'sdb1595f5c742dfbb': `Ievade`,
+'sdbaa4e0831238006': `Rediģēt visu`,
 'sdde16b9126492f79': `Kodola izmērs`,
 'se13c154abb1c1cff': `Pievienot kombinācijas slāni`,
-'se1c4d8107171ecb2': str`Prognoze: 
-          ${0} - Etiķete: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Prognoze: ${0} − etiķete: ${1} = starpība: ${2}`,
 'se2b0409cadbd0a9e': `Izvēlieties avota elementu`,
 'se2b49a41b39653fc': `Vērtību skala`,
+'se6c8329ea1c50858': `Tikai pazīmju iestatījumi`,
 'se7a532063ef7b740': `Lineārs`,
 'seb198c12be265d61': `Izvades mezgli`,
 'seffcca34b918ddc0': `Ir cikliska atsauce.`,
+'sf02c84d2e8520b92': `Pazīmju avots`,
 'sf1674aeb3dc2d55d': `Aktivizēšana`,
 'sf21fb4f4b9e8911f': `Platums`,
 'sf5290513fc7b466a': `Izmantotā tenzora atmiņa:`,
@@ -155,4 +137,3 @@
 'sfd77270c3f54f664': `Izeja`,
 'sffdadf0a576fd802': `Augstums`,
     };
-  

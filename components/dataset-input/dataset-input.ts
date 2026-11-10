@@ -1,4 +1,4 @@
-import { msg } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../../localization/localizer";
 import { html } from "lit";
 
 import { LitElementWw } from "@webwriter/lit";
@@ -19,6 +19,11 @@ import styles from "./dataset-input.styles";
 import file from "@tabler/icons/outline/file.svg";
 
 export class DatasetInput extends LitElementWw {
+  static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+  override get lang(): string { return effectiveLanguage(this); }
+  override set lang(value: string) { this.setAttribute("lang", value); }
+  private readonly msg = localizeElement(this);
 
   /**
    * Returns an object that maps custom element names to their corresponding classes.
@@ -58,7 +63,7 @@ export class DatasetInput extends LitElementWw {
         @drop=${this.handleDropOnFileInputArea}
       >
         <sl-icon slot="prefix" src=${file}></sl-icon>
-        ${msg("Select Dataset")}
+        ${this.msg("Select Dataset")}
         <input
           name="fileInput"
           id="fileInput"

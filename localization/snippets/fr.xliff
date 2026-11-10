@@ -1,16 +1,71 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="fr">
-<file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
-<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST - Lecture de chiffres</target></segment></unit>
-<unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>Ingénierie des caractéristiques</target></segment></unit>
-<unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1"><segment><source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source><target>Nous allons d'abord importer et prétraiter l'ensemble de données. Nous devons indiquer à l'ordinateur comment interpréter le texte de l'ensemble de données en tant que tenseurs.</target></segment></unit>
-<unit id="Model Designing#1"><segment><source>Model Designing</source><target>Conception de modèles</target></segment></unit>
-<unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1"><segment><source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source><target>Ensuite, nous concevons un modèle permettant de classer l'image comme représentant l'un des chiffres disponibles. Dans ce cas, une simple convolution suivie d'une couche dense permet de déterminer la classe de manière fiable.</target></segment></unit>
-<unit id="Model Training#1"><segment><source>Model Training</source><target>Formation des modèles</target></segment></unit>
-<unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1"><segment><source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source><target>À l'aide de l'architecture du modèle, nous optimisons les poids du modèle afin d'obtenir la perte la plus faible possible sur l'ensemble de données. Après chaque lot, les poids du modèle sont optimisés et, une fois tous les échantillons d'apprentissage traités, nous commençons une nouvelle époque et répétons le processus.</target></segment></unit>
-<unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>Prévision du modèle</target></segment></unit>
-<unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>Après l'entraînement, nous pouvons utiliser le modèle pour classer de nouveaux nombres.</target></segment></unit>
-<unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>Évaluation du modèle</target></segment></unit>
-<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>Pour évaluer la qualité du modèle et le comparer à d'autres, nous soumettons généralement notre modèle à une série de tests qui nous donnent une idée de ses performances.</target></segment></unit>
-</file>
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST - Lecture de chiffres</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>Ingénierie des caractéristiques</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>Nous allons d'abord importer et prétraiter l'ensemble de données. Nous devons indiquer à l'ordinateur comment interpréter le texte de l'ensemble de données en tant que tenseurs.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>Conception de modèles</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>Ensuite, nous concevons un modèle permettant de classer l'image comme représentant l'un des chiffres disponibles. Dans ce cas, une simple convolution suivie d'une couche dense permet de déterminer la classe de manière fiable.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>Formation des modèles</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>À l'aide de l'architecture du modèle, nous optimisons les poids du modèle afin d'obtenir la perte la plus faible possible sur l'ensemble de données. Après chaque lot, les poids du modèle sont optimisés et, une fois tous les échantillons d'apprentissage traités, nous commençons une nouvelle époque et répétons le processus.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>Prévision du modèle</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>Après l'entraînement, nous pouvons utiliser le modèle pour classer de nouveaux nombres.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>Évaluation du modèle</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>Pour évaluer la qualité du modèle et le comparer à d'autres, nous soumettons généralement notre modèle à une série de tests qui nous donnent une idée de ses performances.</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

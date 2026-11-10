@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Operacijų skaičius:`,
-'s026fba1543d336b2': `Funkcijos šaltinis`,
 's02bee65dc3f21363': `Sujungimas`,
 's06471a3c2aed9b4b': `Įvesties laukas`,
 's066d70cf9d5e2915': `Rezultatai`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Elementų sudėties pridėjimas`,
 's12126d92849e3b53': `R2 balas`,
 's15371f7ebfb1ad5e': `Treniruočių greitis:`,
-'s162c56231b25e6ff': `paslėpti valdiklį`,
-'s166d284a7cbc6181': `tik skaityti`,
 's1703372e9470522b': `Pridėti formavimo sluoksnį`,
 's17ce2eafdc840624': `Nuostolių paskirstymas`,
-'s19a2ee331d08ad42': `(Įspėjimas: per didelis tenzoriaus duomenų kiekis gali perpildyti įrenginio RAM atmintį ir sukelti gedimą mokymo metu, o blogiausiu atveju – užblokuoti pagrindinę sistemą.)`,
+'s1b7f4af051183fee': `Pageidaujama skaičiavimo posistemė`,
 's1bb08bff53933452': `Modelio versija`,
 's1c3cbd3cbaee4368': `Pridėti įvesties/išvesties sluoksnį`,
-'s1ca51d37e3dae07a': `Tai leidžia transformuotus pavyzdžius talpinti kompiuterio atmintyje, taip žymiai padidinant mokymo greitį, tačiau reikalaujant žymiai daugiau atminties įrenginyje.`,
 's1e0afe8020901f1f': `Pradėti mokymą`,
 's1fa03b3ccbfc66a5': `Vaizdo apdorojimas prieš apdorojimą`,
 's22fde937cb709859': `Padidinti`,
 's2454d1f117573457': `Tikslumas`,
+'s250a7fc28124c361': `Tik skaityti`,
 's255857544a9d5ec0': `Atstatyti`,
 's26b5b115b8b61794': `Funkcijų inžinerijos valdiklis paslėptas nuo studentų.`,
-'s2b28da40a8490a78': `tik funkcijos nustatymai`,
 's2b6d43596140ef3a': `Tęsti mokymą`,
 's2bc80ed8441b0831': `Triukšmas`,
-'s2c48e68704ff98c2': str`Išvesties forma neteisinga: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Netinkama išvesties forma: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Įkeliami modeliai...`,
-'s32f2fa78e3267c4e': `tik savybės`,
 's334f9922638204ab': `Duomenų rinkinys, naudojantis`,
-'s34af392b321cbfa6': `redaguoti viską`,
 's38c7b3d048d88c07': `Ištrinti pažymėtus`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Maksimalūs sluoksnio parametrai`,
+'s38ddf839c081bbaf': str`${0}-asis matmuo`,
 's3aba710c340e1059': `Nėra duomenų apie funkcijas`,
-'s410415ac2406c84e': `Pageidaujamas užpakalinis serveris`,
+'s3c0b025716311430': `Didžiausias sluoksnio parametrų skaičius`,
 's412b62989fc26d3a': `Rodyti pasirinkimą`,
 's446eb2b422b286af': `Impulsas`,
 's49730f3d5751a433': `Įkeliama...`,
-'s4c08da5f7528a7e3': `Modelio šaltinis`,
 's4f5eeeb48a97ea9a': `Nuostolis`,
 's547a4465533a6f5f': `Vaizdo kodavimas`,
 's5561b945c8cd59b0': `Partijos dydis`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Kvadratinis`,
 's58bee799432dbc69': `Priedas`,
 's58d6b1ecd5084538': `Žingsnis`,
-'s5da30fd688d05a35': `Redaguoti leidimus`,
 's61ac82c68c336bb1': `Nutraukti mokymą`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Ištrinti šį duomenų rinkinį?`,
 's62cecbd4b16886e7': `Nuostolių paskirstymo skaičiavimas...`,
 's6557e193c4f15b9c': `Keli klasės vienam pavyzdžiui`,
 's6610206d0ad97d60': `Duomenų rinkinio stulpelių savybės:`,
 's66a5898632280fe2': `Nuostolių funkcija`,
+'s679b3c0fcb1bdadf': `Slėpti valdiklį`,
 's6b0e650acd025eff': `Base64 eilutė`,
 's6c02f2ec8c3f52a4': `Tikslumas`,
 's6c5b5757b7756775': `Centrinis vaizdas`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Skaičių kodavimas`,
 's82c21acdbcd6e830': `Stiprumas`,
 's82caaf657b01a4d0': `Pilkosios spalvos skalė`,
+'s84536b272065202c': `Didžiausias modelio parametrų skaičius`,
+'s858e82f5fff9aac3': `Modelio šaltinis`,
 's888d98a196a240d8': `Įvestys`,
 's8a73af950772f702': `Modelis nėra prieinamas.`,
 's900c980bdb200fcf': `Epochos`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Išlyginti`,
 's981f232bd33ec927': `Kaina`,
 's99456cbda3e05fb0': `Atšaukti`,
-'s9b5ec9d0b70a0fac': `Maksimalūs modelio parametrai`,
 's9eac77171764efaa': `Transponuoti konvoliuciją`,
 'sa4ef4c5175793d6f': `Pavyzdžių nuostolių skaičiavimas...`,
+'sa60f5f53cc29b8cf': `Tik sluoksnių savybės`,
 'sa68f184fe626daf3': `Pridėti mokomąjį sluoksnį`,
 'sa8082d7f7ef02f42': `Ši transformacija netaikoma šioms reikšmėms`,
 'sa812ba9ded26aa98': `Įkeliama modelis...`,
@@ -105,24 +95,18 @@
 'sab09aa21c8921bea': `Įkeliama nuotrauka`,
 'sabf86f32eba45ad4': `Pasirinkite stulpelį, kurį norite formatuoti`,
 'saf01d58ece3a1e02': `Įkeliama Tensorflow...`,
-'sb03650788f41c135': str`iš 
-          ${0} pavyzdžių
-        `,
+'sb03650788f41c135': str`iš ${0} pavyzdžių`,
 'sb05582ce916894da': `Sumažinti`,
 'sb405f0898c39ca67': `Duomenų tipas`,
 'sb4f1dffbb6be6302': `Aišku`,
 'sb59d68ed12d46377': `Įkėlimas`,
 'sb633a04ba54b2dc0': `Sluoksnis turi per daug mokomų parametrų. Pabandykite sumažinti įvesties dydį arba reguliuojamas savybes.`,
+'sb850938497d0a395': `Redagavimo leidimai`,
+'sbf1ff3369db980c0': `Architektūros šaltinis`,
 'sbfe9518a1fe4f185': `Performuoti`,
-'sc0e01e8b4662bec2': str`Prognozė: 
-          ${0} ,  Žymė: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Prognozė: ${0}, žyma: ${1}`,
 'sc2e0d19ed54560c8': `Eksponentinis`,
-'sc3727a4fc25d7500': str`Prognozė: 
-          ${0} ${1} Žymė: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Prognozė: ${0} ${1}, žyma: ${2}`,
 'sc3d8f37ea5f4bd79': `Skirtumų vizualizavimas...`,
 'sc6bff481def13d70': `Iškritimas`,
 'sc6d31f0cce31ddcf': `Bendri parametrai:`,
@@ -131,21 +115,19 @@
 'sce4efb732b98f946': `Viena klasė vienam pavyzdžiui`,
 'scfd25318edb1ebb1': `Branduolių skaičius`,
 'sd2223afb7d6b100d': `Tipas`,
-'sd6b72022c37e1ae0': `Dizaino šaltinis`,
 'sdab07807ff1b6b12': `Modelio dizaino valdiklis paslėptas nuo studentų.`,
 'sdb1595f5c742dfbb': `Įvestis`,
+'sdbaa4e0831238006': `Redaguoti viską`,
 'sdde16b9126492f79': `Branduolio dydis`,
 'se13c154abb1c1cff': `Pridėti kombinuotą sluoksnį`,
-'se1c4d8107171ecb2': str`Prognozė: 
-          ${0} - Žymė: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Prognozė: ${0} − žyma: ${1} = skirtumas: ${2}`,
 'se2b0409cadbd0a9e': `Pasirinkite šaltinio elementą`,
 'se2b49a41b39653fc': `Vertės skalė`,
+'se6c8329ea1c50858': `Tik požymių nuostatos`,
 'se7a532063ef7b740': `Linijinis`,
 'seb198c12be265d61': `Išvesties mazgai`,
 'seffcca34b918ddc0': `Turi ciklinę nuorodą.`,
+'sf02c84d2e8520b92': `Požymių šaltinis`,
 'sf1674aeb3dc2d55d': `Aktyvinimas`,
 'sf21fb4f4b9e8911f': `Plotis`,
 'sf5290513fc7b466a': `Naudota Tensor atmintis:`,
@@ -155,4 +137,3 @@
 'sfd77270c3f54f664': `Išvestis`,
 'sffdadf0a576fd802': `Aukštis`,
     };
-  

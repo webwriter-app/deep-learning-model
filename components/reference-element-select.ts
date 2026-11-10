@@ -1,4 +1,4 @@
-import { msg } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
@@ -8,6 +8,11 @@ import { css, html, TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
 
 export class AiWidgetsReferenceSelect extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    private readonly msg = localizeElement(this);
     static scopedElements = {
         "sl-select": SlSelect,
         "sl-option": SlOption,
@@ -19,14 +24,6 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
       display:block;
     }
     `
-
-    constructor() {
-        super();
-        let that = this;
-        setInterval(function () {
-            that.requestUpdate();
-        }, 1000);
-    }
 
     public options: Record<string, OptionDeclaration> = {}
 
@@ -43,20 +40,12 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
 
     private lastRef:HTMLElement;
 
-    firstUpdated() {
-        if (this.elemId == "" || this.elemId == null) {
-            let testSibblingForElementType = document.getElementById(this.ownerId);
-            console.log(testSibblingForElementType, this.elementType);
-            while (testSibblingForElementType != null && testSibblingForElementType.tagName.toLowerCase() != this.elementType) {
-                testSibblingForElementType = testSibblingForElementType.previousElementSibling as HTMLElement;
-                console.log(testSibblingForElementType);
-            }
-            this.elemId = testSibblingForElementType.id;
-        }
-        this.dispatchEvent(new CustomEvent('refchange', {
-            detail: {
-                id: this.elemId
-            }
+    updated(changed: Map<string, unknown>) {
+        if (!changed.has("elemId")) return;
+        const previous = this.lastRef;
+        this.lastRef = this.getRefElement();
+        this.dispatchEvent(new CustomEvent("refchange", {
+            detail: {id: this.elemId || null, lastRef: previous},
         }));
     }
 
@@ -92,14 +81,14 @@ export class AiWidgetsReferenceSelect extends LitElementWw {
                 elem.style.boxShadow = "";
             }, 1000);
         }
-        return html`<sl-select id="elemselect" value=${this.elemId} placeholder=${msg("Select Source Element")} @sl-focus=${highlight} @sl-change=${changeElem}>
+        return html`<sl-select id="elemselect" value=${this.elemId} placeholder=${this.msg("Select Source Element")} @sl-focus=${highlight} @sl-change=${changeElem}>
             ${options}
         </sl-select>
-        <sl-button @click=${highlight} id="btn">${msg("Show selection")}</sl-button>
+        <sl-button @click=${highlight} id="btn">${this.msg("Show selection")}</sl-button>
         `
     }
 
     public getRefElement() {
-        return document.querySelector("#" + this.elemId) as HTMLElement
+        return this.elemId ? this.ownerDocument.getElementById(this.elemId) : null
     }
 }

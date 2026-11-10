@@ -1,6 +1,7 @@
+import { sourceMsg } from "../../localization/localizer";
 import { SlSelect } from '@shoelace-style/shoelace';
 import { html, TemplateResult } from "lit";
-import { msg, str } from "@lit/localize";
+import { str, type MsgFn } from "@lit/localize";
 import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature';
 
@@ -89,7 +90,7 @@ export default class LinearTransformation extends FeatureTransformation {
         return html`<number-output id=${id}></number-output>`
     }
 
-    public renderPredictionDifference(pred:TF.Tensor1D, label:TF.Tensor1D) {
+    public renderPredictionDifference(pred:TF.Tensor1D, label:TF.Tensor1D, msg: MsgFn = sourceMsg) {
         return html`${until((async () => {
             let predValue = await this.inverse(pred);
             let labelValue = await this.inverse(label);
@@ -97,7 +98,7 @@ export default class LinearTransformation extends FeatureTransformation {
         })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
-    public getSettingElement(changeCallback): TemplateResult {
+    public getSettingElement(changeCallback, _editMode: string, msg: MsgFn = sourceMsg): TemplateResult {
         let that = this;
         function typechange(e: Event) {
             let element = e.target as SlSelect;
@@ -113,7 +114,7 @@ export default class LinearTransformation extends FeatureTransformation {
             </sl-select>`
     }
 
-    public renderTransformedValue(value: string): TemplateResult {
+    public renderTransformedValue(value: string, msg: MsgFn = sourceMsg): TemplateResult {
         return html`${until(
             (async () => { return (await this.transform(value)).arraySync()[0].toFixed(3) })(), html`${msg("Loading")}`)}`;
     }

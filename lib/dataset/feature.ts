@@ -1,3 +1,4 @@
+import type { MsgFn } from "@lit/localize";
 import { TemplateResult } from "lit/html.js";
 
 import type * as tf from "@tensorflow/tfjs";
@@ -80,17 +81,17 @@ export abstract class FeatureTransformation {
     /**
      * Returns the element that will be displayed and changes the settings of the transformation
      */
-    public abstract getSettingElement(changeCallback: (settings: FeatureSettings) => void, editMode: string): TemplateResult;
+    public abstract getSettingElement(changeCallback: (settings: FeatureSettings) => void, editMode: string, msg?: MsgFn): TemplateResult;
 
     /**
      * Returns an html element that will be displayed. Can be a simple text or an image etc.
      */
-    public abstract renderTransformedValue(value: string): TemplateResult;
+    public abstract renderTransformedValue(value: string, msg?: MsgFn): TemplateResult;
 
     /**
      * Returns an html element that will be displayed. Can be a simple text or an image etc.
      */
-    public abstract renderPredictionDifference(pred: tf.Tensor, label: tf.Tensor): TemplateResult;
+    public abstract renderPredictionDifference(pred: tf.Tensor, label: tf.Tensor, msg?: MsgFn): TemplateResult;
 
     /**
      * Returns a string representation of the original value for display in the feature engineering widget.

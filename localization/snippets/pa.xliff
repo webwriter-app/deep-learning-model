@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="pa">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — ਅੰਕ ਪੜ੍ਹਨਾ</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ਫੀਚਰ ਇੰਜਨੀਅਰਿੰਗ</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ਪਹਿਲਾਂ ਅਸੀਂ ਡੇਟਾਸੈੱਟ ਆਯਾਤ ਕਰਕੇ ਉਸਦੀ ਮੁੱਢਲੀ ਪ੍ਰਕਿਰਿਆ ਕਰਾਂਗੇ। ਕੰਪਿਊਟਰ ਨੂੰ ਦੱਸਣਾ ਪਵੇਗਾ ਕਿ ਡੇਟਾਸੈੱਟ ਦੀ ਲਿਖਤ ਨੂੰ ਟੈਂਸਰਾਂ ਵਜੋਂ ਕਿਵੇਂ ਸਮਝਣਾ ਹੈ।</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ਮਾਡਲ ਡਿਜ਼ਾਈਨ</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ਅਗਲਾ ਕਦਮ ਅਜਿਹਾ ਮਾਡਲ ਬਣਾਉਣਾ ਹੈ ਜੋ ਉਪਲਬਧ ਅੰਕਾਂ ਵਿੱਚੋਂ ਚਿੱਤਰ ਵਿੱਚ ਦਿਖਾਏ ਅੰਕ ਦੀ ਪਛਾਣ ਕਰੇ। ਵਰਗ ਨੂੰ ਭਰੋਸੇਯੋਗ ਢੰਗ ਨਾਲ ਲੱਭਣ ਲਈ ਇੱਥੇ ਇੱਕ ਸਧਾਰਨ ਕਨਵੋਲਿਊਸ਼ਨ ਤੋਂ ਬਾਅਦ ਡੈਂਸ ਲੇਅਰ ਵਰਤੀ ਗਈ ਹੈ।</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ਮਾਡਲ ਸਿਖਲਾਈ</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ਡੇਟਾਸੈੱਟ ਉੱਤੇ ਨੁਕਸਾਨ ਸਭ ਤੋਂ ਘੱਟ ਕਰਨ ਲਈ ਮਾਡਲ ਦੀ ਬਣਤਰ ਵਰਤ ਕੇ ਉਸਦੇ ਭਾਰ ਓਪਟੀਮਾਈਜ਼ ਕੀਤੇ ਜਾਂਦੇ ਹਨ। ਹਰ ਬੈਚ ਮਗਰੋਂ ਭਾਰ ਓਪਟੀਮਾਈਜ਼ ਹੁੰਦੇ ਹਨ। ਸਾਰੇ ਸਿਖਲਾਈ ਨਮੂਨੇ ਪ੍ਰਕਿਰਿਆ ਹੋ ਜਾਣ 'ਤੇ ਨਵਾਂ ਐਪੋਕ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ ਅਤੇ ਇਹ ਕਿਰਿਆ ਦੁਹਰਾਈ ਜਾਂਦੀ ਹੈ।</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ਮਾਡਲ ਦੀ ਭਵਿੱਖਬਾਣੀ</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>ਸਿਖਲਾਈ ਤੋਂ ਬਾਅਦ ਨਵੇਂ ਅੰਕਾਂ ਦੀ ਵਰਗੀਕਰਨ ਲਈ ਮਾਡਲ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ।</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ਮਾਡਲ ਦਾ ਮੁਲਾਂਕਣ</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ਮਾਡਲ ਦੀ ਗੁਣਵੱਤਾ ਪਰਖਣ ਅਤੇ ਹੋਰਾਂ ਨਾਲ ਤੁਲਨਾ ਕਰਨ ਲਈ ਅਸੀਂ ਆਮ ਤੌਰ 'ਤੇ ਕਈ ਟੈਸਟ ਚਲਾਉਂਦੇ ਹਾਂ, ਜਿਨ੍ਹਾਂ ਨਾਲ ਉਸਦੀ ਕਾਰਗੁਜ਼ਾਰੀ ਦਾ ਅੰਦਾਜ਼ਾ ਮਿਲਦਾ ਹੈ।</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

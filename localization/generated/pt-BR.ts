@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Número de operações:`,
-'s026fba1543d336b2': `Fonte da funcionalidade`,
 's02bee65dc3f21363': `Concatenação`,
 's06471a3c2aed9b4b': `Campo de entrada`,
 's066d70cf9d5e2915': `Resultados`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Soma elemento a elemento`,
 's12126d92849e3b53': `Pontuação R2`,
 's15371f7ebfb1ad5e': `Velocidade de treinamento:`,
-'s162c56231b25e6ff': `ocultar widget`,
-'s166d284a7cbc6181': `somente leitura`,
 's1703372e9470522b': `Adicionar camada de modelagem`,
 's17ce2eafdc840624': `Distribuição de perdas`,
-'s19a2ee331d08ad42': `(Aviso: dados tensoriais em excesso podem sobrecarregar a RAM do dispositivo e causar falhas durante o treinamento e, na pior das hipóteses, bloquear o sistema host.)`,
+'s1b7f4af051183fee': `Mecanismo de cálculo preferido`,
 's1bb08bff53933452': `Versão do modelo`,
 's1c3cbd3cbaee4368': `Adicionar camada de E/S`,
-'s1ca51d37e3dae07a': `Isso permite que as amostras transformadas sejam armazenadas em cache no dispositivo de computação, aumentando drasticamente a velocidade de treinamento, mas exigindo significativamente mais armazenamento no dispositivo.`,
 's1e0afe8020901f1f': `Comece o treinamento`,
 's1fa03b3ccbfc66a5': `Pré-processamento de imagens`,
 's22fde937cb709859': `Ampliar`,
 's2454d1f117573457': `Precisão`,
+'s250a7fc28124c361': `Somente leitura`,
 's255857544a9d5ec0': `Redefinir`,
 's26b5b115b8b61794': `Widget de engenharia de recursos oculto dos alunos.`,
-'s2b28da40a8490a78': `apenas configurações de recursos`,
 's2b6d43596140ef3a': `Continuar o treinamento`,
 's2bc80ed8441b0831': `Ruído`,
-'s2c48e68704ff98c2': str`Formato de saída inválido: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Formato de saída inválido: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Carregando modelos...`,
-'s32f2fa78e3267c4e': `apenas propriedades`,
 's334f9922638204ab': `Conjunto de dados utilizando`,
-'s34af392b321cbfa6': `editar tudo`,
 's38c7b3d048d88c07': `Excluir os itens selecionados`,
-'s38ddf839c081bbaf': str`
-          ${0} a dimensão
-        `,
-'s39e9054ae5edaf30': `Parâmetros da camada máxima`,
+'s38ddf839c081bbaf': str`Dimensão ${0}`,
 's3aba710c340e1059': `Não há dados disponíveis`,
-'s410415ac2406c84e': `Backend preferencial`,
+'s3c0b025716311430': `Número máximo de parâmetros da camada`,
 's412b62989fc26d3a': `Mostrar seleção`,
 's446eb2b422b286af': `Impulso`,
 's49730f3d5751a433': `Carregando...`,
-'s4c08da5f7528a7e3': `Fonte do modelo`,
 's4f5eeeb48a97ea9a': `Perda`,
 's547a4465533a6f5f': `Codificação de imagens`,
 's5561b945c8cd59b0': `Tamanho do lote`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Quadrático`,
 's58bee799432dbc69': `Adição`,
 's58d6b1ecd5084538': `Passada`,
-'s5da30fd688d05a35': `Editar permissões`,
 's61ac82c68c336bb1': `Interrompa o treinamento`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Excluir este conjunto de dados?`,
 's62cecbd4b16886e7': `Calculando a distribuição de perdas...`,
 's6557e193c4f15b9c': `Várias classes por amostra`,
 's6610206d0ad97d60': `Colunas de recursos do conjunto de dados:`,
 's66a5898632280fe2': `Função de perda`,
+'s679b3c0fcb1bdadf': `Ocultar widget`,
 's6b0e650acd025eff': `Cadeia Base64`,
 's6c02f2ec8c3f52a4': `Precisão`,
 's6c5b5757b7756775': `Vista central`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Codificação numérica`,
 's82c21acdbcd6e830': `Força`,
 's82caaf657b01a4d0': `Escala de cinza`,
+'s84536b272065202c': `Número máximo de parâmetros do modelo`,
+'s858e82f5fff9aac3': `Origem do modelo`,
 's888d98a196a240d8': `Entradas`,
 's8a73af950772f702': `Nenhum modelo disponível.`,
 's900c980bdb200fcf': `Épocas`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Aplanar`,
 's981f232bd33ec927': `Taxa`,
 's99456cbda3e05fb0': `Recall`,
-'s9b5ec9d0b70a0fac': `Parâmetros do modelo máximo`,
 's9eac77171764efaa': `Transposição de convolução`,
 'sa4ef4c5175793d6f': `Calculando a perda das amostras...`,
+'sa60f5f53cc29b8cf': `Apenas propriedades das camadas`,
 'sa68f184fe626daf3': `Adicionar camada treinável`,
 'sa8082d7f7ef02f42': `Esta transformação não é aplicável aos valores`,
 'sa812ba9ded26aa98': `Carregando modelo...`,
@@ -105,25 +95,18 @@
 'sab09aa21c8921bea': `Carregando imagem`,
 'sabf86f32eba45ad4': `Escolha uma coluna para formatá-la`,
 'saf01d58ece3a1e02': `Carregando o Tensorflow...`,
-'sb03650788f41c135': str`de 
-          Amostras de 
-          ${0}
-        `,
+'sb03650788f41c135': str`de ${0} amostras`,
 'sb05582ce916894da': `Diminuir`,
 'sb405f0898c39ca67': `Tipo de Dados`,
 'sb4f1dffbb6be6302': `Limpar`,
 'sb59d68ed12d46377': `Carregando`,
 'sb633a04ba54b2dc0': `A camada tem muitos parâmetros treináveis. Tente reduzir o tamanho da entrada ou as propriedades ajustáveis.`,
+'sb850938497d0a395': `Permissões de edição`,
+'sbf1ff3369db980c0': `Origem da arquitetura`,
 'sbfe9518a1fe4f185': `Remodelar`,
-'sc0e01e8b4662bec2': str`Previsão: 
-          ${0} ,  Rótulo: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Previsão: ${0}, rótulo: ${1}`,
 'sc2e0d19ed54560c8': `Exponencial`,
-'sc3727a4fc25d7500': str`Previsão: 
-          ${0} ${1} Etiqueta: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Previsão: ${0} ${1}, rótulo: ${2}`,
 'sc3d8f37ea5f4bd79': `Visualizando a diferença...`,
 'sc6bff481def13d70': `Abandono escolar`,
 'sc6d31f0cce31ddcf': `Parâmetros totais:`,
@@ -132,21 +115,19 @@
 'sce4efb732b98f946': `Uma classe por amostra`,
 'scfd25318edb1ebb1': `Número de núcleos`,
 'sd2223afb7d6b100d': `Tipo`,
-'sd6b72022c37e1ae0': `Fonte do design`,
 'sdab07807ff1b6b12': `Widget de design do modelo oculto dos alunos.`,
 'sdb1595f5c742dfbb': `Entrada`,
+'sdbaa4e0831238006': `Editar tudo`,
 'sdde16b9126492f79': `Tamanho do kernel`,
 'se13c154abb1c1cff': `Adicionar camada combinatória`,
-'se1c4d8107171ecb2': str`Previsão: 
-          ${0} - Rótulo: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Previsão: ${0} − rótulo: ${1} = diferença: ${2}`,
 'se2b0409cadbd0a9e': `Selecionar elemento de origem`,
 'se2b49a41b39653fc': `Escala de valores`,
+'se6c8329ea1c50858': `Apenas configurações das características`,
 'se7a532063ef7b740': `Linear`,
 'seb198c12be265d61': `Nós de saída`,
 'seffcca34b918ddc0': `Tem uma referência cíclica.`,
+'sf02c84d2e8520b92': `Origem das características`,
 'sf1674aeb3dc2d55d': `Ativação`,
 'sf21fb4f4b9e8911f': `Largura`,
 'sf5290513fc7b466a': `Memória Tensor usada:`,
@@ -156,4 +137,3 @@
 'sfd77270c3f54f664': `Saída`,
 'sffdadf0a576fd802': `Altura`,
     };
-  

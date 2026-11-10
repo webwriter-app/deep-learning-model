@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Antall operasjoner:`,
-'s026fba1543d336b2': `Funksjonskilde`,
 's02bee65dc3f21363': `Sammenkobling`,
 's06471a3c2aed9b4b': `Inndatafelt`,
 's066d70cf9d5e2915': `Resultater`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Elementvis tillegg`,
 's12126d92849e3b53': `R2-poengsum`,
 's15371f7ebfb1ad5e': `Treningshastighet:`,
-'s162c56231b25e6ff': `skjul widget`,
-'s166d284a7cbc6181': `skrivebeskyttet`,
 's1703372e9470522b': `Legg til formingslag`,
 's17ce2eafdc840624': `Tapfordeling`,
-'s19a2ee331d08ad42': `(Advarsel: For mye tensordata kan overfylle enhetens RAM og føre til krasj under trening, og i verste fall låse vertsystemet.)`,
+'s1b7f4af051183fee': `Foretrukket beregningsmotor`,
 's1bb08bff53933452': `Modellversjon`,
 's1c3cbd3cbaee4368': `Legg til I/O-lag`,
-'s1ca51d37e3dae07a': `Dette gjør det mulig å lagre de transformerte prøvene på beregningsenheten, noe som øker treningshastigheten dramatisk, men krever betydelig mer lagringsplass på enheten.`,
 's1e0afe8020901f1f': `Begynn treningen`,
 's1fa03b3ccbfc66a5': `Forbehandling av bilder`,
 's22fde937cb709859': `Zoom inn`,
 's2454d1f117573457': `Presisjon`,
+'s250a7fc28124c361': `Skrivebeskyttet`,
 's255857544a9d5ec0': `Tilbakestill`,
 's26b5b115b8b61794': `Funksjonsutviklingswidget skjult for studenter.`,
-'s2b28da40a8490a78': `kun funksjonsinnstillinger`,
 's2b6d43596140ef3a': `Fortsett opplæringen`,
 's2bc80ed8441b0831': `Støy`,
-'s2c48e68704ff98c2': str`Ugyldig utgangsform: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Ugyldig utdataform: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Laster modeller...`,
-'s32f2fa78e3267c4e': `egenskaper kun`,
 's334f9922638204ab': `Dataset ved bruk av`,
-'s34af392b321cbfa6': `rediger alt`,
 's38c7b3d048d88c07': `Slett det valgte`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Maksimale lagparametere`,
+'s38ddf839c081bbaf': str`Dimensjon ${0}`,
 's3aba710c340e1059': `Ingen funksjonsdata tilgjengelig`,
-'s410415ac2406c84e': `Foretrukket backend`,
+'s3c0b025716311430': `Maksimalt antall lagparametere`,
 's412b62989fc26d3a': `Vis utvalg`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Laster...`,
-'s4c08da5f7528a7e3': `Modellkilde`,
 's4f5eeeb48a97ea9a': `Tap`,
 's547a4465533a6f5f': `Bildekoding`,
 's5561b945c8cd59b0': `Batchstørrelse`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Kvadratisk`,
 's58bee799432dbc69': `Tillegg`,
 's58d6b1ecd5084538': `Skritt`,
-'s5da30fd688d05a35': `Rediger tillatelser`,
 's61ac82c68c336bb1': `Stopp treningen`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Slette dette datasettet?`,
 's62cecbd4b16886e7': `Beregner tapfordeling...`,
 's6557e193c4f15b9c': `Flere klasser per prøve`,
 's6610206d0ad97d60': `Dataset-funksjonskolonner:`,
 's66a5898632280fe2': `Tapfunksjon`,
+'s679b3c0fcb1bdadf': `Skjul modul`,
 's6b0e650acd025eff': `Base64-streng`,
 's6c02f2ec8c3f52a4': `Nøyaktighet`,
 's6c5b5757b7756775': `Senterutsikt`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Nummerkoding`,
 's82c21acdbcd6e830': `Styrke`,
 's82caaf657b01a4d0': `Gråskala`,
+'s84536b272065202c': `Maksimalt antall modellparametere`,
+'s858e82f5fff9aac3': `Modellkilde`,
 's888d98a196a240d8': `Innganger`,
 's8a73af950772f702': `Ingen modell tilgjengelig.`,
 's900c980bdb200fcf': `Epoker`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Flat`,
 's981f232bd33ec927': `Pris`,
 's99456cbda3e05fb0': `Tilbakekalling`,
-'s9b5ec9d0b70a0fac': `Maksimale modellparametere`,
 's9eac77171764efaa': `Transponere konvolusjon`,
 'sa4ef4c5175793d6f': `Beregner tap for prøver...`,
+'sa60f5f53cc29b8cf': `Bare lagegenskaper`,
 'sa68f184fe626daf3': `Legg til trenbart lag`,
 'sa8082d7f7ef02f42': `Denne transformasjonen gjelder ikke for verdiene`,
 'sa812ba9ded26aa98': `Laster modell...`,
@@ -105,24 +95,18 @@
 'sab09aa21c8921bea': `Laster bilde`,
 'sabf86f32eba45ad4': `Velg en kolonne for å formatere den`,
 'saf01d58ece3a1e02': `Laster Tensorflow...`,
-'sb03650788f41c135': str`av 
-          ${0} -prøver
-        `,
+'sb03650788f41c135': str`av ${0} eksempler`,
 'sb05582ce916894da': `Zoom ut`,
 'sb405f0898c39ca67': `Datatype`,
 'sb4f1dffbb6be6302': `Tydelig`,
 'sb59d68ed12d46377': `Laster`,
 'sb633a04ba54b2dc0': `Laget har for mange trenbare parametere. Prøv å redusere inngangsstørrelsen eller de justerbare egenskapene.`,
+'sb850938497d0a395': `Redigeringstillatelser`,
+'sbf1ff3369db980c0': `Arkitekturkilde`,
 'sbfe9518a1fe4f185': `Omforme`,
-'sc0e01e8b4662bec2': str`Prediksjon: 
-          ${0} ,  Etikett: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Prediksjon: ${0}, etikett: ${1}`,
 'sc2e0d19ed54560c8': `Eksponentiell`,
-'sc3727a4fc25d7500': str`Prediksjon: 
-          ${0} ${1} -merke: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Prediksjon: ${0} ${1}, etikett: ${2}`,
 'sc3d8f37ea5f4bd79': `Visualisering av forskjeller...`,
 'sc6bff481def13d70': `Frafall`,
 'sc6d31f0cce31ddcf': `Totale parametere:`,
@@ -131,21 +115,19 @@
 'sce4efb732b98f946': `Én klasse per prøve`,
 'scfd25318edb1ebb1': `Antall kjerner`,
 'sd2223afb7d6b100d': `Type`,
-'sd6b72022c37e1ae0': `Designkilde`,
 'sdab07807ff1b6b12': `Modelldesign-widget skjult for studentene.`,
 'sdb1595f5c742dfbb': `Inndata`,
+'sdbaa4e0831238006': `Rediger alt`,
 'sdde16b9126492f79': `Kjernestørrelse`,
 'se13c154abb1c1cff': `Legg til kombinasjonslag`,
-'se1c4d8107171ecb2': str`Prediksjon: 
-          ${0} - Etikett: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Prediksjon: ${0} − etikett: ${1} = forskjell: ${2}`,
 'se2b0409cadbd0a9e': `Velg kildeelement`,
 'se2b49a41b39653fc': `Verdiskala`,
+'se6c8329ea1c50858': `Bare egenskapsinnstillinger`,
 'se7a532063ef7b740': `Lineær`,
 'seb198c12be265d61': `Utgangsnoder`,
 'seffcca34b918ddc0': `Har en syklisk referanse.`,
+'sf02c84d2e8520b92': `Kilde til egenskaper`,
 'sf1674aeb3dc2d55d': `Aktivering`,
 'sf21fb4f4b9e8911f': `Bredde`,
 'sf5290513fc7b466a': `Brukt tensorminne:`,
@@ -155,4 +137,3 @@
 'sfd77270c3f54f664': `Produksjon`,
 'sffdadf0a576fd802': `Høyde`,
     };
-  

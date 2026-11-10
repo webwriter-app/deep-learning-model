@@ -1,3 +1,4 @@
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
@@ -6,6 +7,11 @@ import { DatasetInput } from "../components/dataset-input/dataset-input";
 import { Editor } from "../lib/layers";
 
 export class ModelEditor extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    private readonly msg = localizeElement(this, false, () => this.controler?.updateLabels());
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
@@ -265,7 +271,7 @@ export class ModelEditor extends LitElementWw {
     public render(): TemplateResult {
         let canvas = document.createElement("div");
         canvas.id = "drawflow";
-        this.controler = new Editor(canvas, this.editmode, this.modelparams, this.layerparams);
+        this.controler = new Editor(canvas, this.editmode, this.modelparams, this.layerparams, this.msg);
         this.controler.import(this.state || [], this.fields);
         let that = this;
         this.controler.onSelectionChanged = function (selected: boolean) {

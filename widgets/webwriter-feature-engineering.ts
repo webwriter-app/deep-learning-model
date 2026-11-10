@@ -1,3 +1,6 @@
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
+import { readData, writeData } from "../lib/data-block";
 import SlButtonGroup from "@shoelace-style/shoelace/dist/components/button-group/button-group.component.js";
 import SlButton from "@shoelace-style/shoelace/dist/components/button/button.component.js";
 import SlInput from "@shoelace-style/shoelace/dist/components/input/input.component.js";
@@ -9,7 +12,7 @@ import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.
 import "@shoelace-style/shoelace/dist/themes/light.css";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, PropertyValues, TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { DatasetInput } from "../components/dataset-input/dataset-input";
 import "../lib/dataset/class";
 import { Dataset, TransformedDataset, } from "../lib/dataset/dataset";
@@ -17,8 +20,7 @@ import { FeatureTransformation, getFeatureTransformation, getFeatureTransformati
 import "../lib/dataset/image";
 import "../lib/dataset/linear";
 import getTF from "../lib/tflib";
-import { msg, str } from "@lit/localize";
-import LOCALIZE from "../localization/generated";
+import { str } from "@lit/localize";
 type Constructor<T> = new (...args: any[]) => T;
 
 BigInt.prototype["toJSON"] = function () {
@@ -46,6 +48,15 @@ type FieldProp = {
  */
 @customElement("webwriter-feature-engineering")
 export class AiWidgetsFeatures extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    public readonly msg = localizeElement(this, true);
+    readonly options = ((msg: MsgFn) => ({
+        editMode: {type: "select" as const, label: { get _() { return msg("Edit permissions"); } }, options: [{value: "edit", label: { get _() { return msg("Edit everything"); } }}, {value: "read", label: { get _() { return msg("Read only"); } }}, {value: "feat", label: { get _() { return msg("Feature settings only"); } }}, {value: "hidden", label: { get _() { return msg("Hide widget"); } }}]},
+    }))(this.msg);
+
   /** @internal */
   static scopedElements = {
     "sl-button": SlButton,
@@ -58,8 +69,6 @@ export class AiWidgetsFeatures extends LitElementWw {
     "sl-tab-group":SlTabGroup,
     "sl-tooltip":SlTooltip
   }
-
-  protected localize = LOCALIZE;
 
   static styles = css`
     .table-fields {
@@ -130,16 +139,64 @@ export class AiWidgetsFeatures extends LitElementWw {
   /**
    * The original decompressed data in a json string with format of RawSample[]
    */
-  @property({ type: String, attribute: true, reflect: true })
-  accessor samplesSave: string;
+  readonly actions = ((msg: MsgFn) => ({
+    deleteDataset: {
+      label: { get _() { return msg("Delete dataset"); } },
+      confirm: { get _() { return msg("Delete this dataset?"); } },
+      intent: "danger" as const,
+    },
+  }))(this.msg);
 
-  private samples: Array<Record<string, string>>;
+  private sampleBlockText: string | null = null;
+
+  private get sampleText() {
+    return this.querySelector(':scope > script[type="application/json"][slot="data"]:not([src])')?.textContent ?? null;
+  }
+
+  private syncSamples() {
+    const text = this.sampleText;
+    if (this.sampleBlockText === text) return;
+    this.sampleBlockText = text;
+    const { samples, fieldProps } = readData<{samples: Array<Record<string, string>>, fieldProps: Record<string, FieldProp>}>(this);
+    this.samples = Array.isArray(samples) ? samples : null;
+    this.storedFieldProps = fieldProps ?? {};
+    this.rawDataset = null;
+    this.requestUpdate();
+  }
+
+  private saveSamples(samples: Array<Record<string, string>> | null, fieldProps: Record<string, FieldProp>) {
+    writeData(this, {samples, fieldProps});
+    this.sampleBlockText = this.sampleText;
+  }
+
+    private dataObserver = new MutationObserver(() => this.syncSamples());
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.dataObserver.observe(this, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["type", "slot", "src"]});
+        this.syncSamples();
+    }
+
+    disconnectedCallback() {
+        this.dataObserver.disconnect();
+        super.disconnectedCallback();
+    }
+
+
+  private samples: Array<Record<string, string>> | null = null;
 
   /**
    * Stores the settings of the feature columns
    */
-  @property({ type: Object, attribute: true, reflect: true })
-  accessor fieldProps: Record<string, FieldProp>;
+  @state()
+  private accessor storedFieldProps: Record<string, FieldProp> = {};
+
+  get fieldProps() { return this.storedFieldProps; }
+
+  set fieldProps(value: Record<string, FieldProp>) {
+    this.storedFieldProps = value;
+    this.saveSamples(this.samples, value);
+  }
 
   private rawDataset: Dataset;
   private tensorDataset: TransformedDataset;
@@ -192,12 +249,12 @@ export class AiWidgetsFeatures extends LitElementWw {
     for (let header of this.rawDataset.fields) {
       tabs.push(html`<sl-button @click=${this.handleHeaderClick} variant=${header == this.activeHeader ? "primary": "default"}>${header}</sl-button>`);
     }
-    return html`<p>${msg("Dataset Feature Colums:")}</p><sl-button-group>${tabs}</sl-button-group>`
+    return html`<p>${this.msg("Dataset Feature Colums:")}</p><sl-button-group>${tabs}</sl-button-group>`
   }
 
   private renderFieldValues(fieldName: string) {
     if (fieldName == "")
-      return html`<div class="props"><p>${msg("Choose a column to format it")}</p></div>`
+      return html`<div class="props"><p>${this.msg("Choose a column to format it")}</p></div>`
 
     let that = this;
     let rows;
@@ -207,7 +264,7 @@ export class AiWidgetsFeatures extends LitElementWw {
           return html`<tr><td><p>${JSON.stringify(v[fieldName])}</p></td></tr>`
         }
       )
-      return html`<div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
+      return html`<div class="props"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
     } else {
       let Transformation = getFeatureTransformation(this.fieldProps[fieldName].type).constructor;
       try {
@@ -216,13 +273,13 @@ export class AiWidgetsFeatures extends LitElementWw {
           function (v) {
             const value = v[fieldName];
             const displayValue = transformation.renderOriginalValue(value);
-            return html`<tr><td><p>${displayValue}</p></td><td><p>${transformation.renderTransformedValue(value)}</p></td></tr>`
+            return html`<tr><td><p>${displayValue}</p></td><td><p>${transformation.renderTransformedValue(value, this.msg)}</p></td></tr>`
           }
         )
-        return html`<div class="settings">${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) }, this.editMode)}</div><div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
+        return html`<div class="settings">${transformation.getSettingElement(function (settings) { that.handleFeatureSettingsChange(settings) }, this.editMode, this.msg)}</div><div class="props"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
       } catch (e) {
         console.log(e);
-        return html`<p style="background: red">${msg("This Transformation is not applicable for the values")}</p><div class="props"><table><thead><td>${fieldName}</td><td>${msg("Tensor")}</td></thead></table></div>`
+        return html`<p style="background: red">${this.msg("This Transformation is not applicable for the values")}</p><div class="props"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead></table></div>`
       }
     }
   }
@@ -236,16 +293,16 @@ export class AiWidgetsFeatures extends LitElementWw {
       let optionName;
       switch (option.name) {
         case "Class Encoding":
-          optionName = msg("Class Encoding");
+          optionName = this.msg("Class Encoding");
           break;
         case "Number Encoding":
-          optionName = msg("Number Encoding");
+          optionName = this.msg("Number Encoding");
           break;
         case "Image Encoding":
-          optionName = msg("Image Encoding");
+          optionName = this.msg("Image Encoding");
           break;
         case "Ignore":
-          optionName = msg("Ignore");
+          optionName = this.msg("Ignore");
           break;
         default:
           optionName = option.name;
@@ -263,7 +320,7 @@ export class AiWidgetsFeatures extends LitElementWw {
       that._triggerChanged();
     }
 
-    return html`<sl-tooltip content=${msg("Select how you want the string to be interpreted.")}><sl-select label=${msg("Data Type")} @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")} ?disabled=${!(this.editMode == "edit")}>${options}</sl-select></sl-tooltip>`
+    return html`<sl-tooltip content=${this.msg("Select how you want the string to be interpreted.")}><sl-select label=${this.msg("Data Type")} @sl-change=${onchange} value=${this.fieldProps[fieldName].type.replaceAll(" ", "_")} ?disabled=${!(this.editMode == "edit")}>${options}</sl-select></sl-tooltip>`
   }
 
   protected firstUpdated(_changedProperties: PropertyValues): void {
@@ -272,9 +329,7 @@ export class AiWidgetsFeatures extends LitElementWw {
 
   render() {
     if (!this.isInitiated)
-      return html`<p>${msg("Loading Tensorflow...")}</p>`
-    if (this.samplesSave && !this.samples)
-      this.samples = JSON.parse(this.samplesSave);
+      return html`<p>${this.msg("Loading Tensorflow...")}</p>`
     if (this.samples == null)
       return this.renderSelectDataset();
     else {
@@ -288,24 +343,10 @@ export class AiWidgetsFeatures extends LitElementWw {
 
       this._triggerChanged();
 
-      function editModeChanged(e: Event) {
-        const select = e.target as HTMLSelectElement;
-        this.editMode = select.value;
-      }
-
       return html`
-      <div part="options">
-        <sl-button id="reset" variant="warning" @click=${this.deleteDataset}>${msg("Delete dataset")}</sl-button>
-        <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
-          <sl-option value="hidden">${msg("hide widget")}</sl-option>
-          <sl-option value="read">${msg("read only")}</sl-option>
-          <sl-option value="feat">${msg("feature settings only")}</sl-option>
-          <sl-option value="edit">${msg("edit everything")}</sl-option>
-        </sl-select>
-      </div>
-      <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Feature Engineering Widget hidden from students.")}</p>
+      <p style=${this.editMode != "hidden" ? "display:none" : ""}>${this.msg("Feature Engineering Widget hidden from students.")}</p>
       <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
-        <p>${msg("Dataset using")} <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000; this.handleSizeChange()}} style="display:inline-block" ?disabled=${this.editMode != "edit"}></sl-input> ${msg(str`of ${this.samples.length} Samples`)}</p>
+        <p>${this.msg("Dataset using")} <sl-input type="number" min="1" max=${String(this.samples.length)} value=${this.limit} @sl-change=${function(e:Event) {this.limit = parseInt((e.target as SlInput).value); if (isNaN(this.limit) || this.limit < 1) this.limit = 1000; this.handleSizeChange()}} style="display:inline-block" ?disabled=${this.editMode != "edit"}></sl-input> ${this.msg(str`of ${this.samples.length} Samples`)}</p>
         ${this.renderTableHeader()}
         ${this.renderFieldTypeSelector(this.activeHeader)}
         ${this.renderFieldValues(this.activeHeader)}
@@ -322,13 +363,9 @@ export class AiWidgetsFeatures extends LitElementWw {
    */
   private handleDataset(data: Array<Record<string, string>>, errors: Array<any>, meta: any) {
     console.log("handle")
-    this.samplesSave = JSON.stringify(data);
     this.samples = data;
     this.rawDataset = new Dataset(this.samples);
-    this.fieldProps = {}
-    for (let field of meta.fields) {
-      this.fieldProps[field] = { type: "Ignore", settings: null };
-    }
+    this.fieldProps = Object.fromEntries(meta.fields.map((field: string) => [field, {type: "Ignore", settings: null}]));
     this.updateTensorDataset();
     this._triggerChanged();
   }
@@ -368,8 +405,9 @@ export class AiWidgetsFeatures extends LitElementWw {
     this.requestUpdate();
   }
 
-  private deleteDataset() {
-    this.samplesSave = null;
+  deleteDataset() {
+    this.storedFieldProps = {};
+    this.saveSamples(null, {});
     this.samples = null;
     this.rawDataset = null;
     this.tensorDataset = null;
