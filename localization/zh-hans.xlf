@@ -1,5 +1,5 @@
 <xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="zh-Hans">
+  <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="zh-hans">
     <body>
       <trans-unit id="s6610206d0ad97d60">
         <source>Dataset Feature Colums:</source>
@@ -338,7 +338,7 @@
         <target>使用数据集</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of 
+        <source>of&#32;
           <x id="0" equiv-text="${this.samples.length}"/> Samples
         </source>
         <target>
@@ -346,12 +346,12 @@
         </target>
       </trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predClass} ${relation}"/> Label: 
+        <source>Prediction:&#32;
+          <x id="0" equiv-text="${predClass} ${relation}"/> Label:&#32;
           <x id="1" equiv-text="${labelClass}"/>
         </source>
         <target>预测：
-          <x id="0" equiv-text="${predClass} ${span}"/> 标签： 
+          <x id="0" equiv-text="${predClass} ${span}"/> 标签：&#32;
           <x id="1" equiv-text="${labelClass}"/>
         </target>
       </trans-unit>
@@ -412,14 +412,14 @@
         <target>灰度</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/> - Label: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
+        <source>Prediction:&#32;
+          <x id="0" equiv-text="${predValue}"/> - Label:&#32;
+          <x id="1" equiv-text="${labelValue}"/> = Delta:&#32;
           <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
         </source>
         <target>预测：
           <x id="0" equiv-text="${predValue}"/> - 标签：
-          <x id="1" equiv-text="${labelValue}"/> = 差值： 
+          <x id="1" equiv-text="${labelValue}"/> = 差值：&#32;
           <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
         </target>
       </trans-unit>
@@ -500,22 +500,22 @@
         </target>
       </trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: 
-          <x id="0" equiv-text="${inDim}"/> != 
+        <source>Output shape invalid:&#32;
+          <x id="0" equiv-text="${inDim}"/> !=&#32;
           <x id="1" equiv-text="${outDim}"/>
         </source>
         <target>输出形状无效：
-          <x id="0" equiv-text="${inDim}"/> != 
+          <x id="0" equiv-text="${inDim}"/> !=&#32;
           <x id="1" equiv-text="${outDim}"/>
         </target>
       </trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/>,  Label: 
+        <source>Prediction:&#32;
+          <x id="0" equiv-text="${predValue}"/>,  Label:&#32;
           <x id="1" equiv-text="${labelValue}"/>
         </source>
         <target>预测：
-          <x id="0" equiv-text="${predValue}"/> ,  标签： 
+          <x id="0" equiv-text="${predValue}"/> ,  标签：&#32;
           <x id="1" equiv-text="${labelValue}"/>
         </target>
       </trans-unit>
