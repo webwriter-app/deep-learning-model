@@ -1,7 +1,6 @@
 import { SlInput } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
-import { msg } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -14,7 +13,7 @@ export class ExportLayer extends Layer {
     constructor(fields: TransformedDataset, editor: Editor) {
         super(1, 1, "Noise", editor)
 
-        this.strength = this.addNumberInput(msg("Strength"), 0, 1)
+        this.strength = this.addNumberInput(() => this.editor.msg("Strength"), 0, 1)
         this.strength.step = 0.01;
         this.strength.value = "0.2";
     }
@@ -38,6 +37,6 @@ export class ExportLayer extends Layer {
         return { output_1: tf.layers.gaussianNoise({ stddev: parseFloat(this.strength.value)}).apply(inputs.input_1) as TF.SymbolicTensor };
     }
     protected getDisplayName(): string {
-        return msg("Noise");
+        return this.editor.msg("Noise");
     }
 }

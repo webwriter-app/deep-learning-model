@@ -1,8 +1,9 @@
+import { sourceMsg } from "../../localization/localizer";
 import { SlInput } from '@shoelace-style/shoelace';
 import { html, TemplateResult } from "lit";
 import { until } from 'lit/directives/until.js';
 import { FeatureSettings, FeatureTransformation, NonEmptyArray } from './feature';
-import { msg, str } from '@lit/localize';
+import { str, type MsgFn } from '@lit/localize';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -175,7 +176,7 @@ export default class ImageTransformation extends FeatureTransformation {
         return outImg;
     }
 
-    public getSettingElement(changeCallback, editMode:string): TemplateResult {
+    public getSettingElement(changeCallback, editMode:string, msg: MsgFn = sourceMsg): TemplateResult {
         let that = this;
         function typechange(e: Event) {
             let element = e.target as HTMLInputElement;
@@ -265,15 +266,15 @@ export default class ImageTransformation extends FeatureTransformation {
         })
     }
 
-    public renderPredictionDifference(pred:TF.Tensor3D, label:TF.Tensor3D) {
+    public renderPredictionDifference(pred:TF.Tensor3D, label:TF.Tensor3D, msg: MsgFn = sourceMsg) {
         return html`${until((async () => {
-            let predValue = this.renderTransformedValue(await this.inverse(pred));
-            let labelValue = this.renderTransformedValue(await this.inverse(label));
+            let predValue = this.renderTransformedValue(await this.inverse(pred), msg);
+            let labelValue = this.renderTransformedValue(await this.inverse(label), msg);
             return html`${msg(str`Prediction: ${predValue},  Label: ${labelValue}`)}`;
         })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
-    public renderTransformedValue(value: string | number[]): TemplateResult {
+    public renderTransformedValue(value: string | number[], msg: MsgFn = sourceMsg): TemplateResult {
         return html`${until(
             (async () => {
                 await this.waitUntilImageDimensionsAvailable();

@@ -1,7 +1,8 @@
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
 import { SlButton, SlButtonGroup, SlIcon, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
-import { msg } from "@lit/localize";
 import { customElement, property, query } from "lit/decorators.js";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
@@ -9,7 +10,6 @@ import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 import { until } from 'lit-html/directives/until.js';
 import { BadSamples } from '../components/model-tests/bad-samples';
 import { LossDistribution } from '../components/model-tests/loss-distribution';
-import LOCALIZE from "../localization/generated";
 import { AiWidgetsTraining } from './webwriter-model-training';
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
@@ -37,10 +37,15 @@ async function waitFor(condition: Function, interval = 10) {
  */
 @customElement("webwriter-model-evaluation")
 export class AiWidgetsTest extends LitElementWw {
-    readonly options = {
-        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: {_: "Feature source", de: "Merkmalsquelle"}},
-        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-training", label: {_: "Model source", de: "Modellquelle"}},
-    };
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    public readonly msg = localizeElement(this, true);
+    readonly options = ((msg: MsgFn) => ({
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: { get _() { return msg("Feature source"); } }},
+        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-training", label: { get _() { return msg("Model source"); } }},
+    }))(this.msg);
 
     /** @internal */
     static scopedElements = {
@@ -54,8 +59,6 @@ export class AiWidgetsTest extends LitElementWw {
         "loss-dist": LossDistribution,
         "bad-samples": BadSamples
     }
-
-    protected localize = LOCALIZE;
 
     static styles = css`
         #container {
@@ -145,7 +148,7 @@ export class AiWidgetsTest extends LitElementWw {
         let that = this;
         await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining)?.getAvailableModels != null});
         let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
-        return html`<sl-select label=${msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label=${this.msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
     public render(): TemplateResult {
@@ -153,10 +156,10 @@ export class AiWidgetsTest extends LitElementWw {
             this.selectedModelName = "best";
 
         return html`
-        ${until(this.getModelSelect(), html`${msg("Loading models...")}`)}
-        <sl-select label=${msg("Test / Evaluation")} id="test-select" @sl-change=${this.testChange}>
-            <sl-option value="loss-dist">${msg("Loss Distribution")}</sl-option>
-            <sl-option value="bad-samples">${msg("Worst Samples")}</sl-option>
+        ${until(this.getModelSelect(), html`${this.msg("Loading models...")}`)}
+        <sl-select label=${this.msg("Test / Evaluation")} id="test-select" @sl-change=${this.testChange}>
+            <sl-option value="loss-dist">${this.msg("Loss Distribution")}</sl-option>
+            <sl-option value="bad-samples">${this.msg("Worst Samples")}</sl-option>
         </sl-select>
         <div id="test-container">
             ${this.testElem}

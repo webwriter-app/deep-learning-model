@@ -1,6 +1,5 @@
 import { TransformedDataset } from '../dataset/dataset';
 import { DynamicInputLayer, Editor, SIZE_SEP } from "./index";
-import { msg } from '@lit/localize';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -45,6 +44,6 @@ export class ExportLayer extends DynamicInputLayer {
         return { output_1: tf.layers.add().apply(Object.values(inputs)) as TF.SymbolicTensor };
     }
     protected getDisplayName(): string {
-        return msg("Elementwise Add");
+        return this.editor.msg("Elementwise Add");
     }
 }

@@ -1,4 +1,4 @@
-import { msg } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../../localization/localizer";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
@@ -26,6 +26,11 @@ async function waitFor(condition: Function, interval = 10) {
 }
 
 export class LossDistribution extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    private readonly msg = localizeElement(this);
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
@@ -167,8 +172,8 @@ export class LossDistribution extends LitElementWw {
 
     public render(): TemplateResult {
         if (this.model == null)
-            return html`<p>${msg("Loading model...")}</p>`
+            return html`<p>${this.msg("Loading model...")}</p>`
 
-        return html`${until(this.getDiagram(), html`<p>${msg("Calculating Loss Distribution...")}</p>`)}`
+        return html`${until(this.getDiagram(), html`<p>${this.msg("Calculating Loss Distribution...")}</p>`)}`
     }
 }

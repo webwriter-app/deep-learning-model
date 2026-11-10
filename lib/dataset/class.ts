@@ -1,3 +1,4 @@
+import { sourceMsg } from "../../localization/localizer";
 import { SlSelect } from "@shoelace-style/shoelace";
 import { html, TemplateResult } from "lit";
 import { until } from 'lit/directives/until.js';
@@ -5,7 +6,7 @@ import { FeatureSettings, FeatureTransformation } from './feature';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
-import { msg, str } from "@lit/localize";
+import { str, type MsgFn } from "@lit/localize";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
@@ -121,7 +122,7 @@ export default class ClassTransformation extends FeatureTransformation {
             return this.aggrigatedInformation.multiClasses;
     }
 
-    public renderPredictionDifference(pred:TF.Tensor1D, label:TF.Tensor1D) {
+    public renderPredictionDifference(pred:TF.Tensor1D, label:TF.Tensor1D, msg: MsgFn = sourceMsg) {
         return html`${until((async () => {
             let predClass = await this.inverse(pred);
             let labelClass = await this.inverse(label);
@@ -130,7 +131,7 @@ export default class ClassTransformation extends FeatureTransformation {
         })(), html`${msg("Visualizing Difference...")}`)}`;
     }
 
-    public getSettingElement(changeCallback): TemplateResult {
+    public getSettingElement(changeCallback, _editMode: string, msg: MsgFn = sourceMsg): TemplateResult {
         let that = this;
         function typechange(e: Event) {
             let element = e.target as SlSelect;
@@ -145,7 +146,7 @@ export default class ClassTransformation extends FeatureTransformation {
             </sl-select>`
     }
 
-    public renderTransformedValue(value: string): TemplateResult {
+    public renderTransformedValue(value: string, msg: MsgFn = sourceMsg): TemplateResult {
         return html`${until(
             (async () => {
                 let transformed = (await this.transform(value)).arraySync();

@@ -1,16 +1,16 @@
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
 import { readData, writeData } from "../lib/data-block";
 import { SlButton, SlButtonGroup, SlCheckbox, SlIcon, SlIconButton, SlInput, SlOption, SlSelect, SlTooltip } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import ApexCharts from "apexcharts";
 import { css, html, TemplateResult } from "lit";
-import { msg } from "@lit/localize";
 import { customElement, property, query } from "lit/decorators.js";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 import { AiWidgetsDesigns } from "./webwriter-model-designing";
 //import {setWasmPaths, setThreadsCount} from '@tensorflow/tfjs-backend-wasm';
 import { Editor, Layer } from "../lib/layers";
-import LOCALIZE from "../localization/generated";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
@@ -71,13 +71,18 @@ function hexToUint8(hex:string) {
  */
 @customElement("webwriter-model-training")
 export class AiWidgetsTraining extends LitElementWw {
-    readonly options = {
-        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: {_: "Feature source", de: "Merkmalsquelle"}},
-        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-designing", label: {_: "Design source", de: "Entwurfsquelle"}},
-        editMode: {type: "select" as const, label: {_: "Edit permissions", de: "Bearbeitungsrechte"}, options: [{value: "edit", label: {_: "Edit everything", de: "Alles bearbeiten"}}, {value: "hidden", label: {_: "Hide widget", de: "Widget ausblenden"}}]},
-        currentBackend: {type: "select" as const, label: {_: "Preferred backend", de: "Bevorzugtes Backend"}, options: [{value: "cpu", label: {_: "CPU", de: "CPU"}}, {value: "webgl", label: {_: "WebGL (GPU)", de: "WebGL (GPU)"}}]},
-        cache: {type: Boolean, label: {_: "Cache training samples", de: "Trainingsdaten zwischenspeichern"}},
-    };
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    public readonly msg = localizeElement(this, true);
+    readonly options = ((msg: MsgFn) => ({
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: { get _() { return msg("Feature source"); } }},
+        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-designing", label: { get _() { return msg("Design source"); } }},
+        editMode: {type: "select" as const, label: { get _() { return msg("Edit permissions"); } }, options: [{value: "edit", label: { get _() { return msg("Edit everything"); } }}, {value: "hidden", label: { get _() { return msg("Hide widget"); } }}]},
+        currentBackend: {type: "select" as const, label: { get _() { return msg("Preferred backend"); } }, options: [{value: "cpu", label: { get _() { return msg("CPU"); } }}, {value: "webgl", label: { get _() { return msg("WebGL (GPU)"); } }}]},
+        cache: {type: Boolean, label: { get _() { return msg("Cache training samples"); } }},
+    }))(this.msg);
 
     /** @internal */
     static scopedElements = {
@@ -92,8 +97,6 @@ export class AiWidgetsTraining extends LitElementWw {
         "sl-tooltip": SlTooltip,
         "ref-select": AiWidgetsReferenceSelect
     }
-
-    protected localize = LOCALIZE;
 
     static styles = css`
     :host {
@@ -233,35 +236,35 @@ export class AiWidgetsTraining extends LitElementWw {
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <div class="controls">
-                <sl-select id="optimizer" value="adam" label=${msg("Optimizer")} size="small" @sl-change=${this.changeOptimizer}>
+                <sl-select id="optimizer" value="adam" label=${this.msg("Optimizer")} size="small" @sl-change=${this.changeOptimizer}>
                     <sl-option value="adam">Adam</sl-option>
                     <sl-option value="momentum">Momentum</sl-option>
                     <sl-option value="rmsprop">RMSProp</sl-option>
                     <sl-option value="sgd">SGD</sl-option>
                 </sl-select>
-                <sl-input id="lr" type="number" label=${msg("Learning Rate")} min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
-                <sl-input style="display:none" id="momentum" type="number" label=${msg("Momentum")} min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="batch" type="number" label=${msg("Batch Size")} min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
-                <sl-input id="epochs" type="number" label=${msg("Epochs")} min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="lr" type="number" label=${this.msg("Learning Rate")} min="0.0001" max="0.01" value="0.002" step="0.0005" size="small" style="max-width:100px"></sl-input>
+                <sl-input style="display:none" id="momentum" type="number" label=${this.msg("Momentum")} min="0.1" max="0.99" value="0.9" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="batch" type="number" label=${this.msg("Batch Size")} min="1" max="512" value="128" step="1" size="small" style="max-width:100px"></sl-input>
+                <sl-input id="epochs" type="number" label=${this.msg("Epochs")} min="1" max="500" value="20" size="small" style="max-width:100px"></sl-input>
                 <sl-button-group>
-                <sl-button id="start-training" @click=${this.training}>${msg("Start training")}</sl-button>
-                <sl-button id="reset-training" @click=${this.resetModel}>${msg("Reset")}</sl-button>
+                <sl-button id="start-training" @click=${this.training}>${this.msg("Start training")}</sl-button>
+                <sl-button id="reset-training" @click=${this.resetModel}>${this.msg("Reset")}</sl-button>
                 </sl-button-group>
             </div>
             <p id="error" style="display:none"></p>
             <div id="training-metrics" style="display:none">
                 ${this.chartContainer}
                 <sl-select id="metrics" value="Loss Accuracy" multiple clearable @sl-change=${this.updateGraph}>
-                    <sl-option value="Loss">${msg("Loss")}</sl-option>
-                    <sl-option value="Accuracy">${msg("Accuracy")}</sl-option>
-                    <sl-option value="R2_Score">${msg("R2 Score")}</sl-option>
-                    <sl-option value="Percision">${msg("Precision")}</sl-option>
-                    <sl-option value="Recall">${msg("Recall")}</sl-option>
+                    <sl-option value="Loss">${this.msg("Loss")}</sl-option>
+                    <sl-option value="Accuracy">${this.msg("Accuracy")}</sl-option>
+                    <sl-option value="R2_Score">${this.msg("R2 Score")}</sl-option>
+                    <sl-option value="Percision">${this.msg("Precision")}</sl-option>
+                    <sl-option value="Recall">${this.msg("Recall")}</sl-option>
                 </sl-select>
-                <p style="margin:0px">${msg("Training Speed:")} <span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;${msg("Used Tensor Memory:")} <span id="memory"></span>MB</p>
+                <p style="margin:0px">${this.msg("Training Speed:")} <span id="speed">0</span>s/epoch&nbsp;&nbsp;&nbsp;&nbsp;${this.msg("Used Tensor Memory:")} <span id="memory"></span>MB</p>
             </div>
         </div>
-        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Training Widget hidden from students.")}</p>
+        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${this.msg("Model Training Widget hidden from students.")}</p>
             <div hidden>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${(e) => this.featureWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
             <ref-select id="design-select" typeName="Design" elemId=${this.modelWidgetId} elementType="webwriter-model-designing" @refchange=${(e) => this.modelWidgetId = e.detail.id} ownerId=${this.id}></ref-select>
@@ -403,7 +406,7 @@ export class AiWidgetsTraining extends LitElementWw {
             return null;
         }
 
-        let editor = new Editor(document.createElement("div"), "read", design.maxModelParameters, design.maxLayerParameters);
+        let editor = new Editor(document.createElement("div"), "read", design.maxModelParameters, design.maxLayerParameters, this.msg);
         await editor.import(model, dataset)
 
         if (editor.getNumberOfParameters() > design.maxModelParameters) {
@@ -525,7 +528,7 @@ export class AiWidgetsTraining extends LitElementWw {
             this.chart.removeAnnotation("best");
         this.updateGraph();
         this.setHyperParamsActive(true);
-        this.startTrainingBtn.innerText = msg("Start Training");
+        this.startTrainingBtn.innerText = this.msg("Start Training");
     }
 
     /**
@@ -583,7 +586,7 @@ export class AiWidgetsTraining extends LitElementWw {
             return;
 
         this.trainingMetricsDiv.style.display = "";
-        this.startTrainingBtn.innerText = msg("Stop Training");
+        this.startTrainingBtn.innerText = this.msg("Stop Training");
 
         if (this.currentTraining != null && !this.isTraining) {
             this.isTraining = true;
@@ -664,14 +667,14 @@ export class AiWidgetsTraining extends LitElementWw {
             }).then(async function() {
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
-                that.startTrainingBtn.innerText = msg("Continue Training");
+                that.startTrainingBtn.innerText = that.msg("Continue Training");
                 that.isTraining = false;
                 await that.saveCurrentModel('epoch-' + that.currentEpoch);
             }).catch(async function(err) {
                 console.error(err);
                 that.resetTrainingBtn.disabled = false;
                 that.currentTraining.stopTraining = false;
-                that.startTrainingBtn.innerText = msg("Continue Training");
+                that.startTrainingBtn.innerText = that.msg("Continue Training");
                 that.isTraining = false;
                 let index = that.backendPriority.indexOf(tf.getBackend()) + 1
                 if (index == that.backendPriority.length)

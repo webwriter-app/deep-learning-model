@@ -1,7 +1,7 @@
 import { SlInput } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
-import { msg, str } from "@lit/localize";
+import { str } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -16,13 +16,13 @@ export class ExportLayer extends Layer {
         super(1, 1, "Reshape", editor)
 
         for (let i = 0; i < 3; i++) {
-            this.shapeInputs[i] = this.addNumberInput(msg(str`${(i + 1)}th dim`), 0, 9999999);
+            this.shapeInputs[i] = this.addNumberInput(() => this.editor.msg(str`${(i + 1)}th dim`), 0, 9999999);
             this.shapeInputs[i].value = "1";
         }
 
         this.error = document.createElement("span");
         this.error.style.color="red";
-        this.addTextElement("", this.error);
+        this.addTextElement(() => "", this.error);
     }
     update() {
         this.updateInputLabels();
@@ -38,7 +38,7 @@ export class ExportLayer extends Layer {
             }
         }
         if (inDim != outDim) {
-            this.error.innerText = msg(str`Output shape invalid: ${inDim} != ${outDim}`);
+            this.error.innerText = this.editor.msg(str`Output shape invalid: ${inDim} != ${outDim}`);
         } else {
             this.error.innerText = "";
         }
@@ -71,6 +71,6 @@ export class ExportLayer extends Layer {
         return { output_1: tf.layers.reshape({ targetShape: outputDims}).apply(inputs.input_1) as TF.SymbolicTensor };
     }
     protected getDisplayName(): string {
-        return msg("Reshape");
+        return this.editor.msg("Reshape");
     }
 }

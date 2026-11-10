@@ -1,7 +1,6 @@
 import { SlSelect } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
-import { msg } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -16,12 +15,12 @@ export class ExportLayer extends Layer {
         super(0, 1, "Input", editor)
         if (fields == null) {
             let span = document.createElement("span");
-            span.innerText = msg("No Feature Data avaliable");
-            this.addTextElement("",span)
+            this.bindLabel(() => span.innerText = this.editor.msg("No Feature Data avaliable"));
+            this.addTextElement(() => "",span)
             return;
         }
         this.fields = fields;
-        this.select = this.addSelect(msg("Input field"), Object.keys(this.fields.featureMaps))
+        this.select = this.addSelect(() => this.editor.msg("Input field"), Object.keys(this.fields.featureMaps))
         this.select.disabled = editor.editMode != "edit";
 
         let that = this;
@@ -50,6 +49,6 @@ export class ExportLayer extends Layer {
         return {output_1: inputs[this.select.value as string] };
     }
     protected getDisplayName(): string {
-        return msg("Input");
+        return this.editor.msg("Input");
     }
 }
