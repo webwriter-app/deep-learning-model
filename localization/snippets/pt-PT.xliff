@@ -1,16 +1,71 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="pt-PT">
-<file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
-<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST - Lendo números</target></segment></unit>
-<unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>Engenharia de recursos</target></segment></unit>
-<unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1"><segment><source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source><target>Primeiro, importaremos e pré-processaremos o conjunto de dados. Precisamos dizer ao computador como interpretar o texto do conjunto de dados como tensores.</target></segment></unit>
-<unit id="Model Designing#1"><segment><source>Model Designing</source><target>Concepção de modelos</target></segment></unit>
-<unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1"><segment><source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source><target>Em seguida, criamos um modelo para classificar a imagem como mostrando um dos números disponíveis. Neste caso, uma convolução simples com uma camada densa a seguir para encontrar a classe de forma confiável.</target></segment></unit>
-<unit id="Model Training#1"><segment><source>Model Training</source><target>Formação de Modelos</target></segment></unit>
-<unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1"><segment><source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source><target>Usando a arquitetura do modelo, otimizamos os pesos do modelo para produzir a menor perda no conjunto de dados. Após cada lote, os pesos do modelo são otimizados e, uma vez que todas as amostras de treino são processadas, iniciamos uma nova época e repetimos o processo.</target></segment></unit>
-<unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>Previsão do modelo</target></segment></unit>
-<unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>Após o treino, podemos usar o modelo para classificar novos números.</target></segment></unit>
-<unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>Avaliação do modelo</target></segment></unit>
-<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>Para avaliar a qualidade do modelo e compará-lo com outros, geralmente submetemos o nosso modelo a uma série de testes que nos dão uma ideia do seu desempenho.</target></segment></unit>
-</file>
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST - Lendo números</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>Engenharia de recursos</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>Primeiro, importaremos e pré-processaremos o conjunto de dados. Precisamos dizer ao computador como interpretar o texto do conjunto de dados como tensores.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>Concepção de modelos</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>Em seguida, criamos um modelo para classificar a imagem como mostrando um dos números disponíveis. Neste caso, uma convolução simples com uma camada densa a seguir para encontrar a classe de forma confiável.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>Formação de Modelos</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>Usando a arquitetura do modelo, otimizamos os pesos do modelo para produzir a menor perda no conjunto de dados. Após cada lote, os pesos do modelo são otimizados e, uma vez que todas as amostras de treino são processadas, iniciamos uma nova época e repetimos o processo.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>Previsão do modelo</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>Após o treino, podemos usar o modelo para classificar novos números.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>Avaliação do modelo</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>Para avaliar a qualidade do modelo e compará-lo com outros, geralmente submetemos o nosso modelo a uma série de testes que nos dão uma ideia do seu desempenho.</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

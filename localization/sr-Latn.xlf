@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="sr-Latn" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s5687c76f8638e9a5">
+  <source>Select Dataset</source>
+<target>Izaberi skup podataka</target></trans-unit>
+<trans-unit id="sb4f1dffbb6be6302">
+  <source>Clear</source>
+<target>Očisti</target></trans-unit>
+<trans-unit id="sa812ba9ded26aa98">
+  <source>Loading model...</source>
+<target>Učitavanje modela…</target></trans-unit>
+<trans-unit id="sa4ef4c5175793d6f">
+  <source>Calculating Loss For Samples...</source>
+<target>Izračun gubitka za uzorke…</target></trans-unit>
+<trans-unit id="s62cecbd4b16886e7">
+  <source>Calculating Loss Distribution...</source>
+<target>Izračun raspodele gubitka…</target></trans-unit>
+<trans-unit id="se2b0409cadbd0a9e">
+  <source>Select Source Element</source>
+<target>Izaberi izvorni element</target></trans-unit>
+<trans-unit id="s412b62989fc26d3a">
+  <source>Show selection</source>
+<target>Prikaži izbor</target></trans-unit>
+<trans-unit id="sc3727a4fc25d7500">
+  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
+<target>Predviđanje: <x id="0" equiv-text="${predClass} ${relation}" />, oznaka: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+<trans-unit id="sc3d8f37ea5f4bd79">
+  <source>Visualizing Difference...</source>
+<target>Prikaz razlike…</target></trans-unit>
+<trans-unit id="sd2223afb7d6b100d">
+  <source>Type</source>
+<target>Vrsta</target></trans-unit>
+<trans-unit id="sce4efb732b98f946">
+  <source>One Class per Sample</source>
+<target>Jedan klasa po uzorku</target></trans-unit>
+<trans-unit id="s6557e193c4f15b9c">
+  <source>Multiple Classes per Sample</source>
+<target>Više klasa po uzorku</target></trans-unit>
+<trans-unit id="s49730f3d5751a433">
+  <source>Loading...</source>
+<target>Učitavanje…</target></trans-unit>
+<trans-unit id="sf21fb4f4b9e8911f">
+  <source>Width</source>
+<target>Širina</target></trans-unit>
+<trans-unit id="sffdadf0a576fd802">
+  <source>Height</source>
+<target>Visina</target></trans-unit>
+<trans-unit id="s7098a15dd248ce2f">
+  <source>Import Format</source>
+<target>Format uvoza</target></trans-unit>
+<trans-unit id="sa91ddb7330d86835">
+  <source>Binary String</source>
+<target>Binarni niz</target></trans-unit>
+<trans-unit id="s6b0e650acd025eff">
+  <source>Base64 String</source>
+<target>Niz Base64</target></trans-unit>
+<trans-unit id="s1fa03b3ccbfc66a5">
+  <source>Image Pre-Processing</source>
+<target>Predobrada slike</target></trans-unit>
+<trans-unit id="s94d63573d312fe9b">
+  <source>Identity</source>
+<target>Bez promjene</target></trans-unit>
+<trans-unit id="s82caaf657b01a4d0">
+  <source>Grayscale</source>
+<target>Sive nijanse</target></trans-unit>
+<trans-unit id="sc0e01e8b4662bec2">
+  <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
+<target>Predviđanje: <x id="0" equiv-text="${predValue}" />, oznaka: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+<trans-unit id="sab09aa21c8921bea">
+  <source>Loading image</source>
+<target>Učitavanje slike</target></trans-unit>
+<trans-unit id="se1c4d8107171ecb2">
+  <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
+<target>Predviđanje: <x id="0" equiv-text="${predValue}" /> − oznaka: <x id="1" equiv-text="${labelValue}" /> = razlika: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+<trans-unit id="se2b49a41b39653fc">
+  <source>Value Scale</source>
+<target>Skala vrednosti</target></trans-unit>
+<trans-unit id="se7a532063ef7b740">
+  <source>Linear</source>
+<target>Linearna</target></trans-unit>
+<trans-unit id="sc2e0d19ed54560c8">
+  <source>Exponential</source>
+<target>Eksponencijalna</target></trans-unit>
+<trans-unit id="s5732d2277d736ba1">
+  <source>Quadratic</source>
+<target>Kvadratna</target></trans-unit>
+<trans-unit id="sb59d68ed12d46377">
+  <source>Loading</source>
+<target>Učitavanje</target></trans-unit>
+<trans-unit id="s07da69ddbc0d4c69">
+  <source>Function</source>
+<target>Funkcija</target></trans-unit>
+<trans-unit id="sf1674aeb3dc2d55d">
+  <source>Activation</source>
+<target>Aktivacija</target></trans-unit>
+<trans-unit id="s0c5410258e1a4144">
+  <source>Elementwise Add</source>
+<target>Zbrajanje po elementima</target></trans-unit>
+<trans-unit id="s76b14a5034f53fd9">
+  <source>Attention</source>
+<target>Pažnja</target></trans-unit>
+<trans-unit id="s02bee65dc3f21363">
+  <source>Concatenation</source>
+<target>Spajanje</target></trans-unit>
+<trans-unit id="sdde16b9126492f79">
+  <source>Kernel Size</source>
+<target>Veličina jezgre</target></trans-unit>
+<trans-unit id="s58d6b1ecd5084538">
+  <source>Stride</source>
+<target>Korak</target></trans-unit>
+<trans-unit id="scfd25318edb1ebb1">
+  <source># of Kernels</source>
+<target>Broj jezgri</target></trans-unit>
+<trans-unit id="s96d63527efafa81b">
+  <source>Parameters: </source>
+<target>Parametri: </target></trans-unit>
+<trans-unit id="sb633a04ba54b2dc0">
+  <source>Layer has to many trainable parameters. Try reducing the input size or the tunable properties.</source>
+<target>Sloj ima previše parametara za treniranje. Pokušaj smanjiti veličinu ulaza ili prilagoditi svojstva sloja.</target></trans-unit>
+<trans-unit id="sa8d9304ef4eefbd5">
+  <source>Convolution</source>
+<target>Konvolucija</target></trans-unit>
+<trans-unit id="s981f232bd33ec927">
+  <source>Rate</source>
+<target>Stopa</target></trans-unit>
+<trans-unit id="sc6bff481def13d70">
+  <source>Dropout</source>
+<target>Ispadanje</target></trans-unit>
+<trans-unit id="seb198c12be265d61">
+  <source>Output Nodes</source>
+<target>Izlazni čvorovi</target></trans-unit>
+<trans-unit id="s975087a831353889">
+  <source>Flatten</source>
+<target>Poravnaj</target></trans-unit>
+<trans-unit id="seffcca34b918ddc0">
+  <source>Has a cyclic reference.</source>
+<target>Sadrži cikličku referencu.</target></trans-unit>
+<trans-unit id="s3aba710c340e1059">
+  <source>No Feature Data avaliable</source>
+<target>Nema podataka o obeležjima</target></trans-unit>
+<trans-unit id="s06471a3c2aed9b4b">
+  <source>Input field</source>
+<target>Ulazno polje</target></trans-unit>
+<trans-unit id="sdb1595f5c742dfbb">
+  <source>Input</source>
+<target>Ulaz</target></trans-unit>
+<trans-unit id="s82c21acdbcd6e830">
+  <source>Strength</source>
+<target>Jačina</target></trans-unit>
+<trans-unit id="s2bc80ed8441b0831">
+  <source>Noise</source>
+<target>Šum</target></trans-unit>
+<trans-unit id="sfd77270c3f54f664">
+  <source>Output</source>
+<target>Izlaz</target></trans-unit>
+<trans-unit id="s66a5898632280fe2">
+  <source>Loss Function</source>
+<target>Funkcija gubitka</target></trans-unit>
+<trans-unit id="s38ddf839c081bbaf">
+  <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
+<target>Dimenzija <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+<trans-unit id="s2c48e68704ff98c2">
+  <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
+<target>Neispravan oblik izlaza: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+<trans-unit id="sbfe9518a1fe4f185">
+  <source>Reshape</source>
+<target>Promeni oblik</target></trans-unit>
+<trans-unit id="s9eac77171764efaa">
+  <source>Transpose Convolution</source>
+<target>Transponirana konvolucija</target></trans-unit>
+<trans-unit id="s6610206d0ad97d60">
+  <source>Dataset Feature Colums:</source>
+<target>Kolone obeležja u skupu podataka:</target></trans-unit>
+<trans-unit id="sabf86f32eba45ad4">
+  <source>Choose a column to format it</source>
+<target>Izaberi kolonu da odrediš njegov format</target></trans-unit>
+<trans-unit id="scb42b9cdc2ad49e4">
+  <source>Tensor</source>
+<target>Tenzor</target></trans-unit>
+<trans-unit id="sa8082d7f7ef02f42">
+  <source>This Transformation is not applicable for the values</source>
+<target>Ova transformacija nije primenjiva na zadane vrednosti</target></trans-unit>
+<trans-unit id="s70027acd13cd9df8">
+  <source>Class Encoding</source>
+<target>Kodiranje klasa</target></trans-unit>
+<trans-unit id="s7b59301169d2cc3d">
+  <source>Number Encoding</source>
+<target>Kodiranje brojeva</target></trans-unit>
+<trans-unit id="s547a4465533a6f5f">
+  <source>Image Encoding</source>
+<target>Kodiranje slika</target></trans-unit>
+<trans-unit id="s917734d83f35efa3">
+  <source>Ignore</source>
+<target>Zanemari</target></trans-unit>
+<trans-unit id="s6f0c402dbc70cade">
+  <source>Select how you want the string to be interpreted.</source>
+<target>Izaberi kako treba protumačiti znakovni niz.</target></trans-unit>
+<trans-unit id="sb405f0898c39ca67">
+  <source>Data Type</source>
+<target>Vrsta podataka</target></trans-unit>
+<trans-unit id="saf01d58ece3a1e02">
+  <source>Loading Tensorflow...</source>
+<target>Učitavanje TensorFlowa…</target></trans-unit>
+<trans-unit id="s26b5b115b8b61794">
+  <source>Feature Engineering Widget hidden from students.</source>
+<target>Vidžet za obradu obeležja skriven je učenicima.</target></trans-unit>
+<trans-unit id="s334f9922638204ab">
+  <source>Dataset using</source>
+<target>Skup podataka koristi</target></trans-unit>
+<trans-unit id="sb03650788f41c135">
+  <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
+<target>od <x id="0" equiv-text="${this.samples.length}" /> uzoraka</target></trans-unit>
+<trans-unit id="s018f0f27bee12bb9">
+  <source>Number of Operations:</source>
+<target>Broj operacija:</target></trans-unit>
+<trans-unit id="sc6d31f0cce31ddcf">
+  <source>Total Parameters:</source>
+<target>Ukupno parametara:</target></trans-unit>
+<trans-unit id="s1c3cbd3cbaee4368">
+  <source>Add I/O Layer</source>
+<target>Dodaj ulazni ili izlazni sloj</target></trans-unit>
+<trans-unit id="sa68f184fe626daf3">
+  <source>Add Trainable Layer</source>
+<target>Dodaj sloj za treniranje</target></trans-unit>
+<trans-unit id="s56eedda42b0bb66f">
+  <source>Add misc. Layer</source>
+<target>Dodaj ostale slojeve</target></trans-unit>
+<trans-unit id="s1703372e9470522b">
+  <source>Add Shaping Layer</source>
+<target>Dodaj sloj za oblikovanje</target></trans-unit>
+<trans-unit id="se13c154abb1c1cff">
+  <source>Add Combinational Layer</source>
+<target>Dodaj kombinacijski sloj</target></trans-unit>
+<trans-unit id="s58bee799432dbc69">
+  <source>Addition</source>
+<target>Zbrajanje</target></trans-unit>
+<trans-unit id="s6c5b5757b7756775">
+  <source>Center View</source>
+<target>Centriraj prikaz</target></trans-unit>
+<trans-unit id="s22fde937cb709859">
+  <source>Zoom In</source>
+<target>Povećaj</target></trans-unit>
+<trans-unit id="sb05582ce916894da">
+  <source>Zoom Out</source>
+<target>Smanji</target></trans-unit>
+<trans-unit id="s38c7b3d048d88c07">
+  <source>Delete selected</source>
+<target>Izbriši izabrano</target></trans-unit>
+<trans-unit id="sdab07807ff1b6b12">
+  <source>Model Design Widget hidden from students.</source>
+<target>Vidžet za projektovanje modela skriven je učenicima.</target></trans-unit>
+<trans-unit id="s1bb08bff53933452">
+  <source>Model version</source>
+<target>Verzija modela</target></trans-unit>
+<trans-unit id="s2d0ac2f4cbd7b867">
+  <source>Loading models...</source>
+<target>Učitavanje modela…</target></trans-unit>
+<trans-unit id="s0aedd465cb4737b2">
+  <source>Test / Evaluation</source>
+<target>Testiranje i evaluaciju</target></trans-unit>
+<trans-unit id="s17ce2eafdc840624">
+  <source>Loss Distribution</source>
+<target>Raspodela gubitka</target></trans-unit>
+<trans-unit id="sf84bd835fc5a52ef">
+  <source>Worst Samples</source>
+<target>Najlošiji uzorci</target></trans-unit>
+<trans-unit id="s8a73af950772f702">
+  <source>No Model avaiable.</source>
+<target>Nema dostupnog modela.</target></trans-unit>
+<trans-unit id="s888d98a196a240d8">
+  <source>Inputs</source>
+<target>Ulazi</target></trans-unit>
+<trans-unit id="s066d70cf9d5e2915">
+  <source>Outputs</source>
+<target>Izlazi</target></trans-unit>
+<trans-unit id="sfb3198d46e57af91">
+  <source>Show Random Test Sample</source>
+<target>Prikaži nasumični testni uzorak</target></trans-unit>
+<trans-unit id="sf99503650274b914">
+  <source>Optimizer</source>
+<target>Optimizator</target></trans-unit>
+<trans-unit id="s7a1c71b249a86643">
+  <source>Learning Rate</source>
+<target>Stopa učenja</target></trans-unit>
+<trans-unit id="s446eb2b422b286af">
+  <source>Momentum</source>
+<target>Moment</target></trans-unit>
+<trans-unit id="s5561b945c8cd59b0">
+  <source>Batch Size</source>
+<target>Veličina serije</target></trans-unit>
+<trans-unit id="s900c980bdb200fcf">
+  <source>Epochs</source>
+<target>Epohe</target></trans-unit>
+<trans-unit id="s1e0afe8020901f1f">
+  <source>Start training</source>
+<target>Započni treniranje</target></trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+<target>Ponovno postavi</target></trans-unit>
+<trans-unit id="s4f5eeeb48a97ea9a">
+  <source>Loss</source>
+<target>Gubitak</target></trans-unit>
+<trans-unit id="s6c02f2ec8c3f52a4">
+  <source>Accuracy</source>
+<target>Točnost</target></trans-unit>
+<trans-unit id="s12126d92849e3b53">
+  <source>R2 Score</source>
+<target>Rezultat R²</target></trans-unit>
+<trans-unit id="s2454d1f117573457">
+  <source>Precision</source>
+<target>Preciznost</target></trans-unit>
+<trans-unit id="s99456cbda3e05fb0">
+  <source>Recall</source>
+<target>Odziv</target></trans-unit>
+<trans-unit id="s15371f7ebfb1ad5e">
+  <source>Training Speed:</source>
+<target>Brzina treniranja:</target></trans-unit>
+<trans-unit id="sf5290513fc7b466a">
+  <source>Used Tensor Memory:</source>
+<target>Zauzeta memorija tenzora:</target></trans-unit>
+<trans-unit id="s56a6aa2100291b96">
+  <source>Model Training Widget hidden from students.</source>
+<target>Vidžet za treniranje modela skriven je učenicima.</target></trans-unit>
+<trans-unit id="sc9d11ba788fd6aff">
+  <source>Start Training</source>
+<target>Započni treniranje</target></trans-unit>
+<trans-unit id="s61ac82c68c336bb1">
+  <source>Stop Training</source>
+<target>Zaustavi treniranje</target></trans-unit>
+<trans-unit id="sb850938497d0a395">
+  <source>Edit permissions</source>
+<target>Dozvole za uređivanje</target></trans-unit>
+<trans-unit id="sdbaa4e0831238006">
+  <source>Edit everything</source>
+<target>Uredi sve</target></trans-unit>
+<trans-unit id="s250a7fc28124c361">
+  <source>Read only</source>
+<target>Samo čitanje</target></trans-unit>
+<trans-unit id="se6c8329ea1c50858">
+  <source>Feature settings only</source>
+<target>Samo postavke obeležja</target></trans-unit>
+<trans-unit id="s679b3c0fcb1bdadf">
+  <source>Hide widget</source>
+<target>Sakrij vidžet</target></trans-unit>
+<trans-unit id="s731e8d25df7b1886">
+  <source>Delete dataset</source>
+<target>Izbriši skup podataka</target></trans-unit>
+<trans-unit id="s6266829135c39917">
+  <source>Delete this dataset?</source>
+<target>Izbrisati ovaj skup podataka?</target></trans-unit>
+<trans-unit id="sf02c84d2e8520b92">
+  <source>Feature source</source>
+<target>Izvor obeležja</target></trans-unit>
+<trans-unit id="sa60f5f53cc29b8cf">
+  <source>Layer properties only</source>
+<target>Samo svojstva slojeva</target></trans-unit>
+<trans-unit id="s84536b272065202c">
+  <source>Max model parameters</source>
+<target>Najveći broj parametara modela</target></trans-unit>
+<trans-unit id="s3c0b025716311430">
+  <source>Max layer parameters</source>
+<target>Najveći broj parametara sloja</target></trans-unit>
+<trans-unit id="s858e82f5fff9aac3">
+  <source>Model source</source>
+<target>Izvor modela</target></trans-unit>
+<trans-unit id="sbf1ff3369db980c0">
+  <source>Design source</source>
+<target>Izvor arhitekture</target></trans-unit>
+<trans-unit id="s1b7f4af051183fee">
+  <source>Preferred backend</source>
+<target>Preferirani računski sistem</target></trans-unit>
+<trans-unit id="s0b453a19aa0f85a9">
+  <source>CPU</source>
+<target>CPU</target></trans-unit>
+<trans-unit id="s61f8c4b6c5f2ae63">
+  <source>WebGL (GPU)</source>
+<target>WebGL (GPU)</target></trans-unit>
+<trans-unit id="s559e9b10ba86261e">
+  <source>Cache training samples</source>
+<target>Sačuvaj uzorke za treniranje u keš</target></trans-unit>
+<trans-unit id="s2b6d43596140ef3a">
+  <source>Continue Training</source>
+<target>Nastavi treniranje</target></trans-unit>
+</body>
+</file>
+</xliff>

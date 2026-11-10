@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="th">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — อ่านตัวเลข</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>วิศวกรรมคุณลักษณะ</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ขั้นแรก เราจะนำเข้าชุดข้อมูลและประมวลผลเบื้องต้น เราต้องบอกคอมพิวเตอร์ว่าจะตีความข้อความในชุดข้อมูลเป็นเทนเซอร์อย่างไร</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ออกแบบโมเดล</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ต่อไปเราออกแบบโมเดลเพื่อจำแนกว่าภาพแสดงตัวเลขใดในบรรดาตัวเลขที่มี ในกรณีนี้ใช้คอนโวลูชันแบบง่ายตามด้วยเลเยอร์หนาแน่น เพื่อค้นหาคลาสได้อย่างน่าเชื่อถือ</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ฝึกโมเดล</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>เราใช้สถาปัตยกรรมของโมเดลเพื่อปรับน้ำหนักให้เหมาะสมและทำให้ค่าความสูญเสียบนชุดข้อมูลต่ำที่สุด หลังจากแต่ละแบตช์ น้ำหนักจะได้รับการปรับ เมื่อประมวลผลตัวอย่างฝึกทั้งหมดแล้ว ยุคใหม่จะเริ่มต้นและทำซ้ำกระบวนการ</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>การทำนายของโมเดล</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>หลังฝึกเสร็จ เราใช้โมเดลจำแนกตัวเลขใหม่ได้</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ประเมินโมเดล</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>เพื่อประเมินคุณภาพของโมเดลและเปรียบเทียบกับโมเดลอื่น เรามักทดสอบหลายรูปแบบเพื่อให้เห็นภาพประสิทธิภาพของโมเดล</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

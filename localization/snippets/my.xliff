@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="my">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — ဂဏန်းများကို ဖတ်ခြင်း</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>လုပ်ဆောင်ချက် ဒီဇိုင်း</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ပထမဦးစွာ ဒေတာစုကို တင်သွင်းပြီး ကြိုတင်ပြင်ဆင်မည်။ ဒေတာစုရှိ စာသားကို တင်ဆာများအဖြစ် မည်သို့နားလည်ရမည်ကို ကွန်ပျူတာအား ပြောပြရမည်။</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>မော်ဒယ် ဒီဇိုင်း</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ထို့နောက် ရရှိနိုင်သော ဂဏန်းများထဲမှ ပုံတွင် ဖော်ပြထားသည့် ဂဏန်းကို အမျိုးအစားခွဲမည့် မော်ဒယ်ကို ဒီဇိုင်းဆွဲမည်။ အတန်းအစားကို ယုံကြည်စိတ်ချစွာ ရှာဖွေရန် ရိုးရှင်းသော ကွန်ဗိုလူးရှင်းပြီးနောက် ဒင်းစ်အလွှာကို အသုံးပြုထားသည်။</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>မော်ဒယ် လေ့ကျင့်ခြင်း</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ဒေတာစုအပေါ် ဆုံးရှုံးမှု အနည်းဆုံးဖြစ်စေရန် မော်ဒယ်ဖွဲ့စည်းပုံကို အသုံးပြုပြီး ၎င်း၏အလေးချိန်များကို အကောင်းဆုံးပြုလုပ်သည်။ အစုတစ်ခုစီပြီးနောက် အလေးချိန်များကို ပြင်ဆင်သည်။ လေ့ကျင့်ရေးနမူနာအားလုံးကို စီမံပြီးနောက် အီပေါ့ခ်အသစ်တစ်ခု စတင်ကာ လုပ်ငန်းစဉ်ကို ထပ်လုပ်သည်။</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>မော်ဒယ် ခန့်မှန်းချက်</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>လေ့ကျင့်ပြီးနောက် မော်ဒယ်ကို အသုံးပြု၍ ဂဏန်းအသစ်များကို အမျိုးအစားခွဲနိုင်သည်။</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>မော်ဒယ် အကဲဖြတ်ခြင်း</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>မော်ဒယ်၏ အရည်အသွေးကို တိုင်းတာပြီး အခြားမော်ဒယ်များနှင့် နှိုင်းယှဉ်ရန် စမ်းသပ်မှုများစွာကို ပုံမှန်လုပ်ဆောင်သည်။ ယင်းတို့က မော်ဒယ်၏ စွမ်းဆောင်ရည်ကို နားလည်စေသည်။</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

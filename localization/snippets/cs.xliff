@@ -1,16 +1,71 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="cs">
-<file id="./snippets/MNIST-Image-to-Number.html" original="./snippets/MNIST-Image-to-Number.html">
-<unit id="MNIST - Reading numbers#1"><segment><source>MNIST - Reading numbers</source><target>MNIST – Čtení čísel</target></segment></unit>
-<unit id="Feature Engineering#1"><segment><source>Feature Engineering</source><target>Inženýrství funkcí</target></segment></unit>
-<unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1"><segment><source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source><target>Nejprve importujeme a předzpracujeme datový soubor. Musíme počítači sdělit, jak má interpretovat text z datového souboru jako tenzory.</target></segment></unit>
-<unit id="Model Designing#1"><segment><source>Model Designing</source><target>Návrh modelu</target></segment></unit>
-<unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1"><segment><source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source><target>Dále navrhneme model, který klasifikuje obrázek jako zobrazující jedno z dostupných čísel. V tomto případě se jedná o jednoduchou konvoluci s hustou vrstvou, která spolehlivě určí třídu.</target></segment></unit>
-<unit id="Model Training#1"><segment><source>Model Training</source><target>Modelové školení</target></segment></unit>
-<unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1"><segment><source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source><target>Pomocí architektury modelu optimalizujeme váhy modelu tak, aby došlo k co nejnižší ztrátě v datovém souboru. Po každé dávce jsou váhy modelu optimalizovány a jakmile jsou zpracovány všechny trénovací vzorky, zahájíme novou epochu a proces opakujeme.</target></segment></unit>
-<unit id="Model Prediction#1"><segment><source>Model Prediction</source><target>Predikce modelu</target></segment></unit>
-<unit id="After training we can use the model to classify new numbers.#1"><segment><source>After training we can use the model to classify new numbers.</source><target>Po tréninku můžeme model použít k klasifikaci nových čísel.</target></segment></unit>
-<unit id="Model Evaluation#1"><segment><source>Model Evaluation</source><target>Hodnocení modelu</target></segment></unit>
-<unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1"><segment><source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source><target>Abychom mohli posoudit kvalitu modelu a porovnat jej s ostatními, obvykle jej podrobuje sérii testů, které nám poskytnou představu o jeho výkonu.</target></segment></unit>
-</file>
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST – Čtení čísel</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>Inženýrství funkcí</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>Nejprve importujeme a předzpracujeme datový soubor. Musíme počítači sdělit, jak má interpretovat text z datového souboru jako tenzory.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>Návrh modelu</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>Dále navrhneme model, který klasifikuje obrázek jako zobrazující jedno z dostupných čísel. V tomto případě se jedná o jednoduchou konvoluci s hustou vrstvou, která spolehlivě určí třídu.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>Modelové školení</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>Pomocí architektury modelu optimalizujeme váhy modelu tak, aby došlo k co nejnižší ztrátě v datovém souboru. Po každé dávce jsou váhy modelu optimalizovány a jakmile jsou zpracovány všechny trénovací vzorky, zahájíme novou epochu a proces opakujeme.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>Predikce modelu</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>Po tréninku můžeme model použít k klasifikaci nových čísel.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>Hodnocení modelu</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>Abychom mohli posoudit kvalitu modelu a porovnat jej s ostatními, obvykle jej podrobuje sérii testů, které nám poskytnou představu o jeho výkonu.</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

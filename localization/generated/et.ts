@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -21,27 +21,25 @@
 's15371f7ebfb1ad5e': `Treeningu kiirus:`,
 's1703372e9470522b': `Lisa kujunduskiht`,
 's17ce2eafdc840624': `Kahjude jaotamine`,
+'s1b7f4af051183fee': `Eelistatud arvutuskeskkond`,
 's1bb08bff53933452': `Mudeliversioon`,
 's1c3cbd3cbaee4368': `Lisa I/O kiht`,
 's1e0afe8020901f1f': `Alusta treeningut`,
 's1fa03b3ccbfc66a5': `Pildi eeltöötlus`,
 's22fde937cb709859': `Suurenda`,
 's2454d1f117573457': `Täpsus`,
+'s250a7fc28124c361': `Kirjutuskaitstud`,
 's255857544a9d5ec0': `Taasta`,
 's26b5b115b8b61794': `Funktsioonide loomise vidin on õpilastele peidetud.`,
 's2b6d43596140ef3a': `Jätka koolitust`,
 's2bc80ed8441b0831': `Müra`,
-'s2c48e68704ff98c2': str`Väljundi kuju on kehtetu: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Väljundi kuju on vigane: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Mudelite laadimine...`,
 's334f9922638204ab': `Andmekogum kasutades`,
 's38c7b3d048d88c07': `Kustuta valitud`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
+'s38ddf839c081bbaf': str`Mõõde ${0}`,
 's3aba710c340e1059': `Andmed puuduvad`,
+'s3c0b025716311430': `Kihi parameetrite suurim arv`,
 's412b62989fc26d3a': `Näita valikut`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Laadimine...`,
@@ -57,10 +55,12 @@
 's58d6b1ecd5084538': `Samm`,
 's61ac82c68c336bb1': `Lõpeta treening`,
 's61f8c4b6c5f2ae63': `WebGL (graafikaprotsessor)`,
+'s6266829135c39917': `Kas kustutada see andmestik?`,
 's62cecbd4b16886e7': `Kahjude jaotuse arvutamine...`,
 's6557e193c4f15b9c': `Mitmed klassid ühe proovi kohta`,
 's6610206d0ad97d60': `Andmekogu omaduste veerud:`,
 's66a5898632280fe2': `Kaotusfunktsioon`,
+'s679b3c0fcb1bdadf': `Peida vidin`,
 's6b0e650acd025eff': `Base64-string`,
 's6c02f2ec8c3f52a4': `Täpsus`,
 's6c5b5757b7756775': `Keskvaade`,
@@ -73,6 +73,8 @@
 's7b59301169d2cc3d': `Numbrite kodeerimine`,
 's82c21acdbcd6e830': `Tugevus`,
 's82caaf657b01a4d0': `Halltoon`,
+'s84536b272065202c': `Mudeli parameetrite suurim arv`,
+'s858e82f5fff9aac3': `Mudeli allikas`,
 's888d98a196a240d8': `Sisendid`,
 's8a73af950772f702': `Mudelit pole saadaval.`,
 's900c980bdb200fcf': `Ajalooajastud`,
@@ -84,6 +86,7 @@
 's99456cbda3e05fb0': `Meenutamine`,
 's9eac77171764efaa': `Transponeeritud konvolutsioon`,
 'sa4ef4c5175793d6f': `Proovide kao arvutamine...`,
+'sa60f5f53cc29b8cf': `Ainult kihtide omadused`,
 'sa68f184fe626daf3': `Lisa treenitav kiht`,
 'sa8082d7f7ef02f42': `See teisendus ei kehti väärtuste puhul`,
 'sa812ba9ded26aa98': `Laaditakse mudelit...`,
@@ -92,25 +95,18 @@
 'sab09aa21c8921bea': `Pildi laadimine`,
 'sabf86f32eba45ad4': `Vali veerg, mida soovid vormindada`,
 'saf01d58ece3a1e02': `Laaditakse Tensorflow...`,
-'sb03650788f41c135': str`
-          ${0} i proovidest
-1.
-        `,
+'sb03650788f41c135': str`${0} näidisest`,
 'sb05582ce916894da': `Vähenda`,
 'sb405f0898c39ca67': `Andmetüüp`,
 'sb4f1dffbb6be6302': `Selge`,
 'sb59d68ed12d46377': `Laadimine`,
 'sb633a04ba54b2dc0': `Kiht on liiga paljude treenitavate parameetritega. Proovi vähendada sisendi suurust või häälestatavaid omadusi.`,
+'sb850938497d0a395': `Muutmisõigused`,
+'sbf1ff3369db980c0': `Arhitektuuri allikas`,
 'sbfe9518a1fe4f185': `Ümberkujundamine`,
-'sc0e01e8b4662bec2': str`Prognoos: 
-          ${0} ,  Silt: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Prognoos: ${0}, silt: ${1}`,
 'sc2e0d19ed54560c8': `Eksponentsiaalne`,
-'sc3727a4fc25d7500': str`Prognoos: 
-          ${0} ${1} Silt: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Prognoos: ${0} ${1}, silt: ${2}`,
 'sc3d8f37ea5f4bd79': `Erinevuste visualiseerimine...`,
 'sc6bff481def13d70': `Koolist väljalangemine`,
 'sc6d31f0cce31ddcf': `Kokku parameetrid:`,
@@ -121,18 +117,17 @@
 'sd2223afb7d6b100d': `Tüüp`,
 'sdab07807ff1b6b12': `Mudelidisaini vidin on õpilastele peidetud.`,
 'sdb1595f5c742dfbb': `Sisend`,
+'sdbaa4e0831238006': `Muuda kõike`,
 'sdde16b9126492f79': `Tuuma suurus`,
 'se13c154abb1c1cff': `Lisa kombinatsioonikiht`,
-'se1c4d8107171ecb2': str`Prognoos: 
-          ${0} - Märge: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Prognoos: ${0} − silt: ${1} = erinevus: ${2}`,
 'se2b0409cadbd0a9e': `Vali allikaselement`,
 'se2b49a41b39653fc': `Väärtuste skaala`,
+'se6c8329ea1c50858': `Ainult tunnuste seaded`,
 'se7a532063ef7b740': `Lineaarne`,
 'seb198c12be265d61': `Väljundsõlmed`,
 'seffcca34b918ddc0': `Sisaldab tsüklilist viidet.`,
+'sf02c84d2e8520b92': `Tunnuste allikas`,
 'sf1674aeb3dc2d55d': `Aktiveerimine`,
 'sf21fb4f4b9e8911f': `Laius`,
 'sf5290513fc7b466a': `Kasutatud tensorimälu:`,
@@ -141,17 +136,4 @@
 'sfb3198d46e57af91': `Näita juhuslikku testnäidet`,
 'sfd77270c3f54f664': `Väljund`,
 'sffdadf0a576fd802': `Kõrgus`,
-'sb850938497d0a395': `Edit permissions`,
-'sdbaa4e0831238006': `Edit everything`,
-'s250a7fc28124c361': `Read only`,
-'se6c8329ea1c50858': `Feature settings only`,
-'s679b3c0fcb1bdadf': `Hide widget`,
-'s6266829135c39917': `Delete this dataset?`,
-'sf02c84d2e8520b92': `Feature source`,
-'sa60f5f53cc29b8cf': `Layer properties only`,
-'s84536b272065202c': `Max model parameters`,
-'s3c0b025716311430': `Max layer parameters`,
-'sbf1ff3369db980c0': `Design source`,
-'s1b7f4af051183fee': `Preferred backend`,
-'s858e82f5fff9aac3': `Model source`,
     };

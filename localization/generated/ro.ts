@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -21,27 +21,25 @@
 's15371f7ebfb1ad5e': `Viteza de antrenament:`,
 's1703372e9470522b': `Adăugați stratul de modelare`,
 's17ce2eafdc840624': `Distribuirea pierderilor`,
+'s1b7f4af051183fee': `Motor de calcul preferat`,
 's1bb08bff53933452': `Versiunea modelului`,
 's1c3cbd3cbaee4368': `Adăugați stratul I/O`,
 's1e0afe8020901f1f': `Începe antrenamentul`,
 's1fa03b3ccbfc66a5': `Prelucrarea prealabilă a imaginilor`,
 's22fde937cb709859': `Mărire`,
 's2454d1f117573457': `Precizie`,
+'s250a7fc28124c361': `Doar citire`,
 's255857544a9d5ec0': `Resetare`,
 's26b5b115b8b61794': `Widgetul Feature Engineering ascuns de studenți.`,
 's2b6d43596140ef3a': `Continuați instruirea`,
 's2bc80ed8441b0831': `Zgomot`,
-'s2c48e68704ff98c2': str`Forma ieșirii nevalidă: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Forma ieșirii nu este validă: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Se încarcă modele...`,
 's334f9922638204ab': `Set de date utilizat`,
 's38c7b3d048d88c07': `Șterge elementele selectate`,
-'s38ddf839c081bbaf': str`
-          ${0} dim
-        `,
+'s38ddf839c081bbaf': str`Dimensiunea ${0}`,
 's3aba710c340e1059': `Nu sunt disponibile date caracteristice.`,
+'s3c0b025716311430': `Număr maxim de parametri ai stratului`,
 's412b62989fc26d3a': `Afișare selecție`,
 's446eb2b422b286af': `Impuls`,
 's49730f3d5751a433': `Se încarcă...`,
@@ -57,10 +55,12 @@
 's58d6b1ecd5084538': `Pas`,
 's61ac82c68c336bb1': `Opriți antrenamentul`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Ștergi acest set de date?`,
 's62cecbd4b16886e7': `Calcularea distribuției pierderilor...`,
 's6557e193c4f15b9c': `Mai multe clase per eșantion`,
 's6610206d0ad97d60': `Coloane caracteristice ale setului de date:`,
 's66a5898632280fe2': `Funcția de pierdere`,
+'s679b3c0fcb1bdadf': `Ascunde widgetul`,
 's6b0e650acd025eff': `Șir Base64`,
 's6c02f2ec8c3f52a4': `Precizie`,
 's6c5b5757b7756775': `Vedere centrală`,
@@ -73,6 +73,8 @@
 's7b59301169d2cc3d': `Codificare numerică`,
 's82c21acdbcd6e830': `Putere`,
 's82caaf657b01a4d0': `Scala de gri`,
+'s84536b272065202c': `Număr maxim de parametri ai modelului`,
+'s858e82f5fff9aac3': `Sursa modelului`,
 's888d98a196a240d8': `Intrări`,
 's8a73af950772f702': `Nu există model disponibil.`,
 's900c980bdb200fcf': `Epocile`,
@@ -84,6 +86,7 @@
 's99456cbda3e05fb0': `Reamintiți`,
 's9eac77171764efaa': `Transpunere convoluție`,
 'sa4ef4c5175793d6f': `Calcularea pierderii pentru eșantioane...`,
+'sa60f5f53cc29b8cf': `Doar proprietățile straturilor`,
 'sa68f184fe626daf3': `Adăugați stratul antrenabil`,
 'sa8082d7f7ef02f42': `Această transformare nu se aplică valorilor`,
 'sa812ba9ded26aa98': `Se încarcă modelul...`,
@@ -92,25 +95,18 @@
 'sab09aa21c8921bea': `Se încarcă imaginea`,
 'sabf86f32eba45ad4': `Alegeți o coloană pentru a o formata`,
 'saf01d58ece3a1e02': `Se încarcă Tensorflow...`,
-'sb03650788f41c135': str`din 
-          Eșantioane 
-          ${0}
-        `,
+'sb03650788f41c135': str`din ${0} eșantioane`,
 'sb05582ce916894da': `Mărire`,
 'sb405f0898c39ca67': `Tipul datelor`,
 'sb4f1dffbb6be6302': `Clar`,
 'sb59d68ed12d46377': `Încărcare`,
 'sb633a04ba54b2dc0': `Stratul are prea mulți parametri care pot fi antrenați. Încercați să reduceți dimensiunea intrării sau proprietățile reglabile.`,
+'sb850938497d0a395': `Permisiuni de editare`,
+'sbf1ff3369db980c0': `Sursa arhitecturii`,
 'sbfe9518a1fe4f185': `Remodelare`,
-'sc0e01e8b4662bec2': str`Predicție: 
-          ${0} ,  Etichetă: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Predicție: ${0}, etichetă: ${1}`,
 'sc2e0d19ed54560c8': `Exponențial`,
-'sc3727a4fc25d7500': str`Predicție: 
-          ${0} ${1} Etichetă: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Predicție: ${0} ${1}, etichetă: ${2}`,
 'sc3d8f37ea5f4bd79': `Vizualizarea diferenței...`,
 'sc6bff481def13d70': `Abandon școlar`,
 'sc6d31f0cce31ddcf': `Parametri totali:`,
@@ -121,18 +117,17 @@
 'sd2223afb7d6b100d': `Tip`,
 'sdab07807ff1b6b12': `Widgetul Model Design ascuns de studenți.`,
 'sdb1595f5c742dfbb': `Intrare`,
+'sdbaa4e0831238006': `Editează tot`,
 'sdde16b9126492f79': `Dimensiunea nucleului`,
 'se13c154abb1c1cff': `Adăugați strat combinat`,
-'se1c4d8107171ecb2': str`Predicție: 
-          ${0} - Etichetă: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Predicție: ${0} − etichetă: ${1} = diferență: ${2}`,
 'se2b0409cadbd0a9e': `Selectați elementul sursă`,
 'se2b49a41b39653fc': `Scala valorică`,
+'se6c8329ea1c50858': `Doar setările caracteristicilor`,
 'se7a532063ef7b740': `Liniar`,
 'seb198c12be265d61': `Noduri de ieșire`,
 'seffcca34b918ddc0': `Are o referință ciclică.`,
+'sf02c84d2e8520b92': `Sursa caracteristicilor`,
 'sf1674aeb3dc2d55d': `Activare`,
 'sf21fb4f4b9e8911f': `Lățime`,
 'sf5290513fc7b466a': `Memorie Tensor utilizată:`,
@@ -141,17 +136,4 @@
 'sfb3198d46e57af91': `Afișează eșantion aleatoriu de testare`,
 'sfd77270c3f54f664': `Ieșire`,
 'sffdadf0a576fd802': `Înălțime`,
-'sb850938497d0a395': `Edit permissions`,
-'sdbaa4e0831238006': `Edit everything`,
-'s250a7fc28124c361': `Read only`,
-'se6c8329ea1c50858': `Feature settings only`,
-'s679b3c0fcb1bdadf': `Hide widget`,
-'s6266829135c39917': `Delete this dataset?`,
-'sf02c84d2e8520b92': `Feature source`,
-'sa60f5f53cc29b8cf': `Layer properties only`,
-'s84536b272065202c': `Max model parameters`,
-'s3c0b025716311430': `Max layer parameters`,
-'sbf1ff3369db980c0': `Design source`,
-'s1b7f4af051183fee': `Preferred backend`,
-'s858e82f5fff9aac3': `Model source`,
     };

@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -21,27 +21,25 @@
 's15371f7ebfb1ad5e': `Harjoittelunopeus:`,
 's1703372e9470522b': `Lisää muotoilukerros`,
 's17ce2eafdc840624': `Tappioiden jakautuminen`,
+'s1b7f4af051183fee': `Ensisijainen taustajärjestelmä`,
 's1bb08bff53933452': `Malliversio`,
 's1c3cbd3cbaee4368': `Lisää I/O-kerros`,
 's1e0afe8020901f1f': `Aloita harjoittelu`,
 's1fa03b3ccbfc66a5': `Kuvien esikäsittely`,
 's22fde937cb709859': `Zoomaa`,
 's2454d1f117573457': `Tarkkuus`,
+'s250a7fc28124c361': `Vain luku`,
 's255857544a9d5ec0': `Nollaa`,
 's26b5b115b8b61794': `Ominaisuustekniikka-widget piilotettu opiskelijoilta.`,
 's2b6d43596140ef3a': `Jatka koulutusta`,
 's2bc80ed8441b0831': `Melu`,
-'s2c48e68704ff98c2': str`Lähtömuoto virheellinen: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Virheellinen tulosteen muoto: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Lataa mallit...`,
 's334f9922638204ab': `Käyttämäsi tietojoukko`,
 's38c7b3d048d88c07': `Poista valitut`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
+'s38ddf839c081bbaf': str`Ulottuvuus ${0}`,
 's3aba710c340e1059': `Ei ominaisuusdataa saatavilla`,
+'s3c0b025716311430': `Kerroksen parametrien enimmäismäärä`,
 's412b62989fc26d3a': `Näytä valinta`,
 's446eb2b422b286af': `Vauhti`,
 's49730f3d5751a433': `Lataa...`,
@@ -57,10 +55,12 @@
 's58d6b1ecd5084538': `Askel`,
 's61ac82c68c336bb1': `Lopeta harjoittelu`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Poistetaanko tämä aineisto?`,
 's62cecbd4b16886e7': `Lasketaan tappioiden jakautumista...`,
 's6557e193c4f15b9c': `Useita luokkia näytettä kohti`,
 's6610206d0ad97d60': `Tietojoukon ominaisuuskolumnit:`,
 's66a5898632280fe2': `Tappiofunktio`,
+'s679b3c0fcb1bdadf': `Piilota pienoisohjelma`,
 's6b0e650acd025eff': `Base64-merkkijono`,
 's6c02f2ec8c3f52a4': `Tarkkuus`,
 's6c5b5757b7756775': `Keskikuvaus`,
@@ -73,6 +73,8 @@
 's7b59301169d2cc3d': `Numerokoodaus`,
 's82c21acdbcd6e830': `Vahvuus`,
 's82caaf657b01a4d0': `harmaasävy`,
+'s84536b272065202c': `Mallin parametrien enimmäismäärä`,
+'s858e82f5fff9aac3': `Mallin lähde`,
 's888d98a196a240d8': `Syötteet`,
 's8a73af950772f702': `Mallia ei saatavilla.`,
 's900c980bdb200fcf': `Aikakaudet`,
@@ -84,6 +86,7 @@
 's99456cbda3e05fb0': `Muistutus`,
 's9eac77171764efaa': `Transponoitu konvoluutio`,
 'sa4ef4c5175793d6f': `Näytteiden menetysten laskeminen...`,
+'sa60f5f53cc29b8cf': `Vain kerroksen ominaisuudet`,
 'sa68f184fe626daf3': `Lisää koulutettava kerros`,
 'sa8082d7f7ef02f42': `Tämä muunnos ei koske arvoja`,
 'sa812ba9ded26aa98': `Lataamassa mallia...`,
@@ -92,24 +95,18 @@
 'sab09aa21c8921bea': `Kuvan lataaminen`,
 'sabf86f32eba45ad4': `Valitse muotoiltava sarake`,
 'saf01d58ece3a1e02': `Lataamassa Tensorflow...`,
-'sb03650788f41c135': str`
-          ${0} -näytteistä -näytteistä
-        `,
+'sb03650788f41c135': str`yhteensä ${0} näytteestä`,
 'sb05582ce916894da': `Pienennä`,
 'sb405f0898c39ca67': `Tietotyyppi`,
 'sb4f1dffbb6be6302': `Selkeä`,
 'sb59d68ed12d46377': `Lataus`,
 'sb633a04ba54b2dc0': `Kerroksessa on liikaa koulutettavia parametreja. Yritä pienentää syötteen kokoa tai säädettäviä ominaisuuksia.`,
+'sb850938497d0a395': `Muokkausoikeudet`,
+'sbf1ff3369db980c0': `Arkkitehtuurin lähde`,
 'sbfe9518a1fe4f185': `Muotoile uudelleen`,
-'sc0e01e8b4662bec2': str`Ennuste: 
-          ${0} ,  Tunniste: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Ennuste: ${0}, tunniste: ${1}`,
 'sc2e0d19ed54560c8': `Eksponentiaalinen`,
-'sc3727a4fc25d7500': str`Ennuste: 
-          ${0} ${1} -merkki: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Ennuste: ${0} ${1}, tunniste: ${2}`,
 'sc3d8f37ea5f4bd79': `Erojen visualisointi...`,
 'sc6bff481def13d70': `Keskeyttäjä`,
 'sc6d31f0cce31ddcf': `Yhteensä parametrit:`,
@@ -120,18 +117,17 @@
 'sd2223afb7d6b100d': `Tyyppi`,
 'sdab07807ff1b6b12': `Mallisuunnittelu-widget piilotettu opiskelijoilta.`,
 'sdb1595f5c742dfbb': `Syöttö`,
+'sdbaa4e0831238006': `Muokkaa kaikkea`,
 'sdde16b9126492f79': `Ytimen koko`,
 'se13c154abb1c1cff': `Lisää yhdistelmäkerros`,
-'se1c4d8107171ecb2': str`Ennuste: 
-          ${0} - Merkki: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Ennuste: ${0} − tunniste: ${1} = erotus: ${2}`,
 'se2b0409cadbd0a9e': `Valitse lähde-elementti`,
 'se2b49a41b39653fc': `Arvotaulukko`,
+'se6c8329ea1c50858': `Vain piirre­asetukset`,
 'se7a532063ef7b740': `Lineaarinen`,
 'seb198c12be265d61': `Lähtösolmut`,
 'seffcca34b918ddc0': `Sisältää syklisen viittauksen.`,
+'sf02c84d2e8520b92': `Piirteiden lähde`,
 'sf1674aeb3dc2d55d': `Aktivointi`,
 'sf21fb4f4b9e8911f': `Leveys`,
 'sf5290513fc7b466a': `Käytetty tensorimuisti:`,
@@ -140,17 +136,4 @@
 'sfb3198d46e57af91': `Näytä satunnainen testinäyte`,
 'sfd77270c3f54f664': `Tuotos`,
 'sffdadf0a576fd802': `Korkeus`,
-'sb850938497d0a395': `Edit permissions`,
-'sdbaa4e0831238006': `Edit everything`,
-'s250a7fc28124c361': `Read only`,
-'se6c8329ea1c50858': `Feature settings only`,
-'s679b3c0fcb1bdadf': `Hide widget`,
-'s6266829135c39917': `Delete this dataset?`,
-'sf02c84d2e8520b92': `Feature source`,
-'sa60f5f53cc29b8cf': `Layer properties only`,
-'s84536b272065202c': `Max model parameters`,
-'s3c0b025716311430': `Max layer parameters`,
-'sbf1ff3369db980c0': `Design source`,
-'s1b7f4af051183fee': `Preferred backend`,
-'s858e82f5fff9aac3': `Model source`,
     };

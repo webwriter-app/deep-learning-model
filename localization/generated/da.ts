@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -21,27 +21,25 @@
 's15371f7ebfb1ad5e': `Træningshastighed:`,
 's1703372e9470522b': `Tilføj formningslag`,
 's17ce2eafdc840624': `Tabfordeling`,
+'s1b7f4af051183fee': `Foretrukket backend`,
 's1bb08bff53933452': `Modelversion`,
 's1c3cbd3cbaee4368': `Tilføj I/O-lag`,
 's1e0afe8020901f1f': `Start træningen`,
 's1fa03b3ccbfc66a5': `Forbehandling af billeder`,
 's22fde937cb709859': `Zoom ind`,
 's2454d1f117573457': `Præcision`,
+'s250a7fc28124c361': `Skrivebeskyttet`,
 's255857544a9d5ec0': `Nulstil`,
 's26b5b115b8b61794': `Feature Engineering Widget skjult for studerende.`,
 's2b6d43596140ef3a': `Fortsæt træningen`,
 's2bc80ed8441b0831': `Støj`,
-'s2c48e68704ff98c2': str`Outputform ugyldig: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Ugyldig outputform: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Indlæser modeller...`,
 's334f9922638204ab': `Dataset ved hjælp af`,
 's38c7b3d048d88c07': `Slet det valgte`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
+'s38ddf839c081bbaf': str`Dimension ${0}`,
 's3aba710c340e1059': `Ingen funktionsdata tilgængelige`,
+'s3c0b025716311430': `Maks. lagparametre`,
 's412b62989fc26d3a': `Vis valg`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Indlæser...`,
@@ -57,10 +55,12 @@
 's58d6b1ecd5084538': `Skridt`,
 's61ac82c68c336bb1': `Stop træningen`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Vil du slette dette datasæt?`,
 's62cecbd4b16886e7': `Beregning af tabfordeling...`,
 's6557e193c4f15b9c': `Flere klasser pr. prøve`,
 's6610206d0ad97d60': `Dataset-funktioner:`,
 's66a5898632280fe2': `Tabsfunktion`,
+'s679b3c0fcb1bdadf': `Skjul widget`,
 's6b0e650acd025eff': `Base64-streng`,
 's6c02f2ec8c3f52a4': `Nøjagtighed`,
 's6c5b5757b7756775': `Centerudsigt`,
@@ -73,6 +73,8 @@
 's7b59301169d2cc3d': `Talekodning`,
 's82c21acdbcd6e830': `Styrke`,
 's82caaf657b01a4d0': `Gråtoner`,
+'s84536b272065202c': `Maks. modelparametre`,
+'s858e82f5fff9aac3': `Modelkilde`,
 's888d98a196a240d8': `Indgange`,
 's8a73af950772f702': `Ingen model tilgængelig.`,
 's900c980bdb200fcf': `Epoker`,
@@ -84,6 +86,7 @@
 's99456cbda3e05fb0': `Tilbagekaldelse`,
 's9eac77171764efaa': `Transponer konvolution`,
 'sa4ef4c5175793d6f': `Beregning af tab for prøver...`,
+'sa60f5f53cc29b8cf': `Kun lagegenskaber`,
 'sa68f184fe626daf3': `Tilføj træningsbart lag`,
 'sa8082d7f7ef02f42': `Denne transformation gælder ikke for værdierne`,
 'sa812ba9ded26aa98': `Indlæser model...`,
@@ -92,24 +95,18 @@
 'sab09aa21c8921bea': `Indlæser billede`,
 'sabf86f32eba45ad4': `Vælg en kolonne for at formatere den`,
 'saf01d58ece3a1e02': `Indlæser Tensorflow...`,
-'sb03650788f41c135': str`af 
-          ${0} -prøver
-        `,
+'sb03650788f41c135': str`af ${0} eksempler`,
 'sb05582ce916894da': `Zoom ud`,
 'sb405f0898c39ca67': `Datatype`,
 'sb4f1dffbb6be6302': `Klar`,
 'sb59d68ed12d46377': `Indlæser`,
 'sb633a04ba54b2dc0': `Laget har for mange træningsparametre. Prøv at reducere inputstørrelsen eller de justerbare egenskaber.`,
+'sb850938497d0a395': `Redigeringstilladelser`,
+'sbf1ff3369db980c0': `Designkilde`,
 'sbfe9518a1fe4f185': `Omforme`,
-'sc0e01e8b4662bec2': str`Forudsigelse: 
-          ${0} ,  Etikette: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Forudsigelse: ${0}, etiket: ${1}`,
 'sc2e0d19ed54560c8': `Eksponentiel`,
-'sc3727a4fc25d7500': str`Forudsigelse: 
-          ${0} ${1} -mærke: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Forudsigelse: ${0} ${1}, etiket: ${2}`,
 'sc3d8f37ea5f4bd79': `Visualisering af forskelle...`,
 'sc6bff481def13d70': `Frafald`,
 'sc6d31f0cce31ddcf': `Samlede parametre:`,
@@ -120,18 +117,17 @@
 'sd2223afb7d6b100d': `Type`,
 'sdab07807ff1b6b12': `Model Design Widget skjult for studerende.`,
 'sdb1595f5c742dfbb': `Indtastning`,
+'sdbaa4e0831238006': `Rediger alt`,
 'sdde16b9126492f79': `Kernelstørrelse`,
 'se13c154abb1c1cff': `Tilføj kombinationslag`,
-'se1c4d8107171ecb2': str`Forudsigelse: 
-          ${0} - Etiket: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Forudsigelse: ${0} − etiket: ${1} = forskel: ${2}`,
 'se2b0409cadbd0a9e': `Vælg kildeelement`,
 'se2b49a41b39653fc': `Værdiskala`,
+'se6c8329ea1c50858': `Kun egenskabsindstillinger`,
 'se7a532063ef7b740': `Lineær`,
 'seb198c12be265d61': `Output-noder`,
 'seffcca34b918ddc0': `Har en cyklisk reference.`,
+'sf02c84d2e8520b92': `Kilde til egenskaber`,
 'sf1674aeb3dc2d55d': `Aktivering`,
 'sf21fb4f4b9e8911f': `Bredde`,
 'sf5290513fc7b466a': `Brugt tensorhukommelse:`,
@@ -140,17 +136,4 @@
 'sfb3198d46e57af91': `Vis tilfældig testprøve`,
 'sfd77270c3f54f664': `Output`,
 'sffdadf0a576fd802': `Højde`,
-'sb850938497d0a395': `Edit permissions`,
-'sdbaa4e0831238006': `Edit everything`,
-'s250a7fc28124c361': `Read only`,
-'se6c8329ea1c50858': `Feature settings only`,
-'s679b3c0fcb1bdadf': `Hide widget`,
-'s6266829135c39917': `Delete this dataset?`,
-'sf02c84d2e8520b92': `Feature source`,
-'sa60f5f53cc29b8cf': `Layer properties only`,
-'s84536b272065202c': `Max model parameters`,
-'s3c0b025716311430': `Max layer parameters`,
-'sbf1ff3369db980c0': `Design source`,
-'s1b7f4af051183fee': `Preferred backend`,
-'s858e82f5fff9aac3': `Model source`,
     };

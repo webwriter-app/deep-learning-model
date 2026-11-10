@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -21,27 +21,25 @@
 's15371f7ebfb1ad5e': `Kecepatan Pelatihan:`,
 's1703372e9470522b': `Tambahkan Lapisan Bentuk`,
 's17ce2eafdc840624': `Distribusi Kerugian`,
+'s1b7f4af051183fee': `Backend pilihan`,
 's1bb08bff53933452': `Versi model`,
 's1c3cbd3cbaee4368': `Tambahkan Lapisan I/O`,
 's1e0afe8020901f1f': `Mulai latihan`,
 's1fa03b3ccbfc66a5': `Prasunting Gambar`,
 's22fde937cb709859': `Perbesar`,
 's2454d1f117573457': `Ketepatan`,
+'s250a7fc28124c361': `Hanya baca`,
 's255857544a9d5ec0': `Reset`,
 's26b5b115b8b61794': `Widget Rekayasa Fitur disembunyikan dari siswa.`,
 's2b6d43596140ef3a': `Lanjutkan Pelatihan`,
 's2bc80ed8441b0831': `Bising`,
-'s2c48e68704ff98c2': str`Bentuk keluaran tidak valid: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Bentuk keluaran tidak valid: ${0} != ${1}`,
 's2d0ac2f4cbd7b867': `Memuat model...`,
 's334f9922638204ab': `Dataset yang menggunakan`,
 's38c7b3d048d88c07': `Hapus yang dipilih`,
-'s38ddf839c081bbaf': str`
-          ${0} dimensi ke-th
-        `,
+'s38ddf839c081bbaf': str`${0} dimensi ke-th`,
 's3aba710c340e1059': `Tidak ada data fitur yang tersedia.`,
+'s3c0b025716311430': `Jumlah maksimum parameter lapisan`,
 's412b62989fc26d3a': `Tampilkan pilihan`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Muat...`,
@@ -57,10 +55,12 @@
 's58d6b1ecd5084538': `Langkah`,
 's61ac82c68c336bb1': `Hentikan Pelatihan`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Hapus kumpulan data ini?`,
 's62cecbd4b16886e7': `Menghitung Distribusi Kerugian...`,
 's6557e193c4f15b9c': `Beberapa Kelas per Sampel`,
 's6610206d0ad97d60': `Kolom Fitur Dataset:`,
 's66a5898632280fe2': `Fungsi Kerugian`,
+'s679b3c0fcb1bdadf': `Sembunyikan widget`,
 's6b0e650acd025eff': `String Base64`,
 's6c02f2ec8c3f52a4': `Ketepatan`,
 's6c5b5757b7756775': `Pemandangan Pusat`,
@@ -73,6 +73,8 @@
 's7b59301169d2cc3d': `Pengkodean Nomor`,
 's82c21acdbcd6e830': `Kekuatan`,
 's82caaf657b01a4d0': `Skala abu-abu`,
+'s84536b272065202c': `Jumlah maksimum parameter model`,
+'s858e82f5fff9aac3': `Sumber model`,
 's888d98a196a240d8': `Masukan`,
 's8a73af950772f702': `Tidak ada model yang tersedia.`,
 's900c980bdb200fcf': `Zaman`,
@@ -84,6 +86,7 @@
 's99456cbda3e05fb0': `Panggilan kembali`,
 's9eac77171764efaa': `Transposisi Konvolusi`,
 'sa4ef4c5175793d6f': `Menghitung Kerugian untuk Sampel...`,
+'sa60f5f53cc29b8cf': `Hanya properti lapisan`,
 'sa68f184fe626daf3': `Tambahkan Lapisan yang Dapat Dilatih`,
 'sa8082d7f7ef02f42': `Transformasi ini tidak berlaku untuk nilai-nilai tersebut.`,
 'sa812ba9ded26aa98': `Memuat model...`,
@@ -92,25 +95,18 @@
 'sab09aa21c8921bea': `Memuat gambar`,
 'sabf86f32eba45ad4': `Pilih kolom yang ingin Anda format.`,
 'saf01d58ece3a1e02': `Memuat TensorFlow...`,
-'sb03650788f41c135': str`dari 
-          Contoh 
-          ${0}
-        `,
+'sb03650788f41c135': str`dari ${0} sampel`,
 'sb05582ce916894da': `Perbesar`,
 'sb405f0898c39ca67': `Jenis Data`,
 'sb4f1dffbb6be6302': `Jelas`,
 'sb59d68ed12d46377': `Sedang memuat`,
 'sb633a04ba54b2dc0': `Lapisan memiliki terlalu banyak parameter yang dapat dilatih. Coba kurangi ukuran input atau properti yang dapat disesuaikan.`,
+'sb850938497d0a395': `Izin pengeditan`,
+'sbf1ff3369db980c0': `Sumber desain`,
 'sbfe9518a1fe4f185': `Bentuk ulang`,
-'sc0e01e8b4662bec2': str`Prediksi: 
-          ${0} ,  Label: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Prediksi: ${0} , Label: ${1}`,
 'sc2e0d19ed54560c8': `Eksponensial`,
-'sc3727a4fc25d7500': str`Prediksi: 
-          ${0} ${1} Label: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Prediksi: ${0} ${1} Label: ${2}`,
 'sc3d8f37ea5f4bd79': `Menampilkan Perbedaan...`,
 'sc6bff481def13d70': `Putus sekolah`,
 'sc6d31f0cce31ddcf': `Jumlah Parameter:`,
@@ -121,18 +117,17 @@
 'sd2223afb7d6b100d': `Jenis`,
 'sdab07807ff1b6b12': `Widget Desain Model disembunyikan dari siswa.`,
 'sdb1595f5c742dfbb': `Masukan`,
+'sdbaa4e0831238006': `Edit semua`,
 'sdde16b9126492f79': `Ukuran Kernel`,
 'se13c154abb1c1cff': `Tambahkan Lapisan Kombinasi`,
-'se1c4d8107171ecb2': str`Prediksi: 
-          ${0} - Label: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Prediksi: ${0} - Label: ${1} = Delta: ${2}`,
 'se2b0409cadbd0a9e': `Pilih Elemen Sumber`,
 'se2b49a41b39653fc': `Skala Nilai`,
+'se6c8329ea1c50858': `Hanya pengaturan fitur`,
 'se7a532063ef7b740': `Linier`,
 'seb198c12be265d61': `Node Keluaran`,
 'seffcca34b918ddc0': `Memiliki referensi siklik.`,
+'sf02c84d2e8520b92': `Sumber fitur`,
 'sf1674aeb3dc2d55d': `Aktivasi`,
 'sf21fb4f4b9e8911f': `Lebar`,
 'sf5290513fc7b466a': `Memori Tensor yang Digunakan:`,
@@ -141,17 +136,4 @@
 'sfb3198d46e57af91': `Tampilkan Contoh Uji Acak`,
 'sfd77270c3f54f664': `Output`,
 'sffdadf0a576fd802': `Tinggi`,
-'sb850938497d0a395': `Edit permissions`,
-'sdbaa4e0831238006': `Edit everything`,
-'s250a7fc28124c361': `Read only`,
-'se6c8329ea1c50858': `Feature settings only`,
-'s679b3c0fcb1bdadf': `Hide widget`,
-'s6266829135c39917': `Delete this dataset?`,
-'sf02c84d2e8520b92': `Feature source`,
-'sa60f5f53cc29b8cf': `Layer properties only`,
-'s84536b272065202c': `Max model parameters`,
-'s3c0b025716311430': `Max layer parameters`,
-'sbf1ff3369db980c0': `Design source`,
-'s1b7f4af051183fee': `Preferred backend`,
-'s858e82f5fff9aac3': `Model source`,
     };

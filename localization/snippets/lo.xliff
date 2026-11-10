@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="lo">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — ການອ່ານຕົວເລກ</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ວິສະວະກຳຄຸນລັກສະນະ</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ກ່ອນອື່ນ ພວກເຮົາຈະນຳເຂົ້າແລະປະມວນຜົນຊຸດຂໍ້ມູນ. ຕ້ອງບອກຄອມພິວເຕີວ່າຈະແປຄວາມໝາຍຂໍ້ຄວາມໃນຊຸດຂໍ້ມູນເປັນເທັນເຊີແນວໃດ.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ການອອກແບບໂມເດວ</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ຕໍ່ໄປ ພວກເຮົາຈະອອກແບບໂມເດວເພື່ອຈັດປະເພດວ່າຮູບສະແດງຕົວເລກໃດໜຶ່ງທີ່ມີຢູ່. ໃນກໍລະນີນີ້ ໃຊ້ຄອນໂວລູຊັນຢ່າງງ່າຍຕາມດ້ວຍຊັ້ນໜາແໜ້ນ ເພື່ອຫາຄລາສໄດ້ຢ່າງແນ່ນອນ.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ການຝຶກໂມເດວ</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ພວກເຮົາໃຊ້ໂຄງສ້າງຂອງໂມເດວເພື່ອປັບນ້ຳໜັກໃຫ້ຄ່າສູນເສຍໃນຊຸດຂໍ້ມູນຕ່ຳທີ່ສຸດ. ຫຼັງຈາກແຕ່ລະແບັດຊ໌ ນ້ຳໜັກຈະຖືກປັບ. ເມື່ອປະມວນຜົນຕົວຢ່າງຝຶກທັງໝົດແລ້ວ ຍຸກໃໝ່ຈະເລີ່ມ ແລະເຮັດຊ້ຳຂັ້ນຕອນນີ້.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ການຄາດຄະເນຂອງໂມເດວ</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>ຫຼັງຈາກຝຶກແລ້ວ ພວກເຮົາສາມາດໃຊ້ໂມເດວເພື່ອຈັດປະເພດຕົວເລກໃໝ່ໄດ້.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ການປະເມີນໂມເດວ</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ເພື່ອປະເມີນຄຸນນະພາບໂມເດວແລະປຽບທຽບກັບໂມເດວອື່ນ ພວກເຮົາມັກທົດສອບຫຼາຍຢ່າງເພື່ອເບິ່ງວ່າໂມເດວເຮັດວຽກໄດ້ດີປານໃດ.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
