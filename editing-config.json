@@ -106,7 +106,16 @@
       "so": "Moodeel Barasho Qoto-dheer",
       "ti": "ሞዴል ጥልቅ ትምህርቲ",
       "sw": "Modeli ya ujifunzaji wa kina",
-      "ha": "Samfurin zurfin koyo"
+      "ha": "Samfurin zurfin koyo",
+      "yue-Hans": "深度学习模型",
+      "yue-Hant": "深度學習模型",
+      "kmr": "Modela Fêrbûna Kûr",
+      "kmr-Latn": "Modela Fêrbûna Kûr",
+      "kmr-Arab": "مۆدەلا فێربوونا کوور",
+      "ckb": "مۆدێلی فێربوونی قووڵ",
+      "ckb-Arab": "مۆدێلی فێربوونی قووڵ",
+      "af-ZA": "Diepleermodel",
+      "af-NA": "Diepleermodel"
     },
     "uninsertable": false,
     "description": {
@@ -214,7 +223,16 @@
       "so": "Urur baloogyo ah oo lagu sameeyo, lagu tababaro, laguna qiimeeyo moodeellada barashada qoto-dheer.",
       "ti": "ንሞዴላት ጥልቅ ትምህርቲ ንምስራሕ፣ ንምስልጣንን ንምግምጋምን ዝሕግዙ ብሎክታት።",
       "sw": "Mkusanyiko wa vizuizi vya kuunda, kufunza na kutathmini modeli za ujifunzaji wa kina.",
-      "ha": "Tarin tubalan don ƙirƙira, horarwa da tantance samfuran zurfin koyo."
+      "ha": "Tarin tubalan don ƙirƙira, horarwa da tantance samfuran zurfin koyo.",
+      "yue-Hans": "一组积木，用嚟建立、训练同评估深度学习模型。",
+      "yue-Hant": "一組積木，用嚟建立、訓練同評估深度學習模型。",
+      "kmr": "Komek blokan ji bo çêkirin, perwerdekirin û nirxandina modelên fêrbûna kûr.",
+      "kmr-Latn": "Komek blokan ji bo çêkirin, perwerdekirin û nirxandina modelên fêrbûna kûr.",
+      "kmr-Arab": "کۆمەک بلۆکان ژ بۆ چێکرن, پەروەردەکرن ئوو نرخاندنا مۆدەلێن فێربوونا کوور.",
+      "ckb": "کۆمەڵێک بلۆک بۆ دروستکردن، ڕاهێنان و هەڵسەنگاندنی مۆدێلەکانی فێربوونی قووڵ.",
+      "ckb-Arab": "کۆمەڵێک بلۆک بۆ دروستکردن، ڕاهێنان و هەڵسەنگاندنی مۆدێلەکانی فێربوونی قووڵ.",
+      "af-ZA": "’n Stel blokke om diepleermodelle te skep, op te lei en te evalueer.",
+      "af-NA": "’n Stel blokke om diepleermodelle te skep, op te lei en te evalueer."
     }
   },
   "./widgets/webwriter-feature-engineering": {
@@ -321,7 +339,16 @@
       "so": "Farsamaynta astaamaha",
       "ti": "ምህንድስና ባህሪ",
       "sw": "Uhandisi wa vipengele",
-      "ha": "Tsara fasali"
+      "ha": "Tsara fasali",
+      "yue-Hans": "特征工程",
+      "yue-Hant": "特徵工程",
+      "kmr": "Endazekirina taybetmendiyan",
+      "kmr-Latn": "Endazekirina taybetmendiyan",
+      "kmr-Arab": "ئەندازەکرنا تایبەتمەندیان",
+      "ckb": "ئەندازیاریی تایبەتمەندی",
+      "ckb-Arab": "ئەندازیاریی تایبەتمەندی",
+      "af-ZA": "Kenmerkingenieurswese",
+      "af-NA": "Kenmerkingenieurswese"
     }
   },
   "./widgets/webwriter-model-designing": {
@@ -428,7 +455,16 @@
       "so": "Naqshadaynta moodeelka",
       "ti": "ዲዛይን ሞዴል",
       "sw": "Usanifu wa modeli",
-      "ha": "Tsarin samfur"
+      "ha": "Tsarin samfur",
+      "yue-Hans": "模型设计",
+      "yue-Hant": "模型設計",
+      "kmr": "Sêwirana modelê",
+      "kmr-Latn": "Sêwirana modelê",
+      "kmr-Arab": "سێورانا مۆدەلێ",
+      "ckb": "دیزاینکردنی مۆدێل",
+      "ckb-Arab": "دیزاینکردنی مۆدێل",
+      "af-ZA": "Modelontwerp",
+      "af-NA": "Modelontwerp"
     }
   },
   "./widgets/webwriter-model-training": {
@@ -535,7 +571,16 @@
       "so": "Tababarka moodeelka",
       "ti": "ስልጠና ሞዴል",
       "sw": "Mafunzo ya modeli",
-      "ha": "Horar da samfur"
+      "ha": "Horar da samfur",
+      "yue-Hans": "模型训练",
+      "yue-Hant": "模型訓練",
+      "kmr": "Perwerdekirina modelê",
+      "kmr-Latn": "Perwerdekirina modelê",
+      "kmr-Arab": "پەروەردەکرنا مۆدەلێ",
+      "ckb": "ڕاهێنانی مۆدێل",
+      "ckb-Arab": "ڕاهێنانی مۆدێل",
+      "af-ZA": "Modelopleiding",
+      "af-NA": "Modelopleiding"
     }
   },
   "./widgets/webwriter-model-prediction": {
@@ -642,7 +687,16 @@
       "so": "Saadaasha moodeelka",
       "ti": "ትንበያ ሞዴል",
       "sw": "Utabiri wa modeli",
-      "ha": "Hasashen samfur"
+      "ha": "Hasashen samfur",
+      "yue-Hans": "模型预测",
+      "yue-Hant": "模型預測",
+      "kmr": "Pêşbîniya modelê",
+      "kmr-Latn": "Pêşbîniya modelê",
+      "kmr-Arab": "پێشبینیا مۆدەلێ",
+      "ckb": "پێشبینیی مۆدێل",
+      "ckb-Arab": "پێشبینیی مۆدێل",
+      "af-ZA": "Modelvoorspelling",
+      "af-NA": "Modelvoorspelling"
     }
   },
   "./widgets/webwriter-model-evaluation": {
@@ -749,7 +803,16 @@
       "so": "Qiimaynta moodeelka",
       "ti": "ገምጋም ሞዴል",
       "sw": "Tathmini ya modeli",
-      "ha": "Tantance samfur"
+      "ha": "Tantance samfur",
+      "yue-Hans": "模型评估",
+      "yue-Hant": "模型評估",
+      "kmr": "Nirxandina modelê",
+      "kmr-Latn": "Nirxandina modelê",
+      "kmr-Arab": "نرخاندنا مۆدەلێ",
+      "ckb": "هەڵسەنگاندنی مۆدێل",
+      "ckb-Arab": "هەڵسەنگاندنی مۆدێل",
+      "af-ZA": "Modelevaluering",
+      "af-NA": "Modelevaluering"
     }
   },
   "./snippets/MNIST-Image-to-Number": {
@@ -856,7 +919,16 @@
       "so": "MNIST — Sawirka ilaa lambarka",
       "ti": "MNIST — ካብ ስእሊ ናብ ቁጽሪ",
       "sw": "MNIST — Kutoka picha hadi nambari",
-      "ha": "MNIST — Daga hoto zuwa lamba"
+      "ha": "MNIST — Daga hoto zuwa lamba",
+      "yue-Hans": "MNIST－由图像读取数字",
+      "yue-Hant": "MNIST－由圖像讀取數字",
+      "kmr": "MNIST-Wêne ji Hejmara",
+      "kmr-Latn": "MNIST-Wêne ji Hejmara",
+      "kmr-Arab": "MNIST-وێنە ژ هەژمارا",
+      "ckb": "وێنەی MNIST بۆ ژمارە",
+      "ckb-Arab": "وێنەی MNIST بۆ ژمارە",
+      "af-ZA": "MNIST – Van beeld na getal",
+      "af-NA": "MNIST – Van beeld na getal"
     }
   }
 }
