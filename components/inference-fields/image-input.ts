@@ -1,3 +1,4 @@
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../../localization/localizer";
 import { SlButton } from "@shoelace-style/shoelace";
 import { css, html } from 'lit';
 import { property } from 'lit/decorators.js';
@@ -5,11 +6,15 @@ import { InputElement } from './inference-interfaces';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
-import { msg } from "@lit/localize";
 let tf: typeof TF;
 (async () => {tf = await getTF()})()
 
 export class DrawingCanvas extends InputElement {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    private readonly msg = localizeElement(this);
     static scopedElements = {
         "sl-button": SlButton
     }
@@ -177,6 +182,6 @@ export class DrawingCanvas extends InputElement {
   }
 
   render() {
-    return html`<canvas></canvas><sl-button @click=${this.clear}>${msg("Clear")}</sl-button>`;
+    return html`<canvas></canvas><sl-button @click=${this.clear}>${this.msg("Clear")}</sl-button>`;
   }
 }

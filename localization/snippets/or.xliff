@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="or">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — ସଂଖ୍ୟା ପଢ଼ିବା</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ବୈଶିଷ୍ଟ୍ୟ ଇଞ୍ଜିନିୟରିଂ</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ପ୍ରଥମେ ଆମେ ଡାଟାସେଟ୍ ଆମଦାନି କରି ପୂର୍ବପ୍ରକ୍ରିୟା କରିବା। ଡାଟାସେଟ୍‌ର ଲେଖାକୁ ଟେନ୍ସର୍ ଭାବେ କିପରି ବୁଝିବାକୁ ହେବ ତାହା କମ୍ପ୍ୟୁଟରକୁ କହିବା ଦରକାର।</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ମଡେଲ୍ ଡିଜାଇନ୍</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ପରେ ଉପଲବ୍ଧ ସଂଖ୍ୟାମଧ୍ୟରୁ କେଉଁଟି ଛବିରେ ଦେଖାଯାଉଛି ତାହା ବର୍ଗୀକରଣ କରିବା ପାଇଁ ଆମେ ମଡେଲ୍ ତିଆରି କରିବା। ଶ୍ରେଣୀଟିକୁ ନିର୍ଭରଯୋଗ୍ୟ ଭାବେ ଚିହ୍ନିବା ପାଇଁ ଏଠାରେ ସରଳ କନଭଲ୍ୟୁସନ୍ ପରେ ଏକ ଡେନ୍ସ ସ୍ତର ଦିଆଯାଇଛି।</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ମଡେଲ୍ ପ୍ରଶିକ୍ଷଣ</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ଡାଟାସେଟ୍‌ରେ କ୍ଷତି ସର୍ବନିମ୍ନ କରିବା ପାଇଁ ମଡେଲ୍ ଗଠନକୁ ବ୍ୟବହାର କରି ତାହାର ଓଜନକୁ ଅପ୍ଟିମାଇଜ୍ କରୁ। ପ୍ରତ୍ୟେକ ବ୍ୟାଚ୍ ପରେ ଓଜନ ଅପ୍ଟିମାଇଜ୍ ହୁଏ। ସମସ୍ତ ପ୍ରଶିକ୍ଷଣ ନମୁନା ପ୍ରକ୍ରିୟା ହେଲେ ନୂଆ ଏପୋକ୍ ଆରମ୍ଭ ହୁଏ ଏବଂ ପ୍ରକ୍ରିୟା ପୁଣି ଚାଲେ।</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ମଡେଲ୍ ପୂର୍ବାନୁମାନ</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>ପ୍ରଶିକ୍ଷଣ ପରେ ନୂଆ ସଂଖ୍ୟାଗୁଡ଼ିକୁ ବର୍ଗୀକରଣ କରିବା ପାଇଁ ଆମେ ମଡେଲ୍ ବ୍ୟବହାର କରିପାରିବା।</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ମଡେଲ୍ ମୂଲ୍ୟାଙ୍କନ</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ମଡେଲ୍‌ର ଗୁଣବତ୍ତା ଆକଳନ ଏବଂ ଅନ୍ୟ ମଡେଲ୍ ସହ ତୁଳନା କରିବା ପାଇଁ ଆମେ ସାଧାରଣତଃ କେତେକ ପରୀକ୍ଷା ଚଳାଉ। ଏଥିରୁ ମଡେଲ୍‌ର କାର୍ଯ୍ୟଦକ୍ଷତା ବିଷୟରେ ଧାରଣା ମିଳେ।</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

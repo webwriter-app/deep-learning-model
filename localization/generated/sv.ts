@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Antal operationer:`,
-'s026fba1543d336b2': `Funktionskälla`,
 's02bee65dc3f21363': `Sammankoppling`,
 's06471a3c2aed9b4b': `Inmatningsfält`,
 's066d70cf9d5e2915': `Resultat`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Elementvis addition`,
 's12126d92849e3b53': `R2-poäng`,
 's15371f7ebfb1ad5e': `Träningshastighet:`,
-'s162c56231b25e6ff': `dölj widget`,
-'s166d284a7cbc6181': `skrivskyddad`,
 's1703372e9470522b': `Lägg till formningslager`,
 's17ce2eafdc840624': `Förlustfördelning`,
-'s19a2ee331d08ad42': `(Varning: För mycket tensordata kan överbelasta enhetens RAM-minne och orsaka krasch under träningen och i värsta fall låsa värdsystemet.)`,
+'s1b7f4af051183fee': `Föredragen beräkningsmotor`,
 's1bb08bff53933452': `Modellversion`,
 's1c3cbd3cbaee4368': `Lägg till I/O-lager`,
-'s1ca51d37e3dae07a': `Detta gör det möjligt att cachelagra de transformerade proverna på beräkningsenheten, vilket dramatiskt ökar träningshastigheten men kräver betydligt mer lagringsutrymme på enheten.`,
 's1e0afe8020901f1f': `Börja träna`,
 's1fa03b3ccbfc66a5': `Bildförbehandling`,
 's22fde937cb709859': `Zooma in`,
 's2454d1f117573457': `Precision`,
+'s250a7fc28124c361': `Skrivskyddad`,
 's255857544a9d5ec0': `Återställ`,
 's26b5b115b8b61794': `Funktionskonstruktion Widget dold för studenter.`,
-'s2b28da40a8490a78': `endast funktionsinställningar`,
 's2b6d43596140ef3a': `Fortsätt träningen`,
 's2bc80ed8441b0831': `Buller`,
-'s2c48e68704ff98c2': str`Utgångsform ogiltig: 
-          ${0}
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Ogiltig form på utdata: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Laddar modeller...`,
-'s32f2fa78e3267c4e': `endast egenskaper`,
 's334f9922638204ab': `Dataset som använder`,
-'s34af392b321cbfa6': `redigera allt`,
 's38c7b3d048d88c07': `Ta bort det markerade`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Maximala lagerparametrar`,
+'s38ddf839c081bbaf': str`Dimension ${0}`,
 's3aba710c340e1059': `Inga funktionsdata tillgängliga`,
-'s410415ac2406c84e': `Föredragen backend`,
+'s3c0b025716311430': `Maximalt antal lagerparametrar`,
 's412b62989fc26d3a': `Visa urval`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Laddar...`,
-'s4c08da5f7528a7e3': `Modellkälla`,
 's4f5eeeb48a97ea9a': `Förlust`,
 's547a4465533a6f5f': `Bildkodning`,
 's5561b945c8cd59b0': `Batchstorlek`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Kvadratisk`,
 's58bee799432dbc69': `Tillägg`,
 's58d6b1ecd5084538': `Steglängd`,
-'s5da30fd688d05a35': `Redigera behörigheter`,
 's61ac82c68c336bb1': `Sluta träna`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Vill du ta bort den här datamängden?`,
 's62cecbd4b16886e7': `Beräkning av förlustfördelning...`,
 's6557e193c4f15b9c': `Flera klasser per prov`,
 's6610206d0ad97d60': `Datasetets funktionskolumner:`,
 's66a5898632280fe2': `Förlustfunktion`,
+'s679b3c0fcb1bdadf': `Dölj widget`,
 's6b0e650acd025eff': `Base64-sträng`,
 's6c02f2ec8c3f52a4': `Noggrannhet`,
 's6c5b5757b7756775': `Mittvy`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Nummerkodning`,
 's82c21acdbcd6e830': `Styrka`,
 's82caaf657b01a4d0': `Gråskala`,
+'s84536b272065202c': `Maximalt antal modellparametrar`,
+'s858e82f5fff9aac3': `Modellkälla`,
 's888d98a196a240d8': `Ingångar`,
 's8a73af950772f702': `Ingen modell tillgänglig.`,
 's900c980bdb200fcf': `Epoker`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Platta till`,
 's981f232bd33ec927': `Pris`,
 's99456cbda3e05fb0': `Återkallande`,
-'s9b5ec9d0b70a0fac': `Maxmodellparametrar`,
 's9eac77171764efaa': `Transponera konvolution`,
 'sa4ef4c5175793d6f': `Beräkning av förlust för prover...`,
+'sa60f5f53cc29b8cf': `Endast lageregenskaper`,
 'sa68f184fe626daf3': `Lägg till träningsbart lager`,
 'sa8082d7f7ef02f42': `Denna omvandling är inte tillämplig för värdena`,
 'sa812ba9ded26aa98': `Laddar modell...`,
@@ -105,24 +95,18 @@
 'sab09aa21c8921bea': `Laddar bild`,
 'sabf86f32eba45ad4': `Välj en kolumn för att formatera den`,
 'saf01d58ece3a1e02': `Laddar Tensorflow...`,
-'sb03650788f41c135': str`av 
-          ${0} -prover
-        `,
+'sb03650788f41c135': str`av ${0} exempel`,
 'sb05582ce916894da': `Zooma ut`,
 'sb405f0898c39ca67': `Datatyp`,
 'sb4f1dffbb6be6302': `Tydligt`,
 'sb59d68ed12d46377': `Laddar`,
 'sb633a04ba54b2dc0': `Lager har för många träningsbara parametrar. Försök minska ingångsstorleken eller de justerbara egenskaperna.`,
+'sb850938497d0a395': `Redigeringsbehörigheter`,
+'sbf1ff3369db980c0': `Arkitekturkälla`,
 'sbfe9518a1fe4f185': `Omforma`,
-'sc0e01e8b4662bec2': str`Förutsägelse: 
-          ${0} ,  Etikett: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Prediktion: ${0}, etikett: ${1}`,
 'sc2e0d19ed54560c8': `Exponentiell`,
-'sc3727a4fc25d7500': str`Förutsägelse: 
-          ${0} ${1} -etikett: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Prediktion: ${0} ${1}, etikett: ${2}`,
 'sc3d8f37ea5f4bd79': `Visualisera skillnader...`,
 'sc6bff481def13d70': `Avhopp`,
 'sc6d31f0cce31ddcf': `Totala parametrar:`,
@@ -131,21 +115,19 @@
 'sce4efb732b98f946': `En klass per prov`,
 'scfd25318edb1ebb1': `Antal kärnor`,
 'sd2223afb7d6b100d': `Typ`,
-'sd6b72022c37e1ae0': `Designkälla`,
 'sdab07807ff1b6b12': `Modelldesignwidget dold för studenter.`,
 'sdb1595f5c742dfbb': `Inmatning`,
+'sdbaa4e0831238006': `Redigera allt`,
 'sdde16b9126492f79': `Kärnstorlek`,
 'se13c154abb1c1cff': `Lägg till kombinationslager`,
-'se1c4d8107171ecb2': str`Förutsägelse: 
-          ${0} - Etikett: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Prediktion: ${0} − etikett: ${1} = skillnad: ${2}`,
 'se2b0409cadbd0a9e': `Välj källelement`,
 'se2b49a41b39653fc': `Värdeskala`,
+'se6c8329ea1c50858': `Endast egenskapsinställningar`,
 'se7a532063ef7b740': `Linjär`,
 'seb198c12be265d61': `Utgångsnoder`,
 'seffcca34b918ddc0': `Har en cyklisk referens.`,
+'sf02c84d2e8520b92': `Källa till egenskaper`,
 'sf1674aeb3dc2d55d': `Aktivering`,
 'sf21fb4f4b9e8911f': `Bredd`,
 'sf5290513fc7b466a': `Använt tensorminne:`,
@@ -155,4 +137,3 @@
 'sfd77270c3f54f664': `Utgång`,
 'sffdadf0a576fd802': `Höjd`,
     };
-  

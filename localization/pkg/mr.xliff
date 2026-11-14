@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="mr">
+  <file id="." original=".">
+    <unit id="label">
+      <segment>
+        <source>Deep Learning Model</source>
+        <target>डीप लर्निंग मॉडेल</target>
+      </segment>
+    </unit>
+    <unit id="description">
+      <segment>
+        <source>A set of blocks to create, train and evaluate deep learning models.</source>
+        <target>डीप लर्निंग मॉडेल तयार करणे, प्रशिक्षित करणे आणि मूल्यमापन करणे यासाठीच्या ब्लॉक्सचा संच.</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-feature-engineering" original="./widgets/webwriter-feature-engineering">
+    <unit id="label">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>वैशिष्ट्य अभियांत्रिकी</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-designing" original="./widgets/webwriter-model-designing">
+    <unit id="label">
+      <segment>
+        <source>Model Designing</source>
+        <target>मॉडेल डिझाइन</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-training" original="./widgets/webwriter-model-training">
+    <unit id="label">
+      <segment>
+        <source>Model Training</source>
+        <target>मॉडेल प्रशिक्षण</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-prediction" original="./widgets/webwriter-model-prediction">
+    <unit id="label">
+      <segment>
+        <source>Model Prediction</source>
+        <target>मॉडेलचा अंदाज</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-evaluation" original="./widgets/webwriter-model-evaluation">
+    <unit id="label">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>मॉडेल मूल्यमापन</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./snippets/MNIST-Image-to-Number" original="./snippets/MNIST-Image-to-Number">
+    <unit id="label">
+      <segment>
+        <source>MNIST-Image To-Number</source>
+        <target>MNIST — प्रतिमेतून अंक</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

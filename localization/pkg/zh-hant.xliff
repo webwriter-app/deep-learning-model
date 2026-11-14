@@ -1,7 +1,65 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="zh-hant">
-<file id="." original=".">
-<unit id="description"><segment><source>A set of blocks to create, train and evaluate deep learning models.</source><target>一套用於建立、訓練及評估深度學習模型的工具組。</target></segment></unit>
-<unit id="label"><segment><source>Deep Learning Model</source><target>深度學習模型</target></segment></unit>
-</file>
+  <file id="." original=".">
+    <unit id="label">
+      <segment>
+        <source>Deep Learning Model</source>
+        <target>深度學習模型</target>
+      </segment>
+    </unit>
+    <unit id="description">
+      <segment>
+        <source>A set of blocks to create, train and evaluate deep learning models.</source>
+        <target>一套用於建立、訓練及評估深度學習模型的工具組。</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-feature-engineering" original="./widgets/webwriter-feature-engineering">
+    <unit id="label">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>特徵工程</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-designing" original="./widgets/webwriter-model-designing">
+    <unit id="label">
+      <segment>
+        <source>Model Designing</source>
+        <target>模型設計</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-training" original="./widgets/webwriter-model-training">
+    <unit id="label">
+      <segment>
+        <source>Model Training</source>
+        <target>模型訓練</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-prediction" original="./widgets/webwriter-model-prediction">
+    <unit id="label">
+      <segment>
+        <source>Model Prediction</source>
+        <target>模型預測</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-evaluation" original="./widgets/webwriter-model-evaluation">
+    <unit id="label">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>模型評估</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./snippets/MNIST-Image-to-Number" original="./snippets/MNIST-Image-to-Number">
+    <unit id="label">
+      <segment>
+        <source>MNIST-Image To-Number</source>
+        <target>MNIST：從影像辨識數字</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>

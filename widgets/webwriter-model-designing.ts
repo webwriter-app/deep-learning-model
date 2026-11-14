@@ -1,11 +1,12 @@
-import { msg } from "@lit/localize";
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
+import { readData, writeData } from "../lib/data-block";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ModelEditor } from "../components/model-editor";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
-import LOCALIZE from "../localization/generated";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
 
 /**
@@ -13,6 +14,18 @@ import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
  */
 @customElement("webwriter-model-designing")
 export class AiWidgetsDesigns extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    public readonly msg = localizeElement(this, true);
+    readonly options = ((msg: MsgFn) => ({
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: { get _() { return msg("Feature source"); } }},
+        editMode: {type: "select" as const, label: { get _() { return msg("Edit permissions"); } }, options: [{value: "edit", label: { get _() { return msg("Edit everything"); } }}, {value: "read", label: { get _() { return msg("Read only"); } }}, {value: "layer", label: { get _() { return msg("Layer properties only"); } }}, {value: "hidden", label: { get _() { return msg("Hide widget"); } }}]},
+        maxModelParameters: {type: Number, min: 1, max: 1000000, step: 100, label: { get _() { return msg("Max model parameters"); } }},
+        maxLayerParameters: {type: Number, min: 1, max: 100000, step: 10, label: { get _() { return msg("Max layer parameters"); } }},
+    }))(this.msg);
+
     /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
@@ -25,8 +38,6 @@ export class AiWidgetsDesigns extends LitElementWw {
         "sl-icon-button": SlIconButton,
         "ref-select": AiWidgetsReferenceSelect
     }
-
-    protected localize = LOCALIZE;
 
     static styles = css`
     :host {
@@ -112,8 +123,59 @@ export class AiWidgetsDesigns extends LitElementWw {
     /**
      * Stores the state of the model editor as a json string
      */
-    @property({ type: String, attribute: true, reflect: true })
-    accessor state: string;
+    private lastDesign: string | null = null;
+
+    get state() {
+        const {design} = readData<{design: unknown[]}>(this);
+        return design ? JSON.stringify(design) : "";
+    }
+
+    private set state(value: string) {
+        writeData(this, {design: JSON.parse(value)});
+        this.lastDesign = value;
+    }
+
+    private syncDesign() {
+        const value = this.state;
+        if (!this.currentCanvas || value === this.lastDesign) return;
+        this.lastDesign = value;
+        if (value) this.currentCanvas.setState(JSON.parse(value));
+        else this.currentCanvas.setState([]);
+    }
+
+    protected firstUpdated() {
+        this.syncDesign();
+        this.refreshStats();
+    }
+
+    private statsTimer?: ReturnType<typeof setInterval>;
+
+    private refreshStats() {
+        if (!this.currentCanvas || this.statsTimer) return;
+        this.statsTimer = setInterval(() => {
+            const control = this.currentCanvas?.controler;
+            if (!control) return;
+            this.renderRoot.querySelector("#numberNodes").textContent = String(control.getNumberOfOperations());
+            this.renderRoot.querySelector("#params").textContent = String(control.getNumberOfParameters());
+        }, 100);
+    }
+
+    private dataObserver = new MutationObserver(() => this.syncDesign());
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.dataObserver.observe(this, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["type", "slot", "src"]});
+        this.syncDesign();
+        if (this.hasUpdated) this.refreshStats();
+    }
+
+    disconnectedCallback() {
+        clearInterval(this.statsTimer);
+        this.statsTimer = undefined;
+        this.dataObserver.disconnect();
+        super.disconnectedCallback();
+    }
+
 
     /**
      * Stores the reference id of the widget where the dataset is used from
@@ -144,16 +206,6 @@ export class AiWidgetsDesigns extends LitElementWw {
 
     constructor() {
         super();
-        let that = this;
-
-        setInterval(function () {
-            let nodes = that.currentCanvas.controler.getNumberOfOperations();
-            that.shadowRoot.getElementById("numberNodes").innerText = String(nodes);
-
-            let params = that.currentCanvas.controler.getNumberOfParameters();
-            that.shadowRoot.getElementById("params").innerText = String(params);
-        }, 100);
-
         // Prevents the del hotkey from removing the widget
         this.addEventListener("keydown", function (e) {
             if (e.key == "Delete") {
@@ -180,12 +232,11 @@ export class AiWidgetsDesigns extends LitElementWw {
         that.featureWidgetId = e.detail.id;
         that.requestUpdate();
         featuresElem = (that.refSelect.getRefElement() as AiWidgetsFeatures)
-        featuresElem.addEventListener("change", datasetChangeListener);
-        if (featuresElem.isReady && featuresElem.isReady()) {
+        featuresElem?.addEventListener("change", datasetChangeListener);
+        if (featuresElem?.isReady && featuresElem.isReady()) {
             datasetChangeListener()
         }
-        if (this.state && this.state != "")
-            this.currentCanvas.setState(JSON.parse(this.state));
+        this.syncDesign();
     }
 
     /**
@@ -217,80 +268,55 @@ export class AiWidgetsDesigns extends LitElementWw {
     }
 
     public render(): TemplateResult {
-        let that = this;
-        function editModeChanged(e: Event) {
-            const select = e.target as HTMLSelectElement;
-            this.editMode = select.value;
-            that.currentCanvas.editmode = that.editMode;
-            that.currentCanvas.requestUpdate();
-        }
-        function modelParametersChanged(e: Event) {
-            const input = e.target as SlInput;
-            that.maxModelParameters = parseInt(input.value);
-        }
-        function layerParametersChanged(e: Event) {
-            const input = e.target as SlInput;
-            that.maxLayerParameters = parseInt(input.value);
-        }
-
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
             <model-editor id="model-editor" @modelchange=${this._editorChange} @selectionchange=${this._selectionChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
             <div id="stats">
-                <p>${msg("Number of Operations:")} <span id="numberNodes"></span></p>
-                <p>${msg("Total Parameters:")} <span id="params"></span></p>
+                <p>${this.msg("Number of Operations:")} <span id="numberNodes"></span></p>
+                <p>${this.msg("Total Parameters:")} <span id="params"></span></p>
             </div>
             <div id="add" style="display:${this.editMode == "edit" ? "" : "none"}">
                 <div class="group">
-                    <p>${msg("Add I/O Layer")}</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("input")}>${msg("Input")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("output")}>${msg("Output")}</sl-button>
+                    <p>${this.msg("Add I/O Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("input")}>${this.msg("Input")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("output")}>${this.msg("Output")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>${msg("Add Trainable Layer")}</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("fcl")}>${msg("Linear")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("conv")}>${msg("Convolution")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("transposeconv")}>${msg("Transpose Convolution")}</sl-button>
+                    <p>${this.msg("Add Trainable Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("fcl")}>${this.msg("Linear")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("conv")}>${this.msg("Convolution")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("transposeconv")}>${this.msg("Transpose Convolution")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>${msg("Add misc. Layer")}</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("activation")}>${msg("Activation")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("dropout")}>${msg("Dropout")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("noise")}>${msg("Noise")}</sl-button>
+                    <p>${this.msg("Add misc. Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("activation")}>${this.msg("Activation")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("dropout")}>${this.msg("Dropout")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("noise")}>${this.msg("Noise")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>${msg("Add Shaping Layer")}</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("flatten")}>${msg("Flatten")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("concat")}>${msg("Concatenation")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("reshape")}>${msg("Reshape")}</sl-button>
+                    <p>${this.msg("Add Shaping Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("flatten")}>${this.msg("Flatten")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("concat")}>${this.msg("Concatenation")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("reshape")}>${this.msg("Reshape")}</sl-button>
                 </div>
                 <div class="group">
-                    <p>${msg("Add Combinational Layer")}</p>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("add")}>${msg("Addition")}</sl-button>
-                    <sl-button @click=${() => this.currentCanvas.createLayer("attention")}>${msg("Attention")}</sl-button>
+                    <p>${this.msg("Add Combinational Layer")}</p>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("add")}>${this.msg("Addition")}</sl-button>
+                    <sl-button @click=${() => this.currentCanvas.createLayer("attention")}>${this.msg("Attention")}</sl-button>
                 </div>
             </div>
             <div id="controls">
-                <sl-button @click=${() => this.zoomReset()}>${msg("Center View")}</sl-button>
-                <sl-tooltip content=${msg("Zoom In")}><sl-button @click=${() => this.zoomIn()}>+</sl-button></sl-tooltip>
-                <sl-tooltip content=${msg("Zoom Out")}><sl-button @click=${() => this.zoomOut()}>-</sl-button></sl-tooltip>
+                <sl-button @click=${() => this.zoomReset()}>${this.msg("Center View")}</sl-button>
+                <sl-tooltip content=${this.msg("Zoom In")}><sl-button @click=${() => this.zoomIn()}>+</sl-button></sl-tooltip>
+                <sl-tooltip content=${this.msg("Zoom Out")}><sl-button @click=${() => this.zoomOut()}>-</sl-button></sl-tooltip>
             </div>
             <div id="delete-control" style="display:${this.editMode == "edit" && this.hasSelection ? "" : "none"}">
-                <sl-button variant="danger" @click=${() => this.currentCanvas.removeSelectedNode()}>${msg("Delete selected")}</sl-button>
+                <sl-button variant="danger" @click=${() => this.currentCanvas.removeSelectedNode()}>${this.msg("Delete selected")}</sl-button>
             </div>
         </div>
-        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${msg("Model Design Widget hidden from students.")}</p>
-        <div part="options">
-            <p>${msg("Feature Source")}</p>
+        <p style=${this.editMode != "hidden" ? "display:none" : ""}>${this.msg("Model Design Widget hidden from students.")}</p>
+        <div hidden>
             <ref-select id="feature-select" elementType="webwriter-feature-engineering" elemId=${this.featureWidgetId} typeName="Features" @refchange=${this._handleRefChange} ownerId=${this.id}></ref-select>
-            <sl-select label=${msg("Edit Permissions")} value=${this.editMode} @sl-change=${editModeChanged}>
-                <sl-option value="hidden">${msg("hide widget")}</sl-option>
-                <sl-option value="read">${msg("read only")}</sl-option>
-                <sl-option value="layer">${msg("properties only")}</sl-option>
-                <sl-option value="edit">${msg("edit everything")}</sl-option>
-            </sl-select>
-            <sl-input label=${msg("Max Model Parameters")} type="number" step="100" value=${this.maxModelParameters} min="1" max="1000000" @sl-change=${modelParametersChanged}></sl-input>
-            <sl-input label=${msg("Max Layer Parameters")} type="number" step="10" value=${this.maxLayerParameters} min="1" max="100000" @sl-change=${layerParametersChanged}></sl-input>
         </div>`
     }
     

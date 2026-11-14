@@ -1,7 +1,6 @@
 import { SlInput } from "@shoelace-style/shoelace";
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
-import { msg } from "@lit/localize";
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -18,17 +17,17 @@ export class ExportLayer extends Layer {
         super(1, 1, "Convolution", editor)
 
         let that = this;
-        this.kernelInput = this.addNumberInput(msg("Kernel Size"), 1, 9);
+        this.kernelInput = this.addNumberInput(() => this.editor.msg("Kernel Size"), 1, 9);
         this.kernelInput.value = "3";
 
-        this.strideInput = this.addNumberInput(msg("Stride"), 1, 7);
+        this.strideInput = this.addNumberInput(() => this.editor.msg("Stride"), 1, 7);
         this.strideInput.onchange = function () {
             that.update();
             that.notifyOutputChange();
         }
         this.strideInput.value = "2";
 
-        this.kernelNumInput = this.addNumberInput(msg("# of Kernels"), 1, 10);
+        this.kernelNumInput = this.addNumberInput(() => this.editor.msg("# of Kernels"), 1, 10);
         this.kernelNumInput.onchange = function () {
             that.update();
             that.notifyOutputChange();
@@ -36,7 +35,7 @@ export class ExportLayer extends Layer {
         this.kernelNumInput.value = "4";
 
         this.params = document.createElement("span");
-        this.addTextElement(msg("Parameters: "), this.params);
+        this.addTextElement(() => this.editor.msg("Parameters: "), this.params);
     }
     public getNumberOfParameters() {
         this.update();
@@ -55,7 +54,7 @@ export class ExportLayer extends Layer {
         let numKernels = parseInt(this.kernelNumInput.value)
         let inDims = this.getNodeInputElement("input_1").innerText.split(SIZE_SEP).map(s => parseInt(s));
         let params = parseInt(this.kernelInput.value) ** 2 * inDims[2] * numKernels + numKernels
-        this.params.title = params > this.editor.maxLayerParams ? msg("Layer has to many trainable parameters. Try reducing the input size or the tunable properties.") : "";
+        this.params.title = params > this.editor.maxLayerParams ? this.editor.msg("Layer has to many trainable parameters. Try reducing the input size or the tunable properties.") : "";
         return super.valid() && params <= this.editor.maxLayerParams;
     }
     getState() {
@@ -78,6 +77,6 @@ export class ExportLayer extends Layer {
         return { output_1: tf.layers.conv2d({ filters:parseInt(this.kernelNumInput.value), kernelSize:parseInt(this.kernelInput.value), strides:parseInt(this.strideInput.value) , padding:"same"}).apply(inputs.input_1) as TF.SymbolicTensor };
     }
     protected getDisplayName(): string {
-        return msg("Convolution");
+        return this.editor.msg("Convolution");
     }
 }

@@ -1,6 +1,5 @@
 import { TransformedDataset } from '../dataset/dataset';
 import { Editor, Layer, SIZE_SEP } from "./index";
-import { msg } from '@lit/localize';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../../lib/tflib";
@@ -69,6 +68,6 @@ export class ExportLayer extends Layer {
         return { output_1: new AttentionLayer({}).apply(Object.values(inputs)) as TF.SymbolicTensor };
     }
     protected getDisplayName(): string {
-        return msg("Attention");
+        return this.editor.msg("Attention");
     }
 }

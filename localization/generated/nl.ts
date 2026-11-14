@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Aantal bewerkingen:`,
-'s026fba1543d336b2': `Bron van de functie`,
 's02bee65dc3f21363': `Aaneenschakeling`,
 's06471a3c2aed9b4b': `Invoerveld`,
 's066d70cf9d5e2915': `Outputs`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Elementgewijs optellen`,
 's12126d92849e3b53': `R2-score`,
 's15371f7ebfb1ad5e': `Trainingssnelheid:`,
-'s162c56231b25e6ff': `widget verbergen`,
-'s166d284a7cbc6181': `alleen-lezen`,
 's1703372e9470522b': `Vormlaag toevoegen`,
 's17ce2eafdc840624': `Verliesverdeling`,
-'s19a2ee331d08ad42': `(Waarschuwing: te veel tensor-gegevens kunnen het RAM-geheugen van het apparaat overbelasten en tijdens de training tot een crash leiden en in het ergste geval het hostsysteem blokkeren.)`,
+'s1b7f4af051183fee': `Voorkeursbackend`,
 's1bb08bff53933452': `Modelversie`,
 's1c3cbd3cbaee4368': `I/O-laag toevoegen`,
-'s1ca51d37e3dae07a': `Hierdoor kunnen de getransformeerde monsters op het rekenapparaat worden opgeslagen, waardoor de trainingssnelheid aanzienlijk wordt verhoogd, maar er ook aanzienlijk meer opslagruimte op het apparaat nodig is.`,
 's1e0afe8020901f1f': `Begin met trainen`,
 's1fa03b3ccbfc66a5': `Voorbewerking van afbeeldingen`,
 's22fde937cb709859': `Inzoomen`,
 's2454d1f117573457': `Precisie`,
+'s250a7fc28124c361': `Alleen-lezen`,
 's255857544a9d5ec0': `Reset`,
 's26b5b115b8b61794': `Feature Engineering Widget verborgen voor studenten.`,
-'s2b28da40a8490a78': `alleen functie-instellingen`,
 's2b6d43596140ef3a': `Doorgaan met training`,
 's2bc80ed8441b0831': `Geluid`,
-'s2c48e68704ff98c2': str`Uitvoerformaat ongeldig: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Ongeldige uitvoervorm: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Modellen worden geladen...`,
-'s32f2fa78e3267c4e': `alleen eigenschappen`,
 's334f9922638204ab': `Gebruikte dataset`,
-'s34af392b321cbfa6': `alles bewerken`,
 's38c7b3d048d88c07': `Geselecteerde items verwijderen`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Maximale laagparameters`,
+'s38ddf839c081bbaf': str`Dimensie ${0}`,
 's3aba710c340e1059': `Geen functiegegevens beschikbaar`,
-'s410415ac2406c84e': `Voorkeursbackend`,
+'s3c0b025716311430': `Maximaal aantal laagparameters`,
 's412b62989fc26d3a': `Selectie weergeven`,
 's446eb2b422b286af': `Momentum`,
 's49730f3d5751a433': `Bezig met laden...`,
-'s4c08da5f7528a7e3': `Modelbron`,
 's4f5eeeb48a97ea9a': `Verlies`,
 's547a4465533a6f5f': `Beeldcodering`,
 's5561b945c8cd59b0': `Batchgrootte`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Kwadratisch`,
 's58bee799432dbc69': `Toevoeging`,
 's58d6b1ecd5084538': `Stap`,
-'s5da30fd688d05a35': `Bewerkingsrechten`,
 's61ac82c68c336bb1': `Stop met trainen`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Deze gegevensset verwijderen?`,
 's62cecbd4b16886e7': `Verliesverdeling berekenen...`,
 's6557e193c4f15b9c': `Meerdere klassen per monster`,
 's6610206d0ad97d60': `Datasetkenmerkenkolommen:`,
 's66a5898632280fe2': `Verliesfunctie`,
+'s679b3c0fcb1bdadf': `Widget verbergen`,
 's6b0e650acd025eff': `Base64-tekenreeks`,
 's6c02f2ec8c3f52a4': `Nauwkeurigheid`,
 's6c5b5757b7756775': `Centrumweergave`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Getallen coderen`,
 's82c21acdbcd6e830': `Kracht`,
 's82caaf657b01a4d0': `Grijstinten`,
+'s84536b272065202c': `Maximaal aantal modelparameters`,
+'s858e82f5fff9aac3': `Modelbron`,
 's888d98a196a240d8': `Inputs`,
 's8a73af950772f702': `Geen model beschikbaar.`,
 's900c980bdb200fcf': `Tijdperken`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Afvlakken`,
 's981f232bd33ec927': `Tarief`,
 's99456cbda3e05fb0': `Terugroepen`,
-'s9b5ec9d0b70a0fac': `Maximale modelparameters`,
 's9eac77171764efaa': `Transponeren Convolutie`,
 'sa4ef4c5175793d6f': `Verlies voor monsters berekenen...`,
+'sa60f5f53cc29b8cf': `Alleen laageigenschappen`,
 'sa68f184fe626daf3': `Trainbare laag toevoegen`,
 'sa8082d7f7ef02f42': `Deze transformatie is niet van toepassing op de waarden`,
 'sa812ba9ded26aa98': `Model wordt geladen...`,
@@ -105,24 +95,18 @@
 'sab09aa21c8921bea': `Afbeelding wordt geladen`,
 'sabf86f32eba45ad4': `Kies een kolom om deze op te maken`,
 'saf01d58ece3a1e02': `Tensorflow wordt geladen...`,
-'sb03650788f41c135': str`van 
-          ${0} -voorbeelden
-        `,
+'sb03650788f41c135': str`van ${0} voorbeelden`,
 'sb05582ce916894da': `Uitzoomen`,
 'sb405f0898c39ca67': `Gegevenstype`,
 'sb4f1dffbb6be6302': `Weg`,
 'sb59d68ed12d46377': `Bezig met laden`,
 'sb633a04ba54b2dc0': `De laag heeft te veel trainbare parameters. Probeer de invoergrootte of de afstelbare eigenschappen te verminderen.`,
+'sb850938497d0a395': `Bewerkingsrechten`,
+'sbf1ff3369db980c0': `Ontwerpbron`,
 'sbfe9518a1fe4f185': `Hervorm`,
-'sc0e01e8b4662bec2': str`Voorspelling: 
-          ${0} ,  Label: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Voorspelling: ${0}, label: ${1}`,
 'sc2e0d19ed54560c8': `Exponentieel`,
-'sc3727a4fc25d7500': str`Voorspelling: 
-          ${0} ${1} -label: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Voorspelling: ${0} ${1}, label: ${2}`,
 'sc3d8f37ea5f4bd79': `Verschillen visualiseren...`,
 'sc6bff481def13d70': `Uitval`,
 'sc6d31f0cce31ddcf': `Totaal aantal parameters:`,
@@ -131,21 +115,19 @@
 'sce4efb732b98f946': `Eén klasse per monster`,
 'scfd25318edb1ebb1': `Aantal kernels`,
 'sd2223afb7d6b100d': `Type`,
-'sd6b72022c37e1ae0': `Ontwerpbron`,
 'sdab07807ff1b6b12': `Modelontwerpwidget verborgen voor studenten.`,
 'sdb1595f5c742dfbb': `Invoer`,
+'sdbaa4e0831238006': `Alles bewerken`,
 'sdde16b9126492f79': `Kernelgrootte`,
 'se13c154abb1c1cff': `Combinatielaag toevoegen`,
-'se1c4d8107171ecb2': str`Voorspelling: 
-          ${0} - Label: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Voorspelling: ${0} − label: ${1} = verschil: ${2}`,
 'se2b0409cadbd0a9e': `Selecteer bronelement`,
 'se2b49a41b39653fc': `Waarde-schaal`,
+'se6c8329ea1c50858': `Alleen kenmerkinstellingen`,
 'se7a532063ef7b740': `Lineair`,
 'seb198c12be265d61': `Uitgangsknooppunten`,
 'seffcca34b918ddc0': `Heeft een cyclische verwijzing.`,
+'sf02c84d2e8520b92': `Bron van kenmerken`,
 'sf1674aeb3dc2d55d': `Activering`,
 'sf21fb4f4b9e8911f': `Breedte`,
 'sf5290513fc7b466a': `Gebruikt tensor-geheugen:`,
@@ -155,4 +137,3 @@
 'sfd77270c3f54f664': `Uitvoer`,
 'sffdadf0a576fd802': `Hoogte`,
     };
-  

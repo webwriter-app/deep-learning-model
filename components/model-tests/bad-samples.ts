@@ -1,4 +1,4 @@
-import { msg } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../../localization/localizer";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
@@ -25,6 +25,11 @@ async function waitFor(condition: Function, interval = 10) {
 }
 
 export class BadSamples extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    private readonly msg = localizeElement(this);
     static scopedElements = {
         "sl-button": SlButton,
         "sl-button-group": SlButtonGroup,
@@ -123,7 +128,7 @@ export class BadSamples extends LitElementWw {
                 let featureName = inName.replace("in_","");
                 let sample = that.rawDataset.getSample(err.sample)
                 let features = that.tensorDataset.featureMaps;
-                let featureElement = features[featureName].renderTransformedValue(sample[featureName]);
+                let featureElement = features[featureName].renderTransformedValue(sample[featureName], this.msg);
                 tData.push(html`<td>${featureElement}</td>`)
             }
             for (let outName of model.outputNames) {
@@ -131,7 +136,7 @@ export class BadSamples extends LitElementWw {
                 let sample = that.rawDataset.getSample(err.sample)
                 let features = that.tensorDataset.featureMaps;
                 let label = await features[featureName].transform(sample[featureName]);
-                let featureElement = features[featureName].renderPredictionDifference(err.pred, label);
+                let featureElement = features[featureName].renderPredictionDifference(err.pred, label, this.msg);
                 //label.dispose();
                 tData.push(html`<td>${featureElement}</td>`)
             }
@@ -145,8 +150,8 @@ export class BadSamples extends LitElementWw {
 
     public render(): TemplateResult {
         if (this.model == null)
-            return html`<p>${msg("Loading model...")}</p>`
+            return html`<p>${this.msg("Loading model...")}</p>`
 
-        return html`${until(this.getBadSamples(), html`<p>${msg("Calculating Loss For Samples...")}</p>`)}`
+        return html`${until(this.getBadSamples(), html`<p>${this.msg("Calculating Loss For Samples...")}</p>`)}`
     }
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="so">
+  <file id="." original=".">
+    <unit id="label">
+      <segment>
+        <source>Deep Learning Model</source>
+        <target>Moodeel Barasho Qoto-dheer</target>
+      </segment>
+    </unit>
+    <unit id="description">
+      <segment>
+        <source>A set of blocks to create, train and evaluate deep learning models.</source>
+        <target>Urur baloogyo ah oo lagu sameeyo, lagu tababaro, laguna qiimeeyo moodeellada barashada qoto-dheer.</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-feature-engineering" original="./widgets/webwriter-feature-engineering">
+    <unit id="label">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>Farsamaynta astaamaha</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-designing" original="./widgets/webwriter-model-designing">
+    <unit id="label">
+      <segment>
+        <source>Model Designing</source>
+        <target>Naqshadaynta moodeelka</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-training" original="./widgets/webwriter-model-training">
+    <unit id="label">
+      <segment>
+        <source>Model Training</source>
+        <target>Tababarka moodeelka</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-prediction" original="./widgets/webwriter-model-prediction">
+    <unit id="label">
+      <segment>
+        <source>Model Prediction</source>
+        <target>Saadaasha moodeelka</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-evaluation" original="./widgets/webwriter-model-evaluation">
+    <unit id="label">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>Qiimaynta moodeelka</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./snippets/MNIST-Image-to-Number" original="./snippets/MNIST-Image-to-Number">
+    <unit id="label">
+      <segment>
+        <source>MNIST-Image To-Number</source>
+        <target>MNIST — Sawirka ilaa lambarka</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

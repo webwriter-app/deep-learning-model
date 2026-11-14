@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="sr-Cyrl" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s5687c76f8638e9a5">
+  <source>Select Dataset</source>
+<target>Изабери скуп података</target></trans-unit>
+<trans-unit id="sb4f1dffbb6be6302">
+  <source>Clear</source>
+<target>Очисти</target></trans-unit>
+<trans-unit id="sa812ba9ded26aa98">
+  <source>Loading model...</source>
+<target>Учитавање модела…</target></trans-unit>
+<trans-unit id="sa4ef4c5175793d6f">
+  <source>Calculating Loss For Samples...</source>
+<target>Израчун губитка за узорке…</target></trans-unit>
+<trans-unit id="s62cecbd4b16886e7">
+  <source>Calculating Loss Distribution...</source>
+<target>Израчун расподеле губитка…</target></trans-unit>
+<trans-unit id="se2b0409cadbd0a9e">
+  <source>Select Source Element</source>
+<target>Изабери изворни елемент</target></trans-unit>
+<trans-unit id="s412b62989fc26d3a">
+  <source>Show selection</source>
+<target>Прикажи избор</target></trans-unit>
+<trans-unit id="sc3727a4fc25d7500">
+  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
+<target>Предвиђање: <x id="0" equiv-text="${predClass} ${relation}" />, ознака: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+<trans-unit id="sc3d8f37ea5f4bd79">
+  <source>Visualizing Difference...</source>
+<target>Приказ разлике…</target></trans-unit>
+<trans-unit id="sd2223afb7d6b100d">
+  <source>Type</source>
+<target>Врста</target></trans-unit>
+<trans-unit id="sce4efb732b98f946">
+  <source>One Class per Sample</source>
+<target>Један класа по узорку</target></trans-unit>
+<trans-unit id="s6557e193c4f15b9c">
+  <source>Multiple Classes per Sample</source>
+<target>Више класа по узорку</target></trans-unit>
+<trans-unit id="s49730f3d5751a433">
+  <source>Loading...</source>
+<target>Учитавање…</target></trans-unit>
+<trans-unit id="sf21fb4f4b9e8911f">
+  <source>Width</source>
+<target>Ширина</target></trans-unit>
+<trans-unit id="sffdadf0a576fd802">
+  <source>Height</source>
+<target>Висина</target></trans-unit>
+<trans-unit id="s7098a15dd248ce2f">
+  <source>Import Format</source>
+<target>Формат увоза</target></trans-unit>
+<trans-unit id="sa91ddb7330d86835">
+  <source>Binary String</source>
+<target>Бинарни низ</target></trans-unit>
+<trans-unit id="s6b0e650acd025eff">
+  <source>Base64 String</source>
+<target>Низ Base64</target></trans-unit>
+<trans-unit id="s1fa03b3ccbfc66a5">
+  <source>Image Pre-Processing</source>
+<target>Предобрада слике</target></trans-unit>
+<trans-unit id="s94d63573d312fe9b">
+  <source>Identity</source>
+<target>Без промјене</target></trans-unit>
+<trans-unit id="s82caaf657b01a4d0">
+  <source>Grayscale</source>
+<target>Сиве нијансе</target></trans-unit>
+<trans-unit id="sc0e01e8b4662bec2">
+  <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
+<target>Предвиђање: <x id="0" equiv-text="${predValue}" />, ознака: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+<trans-unit id="sab09aa21c8921bea">
+  <source>Loading image</source>
+<target>Учитавање слике</target></trans-unit>
+<trans-unit id="se1c4d8107171ecb2">
+  <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
+<target>Предвиђање: <x id="0" equiv-text="${predValue}" /> − ознака: <x id="1" equiv-text="${labelValue}" /> = разлика: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+<trans-unit id="se2b49a41b39653fc">
+  <source>Value Scale</source>
+<target>Скала вредности</target></trans-unit>
+<trans-unit id="se7a532063ef7b740">
+  <source>Linear</source>
+<target>Линеарна</target></trans-unit>
+<trans-unit id="sc2e0d19ed54560c8">
+  <source>Exponential</source>
+<target>Експоненцијална</target></trans-unit>
+<trans-unit id="s5732d2277d736ba1">
+  <source>Quadratic</source>
+<target>Квадратна</target></trans-unit>
+<trans-unit id="sb59d68ed12d46377">
+  <source>Loading</source>
+<target>Учитавање</target></trans-unit>
+<trans-unit id="s07da69ddbc0d4c69">
+  <source>Function</source>
+<target>Функција</target></trans-unit>
+<trans-unit id="sf1674aeb3dc2d55d">
+  <source>Activation</source>
+<target>Активација</target></trans-unit>
+<trans-unit id="s0c5410258e1a4144">
+  <source>Elementwise Add</source>
+<target>Збрајање по елементима</target></trans-unit>
+<trans-unit id="s76b14a5034f53fd9">
+  <source>Attention</source>
+<target>Пажња</target></trans-unit>
+<trans-unit id="s02bee65dc3f21363">
+  <source>Concatenation</source>
+<target>Спајање</target></trans-unit>
+<trans-unit id="sdde16b9126492f79">
+  <source>Kernel Size</source>
+<target>Величина језгре</target></trans-unit>
+<trans-unit id="s58d6b1ecd5084538">
+  <source>Stride</source>
+<target>Корак</target></trans-unit>
+<trans-unit id="scfd25318edb1ebb1">
+  <source># of Kernels</source>
+<target>Број језгри</target></trans-unit>
+<trans-unit id="s96d63527efafa81b">
+  <source>Parameters: </source>
+<target>Параметри: </target></trans-unit>
+<trans-unit id="sb633a04ba54b2dc0">
+  <source>Layer has to many trainable parameters. Try reducing the input size or the tunable properties.</source>
+<target>Слој има превише параметара за тренирање. Покушај смањити величину улаза или прилагодити својства слоја.</target></trans-unit>
+<trans-unit id="sa8d9304ef4eefbd5">
+  <source>Convolution</source>
+<target>Конволуција</target></trans-unit>
+<trans-unit id="s981f232bd33ec927">
+  <source>Rate</source>
+<target>Стопа</target></trans-unit>
+<trans-unit id="sc6bff481def13d70">
+  <source>Dropout</source>
+<target>Испадање</target></trans-unit>
+<trans-unit id="seb198c12be265d61">
+  <source>Output Nodes</source>
+<target>Излазни чворови</target></trans-unit>
+<trans-unit id="s975087a831353889">
+  <source>Flatten</source>
+<target>Поравнај</target></trans-unit>
+<trans-unit id="seffcca34b918ddc0">
+  <source>Has a cyclic reference.</source>
+<target>Садржи цикличку референцу.</target></trans-unit>
+<trans-unit id="s3aba710c340e1059">
+  <source>No Feature Data avaliable</source>
+<target>Нема података о обележјима</target></trans-unit>
+<trans-unit id="s06471a3c2aed9b4b">
+  <source>Input field</source>
+<target>Улазно поље</target></trans-unit>
+<trans-unit id="sdb1595f5c742dfbb">
+  <source>Input</source>
+<target>Улаз</target></trans-unit>
+<trans-unit id="s82c21acdbcd6e830">
+  <source>Strength</source>
+<target>Јачина</target></trans-unit>
+<trans-unit id="s2bc80ed8441b0831">
+  <source>Noise</source>
+<target>Шум</target></trans-unit>
+<trans-unit id="sfd77270c3f54f664">
+  <source>Output</source>
+<target>Излаз</target></trans-unit>
+<trans-unit id="s66a5898632280fe2">
+  <source>Loss Function</source>
+<target>Функција губитка</target></trans-unit>
+<trans-unit id="s38ddf839c081bbaf">
+  <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
+<target>Димензија <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+<trans-unit id="s2c48e68704ff98c2">
+  <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
+<target>Неисправан облик излаза: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+<trans-unit id="sbfe9518a1fe4f185">
+  <source>Reshape</source>
+<target>Промени облик</target></trans-unit>
+<trans-unit id="s9eac77171764efaa">
+  <source>Transpose Convolution</source>
+<target>Транспонирана конволуција</target></trans-unit>
+<trans-unit id="s6610206d0ad97d60">
+  <source>Dataset Feature Colums:</source>
+<target>Колоне обележја у скупу података:</target></trans-unit>
+<trans-unit id="sabf86f32eba45ad4">
+  <source>Choose a column to format it</source>
+<target>Изабери колону да одредиш његов формат</target></trans-unit>
+<trans-unit id="scb42b9cdc2ad49e4">
+  <source>Tensor</source>
+<target>Тензор</target></trans-unit>
+<trans-unit id="sa8082d7f7ef02f42">
+  <source>This Transformation is not applicable for the values</source>
+<target>Ова трансформација није примењива на задане вредности</target></trans-unit>
+<trans-unit id="s70027acd13cd9df8">
+  <source>Class Encoding</source>
+<target>Кодирање класа</target></trans-unit>
+<trans-unit id="s7b59301169d2cc3d">
+  <source>Number Encoding</source>
+<target>Кодирање бројева</target></trans-unit>
+<trans-unit id="s547a4465533a6f5f">
+  <source>Image Encoding</source>
+<target>Кодирање слика</target></trans-unit>
+<trans-unit id="s917734d83f35efa3">
+  <source>Ignore</source>
+<target>Занемари</target></trans-unit>
+<trans-unit id="s6f0c402dbc70cade">
+  <source>Select how you want the string to be interpreted.</source>
+<target>Изабери како треба протумачити знаковни низ.</target></trans-unit>
+<trans-unit id="sb405f0898c39ca67">
+  <source>Data Type</source>
+<target>Врста података</target></trans-unit>
+<trans-unit id="saf01d58ece3a1e02">
+  <source>Loading Tensorflow...</source>
+<target>Учитавање TensorFlowа…</target></trans-unit>
+<trans-unit id="s26b5b115b8b61794">
+  <source>Feature Engineering Widget hidden from students.</source>
+<target>Виџет за обраду обележја скривен је ученицима.</target></trans-unit>
+<trans-unit id="s334f9922638204ab">
+  <source>Dataset using</source>
+<target>Скуп података користи</target></trans-unit>
+<trans-unit id="sb03650788f41c135">
+  <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
+<target>од <x id="0" equiv-text="${this.samples.length}" /> узорака</target></trans-unit>
+<trans-unit id="s018f0f27bee12bb9">
+  <source>Number of Operations:</source>
+<target>Број операција:</target></trans-unit>
+<trans-unit id="sc6d31f0cce31ddcf">
+  <source>Total Parameters:</source>
+<target>Укупно параметара:</target></trans-unit>
+<trans-unit id="s1c3cbd3cbaee4368">
+  <source>Add I/O Layer</source>
+<target>Додај улазни или излазни слој</target></trans-unit>
+<trans-unit id="sa68f184fe626daf3">
+  <source>Add Trainable Layer</source>
+<target>Додај слој за тренирање</target></trans-unit>
+<trans-unit id="s56eedda42b0bb66f">
+  <source>Add misc. Layer</source>
+<target>Додај остале слојеве</target></trans-unit>
+<trans-unit id="s1703372e9470522b">
+  <source>Add Shaping Layer</source>
+<target>Додај слој за обликовање</target></trans-unit>
+<trans-unit id="se13c154abb1c1cff">
+  <source>Add Combinational Layer</source>
+<target>Додај комбинацијски слој</target></trans-unit>
+<trans-unit id="s58bee799432dbc69">
+  <source>Addition</source>
+<target>Збрајање</target></trans-unit>
+<trans-unit id="s6c5b5757b7756775">
+  <source>Center View</source>
+<target>Центрирај приказ</target></trans-unit>
+<trans-unit id="s22fde937cb709859">
+  <source>Zoom In</source>
+<target>Повећај</target></trans-unit>
+<trans-unit id="sb05582ce916894da">
+  <source>Zoom Out</source>
+<target>Смањи</target></trans-unit>
+<trans-unit id="s38c7b3d048d88c07">
+  <source>Delete selected</source>
+<target>Избриши изабрано</target></trans-unit>
+<trans-unit id="sdab07807ff1b6b12">
+  <source>Model Design Widget hidden from students.</source>
+<target>Виџет за пројектовање модела скривен је ученицима.</target></trans-unit>
+<trans-unit id="s1bb08bff53933452">
+  <source>Model version</source>
+<target>Верзија модела</target></trans-unit>
+<trans-unit id="s2d0ac2f4cbd7b867">
+  <source>Loading models...</source>
+<target>Учитавање модела…</target></trans-unit>
+<trans-unit id="s0aedd465cb4737b2">
+  <source>Test / Evaluation</source>
+<target>Тестирање и евалуацију</target></trans-unit>
+<trans-unit id="s17ce2eafdc840624">
+  <source>Loss Distribution</source>
+<target>Расподела губитка</target></trans-unit>
+<trans-unit id="sf84bd835fc5a52ef">
+  <source>Worst Samples</source>
+<target>Најлошији узорци</target></trans-unit>
+<trans-unit id="s8a73af950772f702">
+  <source>No Model avaiable.</source>
+<target>Нема доступног модела.</target></trans-unit>
+<trans-unit id="s888d98a196a240d8">
+  <source>Inputs</source>
+<target>Улази</target></trans-unit>
+<trans-unit id="s066d70cf9d5e2915">
+  <source>Outputs</source>
+<target>Излази</target></trans-unit>
+<trans-unit id="sfb3198d46e57af91">
+  <source>Show Random Test Sample</source>
+<target>Прикажи насумични тестни узорак</target></trans-unit>
+<trans-unit id="sf99503650274b914">
+  <source>Optimizer</source>
+<target>Оптимизатор</target></trans-unit>
+<trans-unit id="s7a1c71b249a86643">
+  <source>Learning Rate</source>
+<target>Стопа учења</target></trans-unit>
+<trans-unit id="s446eb2b422b286af">
+  <source>Momentum</source>
+<target>Момент</target></trans-unit>
+<trans-unit id="s5561b945c8cd59b0">
+  <source>Batch Size</source>
+<target>Величина серије</target></trans-unit>
+<trans-unit id="s900c980bdb200fcf">
+  <source>Epochs</source>
+<target>Епохе</target></trans-unit>
+<trans-unit id="s1e0afe8020901f1f">
+  <source>Start training</source>
+<target>Започни тренирање</target></trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+<target>Поновно постави</target></trans-unit>
+<trans-unit id="s4f5eeeb48a97ea9a">
+  <source>Loss</source>
+<target>Губитак</target></trans-unit>
+<trans-unit id="s6c02f2ec8c3f52a4">
+  <source>Accuracy</source>
+<target>Точност</target></trans-unit>
+<trans-unit id="s12126d92849e3b53">
+  <source>R2 Score</source>
+<target>Резултат R²</target></trans-unit>
+<trans-unit id="s2454d1f117573457">
+  <source>Precision</source>
+<target>Прецизност</target></trans-unit>
+<trans-unit id="s99456cbda3e05fb0">
+  <source>Recall</source>
+<target>Одзив</target></trans-unit>
+<trans-unit id="s15371f7ebfb1ad5e">
+  <source>Training Speed:</source>
+<target>Брзина тренирања:</target></trans-unit>
+<trans-unit id="sf5290513fc7b466a">
+  <source>Used Tensor Memory:</source>
+<target>Заузета меморија тензора:</target></trans-unit>
+<trans-unit id="s56a6aa2100291b96">
+  <source>Model Training Widget hidden from students.</source>
+<target>Виџет за тренирање модела скривен је ученицима.</target></trans-unit>
+<trans-unit id="sc9d11ba788fd6aff">
+  <source>Start Training</source>
+<target>Започни тренирање</target></trans-unit>
+<trans-unit id="s61ac82c68c336bb1">
+  <source>Stop Training</source>
+<target>Заустави тренирање</target></trans-unit>
+<trans-unit id="sb850938497d0a395">
+  <source>Edit permissions</source>
+<target>Дозволе за уређивање</target></trans-unit>
+<trans-unit id="sdbaa4e0831238006">
+  <source>Edit everything</source>
+<target>Уреди све</target></trans-unit>
+<trans-unit id="s250a7fc28124c361">
+  <source>Read only</source>
+<target>Само читање</target></trans-unit>
+<trans-unit id="se6c8329ea1c50858">
+  <source>Feature settings only</source>
+<target>Само поставке обележја</target></trans-unit>
+<trans-unit id="s679b3c0fcb1bdadf">
+  <source>Hide widget</source>
+<target>Сакриј виџет</target></trans-unit>
+<trans-unit id="s731e8d25df7b1886">
+  <source>Delete dataset</source>
+<target>Избриши скуп података</target></trans-unit>
+<trans-unit id="s6266829135c39917">
+  <source>Delete this dataset?</source>
+<target>Избрисати овај скуп података?</target></trans-unit>
+<trans-unit id="sf02c84d2e8520b92">
+  <source>Feature source</source>
+<target>Извор обележја</target></trans-unit>
+<trans-unit id="sa60f5f53cc29b8cf">
+  <source>Layer properties only</source>
+<target>Само својства слојева</target></trans-unit>
+<trans-unit id="s84536b272065202c">
+  <source>Max model parameters</source>
+<target>Највећи број параметара модела</target></trans-unit>
+<trans-unit id="s3c0b025716311430">
+  <source>Max layer parameters</source>
+<target>Највећи број параметара слоја</target></trans-unit>
+<trans-unit id="s858e82f5fff9aac3">
+  <source>Model source</source>
+<target>Извор модела</target></trans-unit>
+<trans-unit id="sbf1ff3369db980c0">
+  <source>Design source</source>
+<target>Извор архитектуре</target></trans-unit>
+<trans-unit id="s1b7f4af051183fee">
+  <source>Preferred backend</source>
+<target>Преферирани рачунски систем</target></trans-unit>
+<trans-unit id="s0b453a19aa0f85a9">
+  <source>CPU</source>
+<target>CPU</target></trans-unit>
+<trans-unit id="s61f8c4b6c5f2ae63">
+  <source>WebGL (GPU)</source>
+<target>WebGL (GPU)</target></trans-unit>
+<trans-unit id="s559e9b10ba86261e">
+  <source>Cache training samples</source>
+<target>Сачувај узорке за тренирање у кеш</target></trans-unit>
+<trans-unit id="s2b6d43596140ef3a">
+  <source>Continue Training</source>
+<target>Настави тренирање</target></trans-unit>
+</body>
+</file>
+</xliff>

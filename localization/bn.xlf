@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file target-language="bn" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s5687c76f8638e9a5">
+  <source>Select Dataset</source>
+<target>ডেটাসেট নির্বাচন করুন</target></trans-unit>
+<trans-unit id="sb4f1dffbb6be6302">
+  <source>Clear</source>
+<target>মুছুন</target></trans-unit>
+<trans-unit id="sa812ba9ded26aa98">
+  <source>Loading model...</source>
+<target>মডেল লোড হচ্ছে...</target></trans-unit>
+<trans-unit id="sa4ef4c5175793d6f">
+  <source>Calculating Loss For Samples...</source>
+<target>নমুনাগুলোর ক্ষতি গণনা হচ্ছে...</target></trans-unit>
+<trans-unit id="s62cecbd4b16886e7">
+  <source>Calculating Loss Distribution...</source>
+<target>ক্ষতির বণ্টন গণনা হচ্ছে...</target></trans-unit>
+<trans-unit id="se2b0409cadbd0a9e">
+  <source>Select Source Element</source>
+<target>উৎস উপাদান নির্বাচন করুন</target></trans-unit>
+<trans-unit id="s412b62989fc26d3a">
+  <source>Show selection</source>
+<target>নির্বাচন দেখান</target></trans-unit>
+<trans-unit id="sc3727a4fc25d7500">
+  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
+<target>পূর্বাভাস: <x id="0" equiv-text="${predClass} ${relation}" /> লেবেল: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+<trans-unit id="sc3d8f37ea5f4bd79">
+  <source>Visualizing Difference...</source>
+<target>পার্থক্য দেখা হচ্ছে...</target></trans-unit>
+<trans-unit id="sd2223afb7d6b100d">
+  <source>Type</source>
+<target>ধরন</target></trans-unit>
+<trans-unit id="sce4efb732b98f946">
+  <source>One Class per Sample</source>
+<target>প্রতি নমুনায় একটি শ্রেণি</target></trans-unit>
+<trans-unit id="s6557e193c4f15b9c">
+  <source>Multiple Classes per Sample</source>
+<target>প্রতি নমুনায় একাধিক শ্রেণি</target></trans-unit>
+<trans-unit id="s49730f3d5751a433">
+  <source>Loading...</source>
+<target>লোড হচ্ছে...</target></trans-unit>
+<trans-unit id="sf21fb4f4b9e8911f">
+  <source>Width</source>
+<target>প্রস্থ</target></trans-unit>
+<trans-unit id="sffdadf0a576fd802">
+  <source>Height</source>
+<target>উচ্চতা</target></trans-unit>
+<trans-unit id="s7098a15dd248ce2f">
+  <source>Import Format</source>
+<target>আমদানির বিন্যাস</target></trans-unit>
+<trans-unit id="sa91ddb7330d86835">
+  <source>Binary String</source>
+<target>বাইনারি স্ট্রিং</target></trans-unit>
+<trans-unit id="s6b0e650acd025eff">
+  <source>Base64 String</source>
+<target>Base64 স্ট্রিং</target></trans-unit>
+<trans-unit id="s1fa03b3ccbfc66a5">
+  <source>Image Pre-Processing</source>
+<target>ছবির প্রাথমিক প্রক্রিয়াকরণ</target></trans-unit>
+<trans-unit id="s94d63573d312fe9b">
+  <source>Identity</source>
+<target>পরিচিতি</target></trans-unit>
+<trans-unit id="s82caaf657b01a4d0">
+  <source>Grayscale</source>
+<target>গ্রেস্কেল</target></trans-unit>
+<trans-unit id="sc0e01e8b4662bec2">
+  <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
+<target>পূর্বাভাস: <x id="0" equiv-text="${predValue}" />, লেবেল: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+<trans-unit id="sab09aa21c8921bea">
+  <source>Loading image</source>
+<target>ছবি লোড হচ্ছে</target></trans-unit>
+<trans-unit id="se1c4d8107171ecb2">
+  <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
+<target>পূর্বাভাস: <x id="0" equiv-text="${predValue}" /> - লেবেল: <x id="1" equiv-text="${labelValue}" /> = পার্থক্য: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+<trans-unit id="se2b49a41b39653fc">
+  <source>Value Scale</source>
+<target>মানের স্কেল</target></trans-unit>
+<trans-unit id="se7a532063ef7b740">
+  <source>Linear</source>
+<target>রৈখিক</target></trans-unit>
+<trans-unit id="sc2e0d19ed54560c8">
+  <source>Exponential</source>
+<target>সূচকীয়</target></trans-unit>
+<trans-unit id="s5732d2277d736ba1">
+  <source>Quadratic</source>
+<target>দ্বিঘাত</target></trans-unit>
+<trans-unit id="sb59d68ed12d46377">
+  <source>Loading</source>
+<target>লোড হচ্ছে</target></trans-unit>
+<trans-unit id="s07da69ddbc0d4c69">
+  <source>Function</source>
+<target>ফাংশন</target></trans-unit>
+<trans-unit id="sf1674aeb3dc2d55d">
+  <source>Activation</source>
+<target>অ্যাক্টিভেশন</target></trans-unit>
+<trans-unit id="s0c5410258e1a4144">
+  <source>Elementwise Add</source>
+<target>প্রতিটি উপাদান যোগ</target></trans-unit>
+<trans-unit id="s76b14a5034f53fd9">
+  <source>Attention</source>
+<target>অ্যাটেনশন</target></trans-unit>
+<trans-unit id="s02bee65dc3f21363">
+  <source>Concatenation</source>
+<target>সংযোজন</target></trans-unit>
+<trans-unit id="sdde16b9126492f79">
+  <source>Kernel Size</source>
+<target>কার্নেলের আকার</target></trans-unit>
+<trans-unit id="s58d6b1ecd5084538">
+  <source>Stride</source>
+<target>ধাপ</target></trans-unit>
+<trans-unit id="scfd25318edb1ebb1">
+  <source># of Kernels</source>
+<target>কার্নেলের সংখ্যা</target></trans-unit>
+<trans-unit id="s96d63527efafa81b">
+  <source>Parameters: </source>
+<target>প্যারামিটার:</target></trans-unit>
+<trans-unit id="sb633a04ba54b2dc0">
+  <source>Layer has to many trainable parameters. Try reducing the input size or the tunable properties.</source>
+<target>লেয়ারে প্রশিক্ষণযোগ্য প্যারামিটার খুব বেশি। ইনপুটের আকার বা পরিবর্তনযোগ্য বৈশিষ্ট্য কমান।</target></trans-unit>
+<trans-unit id="sa8d9304ef4eefbd5">
+  <source>Convolution</source>
+<target>কনভলিউশন</target></trans-unit>
+<trans-unit id="s981f232bd33ec927">
+  <source>Rate</source>
+<target>হার</target></trans-unit>
+<trans-unit id="sc6bff481def13d70">
+  <source>Dropout</source>
+<target>ড্রপআউট</target></trans-unit>
+<trans-unit id="seb198c12be265d61">
+  <source>Output Nodes</source>
+<target>আউটপুট নোড</target></trans-unit>
+<trans-unit id="s975087a831353889">
+  <source>Flatten</source>
+<target>ফ্ল্যাটেন</target></trans-unit>
+<trans-unit id="seffcca34b918ddc0">
+  <source>Has a cyclic reference.</source>
+<target>চক্রাকার রেফারেন্স রয়েছে।</target></trans-unit>
+<trans-unit id="s3aba710c340e1059">
+  <source>No Feature Data avaliable</source>
+<target>ফিচার ডেটা পাওয়া যায়নি</target></trans-unit>
+<trans-unit id="s06471a3c2aed9b4b">
+  <source>Input field</source>
+<target>ইনপুট ক্ষেত্র</target></trans-unit>
+<trans-unit id="sdb1595f5c742dfbb">
+  <source>Input</source>
+<target>ইনপুট</target></trans-unit>
+<trans-unit id="s82c21acdbcd6e830">
+  <source>Strength</source>
+<target>শক্তি</target></trans-unit>
+<trans-unit id="s2bc80ed8441b0831">
+  <source>Noise</source>
+<target>নয়েজ</target></trans-unit>
+<trans-unit id="sfd77270c3f54f664">
+  <source>Output</source>
+<target>আউটপুট</target></trans-unit>
+<trans-unit id="s66a5898632280fe2">
+  <source>Loss Function</source>
+<target>লস ফাংশন</target></trans-unit>
+<trans-unit id="s38ddf839c081bbaf">
+  <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
+<target><x id="0" equiv-text="${(i + 1)}" />-তম মাত্রা</target></trans-unit>
+<trans-unit id="s2c48e68704ff98c2">
+  <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
+<target>আউটপুটের আকৃতি অবৈধ: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+<trans-unit id="sbfe9518a1fe4f185">
+  <source>Reshape</source>
+<target>আকৃতি বদলান</target></trans-unit>
+<trans-unit id="s9eac77171764efaa">
+  <source>Transpose Convolution</source>
+<target>ট্রান্সপোজ কনভলিউশন</target></trans-unit>
+<trans-unit id="s6610206d0ad97d60">
+  <source>Dataset Feature Colums:</source>
+<target>ডেটাসেটের বৈশিষ্ট্য কলাম:</target></trans-unit>
+<trans-unit id="sabf86f32eba45ad4">
+  <source>Choose a column to format it</source>
+<target>বিন্যাস করতে একটি কলাম নির্বাচন করুন</target></trans-unit>
+<trans-unit id="scb42b9cdc2ad49e4">
+  <source>Tensor</source>
+<target>টেনসর</target></trans-unit>
+<trans-unit id="sa8082d7f7ef02f42">
+  <source>This Transformation is not applicable for the values</source>
+<target>এই মানগুলোর ক্ষেত্রে এই রূপান্তর প্রযোজ্য নয়</target></trans-unit>
+<trans-unit id="s70027acd13cd9df8">
+  <source>Class Encoding</source>
+<target>শ্রেণি এনকোডিং</target></trans-unit>
+<trans-unit id="s7b59301169d2cc3d">
+  <source>Number Encoding</source>
+<target>সংখ্যা এনকোডিং</target></trans-unit>
+<trans-unit id="s547a4465533a6f5f">
+  <source>Image Encoding</source>
+<target>ছবি এনকোডিং</target></trans-unit>
+<trans-unit id="s917734d83f35efa3">
+  <source>Ignore</source>
+<target>উপেক্ষা করুন</target></trans-unit>
+<trans-unit id="s6f0c402dbc70cade">
+  <source>Select how you want the string to be interpreted.</source>
+<target>স্ট্রিংটি কীভাবে ব্যাখ্যা করতে চান তা নির্বাচন করুন।</target></trans-unit>
+<trans-unit id="sb405f0898c39ca67">
+  <source>Data Type</source>
+<target>ডেটার ধরন</target></trans-unit>
+<trans-unit id="saf01d58ece3a1e02">
+  <source>Loading Tensorflow...</source>
+<target>TensorFlow লোড হচ্ছে...</target></trans-unit>
+<trans-unit id="s26b5b115b8b61794">
+  <source>Feature Engineering Widget hidden from students.</source>
+<target>শিক্ষার্থীদের কাছ থেকে ফিচার ইঞ্জিনিয়ারিং উইজেটটি লুকানো হয়েছে।</target></trans-unit>
+<trans-unit id="s334f9922638204ab">
+  <source>Dataset using</source>
+<target>ডেটাসেটে আছে</target></trans-unit>
+<trans-unit id="sb03650788f41c135">
+  <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
+<target>মোট <x id="0" equiv-text="${this.samples.length}" />টি নমুনার মধ্যে</target></trans-unit>
+<trans-unit id="s018f0f27bee12bb9">
+  <source>Number of Operations:</source>
+<target>অপারেশনের সংখ্যা:</target></trans-unit>
+<trans-unit id="sc6d31f0cce31ddcf">
+  <source>Total Parameters:</source>
+<target>মোট প্যারামিটার:</target></trans-unit>
+<trans-unit id="s1c3cbd3cbaee4368">
+  <source>Add I/O Layer</source>
+<target>ইনপুট/আউটপুট স্তর যোগ করুন</target></trans-unit>
+<trans-unit id="sa68f184fe626daf3">
+  <source>Add Trainable Layer</source>
+<target>প্রশিক্ষণযোগ্য স্তর যোগ করুন</target></trans-unit>
+<trans-unit id="s56eedda42b0bb66f">
+  <source>Add misc. Layer</source>
+<target>অন্যান্য স্তর যোগ করুন</target></trans-unit>
+<trans-unit id="s1703372e9470522b">
+  <source>Add Shaping Layer</source>
+<target>আকৃতি নির্ধারণের স্তর যোগ করুন</target></trans-unit>
+<trans-unit id="se13c154abb1c1cff">
+  <source>Add Combinational Layer</source>
+<target>সমন্বয়মূলক স্তর যোগ করুন</target></trans-unit>
+<trans-unit id="s58bee799432dbc69">
+  <source>Addition</source>
+<target>যোগ</target></trans-unit>
+<trans-unit id="s6c5b5757b7756775">
+  <source>Center View</source>
+<target>দৃশ্যের কেন্দ্রবিন্দু</target></trans-unit>
+<trans-unit id="s22fde937cb709859">
+  <source>Zoom In</source>
+<target>জুম ইন</target></trans-unit>
+<trans-unit id="sb05582ce916894da">
+  <source>Zoom Out</source>
+<target>জুম আউট</target></trans-unit>
+<trans-unit id="s38c7b3d048d88c07">
+  <source>Delete selected</source>
+<target>নির্বাচিতটি মুছুন</target></trans-unit>
+<trans-unit id="sdab07807ff1b6b12">
+  <source>Model Design Widget hidden from students.</source>
+<target>শিক্ষার্থীদের কাছ থেকে মডেল ডিজাইন উইজেটটি লুকানো হয়েছে।</target></trans-unit>
+<trans-unit id="s1bb08bff53933452">
+  <source>Model version</source>
+<target>মডেলের সংস্করণ</target></trans-unit>
+<trans-unit id="s2d0ac2f4cbd7b867">
+  <source>Loading models...</source>
+<target>মডেলগুলো লোড হচ্ছে...</target></trans-unit>
+<trans-unit id="s0aedd465cb4737b2">
+  <source>Test / Evaluation</source>
+<target>পরীক্ষা / মূল্যায়ন</target></trans-unit>
+<trans-unit id="s17ce2eafdc840624">
+  <source>Loss Distribution</source>
+<target>ক্ষতির বণ্টন</target></trans-unit>
+<trans-unit id="sf84bd835fc5a52ef">
+  <source>Worst Samples</source>
+<target>সবচেয়ে খারাপ নমুনা</target></trans-unit>
+<trans-unit id="s8a73af950772f702">
+  <source>No Model avaiable.</source>
+<target>কোনো মডেল পাওয়া যায়নি।</target></trans-unit>
+<trans-unit id="s888d98a196a240d8">
+  <source>Inputs</source>
+<target>ইনপুট</target></trans-unit>
+<trans-unit id="s066d70cf9d5e2915">
+  <source>Outputs</source>
+<target>আউটপুট</target></trans-unit>
+<trans-unit id="sfb3198d46e57af91">
+  <source>Show Random Test Sample</source>
+<target>এলোমেলো পরীক্ষামূলক নমুনা দেখান</target></trans-unit>
+<trans-unit id="sf99503650274b914">
+  <source>Optimizer</source>
+<target>অপ্টিমাইজার</target></trans-unit>
+<trans-unit id="s7a1c71b249a86643">
+  <source>Learning Rate</source>
+<target>লার্নিং রেট</target></trans-unit>
+<trans-unit id="s446eb2b422b286af">
+  <source>Momentum</source>
+<target>মোমেন্টাম</target></trans-unit>
+<trans-unit id="s5561b945c8cd59b0">
+  <source>Batch Size</source>
+<target>ব্যাচের আকার</target></trans-unit>
+<trans-unit id="s900c980bdb200fcf">
+  <source>Epochs</source>
+<target>ইপক</target></trans-unit>
+<trans-unit id="s1e0afe8020901f1f">
+  <source>Start training</source>
+<target>প্রশিক্ষণ শুরু করুন</target></trans-unit>
+<trans-unit id="s255857544a9d5ec0">
+  <source>Reset</source>
+<target>রিসেট</target></trans-unit>
+<trans-unit id="s4f5eeeb48a97ea9a">
+  <source>Loss</source>
+<target>ক্ষতি</target></trans-unit>
+<trans-unit id="s6c02f2ec8c3f52a4">
+  <source>Accuracy</source>
+<target>নির্ভুলতা</target></trans-unit>
+<trans-unit id="s12126d92849e3b53">
+  <source>R2 Score</source>
+<target>R2 স্কোর</target></trans-unit>
+<trans-unit id="s2454d1f117573457">
+  <source>Precision</source>
+<target>প্রিসিশন</target></trans-unit>
+<trans-unit id="s99456cbda3e05fb0">
+  <source>Recall</source>
+<target>রিকল</target></trans-unit>
+<trans-unit id="s15371f7ebfb1ad5e">
+  <source>Training Speed:</source>
+<target>প্রশিক্ষণের গতি:</target></trans-unit>
+<trans-unit id="sf5290513fc7b466a">
+  <source>Used Tensor Memory:</source>
+<target>ব্যবহৃত টেনসর মেমরি:</target></trans-unit>
+<trans-unit id="s56a6aa2100291b96">
+  <source>Model Training Widget hidden from students.</source>
+<target>শিক্ষার্থীদের কাছ থেকে মডেল প্রশিক্ষণ উইজেটটি লুকানো হয়েছে।</target></trans-unit>
+<trans-unit id="sc9d11ba788fd6aff">
+  <source>Start Training</source>
+<target>প্রশিক্ষণ শুরু করুন</target></trans-unit>
+<trans-unit id="s61ac82c68c336bb1">
+  <source>Stop Training</source>
+<target>প্রশিক্ষণ থামান</target></trans-unit>
+<trans-unit id="sb850938497d0a395">
+  <source>Edit permissions</source>
+<target>সম্পাদনার অনুমতি</target></trans-unit>
+<trans-unit id="sdbaa4e0831238006">
+  <source>Edit everything</source>
+<target>সবকিছু সম্পাদনা করুন</target></trans-unit>
+<trans-unit id="s250a7fc28124c361">
+  <source>Read only</source>
+<target>শুধু পড়ুন</target></trans-unit>
+<trans-unit id="se6c8329ea1c50858">
+  <source>Feature settings only</source>
+<target>শুধু বৈশিষ্ট্যের সেটিংস</target></trans-unit>
+<trans-unit id="s679b3c0fcb1bdadf">
+  <source>Hide widget</source>
+<target>উইজেট লুকান</target></trans-unit>
+<trans-unit id="s731e8d25df7b1886">
+  <source>Delete dataset</source>
+<target>ডেটাসেট মুছুন</target></trans-unit>
+<trans-unit id="s6266829135c39917">
+  <source>Delete this dataset?</source>
+<target>এই ডেটাসেটটি মুছবেন?</target></trans-unit>
+<trans-unit id="sf02c84d2e8520b92">
+  <source>Feature source</source>
+<target>বৈশিষ্ট্যের উৎস</target></trans-unit>
+<trans-unit id="sa60f5f53cc29b8cf">
+  <source>Layer properties only</source>
+<target>শুধু স্তরের বৈশিষ্ট্য</target></trans-unit>
+<trans-unit id="s84536b272065202c">
+  <source>Max model parameters</source>
+<target>মডেলের সর্বোচ্চ প্যারামিটার</target></trans-unit>
+<trans-unit id="s3c0b025716311430">
+  <source>Max layer parameters</source>
+<target>স্তরের সর্বোচ্চ প্যারামিটার</target></trans-unit>
+<trans-unit id="s858e82f5fff9aac3">
+  <source>Model source</source>
+<target>মডেলের উৎস</target></trans-unit>
+<trans-unit id="sbf1ff3369db980c0">
+  <source>Design source</source>
+<target>ডিজাইনের উৎস</target></trans-unit>
+<trans-unit id="s1b7f4af051183fee">
+  <source>Preferred backend</source>
+<target>পছন্দের ব্যাকএন্ড</target></trans-unit>
+<trans-unit id="s0b453a19aa0f85a9">
+  <source>CPU</source>
+<target>CPU</target></trans-unit>
+<trans-unit id="s61f8c4b6c5f2ae63">
+  <source>WebGL (GPU)</source>
+<target>WebGL (GPU)</target></trans-unit>
+<trans-unit id="s559e9b10ba86261e">
+  <source>Cache training samples</source>
+<target>প্রশিক্ষণের নমুনা ক্যাশে করুন</target></trans-unit>
+<trans-unit id="s2b6d43596140ef3a">
+  <source>Continue Training</source>
+<target>প্রশিক্ষণ চালিয়ে যান</target></trans-unit>
+</body>
+</file>
+</xliff>

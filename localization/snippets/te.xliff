@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="te">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — అంకెలను చదవడం</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ఫీచర్ ఇంజినీరింగ్</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>మొదట డేటాసెట్‌ను దిగుమతి చేసి ముందస్తు ప్రాసెసింగ్ చేస్తాం. డేటాసెట్‌లోని పాఠ్యాన్ని టెన్సర్‌లుగా ఎలా అర్థం చేసుకోవాలో కంప్యూటర్‌కు చెప్పాలి.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>మోడల్ రూపకల్పన</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>తర్వాత అందుబాటులో ఉన్న అంకెలలో ఏది చిత్రంలో ఉందో గుర్తించే మోడల్‌ను రూపొందిస్తాం. తరగతిని విశ్వసనీయంగా గుర్తించేందుకు ఇక్కడ సరళమైన కన్వల్యూషన్ తర్వాత డెన్స్ లేయర్‌ను ఉపయోగిస్తాం.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>మోడల్ శిక్షణ</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>డేటాసెట్‌పై నష్టాన్ని కనిష్ఠం చేయడానికి మోడల్ నిర్మాణాన్ని ఉపయోగించి దాని వెయిట్‌లను ఆప్టిమైజ్ చేస్తాం. ప్రతి బ్యాచ్ తర్వాత వెయిట్‌లు ఆప్టిమైజ్ అవుతాయి. అన్ని శిక్షణ నమూనాలు ప్రాసెస్ అయిన తర్వాత కొత్త ఎపోక్ మొదలై ప్రక్రియ మళ్లీ జరుగుతుంది.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>మోడల్ అంచనా</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>శిక్షణ తర్వాత కొత్త అంకెలను వర్గీకరించడానికి మోడల్‌ను ఉపయోగించవచ్చు.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>మోడల్ మూల్యాంకనం</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>మోడల్ నాణ్యతను అంచనా వేయడానికి, ఇతర మోడళ్లతో పోల్చడానికి సాధారణంగా పరీక్షల సమితిని నిర్వహిస్తాం. ఇవి మోడల్ పనితీరుపై అవగాహన ఇస్తాయి.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

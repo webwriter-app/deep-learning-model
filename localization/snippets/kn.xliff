@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="kn">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — ಸಂಖ್ಯೆಗಳನ್ನು ಓದುವುದು</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ವೈಶಿಷ್ಟ್ಯ ಎಂಜಿನಿಯರಿಂಗ್</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ಮೊದಲು ಡೇಟಾಸೆಟ್ ಅನ್ನು ಆಮದು ಮಾಡಿ ಪೂರ್ವಸಂಸ್ಕರಣೆ ಮಾಡುತ್ತೇವೆ. ಡೇಟಾಸೆಟ್‌ನ ಪಠ್ಯವನ್ನು ಟೆನ್ಸರ್‌ಗಳಾಗಿ ಹೇಗೆ ಅರ್ಥೈಸಬೇಕು ಎಂದು ಕಂಪ್ಯೂಟರ್‌ಗೆ ತಿಳಿಸಬೇಕು.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ಮಾದರಿ ವಿನ್ಯಾಸ</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ನಂತರ ಲಭ್ಯವಿರುವ ಸಂಖ್ಯೆಗಳ ಪೈಕಿ ಚಿತ್ರದಲ್ಲಿ ಯಾವುದು ತೋರಿಸಲಾಗಿದೆ ಎಂದು ವರ್ಗೀಕರಿಸುವ ಮಾದರಿಯನ್ನು ರೂಪಿಸುತ್ತೇವೆ. ವರ್ಗವನ್ನು ವಿಶ್ವಾಸಾರ್ಹವಾಗಿ ಗುರುತಿಸಲು ಇಲ್ಲಿ ಸರಳ ಕನ್ವಲ್ಯೂಷನ್ ನಂತರ ಡೆನ್ಸ್ ಲೇಯರ್ ಬಳಸಲಾಗಿದೆ.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ಮಾದರಿ ತರಬೇತಿ</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ಡೇಟಾಸೆಟ್‌ನಲ್ಲಿನ ನಷ್ಟವನ್ನು ಕಡಿಮೆ ಮಾಡಲು ಮಾದರಿಯ ವಾಸ್ತುಶಿಲ್ಪವನ್ನು ಬಳಸಿ ಅದರ ತೂಕಗಳನ್ನು ಆಪ್ಟಿಮೈಸ್ ಮಾಡುತ್ತೇವೆ. ಪ್ರತಿ ಬ್ಯಾಚ್ ನಂತರ ತೂಕಗಳನ್ನು ಸುಧಾರಿಸಲಾಗುತ್ತದೆ. ಎಲ್ಲ ತರಬೇತಿ ಮಾದರಿಗಳನ್ನು ಸಂಸ್ಕರಿಸಿದಾಗ ಹೊಸ ಎಪೋಕ್ ಪ್ರಾರಂಭವಾಗಿ ಪ್ರಕ್ರಿಯೆ ಮತ್ತೆ ನಡೆಯುತ್ತದೆ.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ಮಾದರಿ ಭವಿಷ್ಯವಾಣಿ</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>ತರಬೇತಿಯ ನಂತರ ಹೊಸ ಸಂಖ್ಯೆಗಳನ್ನು ವರ್ಗೀಕರಿಸಲು ಮಾದರಿಯನ್ನು ಬಳಸಬಹುದು.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ಮಾದರಿ ಮೌಲ್ಯಮಾಪನ</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ಮಾದರಿಯ ಗುಣಮಟ್ಟವನ್ನು ಅಳೆಯಲು ಮತ್ತು ಇತರ ಮಾದರಿಗಳೊಂದಿಗೆ ಹೋಲಿಸಲು ಸಾಮಾನ್ಯವಾಗಿ ಪರೀಕ್ಷೆಗಳ ಸರಣಿಯನ್ನು ನಡೆಸುತ್ತೇವೆ. ಅವು ಮಾದರಿಯ ಕಾರ್ಯಕ್ಷಮತೆಯ ಕುರಿತು ತಿಳಿವಳಿಕೆ ನೀಡುತ್ತವೆ.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

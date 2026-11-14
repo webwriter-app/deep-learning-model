@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="ko">
     <body>
       <trans-unit id="s6610206d0ad97d60">
@@ -338,23 +339,11 @@
         <target>데이터셋 사용</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of 
-          <x id="0" equiv-text="${this.samples.length}"/> Samples
-        </source>
-        <target>of
-          <x id="0" equiv-text="${this.samples.length}"/> Samples
-        </target>
-      </trans-unit>
+        <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
+<target>전체 샘플 <x id="0" equiv-text="${this.samples.length}" />개 중</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predClass} ${relation}"/> Label: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </source>
-        <target>예측:
-          <x id="0" equiv-text="${predClass} ${span}"/> 라벨: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
+<target>예측: <x id="0" equiv-text="${predClass} ${relation}" />, 레이블: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>차이 시각화하기...</target>
@@ -412,17 +401,8 @@
         <target>그레이스케일</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/> - Label: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </source>
-        <target>예측:
-          <x id="0" equiv-text="${predValue}"/> - 레이블:
-          <x id="1" equiv-text="${labelValue}"/> = 차이: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
+<target>예측: <x id="0" equiv-text="${predValue}" /> − 레이블: <x id="1" equiv-text="${labelValue}" /> = 차이: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>가치 척도</target>
@@ -492,33 +472,14 @@
         <target>손실 함수</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source>
-          <x id="0" equiv-text="${(i + 1)}"/>th dim
-        </source>
-        <target>
-          <x id="0" equiv-text="${(i + 1)}"/> th 차원
-        </target>
-      </trans-unit>
+        <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
+<target><x id="0" equiv-text="${(i + 1)}" />번째 차원</target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </source>
-        <target>출력 형식이 잘못되었습니다:
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </target>
-      </trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
+<target>출력 형태가 잘못되었습니다: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/>,  Label: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </source>
-        <target>예측:
-          <x id="0" equiv-text="${predValue}"/> ,  라벨: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
+<target>예측: <x id="0" equiv-text="${predValue}" />, 레이블: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>이미지 로딩 중</target>
@@ -547,6 +508,45 @@
         <source>Delete selected</source>
         <target>선택한 항목 삭제</target>
       </trans-unit>
-    </body>
+    <trans-unit id="sb850938497d0a395">
+  <source>Edit permissions</source>
+<target>편집 권한</target></trans-unit>
+<trans-unit id="sdbaa4e0831238006">
+  <source>Edit everything</source>
+<target>모두 편집</target></trans-unit>
+<trans-unit id="s250a7fc28124c361">
+  <source>Read only</source>
+<target>읽기 전용</target></trans-unit>
+<trans-unit id="se6c8329ea1c50858">
+  <source>Feature settings only</source>
+<target>특성 설정만</target></trans-unit>
+<trans-unit id="s679b3c0fcb1bdadf">
+  <source>Hide widget</source>
+<target>위젯 숨기기</target></trans-unit>
+<trans-unit id="s6266829135c39917">
+  <source>Delete this dataset?</source>
+<target>이 데이터세트를 삭제할까요?</target></trans-unit>
+<trans-unit id="sf02c84d2e8520b92">
+  <source>Feature source</source>
+<target>특성 소스</target></trans-unit>
+<trans-unit id="sa60f5f53cc29b8cf">
+  <source>Layer properties only</source>
+<target>계층 속성만</target></trans-unit>
+<trans-unit id="s84536b272065202c">
+  <source>Max model parameters</source>
+<target>최대 모델 매개변수 수</target></trans-unit>
+<trans-unit id="s3c0b025716311430">
+  <source>Max layer parameters</source>
+<target>최대 계층 매개변수 수</target></trans-unit>
+<trans-unit id="s858e82f5fff9aac3">
+  <source>Model source</source>
+<target>모델 소스</target></trans-unit>
+<trans-unit id="sbf1ff3369db980c0">
+  <source>Design source</source>
+<target>설계 소스</target></trans-unit>
+<trans-unit id="s1b7f4af051183fee">
+  <source>Preferred backend</source>
+<target>선호 백엔드</target></trans-unit>
+</body>
   </file>
 </xliff>

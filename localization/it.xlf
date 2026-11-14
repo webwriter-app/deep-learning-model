@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="it">
     <body>
       <trans-unit id="s6610206d0ad97d60">
@@ -338,24 +339,11 @@
         <target>Set di dati utilizzando</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of 
-          <x id="0" equiv-text="${this.samples.length}"/> Samples
-        </source>
-        <target>di 
-          Campioni 
-          <x id="0" equiv-text="${this.samples.length}"/>
-        </target>
-      </trans-unit>
+        <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
+<target>su <x id="0" equiv-text="${this.samples.length}" /> campioni</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predClass} ${relation}"/> Label: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </source>
-        <target>Previsione: 
-          <x id="0" equiv-text="${predClass} ${span}"/> Etichetta: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
+<target>Previsione: <x id="0" equiv-text="${predClass} ${relation}" />, etichetta: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>Visualizzare la differenza...</target>
@@ -413,17 +401,8 @@
         <target>Scala di grigi</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/> - Label: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </source>
-        <target>Previsione: 
-          <x id="0" equiv-text="${predValue}"/> - Etichetta: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
+<target>Previsione: <x id="0" equiv-text="${predValue}" /> − etichetta: <x id="1" equiv-text="${labelValue}" /> = differenza: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>Scala dei valori</target>
@@ -493,33 +472,14 @@
         <target>Funzione di perdita</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source>
-          <x id="0" equiv-text="${(i + 1)}"/>th dim
-        </source>
-        <target>
-          <x id="0" equiv-text="${(i + 1)}"/> la dimensione
-        </target>
-      </trans-unit>
+        <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
+<target>Dimensione <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </source>
-        <target>Forma dell'output non valida: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </target>
-      </trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
+<target>Forma dell’output non valida: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/>,  Label: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </source>
-        <target>Previsione: 
-          <x id="0" equiv-text="${predValue}"/> ,  Etichetta: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
+<target>Previsione: <x id="0" equiv-text="${predValue}" />, etichetta: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>Caricamento immagine</target>
@@ -548,6 +508,45 @@
         <source>Delete selected</source>
         <target>Elimina selezionati</target>
       </trans-unit>
-    </body>
+    <trans-unit id="sb850938497d0a395">
+  <source>Edit permissions</source>
+<target>Autorizzazioni di modifica</target></trans-unit>
+<trans-unit id="sdbaa4e0831238006">
+  <source>Edit everything</source>
+<target>Modifica tutto</target></trans-unit>
+<trans-unit id="s250a7fc28124c361">
+  <source>Read only</source>
+<target>Sola lettura</target></trans-unit>
+<trans-unit id="se6c8329ea1c50858">
+  <source>Feature settings only</source>
+<target>Solo impostazioni delle caratteristiche</target></trans-unit>
+<trans-unit id="s679b3c0fcb1bdadf">
+  <source>Hide widget</source>
+<target>Nascondi il widget</target></trans-unit>
+<trans-unit id="s6266829135c39917">
+  <source>Delete this dataset?</source>
+<target>Eliminare questo set di dati?</target></trans-unit>
+<trans-unit id="sf02c84d2e8520b92">
+  <source>Feature source</source>
+<target>Origine delle caratteristiche</target></trans-unit>
+<trans-unit id="sa60f5f53cc29b8cf">
+  <source>Layer properties only</source>
+<target>Solo proprietà dei livelli</target></trans-unit>
+<trans-unit id="s84536b272065202c">
+  <source>Max model parameters</source>
+<target>Numero massimo di parametri del modello</target></trans-unit>
+<trans-unit id="s3c0b025716311430">
+  <source>Max layer parameters</source>
+<target>Numero massimo di parametri del livello</target></trans-unit>
+<trans-unit id="s858e82f5fff9aac3">
+  <source>Model source</source>
+<target>Origine del modello</target></trans-unit>
+<trans-unit id="sbf1ff3369db980c0">
+  <source>Design source</source>
+<target>Origine dell’architettura</target></trans-unit>
+<trans-unit id="s1b7f4af051183fee">
+  <source>Preferred backend</source>
+<target>Backend preferito</target></trans-unit>
+</body>
   </file>
 </xliff>

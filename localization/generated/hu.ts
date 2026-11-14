@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -10,7 +10,6 @@
 
     export const templates = {
       's018f0f27bee12bb9': `Műveletek száma:`,
-'s026fba1543d336b2': `Forrás`,
 's02bee65dc3f21363': `Összekapcsolás`,
 's06471a3c2aed9b4b': `Beviteli mező`,
 's066d70cf9d5e2915': `Kimenetek`,
@@ -20,42 +19,30 @@
 's0c5410258e1a4144': `Elemek szerinti összeadás`,
 's12126d92849e3b53': `R2 pontszám`,
 's15371f7ebfb1ad5e': `Edzés sebessége:`,
-'s162c56231b25e6ff': `widget elrejtése`,
-'s166d284a7cbc6181': `csak olvasható`,
 's1703372e9470522b': `Alakító réteg hozzáadása`,
 's17ce2eafdc840624': `Veszteség elosztása`,
-'s19a2ee331d08ad42': `(Figyelem: A túl sok tenzoradat túlterhelheti az eszköz RAM-ját, ami a képzés során összeomlást okozhat, és a legrosszabb esetben a gazdaszerver rendszerét is leállíthatja.)`,
+'s1b7f4af051183fee': `Előnyben részesített számítási háttérrendszer`,
 's1bb08bff53933452': `Modell verzió`,
 's1c3cbd3cbaee4368': `I/O réteg hozzáadása`,
-'s1ca51d37e3dae07a': `Ez lehetővé teszi, hogy az átalakított minták a számítási eszközön tárolódjanak, ami jelentősen növeli a képzési sebességet, de lényegesen több tárhelyet igényel az eszközön.`,
 's1e0afe8020901f1f': `Kezdje el az edzést`,
 's1fa03b3ccbfc66a5': `Kép előfeldolgozás`,
 's22fde937cb709859': `Nagyítás`,
 's2454d1f117573457': `Precíziós`,
+'s250a7fc28124c361': `Csak olvasható`,
 's255857544a9d5ec0': `Visszaállítás`,
 's26b5b115b8b61794': `A Feature Engineering Widget el van rejtve a hallgatók elől.`,
-'s2b28da40a8490a78': `csak funkcióbeállítások`,
 's2b6d43596140ef3a': `Folytassa a képzést`,
 's2bc80ed8441b0831': `Zaj`,
-'s2c48e68704ff98c2': str`Kimeneti forma érvénytelen: 
-          ${0} != 
-          ${1}
-        `,
+'s2c48e68704ff98c2': str`Érvénytelen kimeneti alak: ${0} ≠ ${1}`,
 's2d0ac2f4cbd7b867': `Modellek betöltése...`,
-'s32f2fa78e3267c4e': `csak tulajdonságok`,
 's334f9922638204ab': `Adatkészlet használata`,
-'s34af392b321cbfa6': `mindent szerkeszteni`,
 's38c7b3d048d88c07': `A kijelöltek törlése`,
-'s38ddf839c081bbaf': str`
-          ${0} th dim
-        `,
-'s39e9054ae5edaf30': `Maximális réteg paraméterek`,
+'s38ddf839c081bbaf': str`${0}. dimenzió`,
 's3aba710c340e1059': `Nincs elérhető funkcióadat`,
-'s410415ac2406c84e': `Előnyben részesített háttérrendszer`,
+'s3c0b025716311430': `Rétegparaméterek maximális száma`,
 's412b62989fc26d3a': `Kiválasztás megjelenítése`,
 's446eb2b422b286af': `Lendület`,
 's49730f3d5751a433': `Betöltés...`,
-'s4c08da5f7528a7e3': `Modell forrás`,
 's4f5eeeb48a97ea9a': `Veszteség`,
 's547a4465533a6f5f': `Kép kódolás`,
 's5561b945c8cd59b0': `Tétel mérete`,
@@ -66,13 +53,14 @@
 's5732d2277d736ba1': `Másodfokú`,
 's58bee799432dbc69': `Kiegészítés`,
 's58d6b1ecd5084538': `Lépés`,
-'s5da30fd688d05a35': `Szerkesztési jogosultságok`,
 's61ac82c68c336bb1': `A képzés befejezése`,
 's61f8c4b6c5f2ae63': `WebGL (GPU)`,
+'s6266829135c39917': `Törli ezt az adatkészletet?`,
 's62cecbd4b16886e7': `A veszteség elosztásának kiszámítása...`,
 's6557e193c4f15b9c': `Több osztály egy mintánként`,
 's6610206d0ad97d60': `Adatkészlet jellemző oszlopok:`,
 's66a5898632280fe2': `Veszteségfüggvény`,
+'s679b3c0fcb1bdadf': `Modul elrejtése`,
 's6b0e650acd025eff': `Base64 karakterlánc`,
 's6c02f2ec8c3f52a4': `Pontosság`,
 's6c5b5757b7756775': `Középső nézet`,
@@ -85,6 +73,8 @@
 's7b59301169d2cc3d': `Számkódolás`,
 's82c21acdbcd6e830': `Erő`,
 's82caaf657b01a4d0': `Szürkeskála`,
+'s84536b272065202c': `Modellparaméterek maximális száma`,
+'s858e82f5fff9aac3': `Modell forrása`,
 's888d98a196a240d8': `Bemenetek`,
 's8a73af950772f702': `Nincs elérhető modell.`,
 's900c980bdb200fcf': `Korszakok`,
@@ -94,9 +84,9 @@
 's975087a831353889': `Lapítsd`,
 's981f232bd33ec927': `Ár`,
 's99456cbda3e05fb0': `Visszahívás`,
-'s9b5ec9d0b70a0fac': `Maximális modellparaméterek`,
 's9eac77171764efaa': `Transzponált konvolúció`,
 'sa4ef4c5175793d6f': `A minták veszteségének kiszámítása...`,
+'sa60f5f53cc29b8cf': `Csak a rétegtulajdonságok`,
 'sa68f184fe626daf3': `Tanítható réteg hozzáadása`,
 'sa8082d7f7ef02f42': `Ez az átalakítás nem alkalmazható az alábbi értékekre`,
 'sa812ba9ded26aa98': `Modell betöltése...`,
@@ -105,24 +95,18 @@
 'sab09aa21c8921bea': `Kép betöltése`,
 'sabf86f32eba45ad4': `Válasszon ki egy oszlopot a formázáshoz`,
 'saf01d58ece3a1e02': `Tensorflow betöltése...`,
-'sb03650788f41c135': str`
-          ${0} -minták
-        `,
+'sb03650788f41c135': str`${0} mintából`,
 'sb05582ce916894da': `Kicsinyítés`,
 'sb405f0898c39ca67': `Adattípus`,
 'sb4f1dffbb6be6302': `Tiszta`,
 'sb59d68ed12d46377': `Betöltés`,
 'sb633a04ba54b2dc0': `A rétegnek túl sok edzhető paramétere van. Próbálja meg csökkenteni a bemeneti méretet vagy a hangolható tulajdonságokat.`,
+'sb850938497d0a395': `Szerkesztési jogosultságok`,
+'sbf1ff3369db980c0': `Architektúra forrása`,
 'sbfe9518a1fe4f185': `Átalakítás`,
-'sc0e01e8b4662bec2': str`Előrejelzés: 
-          ${0} ,  Címke: 
-          ${1}
-        `,
+'sc0e01e8b4662bec2': str`Előrejelzés: ${0}, címke: ${1}`,
 'sc2e0d19ed54560c8': `Exponenciális`,
-'sc3727a4fc25d7500': str`Előrejelzés: 
-          ${0} ${1} Címke: 
-          ${2}
-        `,
+'sc3727a4fc25d7500': str`Előrejelzés: ${0} ${1}, címke: ${2}`,
 'sc3d8f37ea5f4bd79': `A különbség vizualizálása...`,
 'sc6bff481def13d70': `Lemorzsolódás`,
 'sc6d31f0cce31ddcf': `Összes paraméter:`,
@@ -131,21 +115,19 @@
 'sce4efb732b98f946': `Egy osztály mintánként`,
 'scfd25318edb1ebb1': `Magok száma`,
 'sd2223afb7d6b100d': `Típus`,
-'sd6b72022c37e1ae0': `Tervezési forrás`,
 'sdab07807ff1b6b12': `A modelltervező widget a hallgatók számára rejtve van.`,
 'sdb1595f5c742dfbb': `Bemenet`,
+'sdbaa4e0831238006': `Minden szerkeszthető`,
 'sdde16b9126492f79': `Kernel méret`,
 'se13c154abb1c1cff': `Kombinációs réteg hozzáadása`,
-'se1c4d8107171ecb2': str`Előrejelzés: 
-          ${0} - Címke: 
-          ${1} = Delta: 
-          ${2}
-        `,
+'se1c4d8107171ecb2': str`Előrejelzés: ${0} − címke: ${1} = eltérés: ${2}`,
 'se2b0409cadbd0a9e': `Forráselem kiválasztása`,
 'se2b49a41b39653fc': `Értékskála`,
+'se6c8329ea1c50858': `Csak a jellemzők beállításai`,
 'se7a532063ef7b740': `Lineáris`,
 'seb198c12be265d61': `Kimeneti csomópontok`,
 'seffcca34b918ddc0': `Ciklikus hivatkozás van benne.`,
+'sf02c84d2e8520b92': `Jellemzők forrása`,
 'sf1674aeb3dc2d55d': `Aktiválás`,
 'sf21fb4f4b9e8911f': `Szélesség`,
 'sf5290513fc7b466a': `Használt Tensor memória:`,
@@ -155,4 +137,3 @@
 'sfd77270c3f54f664': `Kimenet`,
 'sffdadf0a576fd802': `Magasság`,
     };
-  

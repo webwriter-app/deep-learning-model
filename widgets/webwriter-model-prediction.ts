@@ -1,7 +1,8 @@
+import type { MsgFn } from "@lit/localize";
+import { effectiveLanguage, localizeElement, nativeLanguageAttributes } from "../localization/localizer";
 import { SlButton, SlButtonGroup, SlIcon, SlIconButton, SlInput, SlOption, SlSelect } from "@shoelace-style/shoelace";
 import { LitElementWw } from "@webwriter/lit";
 import { css, html, TemplateResult } from "lit";
-import { msg } from "@lit/localize";
 import { customElement, property, query } from "lit/decorators.js";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { AiWidgetsFeatures } from "./webwriter-feature-engineering";
@@ -15,7 +16,6 @@ import { InputElement, OutputElement } from '../components/inference-fields/infe
 import { NumberInput } from '../components/inference-fields/number-input';
 import { NumberOutput } from '../components/inference-fields/number-output';
 import { AiWidgetsTraining } from './webwriter-model-training';
-import LOCALIZE from "../localization/generated";
 //setWasmPaths('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.22.0/dist/');
 //setThreadsCount(4);
 
@@ -42,6 +42,16 @@ async function waitFor(condition: Function, interval = 10) {
  */
 @customElement("webwriter-model-prediction")
 export class AiWidgetsInference extends LitElementWw {
+    static override get observedAttributes() { return nativeLanguageAttributes(this, super.observedAttributes); }
+
+    override get lang(): string { return effectiveLanguage(this); }
+    override set lang(value: string) { this.setAttribute("lang", value); }
+    public readonly msg = localizeElement(this, true);
+    readonly options = ((msg: MsgFn) => ({
+        featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: { get _() { return msg("Feature source"); } }},
+        modelWidgetId: {type: "reference" as const, selector: "webwriter-model-training", label: { get _() { return msg("Model source"); } }},
+    }))(this.msg);
+
     /** @internal */
     static scopedElements = {
         "sl-button": SlButton,
@@ -59,8 +69,6 @@ export class AiWidgetsInference extends LitElementWw {
         "number-output": NumberOutput,
         "number-input": NumberInput
     }
-
-    protected localize = LOCALIZE;
 
     static styles = css`
         :host div[part='options'] {
@@ -154,22 +162,22 @@ export class AiWidgetsInference extends LitElementWw {
      */
     private async getModelSelect() {
         let that = this;
-        await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels != null});
+        await waitFor(function() {return that.modelSelect != null && that.modelSelect.getRefElement != null && (that.modelSelect.getRefElement() as AiWidgetsTraining)?.getAvailableModels != null});
         let models = (this.modelSelect.getRefElement() as AiWidgetsTraining).getAvailableModels();
         if (this.model == null)
             setTimeout(function() {
                 that.selectedModelChange();
             })
-        return html`<sl-select label=${msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
+        return html`<sl-select label=${this.msg("Model version")} id="epoch-select" value=${this.selectedModelName} @sl-change=${this.selectedModelChange}>${models.map(model => html`<sl-option value=${model}>${model}</sl-option>`)}</sl-select>`;
     }
 
     /** Renders the left input fields which the user can edit and which values are fed into the model periodically. */
     private getFeatureInputs() {
         if (this.model == null)
-            return html`<p>${msg("No Model avaiable.")}</p>`;
+            return html`<p>${this.msg("No Model avaiable.")}</p>`;
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [html`<div class="input"><p>🡺 ${msg("Inputs")}</p></div>`];
+        let elements = [html`<div class="input"><p>🡺 ${this.msg("Inputs")}</p></div>`];
         for (let input of this.model.inputNames) {
             let featureName = input.replace("in_","");
             let transform = tensorDataset.featureMaps[featureName];
@@ -184,7 +192,7 @@ export class AiWidgetsInference extends LitElementWw {
             return html``;
         let that = this;
         let {rawDataset, tensorDataset} = (this.featureSelect.getRefElement() as AiWidgetsFeatures).getDataset();
-        let elements = [html`<div class="output"><p>${msg("Outputs")} 🡺</p></div>`];
+        let elements = [html`<div class="output"><p>${this.msg("Outputs")} 🡺</p></div>`];
         for (let input of this.model.outputNames) {
             let featureName = input.replace("out_","");
             let transform = tensorDataset.featureMaps[featureName];
@@ -203,16 +211,14 @@ export class AiWidgetsInference extends LitElementWw {
         }, 1000);
         return html`<div id="container">
         <div id="top">
-        ${until(this.getModelSelect(), html`${msg("Loading models...")}`)}
-        <sl-button @click=${this.fillWithRandomSample}>${msg("Show Random Test Sample")}</sl-button>
+        ${until(this.getModelSelect(), html`${this.msg("Loading models...")}`)}
+        <sl-button @click=${this.fillWithRandomSample}>${this.msg("Show Random Test Sample")}</sl-button>
         </div>
         ${this.getFeatureInputs()}
         ${this.getFeatureOutputs()}
         </div>
-        <div part="options">
-            <p>${msg("Feature Source")}</p>
+        <div hidden>
             <ref-select id="feature-select" typeName="Features" elemId=${this.featureWidgetId} elementType="webwriter-feature-engineering" @refchange=${this.featureRefChange} ownerId=${this.id}></ref-select>
-            <p>${msg("Model Source")}</p>
             <ref-select id="model-select" typeName="Model" elemId=${this.modelWidgetId} elementType="webwriter-model-training" @refchange=${this.modelRefChange} ownerId=${this.id}></ref-select>
         </div>`
     }
@@ -229,7 +235,7 @@ export class AiWidgetsInference extends LitElementWw {
 
         if (e.detail.lastRef != null)
             e.detail.lastRef.removeEventListener("finished", modelUpdate);
-        this.modelSelect.getRefElement().addEventListener("finished", modelUpdate);
+        this.modelSelect.getRefElement()?.addEventListener("finished", modelUpdate);
     }
 
     private featureRefChange(e:CustomEvent) {
@@ -242,7 +248,7 @@ export class AiWidgetsInference extends LitElementWw {
 
         if (e.detail.lastRef != null)
             e.detail.lastRef.removeEventListener("change", featuresUpdate);
-        this.modelSelect.getRefElement().addEventListener("change", featuresUpdate);
+        this.featureSelect.getRefElement()?.addEventListener("change", featuresUpdate);
     }
 
     private async selectedModelChange() {

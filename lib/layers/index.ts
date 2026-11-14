@@ -1,7 +1,8 @@
+import { sourceMsg } from "../../localization/localizer";
+import type { MsgFn } from "@lit/localize";
 import { SlInput, SlSelect } from '@shoelace-style/shoelace';
 import Drawflow, { DrawflowConnectionDetail } from 'drawflow';
 import { TransformedDataset } from '../dataset/dataset';
-import { msg } from '@lit/localize';
 
 import type * as TF from "@tensorflow/tfjs";
 import getTF from "../tflib";
@@ -37,7 +38,7 @@ export class Editor {
     /** Called with the new selection state whenever a layer or connection is selected or unselected. */
     public onSelectionChanged: ((selected: boolean) => void) | null = null;
 
-    constructor(container: HTMLDivElement, editMode:string = "edit", maxModelParams:number, maxLayerParams:number) {
+    constructor(container: HTMLDivElement, editMode:string = "edit", maxModelParams:number, maxLayerParams:number, readonly msg: MsgFn = sourceMsg) {
         let that = this;
         this.editMode = editMode;
         this.maxModelParams = maxModelParams;
@@ -240,6 +241,10 @@ export class Editor {
     public registerLayer(layer: Layer) {
         this.layers[layer.id] = layer;
     }
+    public updateLabels() {
+        for (const layer of Object.values(this.layers)) layer.updateLabels();
+    }
+
     public getLayer(id: number) {
         return this.layers[id];
     }
@@ -293,6 +298,7 @@ export abstract class Layer {
     private events = {};
     public readonly type: string;
     public readonly editor: Editor;
+    private readonly labelUpdates: Array<() => void> = [];
     private hasCyclicReference = false;
     private hasUpdatedOutputsThisUpdate = false;
 
@@ -315,7 +321,7 @@ export abstract class Layer {
 
         let elem = document.createElement("div");
         let header = document.createElement("p");
-        header.innerText = this.getDisplayName();
+        this.bindLabel(() => header.innerText = this.getDisplayName());
 
         let nodeContentElement = nodeElement.getElementsByClassName("drawflow_content_node")[0] as HTMLDivElement;
         nodeContentElement.append(header);
@@ -341,7 +347,7 @@ export abstract class Layer {
      * @param max Max possible value
      * @returns sl-input element that was added to the drawflow node.
      */
-    protected addNumberInput(label:string, min: number, max:number):SlInput {
+    protected addNumberInput(label: () => string, min: number, max:number):SlInput {
         let that = this;
 
         let input = document.createElement("sl-input");
@@ -378,7 +384,7 @@ export abstract class Layer {
                 return false;
             }
         })
-        input.label = label;
+        this.bindLabel(() => input.label = label());
         input.size = "small";
         input.disabled = this.editor.editMode == "read"
         this.elem.append(input);
@@ -391,7 +397,7 @@ export abstract class Layer {
      * @param options list of sl-options
      * @returns sl-select element that was added to the drawflow node.
      */
-    protected addSelect(label:string, options: string[]):SlSelect {
+    protected addSelect(label: () => string, options: string[]):SlSelect {
         let select = document.createElement("sl-select");
         for (let act of options) {
             let option = document.createElement("sl-option");
@@ -399,7 +405,7 @@ export abstract class Layer {
             option.innerText = act;
             select.append(option)
         }
-        select.label = label;
+        this.bindLabel(() => select.label = label());
         select.size = "small";
         select.disabled = this.editor.editMode == "read"
         this.elem.append(select);
@@ -425,13 +431,25 @@ export abstract class Layer {
      * @param label Label of the span element
      * @returns A paragraph wrapping the span that was added to the drawflow node.
      */
-    protected addTextElement(label:string, elem: HTMLSpanElement):HTMLParagraphElement {
+    protected addTextElement(label: () => string, elem: HTMLSpanElement):HTMLParagraphElement {
         let p = document.createElement("p");
-        p.innerHTML = label;
-        p.append(elem);
+        const text = document.createTextNode('');
+        this.bindLabel(() => text.data = label());
+        p.append(text, elem);
         this.elem.append(p);
         return p;
     }
+
+    protected bindLabel(update: () => void) {
+        this.labelUpdates.push(update);
+        update();
+    }
+
+    public updateLabels() {
+        for (const update of this.labelUpdates) update();
+        this.showValid();
+    }
+
     public getNode() {
         return this.editor.getNodeFromId(this.id);
     }
@@ -680,7 +698,7 @@ export abstract class Layer {
         if (!valid) {
             elem.classList.add("invalid");
             if (this.hasCyclicReference)
-                elem.setAttribute("title", msg("Has a cyclic reference."));
+                elem.setAttribute("title", this.editor.msg("Has a cyclic reference."));
         } else {
             elem.classList.remove("invalid");
         }

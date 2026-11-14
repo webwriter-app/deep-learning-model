@@ -1,7 +1,65 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="de">
-<file id="." original=".">
-<unit id="description"><segment><source>A set of blocks to create, train and evaluate deep learning models.</source><target>Eine Reihe von Bausteinen zum Erstellen, Trainieren und Bewerten von Deep-Learning-Modellen.</target></segment></unit>
-<unit id="label"><segment><source>Deep Learning Model</source><target>Deep-Learning-Modell</target></segment></unit>
-</file>
+  <file id="." original=".">
+    <unit id="label">
+      <segment>
+        <source>Deep Learning Model</source>
+        <target>Deep-Learning-Modell</target>
+      </segment>
+    </unit>
+    <unit id="description">
+      <segment>
+        <source>A set of blocks to create, train and evaluate deep learning models.</source>
+        <target>Eine Reihe von Bausteinen zum Erstellen, Trainieren und Bewerten von Deep-Learning-Modellen.</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-feature-engineering" original="./widgets/webwriter-feature-engineering">
+    <unit id="label">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>Feature-Engineering</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-designing" original="./widgets/webwriter-model-designing">
+    <unit id="label">
+      <segment>
+        <source>Model Designing</source>
+        <target>Modellgestaltung</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-training" original="./widgets/webwriter-model-training">
+    <unit id="label">
+      <segment>
+        <source>Model Training</source>
+        <target>Modelltraining</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-prediction" original="./widgets/webwriter-model-prediction">
+    <unit id="label">
+      <segment>
+        <source>Model Prediction</source>
+        <target>Modellvorhersage</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./widgets/webwriter-model-evaluation" original="./widgets/webwriter-model-evaluation">
+    <unit id="label">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>Modellbewertung</target>
+      </segment>
+    </unit>
+  </file>
+  <file id="./snippets/MNIST-Image-to-Number" original="./snippets/MNIST-Image-to-Number">
+    <unit id="label">
+      <segment>
+        <source>MNIST-Image To-Number</source>
+        <target>MNIST: Bild zur Ziffer</target>
+      </segment>
+    </unit>
+  </file>
 </xliff>
