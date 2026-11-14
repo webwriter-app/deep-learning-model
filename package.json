@@ -136,18 +136,19 @@
   },
   "dependencies": {
     "@shoelace-style/shoelace": "^2.20.1",
-    "@tabler/icons": "^3.33.0",
+    "@tabler/icons": "^3.52.0",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-wasm": "^4.22.0",
     "@tensorflow/tfjs-backend-webgpu": "^4.22.0",
-    "@webwriter/lit": "^2",
+    "@webwriter/lit": "^3.0.0",
     "apexcharts": "^4.7.0",
     "drawflow": "^0.0.60",
-    "hyparquet": "^1.16.2",
+    "hyparquet": "^1.33.0",
     "lit": "^3",
-    "papaparse": "^5.5.3"
+    "papaparse": "^5.7.1"
   },
   "devDependencies": {
+    "@webwriter/build": "^1.13.1",
     "@lit/localize-tools": "^0.8",
     "@types/drawflow": "^0.0.12"
   },
