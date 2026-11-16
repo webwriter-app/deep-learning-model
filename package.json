@@ -130,56 +130,79 @@
   "license": "MIT",
   "author": "Matthias Schäfer",
   "scripts": {
-    "prepublishOnly": "npx @webwriter/build",
-    "dev": "npx @webwriter/build dev",
+    "prepublishOnly": "npx @webwriter/build --shared-dependencies",
+    "dev": "npx @webwriter/build dev --shared-dependencies",
     "localize": "lit-localize extract && npx @webwriter/build localize && lit-localize build"
   },
   "dependencies": {
+    "@lit/localize": "^0.12.2",
     "@shoelace-style/shoelace": "^2.20.1",
     "@tabler/icons": "^3.52.0",
     "@tensorflow/tfjs": "^4.22.0",
-    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
-    "@tensorflow/tfjs-backend-webgpu": "^4.22.0",
-    "@webwriter/lit": "^3.0.0",
-    "apexcharts": "^4.7.0",
-    "drawflow": "^0.0.60",
+    "@webwriter/lit": "^3.2.0",
+    "@webwriter/widget": "^1.2.0",
+    "chart.js": "^4.6.1",
     "hyparquet": "^1.33.0",
-    "lit": "^3",
-    "papaparse": "^5.7.1"
+    "lit": "^3.3.0",
+    "papaparse": "^5.7.1",
+    "pixi.js": "^8.23.0"
   },
   "devDependencies": {
-    "@webwriter/build": "^1.13.1",
     "@lit/localize-tools": "^0.8",
-    "@types/drawflow": "^0.0.12"
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
+    "@webwriter/build": "^1.14.0",
+    "chai": "^6.3.0",
+    "mocha": "^12.0.3",
+    "typescript": "^7.0.2"
   },
   "exports": {
     "./widgets/webwriter-feature-engineering.*": {
-      "source": "./widgets/webwriter-feature-engineering.ts",
+      "source": "./src/widgets/webwriter-feature-engineering.ts",
       "default": "./dist/widgets/webwriter-feature-engineering.*"
     },
     "./widgets/webwriter-model-designing.*": {
-      "source": "./widgets/webwriter-model-designing.ts",
+      "source": "./src/widgets/webwriter-model-designing.ts",
       "default": "./dist/widgets/webwriter-model-designing.*"
     },
     "./widgets/webwriter-model-training.*": {
-      "source": "./widgets/webwriter-model-training.ts",
+      "source": "./src/widgets/webwriter-model-training.ts",
       "default": "./dist/widgets/webwriter-model-training.*"
     },
     "./widgets/webwriter-model-prediction.*": {
-      "source": "./widgets/webwriter-model-prediction.ts",
+      "source": "./src/widgets/webwriter-model-prediction.ts",
       "default": "./dist/widgets/webwriter-model-prediction.*"
     },
     "./widgets/webwriter-model-evaluation.*": {
-      "source": "./widgets/webwriter-model-evaluation.ts",
+      "source": "./src/widgets/webwriter-model-evaluation.ts",
       "default": "./dist/widgets/webwriter-model-evaluation.*"
     },
     "./snippets/MNIST-Image-to-Number.html": "./snippets/MNIST.html",
     "./icon": "./icon.svg",
     "./editing-config.json": "./editing-config.json",
-    "./custom-elements.json": "./custom-elements.json"
+    "./custom-elements.json": "./custom-elements.json",
+    "./tests/data-block.*": {
+      "source": "./tests/data-block.test.ts",
+      "default": "./dist/tests/data-block.*"
+    },
+    "./tests/editor.*": {
+      "source": "./tests/editor.test.ts",
+      "default": "./dist/tests/editor.*"
+    },
+    "./tests/localization.*": {
+      "source": "./tests/localization.test.ts",
+      "default": "./dist/tests/localization.*"
+    }
   },
   "editingConfig": {
     ".": {}
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "prebuiltDependencies": [
+    "@tensorflow/tfjs",
+    "@webwriter/lit",
+    "@webwriter/widget",
+    "papaparse",
+    "pixi.js"
+  ]
 }
