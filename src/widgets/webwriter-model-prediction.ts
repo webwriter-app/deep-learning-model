@@ -135,21 +135,19 @@ export class WebwriterModelPrediction extends LitElementWw {
     private accessor modelName: SlSelect;
 
     private model: TF.LayersModel | null = null;
-    private predictionInterval: ReturnType<typeof setInterval>;
+    private predictionInterval?: ReturnType<typeof setInterval>;
 
-    constructor() {
-        super();
-        let that = this;
-        this.predictionInterval = setInterval(function() {
-            that.predict();
-        }, 200);
+    private predicting = false;
+
+    connectedCallback() {
+        super.connectedCallback();
+        // Started here (not in the constructor) so that a re-inserted widget predicts again.
+        this.predictionInterval = setInterval(() => this.predict(), 200);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
-        if (this.predictionInterval) {
-            clearInterval(this.predictionInterval);
-        }
+        clearInterval(this.predictionInterval);
     }
 
     private fillWithRandomSample() {
@@ -181,6 +179,16 @@ export class WebwriterModelPrediction extends LitElementWw {
 
     /** Is periodically called and will invoke the input fields values on the model to update the output fields. */
     private async predict() {
+        if (this.predicting) return;
+        this.predicting = true;
+        try {
+            await this.runPrediction();
+        } finally {
+            this.predicting = false;
+        }
+    }
+
+    private async runPrediction() {
         if (this.model == null || !this.featureSelect || !this.featureSelect.getRefElement())
             return;
 

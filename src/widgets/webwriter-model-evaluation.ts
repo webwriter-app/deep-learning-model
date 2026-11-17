@@ -120,9 +120,6 @@ export class WebwriterModelEvaluation extends LitElementWw {
     @query("#test-select")
     private accessor testSelect: SlSelect;
 
-    @query("#test-container")
-    private accessor testContainer: HTMLDivElement;
-
     private testElem: TemplateResult;
 
     private model: TF.LayersModel | null = null;

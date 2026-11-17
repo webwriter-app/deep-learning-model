@@ -3,7 +3,7 @@ import { html, nothing, type TemplateResult } from "lit";
 import { ACTIVATIONS, LOSSES, parseInteger, parseReal, type FeatureSizes, type LayerInfo, type LayerState, type LayerType } from "../model/network";
 
 /** What the fields of a layer need from the editor that shows them. */
-export type FieldsContext = {
+type FieldsContext = {
     msg: MsgFn;
     editmode: string;
     sizes: FeatureSizes | null;

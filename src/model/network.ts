@@ -1,6 +1,6 @@
 /** The layers of a model design, the shapes of the data between them, and the edits a design allows. No DOM, no tfjs. */
 
-export const SIZE_SEP = "×";
+const SIZE_SEP = "×";
 
 export type Shape = number[];
 /** The shape of every feature of the dataset by its name. */
@@ -10,7 +10,7 @@ export type LayerType =
     | "input" | "output" | "fcl" | "conv" | "transposeconv" | "activation" | "dropout" | "noise"
     | "flatten" | "reshape" | "concat" | "add" | "attention";
 
-export type Connection = { node: string; input: string };
+type Connection = { node: string; input: string };
 
 /** A layer as it is stored in the design. The settings depend on the type. */
 export interface LayerState {
@@ -23,9 +23,9 @@ export interface LayerState {
     [setting: string]: unknown;
 }
 
-export type Limits = { layer: number; model: number };
+type Limits = { layer: number; model: number };
 
-export type PortInfo = { name: string; label: string; wired: boolean; invalid: boolean };
+type PortInfo = { name: string; label: string; wired: boolean; invalid: boolean };
 
 export type LayerInfo = {
     /** The shape of what is connected to each input port, null where nothing known is. */
@@ -78,7 +78,7 @@ const product = (shape: Shape) => shape.reduce((a, b) => a * b, 1);
 const known = (...values: (number | undefined)[]) => values.every(value => value !== undefined && !Number.isNaN(value));
 const same = (a: Shape | null, b: Shape | null) => (a ? a.join(SIZE_SEP) : "") === (b ? b.join(SIZE_SEP) : "");
 
-export const shapeLabel = (shape: Shape | null | undefined) => (shape ? shape.join(SIZE_SEP) : "");
+const shapeLabel = (shape: Shape | null | undefined) => (shape ? shape.join(SIZE_SEP) : "");
 
 /** The number of input ports of a layer with a variable number of inputs: all connected ones and a free one. */
 function dynamicPorts(layer: LayerState) {
@@ -233,11 +233,11 @@ export function inputPorts(layer: LayerState): string[] {
     return Array.from({ length: KINDS[layer.type]?.ports(layer) ?? 0 }, (_, index) => `input_${index + 1}`);
 }
 
-export function hasOutput(layer: LayerState) {
+function hasOutput(layer: LayerState) {
     return (KINDS[layer.type]?.outputs ?? 0) > 0;
 }
 
-export function isLayerType(type: unknown): type is LayerType {
+function isLayerType(type: unknown): type is LayerType {
     return typeof type === "string" && Object.hasOwn(KINDS, type);
 }
 

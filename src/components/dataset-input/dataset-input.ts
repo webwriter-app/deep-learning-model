@@ -88,7 +88,7 @@ export class DatasetInput extends LitElementWw {
   }
   async readCSVFile(file: File): Promise<ParseResult<Record<string, any>>> {
     const { default: Papa } = await import("papaparse");
-    return new Promise(function (res, rej) {
+    return new Promise(function (res) {
       Papa.parse(file, {
         header: true,
         skipEmptyLines: "greedy",
@@ -153,7 +153,6 @@ export class DatasetInput extends LitElementWw {
    * @param file - The file to be handled.
    */
   async handleFile(file: File) {
-    let that = this;
     let data: Partial<ParseResult<Record<string, any>>> | null = null;
     if (file.name.endsWith("parquet")) {
       let content = await this.readParquetFile(file);

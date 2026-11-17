@@ -202,7 +202,7 @@ export default class ImageTransformation extends FeatureTransformation {
 
     public async getImage(value: string | number[]): Promise<HTMLImageElement> {
         let img = this.getRawImage(value);
-        await (new Promise(function (res, rej) {
+        await (new Promise(function (res) {
             img.onload = res;
         }))
         let scaled = this.transformImage(img, this.settings.width, this.settings.height);
@@ -236,7 +236,7 @@ export default class ImageTransformation extends FeatureTransformation {
 
     private async waitUntilImageDimensionsAvailable() {
         let that = this;
-        return new Promise(function (res, rej) {
+        return new Promise(function (res) {
             let inter = setInterval(function () {
                 if (that.settings.width != 0 && that.settings.height != 0) {
                     clearInterval(inter);

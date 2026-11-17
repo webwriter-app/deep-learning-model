@@ -3,7 +3,7 @@ import type * as TF from "@tensorflow/tfjs";
 /** A loss function as `compile` takes it. */
 export type LossFn = Extract<NonNullable<Parameters<TF.LayersModel["compile"]>[0]["loss"]>, (...args: any[]) => any>;
 
-export type NoOpLayerClass = new (config: ConstructorParameters<typeof TF.layers.Layer>[0]) => TF.layers.Layer;
+type NoOpLayerClass = new (config: ConstructorParameters<typeof TF.layers.Layer>[0]) => TF.layers.Layer;
 
 export function uint8ToHex(uint8: Uint8Array) {
   return Array.from(uint8, b => b.toString(16).padStart(2, '0')).join('');

@@ -6,8 +6,6 @@ import ClassTransformation from '../dataset/class';
 import { OutputElement } from './inference-interfaces';
 
 import type * as TF from "@tensorflow/tfjs";
-import getTF from "../../model/tflib";
-const tf = await getTF();
 
 export class ClassInput extends OutputElement {
     static scopedElements = {
