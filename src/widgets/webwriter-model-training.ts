@@ -8,12 +8,13 @@ import SlInput from "@shoelace-style/shoelace/dist/components/input/input.compon
 import SlOption from "@shoelace-style/shoelace/dist/components/option/option.component.js";
 import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.component.js";
 import SlTooltip from "@shoelace-style/shoelace/dist/components/tooltip/tooltip.component.js";
-import { LitElementWw } from "@webwriter/lit";
+import { computed, LitElementWw, signal } from "@webwriter/lit";
 import { jsonData } from "@webwriter/lit/data";
 import { localizer } from "@webwriter/lit/localize";
-import { css, html, TemplateResult } from "lit";
+import { html, TemplateResult } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { localeOptions } from "../../localization/locale-options";
+import styles from "../components/model-training.styles";
 import { TrainingChart } from "../components/training-chart";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { WebwriterFeatureEngineering } from "./webwriter-feature-engineering";
@@ -23,7 +24,9 @@ import type * as TF from "@tensorflow/tfjs";
 import getTF from "../model/tflib";
 import { analyze, featureSizes, importLayers, type LayerState } from "../model/network";
 import { connectNetwork } from "../model/network-build";
-import { hexToUint8, uint8ToHex } from "../model/training";
+import { historyTable, hexToUint8, lastValue, pickCheckpoint, uint8ToHex } from "../model/training";
+import { tableElement } from "../components/table-element";
+import { tableToCsv, type Table } from "../model/dataset/table";
 
 type Labelled = { msg: MsgFn };
 
@@ -31,37 +34,22 @@ const tf = await getTF();
 /**
  * A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.
  * 
+ * Signals: `history` is the table of the metrics per epoch (columns "epoch", "Training Loss", "Validation Loss" and the
+ * other selected metrics), empty until the first epoch ends and after a reset. `loss` is the latest validation loss
+ * as a number, or null. Another widget connects to them with an effect attribute such as `data-from="#training[history]"`.
+ *
+ * Conversions: the history leaves as a `table` or as `text/csv`; the best checkpoint (else the latest) leaves as
+ * `application/json` with the TensorFlow.js model topology, weight specs and the weights as hex text.
+ * The history is not stored in the document, so the exports hold what was trained since the widget loaded.
+ *
  * @event finished - Fired when the training process has finished.
  * @event epoch - Fired after each epoch during training.
+ *
+ * @part chart - The chart of the training metrics.
  */
 @customElement("webwriter-model-training")
 export class WebwriterModelTraining extends LitElementWw {
-    static styles = css`
-    :host {
-      display:block;
-      font-size: 0.9rem;
-    }
-    :host([contenteditable][editmode="hidden"]) {
-      min-height: 30px;
-      background:lightgray;
-      font-size: inherit;
-    }
-    :host .controls {
-        display:flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: flex-start;
-        align-items: flex-end;
-        gap: 10px;
-    }
-    #error {
-        color:red;
-    }
-    #error:before {
-        content:"⚠";
-    }
-    `
+    static styles = styles
 
     /** @internal */
     static scopedElements = {
@@ -97,6 +85,12 @@ export class WebwriterModelTraining extends LitElementWw {
             ],
         },
         cache: {type: Boolean, label: (widget: Labelled) => widget.msg("Cache training samples")},
+    }
+
+    static convertTo = {
+        table: "toTable",
+        "text/csv": "exportHistory",
+        "application/json": "exportModel",
     }
 
     readonly localize = localizer(this, localeOptions);
@@ -180,6 +174,14 @@ export class WebwriterModelTraining extends LitElementWw {
     /** A list of available backends for tf to use. Could be expanded and are tried out in order. (Not all backends support all layer and operation types, but can provide better training speed) */
     private backendPriority = ["webgl","cpu"];
 
+    #history = signal<Table>({columns: ["epoch"], rows: []});
+
+    /** Published for other widgets: the metrics per epoch and the latest validation loss. */
+    readonly signals = {
+        history: computed(() => this.#history.get()),
+        loss: computed(() => lastValue(this.#history.get(), "Validation Loss")),
+    };
+
     private memoryTimer?: ReturnType<typeof setInterval>;
 
     private losses: Record<string, Array<number>> = {};
@@ -219,6 +221,29 @@ export class WebwriterModelTraining extends LitElementWw {
     set modelVersions(modelVersions: Record<string, string>) {
         this.#data.set({modelVersions});
         this.notifyModelVersions();
+    }
+
+    private publishHistory() {
+        this.#history.set(historyTable(this.losses));
+    }
+
+    /** The history as a table, or null before the first epoch. */
+    toTable() {
+        const {columns, rows} = this.#history.get();
+        if (rows.length === 0) return null;
+        return tableElement({columns, rows});
+    }
+
+    /** The history as CSV, or null before the first epoch. */
+    exportHistory() {
+        const table = this.#history.get();
+        return table.rows.length === 0 ? null : new File([tableToCsv(table)], "training-history.csv", {type: "text/csv"});
+    }
+
+    /** The best checkpoint as JSON, or null without a checkpoint. */
+    exportModel() {
+        const name = pickCheckpoint(this.getAvailableModels());
+        return name == null ? null : new File([this.modelVersions[name]], `model-${name}.json`, {type: "application/json"});
     }
 
     private notifyModelVersions() {
@@ -330,6 +355,7 @@ export class WebwriterModelTraining extends LitElementWw {
         this.currentTraining = null;
         this.clearModels();
         this.losses = {}
+        this.publishHistory();
         this.currentEpoch = 0;
         this.insights = {min_val_loss: 100, min_val_loss_index: 0};
         this.updateGraph();
@@ -438,7 +464,7 @@ export class WebwriterModelTraining extends LitElementWw {
                             }
                         }
 
-                        that.updateGraph();
+                        this.publishHistory();
                         this.updateGraph();
                         this.currentEpoch = epoch;
 
@@ -526,9 +552,9 @@ export class WebwriterModelTraining extends LitElementWw {
                 <sl-button id="reset-training" @click=${this.resetModel}>${this.msg("Reset")}</sl-button>
                 </sl-button-group>
             </div>
-            <p id="error" style="display:none"></p>
+            <p id="error" role="alert" style="display:none"></p>
             <div id="training-metrics" style="display:none">
-                <div style="height:200px"><canvas id="chart"></canvas></div>
+                <div id="chart-box" part="chart"><canvas id="chart" role="img" aria-label=${this.msg("Training Metrics")}></canvas></div>
                 <sl-select id="metrics" value="Loss Accuracy" multiple clearable @sl-change=${this.updateGraph}>
                     <sl-option value="Loss">${this.msg("Loss")}</sl-option>
                     <sl-option value="Accuracy">${this.msg("Accuracy")}</sl-option>

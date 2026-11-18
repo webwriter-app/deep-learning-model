@@ -18,8 +18,11 @@ import { DatasetInput } from "../components/dataset-input/dataset-input";
 import "../components/dataset/class";
 import "../components/dataset/image";
 import "../components/dataset/linear";
+import { hostStyles } from "../components/host.styles";
 import { Dataset, TransformedDataset } from "../model/dataset/dataset";
 import { Constructor, FeatureSettings, FeatureTransformation, getFeatureTransformation, getFeatureTransformations } from "../model/dataset/feature";
+import { tableElement } from "../components/table-element";
+import { samplesFromJson, samplesToTable, tableToCsv, toSamples, type Sample, type TableProblem } from "../model/dataset/table";
 import getTF from "../model/tflib";
 
 BigInt.prototype.toJSON = function () {
@@ -45,11 +48,19 @@ type FieldProp = {
 /**
  * A widget that allows feature engineering on a dataset
  *
+ * Conversions: a `table` (first row is the header) and the files `.csv` (`text/csv`) and `.json` (an array of objects)
+ * replace the dataset; the dataset leaves as a `table` or as `text/csv`. Imports reset the feature settings of the
+ * columns to "Ignore", and exports carry only the samples, not the settings. Every value becomes text. The Model
+ * Designing widget also takes a `.json` file (a list of layers); each import validates its file and rejects the shape of
+ * the other, so a wrongly routed file changes nothing.
+ *
  * @event change - Fired when the dataset changes. Detail contains { dataset: Dataset, tensorDataset: TransformedDataset }
+ *
+ * @part table - The table that shows the values of the selected column and their tensors.
  */
 @customElement("webwriter-feature-engineering")
 export class WebwriterFeatureEngineering extends LitElementWw {
-  static styles = css`
+  static styles = [hostStyles, css`
     .table-fields {
       width: 100%;
       display: flex;
@@ -61,9 +72,6 @@ export class WebwriterFeatureEngineering extends LitElementWw {
     }
     .table-fields sl-button {
       flex-grow: 2;
-    }
-    :host {
-      display:block;
     }
     :host([contenteditable]) {
       min-height: 100px;
@@ -86,14 +94,24 @@ export class WebwriterFeatureEngineering extends LitElementWw {
     :host div.settings * {
       flex-grow:1;
     }
+    .columns {
+      overflow-x: auto;
+    }
+    .columns sl-button-group {
+      width: max-content;
+    }
+    :host div.props {
+      overflow-x: auto;
+    }
     :host div.props table {
       width: 100%;
       position:relative;
+      table-layout: fixed;
     }
     :host div.props table td * {
       overflow:hidden;
       text-overflow: ellipsis;
-      width: 390px;
+      max-width: 100%;
       max-height: 26px;
       white-space: nowrap;
       margin: 0px;
@@ -106,8 +124,29 @@ export class WebwriterFeatureEngineering extends LitElementWw {
     }
     img {
       object-fit: contain;
+      max-width: 100%;
     }
-  `
+    @container (max-width: 520px) {
+      :host div.settings * {
+        flex-basis: 100%;
+      }
+    }
+    @media print {
+      .columns {
+        overflow: visible;
+      }
+      .columns sl-button-group {
+        width: auto;
+        flex-wrap: wrap;
+      }
+      :host div.props table {
+        break-inside: avoid;
+      }
+      :host([editmode="hidden"]) {
+        display: none;
+      }
+    }
+  `]
 
   /** @internal */
   static scopedElements = {
@@ -141,6 +180,18 @@ export class WebwriterFeatureEngineering extends LitElementWw {
       confirm: (widget: Labelled) => widget.msg("Delete this dataset?"),
       intent: "danger" as const,
     },
+  }
+
+  static convertFrom = {
+    table: "loadTable",
+    ".csv": "importCsv",
+    "text/csv": "importCsv",
+    ".json": "importJson",
+  }
+
+  static convertTo = {
+    table: "toTable",
+    "text/csv": "exportCsv",
   }
 
   readonly localize = localizer(this, localeOptions);
@@ -238,6 +289,66 @@ export class WebwriterFeatureEngineering extends LitElementWw {
     this.tensorDataset = null;
     this.requestUpdate();
     this._triggerChanged();
+  }
+
+  /** Replaces the dataset. The tensors are built when the widget renders. */
+  private replaceDataset(samples: Sample[], fields: string[]) {
+    this.samples = samples;
+    this.rawDataset = null;
+    this.tensorDataset?.clearCache();
+    this.tensorDataset = null;
+    this.activeHeader = "";
+    this.fieldProps = Object.fromEntries(fields.map((field): [string, FieldProp] => [field, {type: "Ignore", settings: null}]));
+    this.requestUpdate();
+  }
+
+  private problem(code: TableProblem) {
+    switch (code) {
+      case "no-columns": return this.msg("The data has no columns.");
+      case "duplicate-columns": return this.msg("The column names are empty or not unique.");
+      case "no-rows": return this.msg("The data has no rows.");
+      case "ragged": return this.msg("A row has more values than the header.");
+    }
+  }
+
+  /** Takes the first table of the fragment: the first row is the header. Declines a table without usable data. */
+  loadTable(fragment: DocumentFragment) {
+    const rows = Array.from(fragment.querySelector("table")?.rows ?? [], row => Array.from(row.cells, cell => cell.textContent?.trim() ?? ""));
+    const result = rows.length > 0 ? toSamples(rows[0], rows.slice(1)) : "no-columns";
+    if (typeof result === "string") return false;
+    this.replaceDataset(result.samples, result.fields);
+  }
+
+  /** The dataset as a table with the samples, or null without a dataset. */
+  toTable() {
+    if (!this.samples?.length) return null;
+    return tableElement(samplesToTable(this.samples));
+  }
+
+  /** Reads a CSV file with a header row and returns the function that replaces the dataset. */
+  async importCsv(file: File) {
+    const {default: Papa} = await import("papaparse");
+    const text = await file.text();
+    const cells = await new Promise<string[][]>(resolve => Papa.parse<string[]>(text, {skipEmptyLines: "greedy", complete: results => resolve(results.data)}));
+    const result = cells.length > 0 ? toSamples(cells[0], cells.slice(1)) : "no-columns";
+    if (typeof result === "string") throw new Error(this.problem(result));
+    return () => this.replaceDataset(result.samples, result.fields);
+  }
+
+  /** Reads a JSON file with an array of objects and returns the function that replaces the dataset. */
+  async importJson(file: File) {
+    let value: unknown;
+    try { value = JSON.parse(await file.text()); }
+    catch { throw new Error(this.msg("The file is not valid JSON.")); }
+    const result = samplesFromJson(value);
+    if (typeof result === "string") throw new Error(this.msg("Expected a JSON array of objects.") + (result === "no-columns" ? "" : " " + this.problem(result)));
+    return () => this.replaceDataset(result.samples, result.fields);
+  }
+
+  /** The samples as CSV, or null without a dataset. */
+  exportCsv() {
+    if (!this.samples?.length) return null;
+    return new File([tableToCsv(samplesToTable(this.samples))], "dataset.csv", {type: "text/csv"});
   }
 
   /**
@@ -342,7 +453,7 @@ export class WebwriterFeatureEngineering extends LitElementWw {
     for (let header of dataset.fields) {
       tabs.push(html`<sl-button @click=${this.handleHeaderClick} variant=${header == this.activeHeader ? "primary": "default"}>${header}</sl-button>`);
     }
-    return html`<p>${this.msg("Dataset Feature Colums:")}</p><sl-button-group>${tabs}</sl-button-group>`
+    return html`<p>${this.msg("Dataset Feature Colums:")}</p><div class="columns"><sl-button-group>${tabs}</sl-button-group></div>`
   }
 
   private renderFieldValues(samples: Array<Record<string, string>>, fieldName: string) {
@@ -353,7 +464,7 @@ export class WebwriterFeatureEngineering extends LitElementWw {
       let rows = samples.slice(0, 10).map(
         (v) => html`<tr><td><p>${JSON.stringify(v[fieldName])}</p></td></tr>`
       )
-      return html`<div class="props"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
+      return html`<div class="props" part="table"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
     } else {
       let Transformation = getFeatureTransformation(this.fieldProps[fieldName].type).constructor;
       try {
@@ -365,9 +476,9 @@ export class WebwriterFeatureEngineering extends LitElementWw {
             return html`<tr><td><p>${displayValue}</p></td><td><p>${transformation.renderTransformedValue(value, this.msg)}</p></td></tr>`
           }
         )
-        return html`<div class="settings">${transformation.getSettingElement((settings: FeatureSettings) => { this.handleFeatureSettingsChange(settings) }, this.editMode, this.msg)}</div><div class="props"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
+        return html`<div class="settings">${transformation.getSettingElement((settings: FeatureSettings) => { this.handleFeatureSettingsChange(settings) }, this.editMode, this.msg)}</div><div class="props" part="table"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead><tbody>${rows}</tbody></table></div>`
       } catch (e) {
-        return html`<p style="background: red">${this.msg("This Transformation is not applicable for the values")}</p><div class="props"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead></table></div>`
+        return html`<p style="background: red">${this.msg("This Transformation is not applicable for the values")}</p><div class="props" part="table"><table><thead><td>${fieldName}</td><td>${this.msg("Tensor")}</td></thead></table></div>`
       }
     }
   }

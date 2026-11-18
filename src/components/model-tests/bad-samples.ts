@@ -29,6 +29,11 @@ export class BadSamples extends LitElementWw {
     }
 
     static styles = css`
+        :host {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+        }
         #container {
             display: flex;
             flex-direction: row;
@@ -63,6 +68,14 @@ export class BadSamples extends LitElementWw {
         }
         table td {
             padding: 0px 10px;
+        }
+        @media print {
+            :host {
+                overflow: visible;
+            }
+            table {
+                break-inside: avoid;
+            }
         }
     `
 

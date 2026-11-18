@@ -37,7 +37,7 @@ export class DatasetInput extends LitElementWw {
     >
       <sl-button
         variant="default"
-        style="width: 20%"
+        class="select"
         @click=${this.triggerFileInput}
         @dragover=${this.handleDragOverFileInputArea}
         @drop=${this.handleDropOnFileInputArea}

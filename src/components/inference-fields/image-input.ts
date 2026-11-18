@@ -26,7 +26,6 @@ export class DrawingCanvas extends InputElement {
     :host {
       position: relative;
       display: inline-block;
-      touch-action: none;
     }
     canvas {
       background: white;
@@ -38,6 +37,11 @@ export class DrawingCanvas extends InputElement {
       position: absolute;
       top: 0px;
       left: 0px;
+    }
+    @media print {
+      sl-button {
+        display: none;
+      }
     }
   `;
 
@@ -94,30 +98,21 @@ export class DrawingCanvas extends InputElement {
       this.points = [];
     };
 
-    this.canvas!.addEventListener('mousedown', e => {
+    const canvas = this.canvas!;
+    const draw = (e: PointerEvent) => {
+      const { x, y } = getCanvasCoords(e.clientX, e.clientY);
+      move(x, y);
+    };
+    // Pointer events carry mouse, touch and pen. The capture keeps a stroke going when the pointer leaves the canvas.
+    canvas.addEventListener('pointerdown', e => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      try { canvas.setPointerCapture(e.pointerId); } catch { /* a pointer that is gone needs no capture */ }
       const { x, y } = getCanvasCoords(e.clientX, e.clientY);
       start(x, y);
     });
-    this.canvas!.addEventListener('mousemove', e => {
-      const { x, y } = getCanvasCoords(e.clientX, e.clientY);
-      move(x, y);
-    });
-    this.canvas!.addEventListener('mouseup', end);
-    this.canvas!.addEventListener('mouseleave', end);
-
-    this.canvas!.addEventListener('touchstart', e => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const { x, y } = getCanvasCoords(touch.clientX, touch.clientY);
-      start(x, y);
-    });
-    this.canvas!.addEventListener('touchmove', e => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const { x, y } = getCanvasCoords(touch.clientX, touch.clientY);
-      move(x, y);
-    });
-    this.canvas!.addEventListener('touchend', end);
+    canvas.addEventListener('pointermove', draw);
+    canvas.addEventListener('pointerup', end);
+    canvas.addEventListener('pointercancel', end);
   }
 
   private redraw() {

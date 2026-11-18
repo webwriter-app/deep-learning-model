@@ -8,8 +8,14 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A widget that allows feature engineering on a dataset",
+          "description": "A widget that allows feature engineering on a dataset\n\nConversions: a `table` (first row is the header) and the files `.csv` (`text/csv`) and `.json` (an array of objects)\nreplace the dataset; the dataset leaves as a `table` or as `text/csv`. Imports reset the feature settings of the\ncolumns to \"Ignore\", and exports carry only the samples, not the settings. Every value becomes text. The Model\nDesigning widget also takes a `.json` file (a list of layers); each import validates its file and rejects the shape of\nthe other, so a wrongly routed file changes nothing.",
           "name": "WebwriterFeatureEngineering",
+          "cssParts": [
+            {
+              "description": "The table that shows the values of the selected column and their tensors.",
+              "name": "table"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -28,6 +34,24 @@
               },
               "static": true,
               "default": "{ deleteDataset: { label: (widget: Labelled) => widget.msg(\"Delete dataset\"), confirm: (widget: Labelled) => widget.msg(\"Delete this dataset?\"), intent: \"danger\" as const, }, }"
+            },
+            {
+              "kind": "field",
+              "name": "convertFrom",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ table: \"loadTable\", \".csv\": \"importCsv\", \"text/csv\": \"importCsv\", \".json\": \"importJson\", }"
+            },
+            {
+              "kind": "field",
+              "name": "convertTo",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ table: \"toTable\", \"text/csv\": \"exportCsv\", }"
             },
             {
               "kind": "field",
@@ -184,6 +208,88 @@
             {
               "kind": "method",
               "name": "deleteDataset"
+            },
+            {
+              "kind": "method",
+              "name": "replaceDataset",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "samples",
+                  "type": {
+                    "text": "Sample[]"
+                  }
+                },
+                {
+                  "name": "fields",
+                  "type": {
+                    "text": "string[]"
+                  }
+                }
+              ],
+              "description": "Replaces the dataset. The tensors are built when the widget renders."
+            },
+            {
+              "kind": "method",
+              "name": "problem",
+              "privacy": "private",
+              "parameters": [
+                {
+                  "name": "code",
+                  "type": {
+                    "text": "TableProblem"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "loadTable",
+              "parameters": [
+                {
+                  "name": "fragment",
+                  "type": {
+                    "text": "DocumentFragment"
+                  }
+                }
+              ],
+              "description": "Takes the first table of the fragment: the first row is the header. Declines a table without usable data."
+            },
+            {
+              "kind": "method",
+              "name": "toTable",
+              "description": "The dataset as a table with the samples, or null without a dataset."
+            },
+            {
+              "kind": "method",
+              "name": "importCsv",
+              "parameters": [
+                {
+                  "name": "file",
+                  "type": {
+                    "text": "File"
+                  }
+                }
+              ],
+              "description": "Reads a CSV file with a header row and returns the function that replaces the dataset."
+            },
+            {
+              "kind": "method",
+              "name": "importJson",
+              "parameters": [
+                {
+                  "name": "file",
+                  "type": {
+                    "text": "File"
+                  }
+                }
+              ],
+              "description": "Reads a JSON file with an array of objects and returns the function that replaces the dataset."
+            },
+            {
+              "kind": "method",
+              "name": "exportCsv",
+              "description": "The samples as CSV, or null without a dataset."
             },
             {
               "kind": "method",
@@ -385,8 +491,14 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A widget to design AI models using a visual editor.",
+          "description": "A widget to design AI models using a visual editor.\n\nLayers are nodes that take focus: arrow keys move the selected layer, Enter on a port starts a connection, and Delete\nremoves the selection. On a touch screen a tap on a port picks a connection up and a tap on another port ends it.\n\nConversions: the design leaves and enters as a `.json` file (`application/json`) with the layers, their settings,\npositions and connections. The file replaces the whole design; it keeps no zoom or selection.",
           "name": "WebwriterModelDesigning",
+          "cssParts": [
+            {
+              "description": "The canvas with the layers and their connections.",
+              "name": "editor"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -406,6 +518,24 @@
               "static": true,
               "default": "{ deleteSelection: {label: (widget: Labelled) => widget.msg(\"Delete selected\"), shortcut: [\"Delete\"], hidden: true}, }",
               "description": "Delete removes the selected layer or connection. It has no button in the editor's drawer."
+            },
+            {
+              "kind": "field",
+              "name": "convertFrom",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ \".json\": \"importDesign\", }"
+            },
+            {
+              "kind": "field",
+              "name": "convertTo",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ \"application/json\": \"exportDesign\", }"
             },
             {
               "kind": "field",
@@ -568,6 +698,24 @@
             },
             {
               "kind": "method",
+              "name": "importDesign",
+              "parameters": [
+                {
+                  "name": "file",
+                  "type": {
+                    "text": "File"
+                  }
+                }
+              ],
+              "description": "Reads a JSON file with the layers of a design and returns the function that replaces the design."
+            },
+            {
+              "kind": "method",
+              "name": "exportDesign",
+              "description": "The design as JSON: the layers with their settings and connections, or null for an empty design."
+            },
+            {
+              "kind": "method",
               "name": "getModel",
               "description": "Exports the current model design",
               "return": {
@@ -694,6 +842,12 @@
           "kind": "class",
           "description": "A widget that allows evaluating a trained model using various tests.",
           "name": "WebwriterModelEvaluation",
+          "cssParts": [
+            {
+              "description": "The result of the selected test.",
+              "name": "test"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -774,14 +928,6 @@
               "name": "testSelect",
               "type": {
                 "text": "SlSelect"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "testContainer",
-              "type": {
-                "text": "HTMLDivElement"
               },
               "privacy": "private"
             },
@@ -905,8 +1051,18 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A widget to run inference using a trained model and features created in the feature engineering widget.",
+          "description": "A widget to run inference using a trained model and features created in the feature engineering widget.\n\nThe drawing area takes pen, touch and mouse. \"Show Random Test Sample\" fills the inputs from the test data without a pointer.",
           "name": "WebwriterModelPrediction",
+          "cssParts": [
+            {
+              "description": "The input fields of the model.",
+              "name": "inputs"
+            },
+            {
+              "description": "The predicted outputs of the model.",
+              "name": "outputs"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -995,9 +1151,18 @@
               "kind": "field",
               "name": "predictionInterval",
               "type": {
-                "text": "ReturnType<typeof setInterval>"
+                "text": "ReturnType<typeof setInterval> | undefined"
               },
               "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "predicting",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
             },
             {
               "kind": "method",
@@ -1024,6 +1189,11 @@
               "name": "predict",
               "privacy": "private",
               "description": "Is periodically called and will invoke the input fields values on the model to update the output fields."
+            },
+            {
+              "kind": "method",
+              "name": "runPrediction",
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -1135,8 +1305,14 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.",
+          "description": "A widget to train models designed in the model designing widget using datasets created in the feature engineering widget.\n\nSignals: `history` is the table of the metrics per epoch (columns \"epoch\", \"Training Loss\", \"Validation Loss\" and the\nother selected metrics), empty until the first epoch ends and after a reset. `loss` is the latest validation loss\nas a number, or null. Another widget connects to them with an effect attribute such as `data-from=\"#training[history]\"`.\n\nConversions: the history leaves as a `table` or as `text/csv`; the best checkpoint (else the latest) leaves as\n`application/json` with the TensorFlow.js model topology, weight specs and the weights as hex text.\nThe history is not stored in the document, so the exports hold what was trained since the widget loaded.",
           "name": "WebwriterModelTraining",
+          "cssParts": [
+            {
+              "description": "The chart of the training metrics.",
+              "name": "chart"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1146,6 +1322,15 @@
               },
               "static": true,
               "default": "{ featureWidgetId: {type: \"reference\" as const, selector: \"webwriter-feature-engineering\", label: (widget: Labelled) => widget.msg(\"Feature source\")}, modelWidgetId: {type: \"reference\" as const, selector: \"webwriter-model-designing\", label: (widget: Labelled) => widget.msg(\"Design source\")}, editMode: { type: \"select\" as const, label: (widget: Labelled) => widget.msg(\"Edit permissions\"), options: [ {value: \"edit\", label: (widget: Labelled) => widget.msg(\"Edit everything\")}, {value: \"hidden\", label: (widget: Labelled) => widget.msg(\"Hide widget\")}, ], }, currentBackend: { type: \"select\" as const, label: (widget: Labelled) => widget.msg(\"Preferred backend\"), options: [ {value: \"cpu\", label: (widget: Labelled) => widget.msg(\"CPU\")}, {value: \"webgl\", label: (widget: Labelled) => widget.msg(\"WebGL (GPU)\")}, ], }, cache: {type: Boolean, label: (widget: Labelled) => widget.msg(\"Cache training samples\")}, }"
+            },
+            {
+              "kind": "field",
+              "name": "convertTo",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ table: \"toTable\", \"text/csv\": \"exportHistory\", \"application/json\": \"exportModel\", }"
             },
             {
               "kind": "field",
@@ -1361,6 +1546,21 @@
             },
             {
               "kind": "field",
+              "name": "#history",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "signals",
+              "type": {
+                "text": "object"
+              },
+              "readonly": true,
+              "default": "{ history: computed(() => this.#history.get()), loss: computed(() => lastValue(this.#history.get(), \"Validation Loss\")), }",
+              "description": "Published for other widgets: the metrics per epoch and the latest validation loss."
+            },
+            {
+              "kind": "field",
               "name": "memoryTimer",
               "type": {
                 "text": "ReturnType<typeof setInterval> | undefined"
@@ -1399,6 +1599,26 @@
               "type": {
                 "text": "Record<string, string>"
               }
+            },
+            {
+              "kind": "method",
+              "name": "publishHistory",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "toTable",
+              "description": "The history as a table, or null before the first epoch."
+            },
+            {
+              "kind": "method",
+              "name": "exportHistory",
+              "description": "The history as CSV, or null before the first epoch."
+            },
+            {
+              "kind": "method",
+              "name": "exportModel",
+              "description": "The best checkpoint as JSON, or null without a checkpoint."
             },
             {
               "kind": "method",

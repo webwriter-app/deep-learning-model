@@ -349,7 +349,15 @@
       "ckb-Arab": "ئەندازیاریی تایبەتمەندی",
       "af-ZA": "Kenmerkingenieurswese",
       "af-NA": "Kenmerkingenieurswese"
-    }
+    },
+    "importFormats": [
+      ".csv",
+      "text/csv",
+      ".json"
+    ],
+    "exportFormats": [
+      "text/csv"
+    ]
   },
   "./widgets/webwriter-model-designing": {
     "label": {
@@ -465,7 +473,13 @@
       "ckb-Arab": "دیزاینکردنی مۆدێل",
       "af-ZA": "Modelontwerp",
       "af-NA": "Modelontwerp"
-    }
+    },
+    "importFormats": [
+      ".json"
+    ],
+    "exportFormats": [
+      "application/json"
+    ]
   },
   "./widgets/webwriter-model-training": {
     "label": {
@@ -581,7 +595,11 @@
       "ckb-Arab": "ڕاهێنانی مۆدێل",
       "af-ZA": "Modelopleiding",
       "af-NA": "Modelopleiding"
-    }
+    },
+    "exportFormats": [
+      "text/csv",
+      "application/json"
+    ]
   },
   "./widgets/webwriter-model-prediction": {
     "label": {

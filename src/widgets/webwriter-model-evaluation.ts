@@ -13,6 +13,7 @@ import { until } from "lit/directives/until.js";
 import { localeOptions } from "../../localization/locale-options";
 import { BadSamples } from "../components/model-tests/bad-samples";
 import { LossDistribution } from "../components/model-tests/loss-distribution";
+import { hostStyles } from "../components/host.styles";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { WebwriterFeatureEngineering } from "./webwriter-feature-engineering";
 import { WebwriterModelTraining } from "./webwriter-model-training";
@@ -36,6 +37,8 @@ async function waitFor(condition: () => unknown, interval = 10) {
 
 /**
  * A widget that allows evaluating a trained model using various tests.
+ *
+ * @part test - The result of the selected test.
  */
 @customElement("webwriter-model-evaluation")
 export class WebwriterModelEvaluation extends LitElementWw {
@@ -52,7 +55,7 @@ export class WebwriterModelEvaluation extends LitElementWw {
         "bad-samples": BadSamples
     }
 
-    static styles = css`
+    static styles = [hostStyles, css`
         #container {
             display: flex;
             flex-direction: row;
@@ -83,7 +86,15 @@ export class WebwriterModelEvaluation extends LitElementWw {
             margin: 0px;
             font-size: 16px;
         }
-    `
+        #test-select, #epoch-select {
+            max-width: 100%;
+        }
+        @media print {
+            #test-select, #epoch-select {
+                display: none;
+            }
+        }
+    `]
 
     static options = {
         featureWidgetId: {type: "reference" as const, selector: "webwriter-feature-engineering", label: (widget: Labelled) => widget.msg("Feature source")},
@@ -201,7 +212,7 @@ export class WebwriterModelEvaluation extends LitElementWw {
             <sl-option value="loss-dist">${this.msg("Loss Distribution")}</sl-option>
             <sl-option value="bad-samples">${this.msg("Worst Samples")}</sl-option>
         </sl-select>
-        <div id="test-container">
+        <div id="test-container" part="test">
             ${this.testElem}
         </div>
         <div hidden>

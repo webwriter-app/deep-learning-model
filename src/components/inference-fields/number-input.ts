@@ -16,7 +16,6 @@ export class NumberInput extends OutputElement {
     :host {
       position: relative;
       display: inline-block;
-      touch-action: none;
       width: 100%;
     }
     table {

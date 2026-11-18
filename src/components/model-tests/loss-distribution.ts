@@ -32,6 +32,10 @@ export class LossDistribution extends LitElementWw {
     }
 
     static styles = css`
+        :host {
+            display: block;
+            max-width: 100%;
+        }
         #container {
             display: flex;
             flex-direction: row;
@@ -114,12 +118,13 @@ export class LossDistribution extends LitElementWw {
         let canvas = document.createElement("canvas");
         let chartDiv = document.createElement("div");
         chartDiv.style.height = "200px";
+        chartDiv.style.breakInside = "avoid";
         chartDiv.append(canvas);
         new Chart(canvas, {
             type: "bar",
             data: {
                 labels: titles,
-                datasets: [{ label: "Frequency", data: bins, backgroundColor: "#008ffb" }],
+                datasets: [{ label: "Frequency", data: bins, backgroundColor: getComputedStyle(this).getPropertyValue("--ww-theme-accent-1").trim() || "#008ffb" }],
             },
             options: {
                 responsive: true,

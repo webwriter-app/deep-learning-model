@@ -14,7 +14,29 @@
     "isced2011-6",
     "isced2011-7",
     "isced2011-8",
-    "iscedf2013-06",
+    "iscedf2013-061",
+    "widget-editable",
+    "widget-allows-pointer-input",
+    "widget-allows-keyboard-input",
+    "widget-allows-touch-input",
+    "widget-responsive",
+    "widget-themeable",
+    "widget-printable",
+    "widget-stateful",
+    "widget-configurable",
+    "widget-reactive",
+    "widget-testable",
+    "widget-supports-dynamic-loading",
+    "widget-supports-shared-dependencies",
+    "widget-convertible-from-table",
+    "widget-convertible-from-text/csv",
+    "widget-convertible-from-application/json",
+    "widget-convertible-to-table",
+    "widget-convertible-to-text/csv",
+    "widget-convertible-to-application/json",
+    "deep learning",
+    "machine learning",
+    "neural network",
     "widget-lang-en",
     "widget-lang-en-US",
     "widget-lang-en-GB",
@@ -192,6 +214,14 @@
     "./tests/localization.*": {
       "source": "./tests/localization.test.ts",
       "default": "./dist/tests/localization.*"
+    },
+    "./tests/presentation.*": {
+      "source": "./tests/presentation.test.ts",
+      "default": "./dist/tests/presentation.*"
+    },
+    "./tests/conversions.*": {
+      "source": "./tests/conversions.test.ts",
+      "default": "./dist/tests/conversions.*"
     }
   },
   "editingConfig": {

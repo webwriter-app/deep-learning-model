@@ -45,25 +45,27 @@ export class ModelEditor extends LitElementWw {
         min-height: 200px;
         display: block;
         font-size: 0.9rem;
+        container-type: inline-size;
     }
     ww-scene {
         margin-top: 10px;
         display: block;
         height: 500px;
-        min-width: 300px;
+        min-width: 0;
+        max-width: 100%;
         border: 1px solid var(--sl-input-border-color);
         outline: none;
         user-select: none;
     }
     ww-path {
-        stroke: #4682b4;
+        stroke: var(--ww-theme-accent-1, #4682b4);
         stroke-width: 5px;
     }
     ww-path:state(hover) {
         stroke: #1266ab;
     }
     ww-path[selected] {
-        stroke: #43b993;
+        stroke: var(--ww-theme-accent-2, #43b993);
     }
     ww-node {
         display: flex;
@@ -130,7 +132,7 @@ export class ModelEditor extends LitElementWw {
     .port {
         box-sizing: content-box;
         width: 20px;
-        min-height: 12px;
+        min-height: 14px;
         padding: 5px 2px;
         border: 1px solid #000;
         background: #fff;
@@ -151,10 +153,24 @@ export class ModelEditor extends LitElementWw {
         background: #f77;
     }
     .port[data-ww-port-candidate] {
-        background: #f59e0b;
+        background: var(--ww-theme-accent-3, #f59e0b);
     }
     .port[data-ww-port-over] {
         box-shadow: 0 0 0 4px #f59e0b66;
+    }
+    ww-node:focus-visible, .port:focus-visible {
+        outline: 2px solid var(--ww-theme-accent-1, #4682b4);
+        outline-offset: 2px;
+    }
+    @container (max-width: 520px) {
+        ww-scene {
+            height: 380px;
+        }
+    }
+    @media print {
+        ww-scene {
+            break-inside: avoid;
+        }
     }`;
 
     @property({ type: String }) accessor editmode = "edit";
@@ -297,7 +313,7 @@ export class ModelEditor extends LitElementWw {
             const connection = layer.inputConnections[port];
             return connection ? [{ layer, port, from: connection.node }] : [];
         }));
-        return html`<ww-scene select="single" background="dots" background-spacing="22" data-ww-viewport="canvas" data-ww-viewport-zoom="0.5 1.6" data-ww-viewport-fit="none"
+        return html`<ww-scene select="single" connect-click background="dots" background-spacing="22" data-ww-viewport="canvas" data-ww-viewport-zoom="0.5 1.6" data-ww-viewport-fit="none"
             @ww-select=${this.#onSelect} @ww-move=${this.#onMove} @ww-connect=${this.#onConnect}>
             ${wires.map(({ layer, port, from }) => html`<ww-path data-ww-key=${wireKey(layer, port)} from="${from}:output_1" to="${layer.id}:${port}"
                 route="curve" selectable ?selected=${this.selection !== null && "wire" in this.selection && this.selection.wire === wireKey(layer, port)}></ww-path>`)}

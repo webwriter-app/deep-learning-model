@@ -1,6 +1,17 @@
 import { css } from "lit";
 
 export default css`
+  :host {
+    display: block;
+    position: relative;
+    min-height: 160px;
+  }
+
+  .select {
+    width: min(20%, 100%);
+    min-width: 12rem;
+  }
+
   .overlay {
     position: absolute; /* To overlay the .page div */
     top: 0;
@@ -16,5 +27,11 @@ export default css`
 
   #file-input-label:hover {
     color: blue;
+  }
+
+  @media print {
+    :host {
+      display: none;
+    }
   }
 `;

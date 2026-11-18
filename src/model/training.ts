@@ -1,4 +1,5 @@
 import type * as TF from "@tensorflow/tfjs";
+import type { Table } from "./dataset/table";
 
 /** A loss function as `compile` takes it. */
 export type LossFn = Extract<NonNullable<Parameters<TF.LayersModel["compile"]>[0]["loss"]>, (...args: any[]) => any>;
@@ -64,4 +65,31 @@ export function lossStringToFunction(tf: typeof TF, loss: string) {
     case "CosDist": return tf.losses.cosineDistance;
     default: throw new Error(`Unknown loss function "${loss}"`);
   }
+}
+
+/** The metrics per epoch as a table: one column per metric, one row per epoch, the epochs counted from 1. */
+export function historyTable(metrics: Record<string, number[]>): Table {
+  const names = Object.keys(metrics);
+  const epochs = Math.max(0, ...names.map(name => metrics[name].length));
+  return {
+    columns: ["epoch", ...names.map(name => name.replaceAll("_", " "))],
+    rows: Array.from({ length: epochs }, (_, index) => [index + 1, ...names.map(name => metrics[name][index] ?? null)]),
+  };
+}
+
+/** The last value of a column of a history table, or null. */
+export function lastValue(table: Table, column: string): number | null {
+  const index = table.columns.indexOf(column);
+  for (let row = table.rows.length - 1; index > 0 && row >= 0; row--) {
+    const value = table.rows[row][index];
+    if (typeof value === "number") return value;
+  }
+  return null;
+}
+
+/** The checkpoint to export: the best one, else the one of the latest epoch. */
+export function pickCheckpoint(names: string[]): string | null {
+  if (names.includes("best")) return "best";
+  const epochs = names.filter(name => /^epoch-\d+$/.test(name)).sort((a, b) => Number(a.slice(6)) - Number(b.slice(6)));
+  return epochs.at(-1) ?? names[0] ?? null;
 }

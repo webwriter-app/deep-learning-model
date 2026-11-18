@@ -14,6 +14,7 @@ import { Shortcuts } from "@webwriter/lit/shortcuts";
 import { css, html, TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { localeOptions } from "../../localization/locale-options";
+import { hostStyles } from "../components/host.styles";
 import { ModelEditor } from "../components/model-editor";
 import { AiWidgetsReferenceSelect } from "../components/reference-element-select";
 import { analyze, exportLayers, featureSizes, importLayers, type FeatureSizes, type LayerState } from "../model/network";
@@ -23,12 +24,19 @@ type Labelled = { msg: MsgFn };
 
 /**
  * A widget to design AI models using a visual editor.
+ *
+ * Layers are nodes that take focus: arrow keys move the selected layer, Enter on a port starts a connection, and Delete
+ * removes the selection. On a touch screen a tap on a port picks a connection up and a tap on another port ends it.
+ *
+ * Conversions: the design leaves and enters as a `.json` file (`application/json`) with the layers, their settings,
+ * positions and connections. The file replaces the whole design; it keeps no zoom or selection.
+ *
+ * @part editor - The canvas with the layers and their connections.
  */
 @customElement("webwriter-model-designing")
 export class WebwriterModelDesigning extends LitElementWw {
-    static styles = css`
+    static styles = [hostStyles, css`
     :host {
-      display:block;
       font-size: 0.9rem;
     }
     :host([contenteditable][editmode="hidden"]) {
@@ -98,7 +106,39 @@ export class WebwriterModelDesigning extends LitElementWw {
         right: 5px;
         bottom: 110px;
         z-index: 10;
-    }`
+    }
+    @container (max-width: 1100px) {
+        .group {
+            flex-wrap: wrap;
+        }
+        #add {
+            position: static;
+            width: 100%;
+            flex-wrap: wrap;
+            overflow: visible;
+            padding: 5px 0;
+            background: none;
+        }
+        #controls {
+            right: 3px;
+            top: 3px;
+        }
+        #delete-control {
+            bottom: auto;
+            top: 40px;
+        }
+        #stats {
+            flex-wrap: wrap;
+        }
+    }
+    @media print {
+        #add, #controls, #delete-control {
+            display: none !important;
+        }
+        #stats {
+            margin-top: 10px;
+        }
+    }`]
 
     /** @internal */
     static scopedElements = {
@@ -133,6 +173,14 @@ export class WebwriterModelDesigning extends LitElementWw {
     /** Delete removes the selected layer or connection. It has no button in the editor's drawer. */
     static actions = {
         deleteSelection: {label: (widget: Labelled) => widget.msg("Delete selected"), shortcut: ["Delete"], hidden: true},
+    }
+
+    static convertFrom = {
+        ".json": "importDesign",
+    }
+
+    static convertTo = {
+        "application/json": "exportDesign",
     }
 
     readonly localize = localizer(this, localeOptions);
@@ -211,8 +259,13 @@ export class WebwriterModelDesigning extends LitElementWw {
     constructor() {
         super();
         // Prevents the del hotkey from removing the widget
-        this.addEventListener("keydown", function (e) {
-            if (e.key == "Delete") {
+        this.addEventListener("keydown", (e) => {
+            // Delete in a field of a layer edits the text
+            const origin = e.composedPath()[0];
+            if (origin instanceof HTMLInputElement || origin instanceof HTMLTextAreaElement)
+                return;
+            // With a selection the Delete shortcut removes it; it ignores a key that is already prevented
+            if (e.key == "Delete" && !(this.editMode == "edit" && this.hasSelection)) {
                 e.preventDefault();
                 return false;
             }
@@ -255,6 +308,25 @@ export class WebwriterModelDesigning extends LitElementWw {
      */
     public zoomReset() {
         this.currentCanvas.zoomReset();
+    }
+
+    /** Reads a JSON file with the layers of a design and returns the function that replaces the design. */
+    async importDesign(file: File) {
+        let value: unknown;
+        try { value = JSON.parse(await file.text()); }
+        catch { throw new Error(this.msg("The file is not valid JSON.")); }
+        const layers = importLayers(value);
+        if (layers.length === 0) throw new Error(this.msg("The file holds no model layers."));
+        return () => {
+            this.layers = layers;
+            this.state = JSON.stringify(layers);
+        };
+    }
+
+    /** The design as JSON: the layers with their settings and connections, or null for an empty design. */
+    exportDesign() {
+        if (this.layers.length === 0) return null;
+        return new File([JSON.stringify(this.getModel(), null, 2)], "model-design.json", {type: "application/json"});
     }
 
     /**
@@ -311,7 +383,7 @@ export class WebwriterModelDesigning extends LitElementWw {
         const analysis = analyze(this.layers, this.sizes, this.limits);
         return html`
         <div id="content" style=${this.editMode == "hidden" ? "display:none" : ""}>
-            <model-editor id="model-editor" .layers=${this.layers} .sizes=${this.sizes} @modelchange=${this._editorChange} @selectionchange=${this._selectionChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
+            <model-editor id="model-editor" part="editor" .layers=${this.layers} .sizes=${this.sizes} @modelchange=${this._editorChange} @selectionchange=${this._selectionChange} editmode=${this.editMode} modelparams=${this.maxModelParameters} layerparams=${this.maxLayerParameters}></model-editor>
             <div id="stats">
                 <p>${this.msg("Number of Operations:")} <span id="numberNodes">${analysis.operations}</span></p>
                 <p>${this.msg("Total Parameters:")} <span id="params">${analysis.parameters}</span></p>
