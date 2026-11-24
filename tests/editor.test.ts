@@ -2,10 +2,24 @@
 import "mocha/mocha.js";
 import { assert } from "chai";
 import { getMochaConfig } from "@webwriter/build/test";
-import "../src/widgets/webwriter-model-designing";
+import { WebwriterModelDesigning } from "../src/widgets/webwriter-model-designing";
 import { block, dataOf, frame, modes, mounting, until } from "./helpers";
 
 mocha.setup(getMochaConfig());
+
+it("does not start an interval when WebWriter creates a detached model designer", function () {
+  const setInterval = window.setInterval;
+  let intervalCount = 0;
+  window.setInterval = () => ++intervalCount;
+  try {
+    const probe = document.createElement("webwriter-model-designing");
+    assert.instanceOf(probe, WebwriterModelDesigning);
+    assert.isFalse(probe.isConnected);
+    assert.equal(intervalCount, 0);
+  } finally {
+    window.setInterval = setInterval;
+  }
+});
 
 const layer = (id: number, type: string, extra = {}) =>
   ({ id, posX: 40 + id * 200, posY: 60, inputConnections: {}, type, valid: true, ...extra });
