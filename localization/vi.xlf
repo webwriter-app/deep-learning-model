@@ -383,6 +383,14 @@
 <trans-unit id="s2b6d43596140ef3a">
   <source>Continue Training</source>
 <target>Tiếp tục huấn luyện</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2"><source>The data has no columns.</source><target>Dữ liệu không có cột.</target></trans-unit>
+<trans-unit id="s51c124e5e98f9718"><source>The column names are empty or not unique.</source><target>Tên cột trống hoặc không duy nhất.</target></trans-unit>
+<trans-unit id="s6715c7a212ee37fe"><source>The data has no rows.</source><target>Dữ liệu không có hàng.</target></trans-unit>
+<trans-unit id="s4ffa704641ad66d2"><source>A row has more values than the header.</source><target>Một hàng có nhiều giá trị hơn hàng tiêu đề.</target></trans-unit>
+<trans-unit id="sb8c878135ee917b1"><source>The file is not valid JSON.</source><target>Tệp không phải JSON hợp lệ.</target></trans-unit>
+<trans-unit id="s9f72fa206c8b32e0"><source>Expected a JSON array of objects.</source><target>Cần một mảng JSON gồm các đối tượng.</target></trans-unit>
+<trans-unit id="sa6570e7053d51656"><source>The file holds no model layers.</source><target>Tệp không có lớp mô hình.</target></trans-unit>
+<trans-unit id="s4f7691c326912146"><source>Training Metrics</source><target>Chỉ số huấn luyện</target></trans-unit>
 </body>
 </file>
 </xliff>

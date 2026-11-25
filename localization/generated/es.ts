@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -44,6 +44,9 @@
 's446eb2b422b286af': `Impulso`,
 's49730f3d5751a433': `Cargando...`,
 's4f5eeeb48a97ea9a': `Pérdida`,
+'s4f7691c326912146': `Métricas de entrenamiento`,
+'s4ffa704641ad66d2': `Una fila tiene más valores que la cabecera.`,
+'s51c124e5e98f9718': `Los nombres de columna están vacíos o no son únicos.`,
 's547a4465533a6f5f': `Codificación de imágenes`,
 's5561b945c8cd59b0': `Tamaño del lote`,
 's559e9b10ba86261e': `Muestras de entrenamiento de caché`,
@@ -51,6 +54,7 @@
 's56a6aa2100291b96': `Widget de formación de modelos oculto para los estudiantes.`,
 's56eedda42b0bb66f': `Añadir capa miscelánea`,
 's5732d2277d736ba1': `Cuadrático`,
+'s5754a3a243ce0bd2': `Los datos no tienen columnas.`,
 's58bee799432dbc69': `Adición`,
 's58d6b1ecd5084538': `Zancada`,
 's61ac82c68c336bb1': `Deja de entrenar`,
@@ -60,6 +64,7 @@
 's6557e193c4f15b9c': `Múltiples clases por muestra`,
 's6610206d0ad97d60': `Columnas de características del conjunto de datos:`,
 's66a5898632280fe2': `Función de pérdida`,
+'s6715c7a212ee37fe': `Los datos no tienen filas.`,
 's679b3c0fcb1bdadf': `Ocultar el widget`,
 's6b0e650acd025eff': `Cadena Base64`,
 's6c02f2ec8c3f52a4': `Precisión`,
@@ -85,8 +90,10 @@
 's981f232bd33ec927': `Tasa`,
 's99456cbda3e05fb0': `Recordatorio`,
 's9eac77171764efaa': `Transposición de convolución`,
+'s9f72fa206c8b32e0': `Se esperaba una matriz JSON de objetos.`,
 'sa4ef4c5175793d6f': `Cálculo de pérdidas para muestras...`,
 'sa60f5f53cc29b8cf': `Solo propiedades de las capas`,
+'sa6570e7053d51656': `El archivo no contiene capas del modelo.`,
 'sa68f184fe626daf3': `Añadir capa entrenable`,
 'sa8082d7f7ef02f42': `Esta transformación no es aplicable a los valores.`,
 'sa812ba9ded26aa98': `Cargando modelo...`,
@@ -102,6 +109,7 @@
 'sb59d68ed12d46377': `Cargando`,
 'sb633a04ba54b2dc0': `La capa tiene demasiados parámetros entrenables. Intenta reducir el tamaño de la entrada o las propiedades ajustables.`,
 'sb850938497d0a395': `Permisos de edición`,
+'sb8c878135ee917b1': `El archivo no es un JSON válido.`,
 'sbf1ff3369db980c0': `Fuente del diseño`,
 'sbfe9518a1fe4f185': `Remodelar`,
 'sc0e01e8b4662bec2': str`Predicción: ${0}, valor objetivo: ${1}`,

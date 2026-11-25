@@ -24,8 +24,8 @@
   <source>Show selection</source>
 <target>Vis utval</target></trans-unit>
 <trans-unit id="sc3727a4fc25d7500">
-  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>Prediksjon: <x id="0" equiv-text="${predClass} ${relation}" />, etikett: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>Prediksjon: <x id="0" equiv-text="${predClass} ${relation}"/>, etikett: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
 <trans-unit id="sc3d8f37ea5f4bd79">
   <source>Visualizing Difference...</source>
 <target>Viser skilnaden…</target></trans-unit>
@@ -66,14 +66,14 @@
   <source>Grayscale</source>
 <target>Gråskala</target></trans-unit>
 <trans-unit id="sc0e01e8b4662bec2">
-  <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>Prediksjon: <x id="0" equiv-text="${predValue}" />, etikett: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>Prediksjon: <x id="0" equiv-text="${predValue}"/>, etikett: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
 <trans-unit id="sab09aa21c8921bea">
   <source>Loading image</source>
 <target>Lastar bilete</target></trans-unit>
 <trans-unit id="se1c4d8107171ecb2">
-  <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>Prediksjon: <x id="0" equiv-text="${predValue}" /> − etikett: <x id="1" equiv-text="${labelValue}" /> = skilnad: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>Prediksjon: <x id="0" equiv-text="${predValue}"/> − etikett: <x id="1" equiv-text="${labelValue}"/> = skilnad: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
 <trans-unit id="se2b49a41b39653fc">
   <source>Value Scale</source>
 <target>Verdiskala</target></trans-unit>
@@ -159,11 +159,11 @@
   <source>Loss Function</source>
 <target>Tapsfunksjon</target></trans-unit>
 <trans-unit id="s38ddf839c081bbaf">
-  <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target>Dimensjon <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+  <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target>Dimensjon <x id="0" equiv-text="${(i + 1)}"/></target></trans-unit>
 <trans-unit id="s2c48e68704ff98c2">
-  <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>Ugyldig utdataform: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+  <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>Ugyldig utdataform: <x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
 <trans-unit id="sbfe9518a1fe4f185">
   <source>Reshape</source>
 <target>Endre form</target></trans-unit>
@@ -210,8 +210,8 @@
   <source>Dataset using</source>
 <target>Datasettet bruker</target></trans-unit>
 <trans-unit id="sb03650788f41c135">
-  <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>av <x id="0" equiv-text="${this.samples.length}" /> eksempel</target></trans-unit>
+  <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>av <x id="0" equiv-text="${this.samples.length}"/> eksempel</target></trans-unit>
 <trans-unit id="s018f0f27bee12bb9">
   <source>Number of Operations:</source>
 <target>Tal på operasjonar:</target></trans-unit>
@@ -383,6 +383,38 @@
 <trans-unit id="s2b6d43596140ef3a">
   <source>Continue Training</source>
 <target>Hald fram med treninga</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>Dataene har ingen kolonner.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>Kolonnenavnene er tomme eller ikke unike.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>Dataene har ingen rader.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>En rad har flere verdier enn overskriften.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>Fila er ikkje gyldig JSON.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>Det forventes en JSON-liste med objekter.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>Filen inneholder ingen modellag.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>Treningsmålinger</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

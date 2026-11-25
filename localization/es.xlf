@@ -54,26 +54,6 @@
         <source>Delete dataset</source>
         <target>Eliminar conjunto de datos</target>
       </trans-unit>
-      <trans-unit id="s5da30fd688d05a35">
-        <source>Edit Permissions</source>
-        <target>Permisos de edición</target>
-      </trans-unit>
-      <trans-unit id="s162c56231b25e6ff">
-        <source>hide widget</source>
-        <target>ocultar widget</target>
-      </trans-unit>
-      <trans-unit id="s166d284a7cbc6181">
-        <source>read only</source>
-        <target>solo lectura</target>
-      </trans-unit>
-      <trans-unit id="s2b28da40a8490a78">
-        <source>feature settings only</source>
-        <target>solo ajustes de funciones</target>
-      </trans-unit>
-      <trans-unit id="s34af392b321cbfa6">
-        <source>edit everything</source>
-        <target>editar todo</target>
-      </trans-unit>
       <trans-unit id="s26b5b115b8b61794">
         <source>Feature Engineering Widget hidden from students.</source>
         <target>Widget de ingeniería de características oculto para los estudiantes.</target>
@@ -170,22 +150,6 @@
         <source>Model Design Widget hidden from students.</source>
         <target>Widget de diseño de modelos oculto para los estudiantes.</target>
       </trans-unit>
-      <trans-unit id="s026fba1543d336b2">
-        <source>Feature Source</source>
-        <target>Fuente de la función</target>
-      </trans-unit>
-      <trans-unit id="s32f2fa78e3267c4e">
-        <source>properties only</source>
-        <target>solo propiedades</target>
-      </trans-unit>
-      <trans-unit id="s9b5ec9d0b70a0fac">
-        <source>Max Model Parameters</source>
-        <target>Parámetros del modelo máximo</target>
-      </trans-unit>
-      <trans-unit id="s39e9054ae5edaf30">
-        <source>Max Layer Parameters</source>
-        <target>Parámetros de capa máxima</target>
-      </trans-unit>
       <trans-unit id="sf99503650274b914">
         <source>Optimizer</source>
         <target>Optimizador</target>
@@ -246,14 +210,6 @@
         <source>Model Training Widget hidden from students.</source>
         <target>Widget de formación de modelos oculto para los estudiantes.</target>
       </trans-unit>
-      <trans-unit id="sd6b72022c37e1ae0">
-        <source>Design Source</source>
-        <target>Fuente del diseño</target>
-      </trans-unit>
-      <trans-unit id="s410415ac2406c84e">
-        <source>Preferred Backend</source>
-        <target>Backend preferido</target>
-      </trans-unit>
       <trans-unit id="s0b453a19aa0f85a9">
         <source>CPU</source>
         <target>CPU</target>
@@ -265,14 +221,6 @@
       <trans-unit id="s559e9b10ba86261e">
         <source>Cache training samples</source>
         <target>Muestras de entrenamiento de caché</target>
-      </trans-unit>
-      <trans-unit id="s1ca51d37e3dae07a">
-        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
-        <target>Esto permite que las muestras transformadas se almacenen en la memoria caché del dispositivo de cálculo, lo que aumenta considerablemente la velocidad de entrenamiento, pero requiere mucho más espacio de almacenamiento en el dispositivo.</target>
-      </trans-unit>
-      <trans-unit id="s19a2ee331d08ad42">
-        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
-        <target>(Advertencia: un exceso de datos tensoriales puede saturar la memoria RAM del dispositivo y provocar un fallo durante el entrenamiento y, en el peor de los casos, bloquear el sistema host).</target>
       </trans-unit>
       <trans-unit id="s1bb08bff53933452">
         <source>Model version</source>
@@ -293,10 +241,6 @@
       <trans-unit id="sf84bd835fc5a52ef">
         <source>Worst Samples</source>
         <target>Las peores muestras</target>
-      </trans-unit>
-      <trans-unit id="s4c08da5f7528a7e3">
-        <source>Model Source</source>
-        <target>Fuente del modelo</target>
       </trans-unit>
       <trans-unit id="s8a73af950772f702">
         <source>No Model avaiable.</source>
@@ -339,11 +283,11 @@
         <target>Conjunto de datos utilizando</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>de <x id="0" equiv-text="${this.samples.length}" /> muestras</target></trans-unit>
+        <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>de <x id="0" equiv-text="${this.samples.length}"/> muestras</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>Predicción: <x id="0" equiv-text="${predClass} ${relation}" /> Valor objetivo: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>Predicción: <x id="0" equiv-text="${predClass} ${relation}"/> Valor objetivo: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>Visualizando la diferencia...</target>
@@ -401,8 +345,8 @@
         <target>Escala de grises</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>Predicción: <x id="0" equiv-text="${predValue}" /> − valor objetivo: <x id="1" equiv-text="${labelValue}" /> = diferencia: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>Predicción: <x id="0" equiv-text="${predValue}"/> − valor objetivo: <x id="1" equiv-text="${labelValue}"/> = diferencia: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>Escala de valores</target>
@@ -472,14 +416,14 @@
         <target>Función de pérdida</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target>Dimensión <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+        <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target>Dimensión <x id="0" equiv-text="${(i + 1)}"/></target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>Forma de salida no válida: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>Forma de salida no válida: <x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>Predicción: <x id="0" equiv-text="${predValue}" />, valor objetivo: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>Predicción: <x id="0" equiv-text="${predValue}"/>, valor objetivo: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>Cargando imagen</target>
@@ -547,6 +491,94 @@
 <trans-unit id="s1b7f4af051183fee">
   <source>Preferred backend</source>
 <target>Motor de cálculo preferido</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>Los datos no tienen columnas.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>Los nombres de columna están vacíos o no son únicos.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>Los datos no tienen filas.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>Una fila tiene más valores que la cabecera.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>El archivo no es un JSON válido.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>Se esperaba una matriz JSON de objetos.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>El archivo no contiene capas del modelo.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>Métricas de entrenamiento</target>
+</trans-unit>
+<trans-unit id="s5da30fd688d05a35">
+        <source>Edit Permissions</source>
+        <target>Permisos de edición</target>
+      </trans-unit>
+<trans-unit id="s162c56231b25e6ff">
+        <source>hide widget</source>
+        <target>ocultar widget</target>
+      </trans-unit>
+<trans-unit id="s166d284a7cbc6181">
+        <source>read only</source>
+        <target>solo lectura</target>
+      </trans-unit>
+<trans-unit id="s2b28da40a8490a78">
+        <source>feature settings only</source>
+        <target>solo ajustes de funciones</target>
+      </trans-unit>
+<trans-unit id="s34af392b321cbfa6">
+        <source>edit everything</source>
+        <target>editar todo</target>
+      </trans-unit>
+<trans-unit id="s026fba1543d336b2">
+        <source>Feature Source</source>
+        <target>Fuente de la función</target>
+      </trans-unit>
+<trans-unit id="s32f2fa78e3267c4e">
+        <source>properties only</source>
+        <target>solo propiedades</target>
+      </trans-unit>
+<trans-unit id="s9b5ec9d0b70a0fac">
+        <source>Max Model Parameters</source>
+        <target>Parámetros del modelo máximo</target>
+      </trans-unit>
+<trans-unit id="s39e9054ae5edaf30">
+        <source>Max Layer Parameters</source>
+        <target>Parámetros de capa máxima</target>
+      </trans-unit>
+<trans-unit id="sd6b72022c37e1ae0">
+        <source>Design Source</source>
+        <target>Fuente del diseño</target>
+      </trans-unit>
+<trans-unit id="s410415ac2406c84e">
+        <source>Preferred Backend</source>
+        <target>Backend preferido</target>
+      </trans-unit>
+<trans-unit id="s1ca51d37e3dae07a">
+        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
+        <target>Esto permite que las muestras transformadas se almacenen en la memoria caché del dispositivo de cálculo, lo que aumenta considerablemente la velocidad de entrenamiento, pero requiere mucho más espacio de almacenamiento en el dispositivo.</target>
+      </trans-unit>
+<trans-unit id="s19a2ee331d08ad42">
+        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
+        <target>(Advertencia: un exceso de datos tensoriales puede saturar la memoria RAM del dispositivo y provocar un fallo durante el entrenamiento y, en el peor de los casos, bloquear el sistema host).</target>
+      </trans-unit>
+<trans-unit id="s4c08da5f7528a7e3">
+        <source>Model Source</source>
+        <target>Fuente del modelo</target>
+      </trans-unit>
 </body>
   </file>
 </xliff>

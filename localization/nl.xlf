@@ -54,26 +54,6 @@
         <source>Delete dataset</source>
         <target>Dataset verwijderen</target>
       </trans-unit>
-      <trans-unit id="s5da30fd688d05a35">
-        <source>Edit Permissions</source>
-        <target>Bewerkingsrechten</target>
-      </trans-unit>
-      <trans-unit id="s162c56231b25e6ff">
-        <source>hide widget</source>
-        <target>widget verbergen</target>
-      </trans-unit>
-      <trans-unit id="s166d284a7cbc6181">
-        <source>read only</source>
-        <target>alleen-lezen</target>
-      </trans-unit>
-      <trans-unit id="s2b28da40a8490a78">
-        <source>feature settings only</source>
-        <target>alleen functie-instellingen</target>
-      </trans-unit>
-      <trans-unit id="s34af392b321cbfa6">
-        <source>edit everything</source>
-        <target>alles bewerken</target>
-      </trans-unit>
       <trans-unit id="s26b5b115b8b61794">
         <source>Feature Engineering Widget hidden from students.</source>
         <target>Feature Engineering Widget verborgen voor studenten.</target>
@@ -170,22 +150,6 @@
         <source>Model Design Widget hidden from students.</source>
         <target>Modelontwerpwidget verborgen voor studenten.</target>
       </trans-unit>
-      <trans-unit id="s026fba1543d336b2">
-        <source>Feature Source</source>
-        <target>Bron van de functie</target>
-      </trans-unit>
-      <trans-unit id="s32f2fa78e3267c4e">
-        <source>properties only</source>
-        <target>alleen eigenschappen</target>
-      </trans-unit>
-      <trans-unit id="s9b5ec9d0b70a0fac">
-        <source>Max Model Parameters</source>
-        <target>Maximale modelparameters</target>
-      </trans-unit>
-      <trans-unit id="s39e9054ae5edaf30">
-        <source>Max Layer Parameters</source>
-        <target>Maximale laagparameters</target>
-      </trans-unit>
       <trans-unit id="sf99503650274b914">
         <source>Optimizer</source>
         <target>Optimalisator</target>
@@ -246,14 +210,6 @@
         <source>Model Training Widget hidden from students.</source>
         <target>Model Training Widget verborgen voor studenten.</target>
       </trans-unit>
-      <trans-unit id="sd6b72022c37e1ae0">
-        <source>Design Source</source>
-        <target>Ontwerpbron</target>
-      </trans-unit>
-      <trans-unit id="s410415ac2406c84e">
-        <source>Preferred Backend</source>
-        <target>Voorkeursbackend</target>
-      </trans-unit>
       <trans-unit id="s0b453a19aa0f85a9">
         <source>CPU</source>
         <target>CPU</target>
@@ -265,14 +221,6 @@
       <trans-unit id="s559e9b10ba86261e">
         <source>Cache training samples</source>
         <target>Cache-trainingsvoorbeelden</target>
-      </trans-unit>
-      <trans-unit id="s1ca51d37e3dae07a">
-        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
-        <target>Hierdoor kunnen de getransformeerde monsters op het rekenapparaat worden opgeslagen, waardoor de trainingssnelheid aanzienlijk wordt verhoogd, maar er ook aanzienlijk meer opslagruimte op het apparaat nodig is.</target>
-      </trans-unit>
-      <trans-unit id="s19a2ee331d08ad42">
-        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
-        <target>(Waarschuwing: te veel tensor-gegevens kunnen het RAM-geheugen van het apparaat overbelasten en tijdens de training tot een crash leiden en in het ergste geval het hostsysteem blokkeren.)</target>
       </trans-unit>
       <trans-unit id="s1bb08bff53933452">
         <source>Model version</source>
@@ -293,10 +241,6 @@
       <trans-unit id="sf84bd835fc5a52ef">
         <source>Worst Samples</source>
         <target>Slechtste voorbeelden</target>
-      </trans-unit>
-      <trans-unit id="s4c08da5f7528a7e3">
-        <source>Model Source</source>
-        <target>Modelbron</target>
       </trans-unit>
       <trans-unit id="s8a73af950772f702">
         <source>No Model avaiable.</source>
@@ -339,11 +283,11 @@
         <target>Gebruikte dataset</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>van <x id="0" equiv-text="${this.samples.length}" /> voorbeelden</target></trans-unit>
+        <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>van <x id="0" equiv-text="${this.samples.length}"/> voorbeelden</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>Voorspelling: <x id="0" equiv-text="${predClass} ${relation}" />, label: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>Voorspelling: <x id="0" equiv-text="${predClass} ${relation}"/>, label: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>Verschillen visualiseren...</target>
@@ -401,8 +345,8 @@
         <target>Grijstinten</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>Voorspelling: <x id="0" equiv-text="${predValue}" /> − label: <x id="1" equiv-text="${labelValue}" /> = verschil: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>Voorspelling: <x id="0" equiv-text="${predValue}"/> − label: <x id="1" equiv-text="${labelValue}"/> = verschil: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>Waarde-schaal</target>
@@ -472,14 +416,14 @@
         <target>Verliesfunctie</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target>Dimensie <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+        <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target>Dimensie <x id="0" equiv-text="${(i + 1)}"/></target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>Ongeldige uitvoervorm: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>Ongeldige uitvoervorm: <x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>Voorspelling: <x id="0" equiv-text="${predValue}" />, label: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>Voorspelling: <x id="0" equiv-text="${predValue}"/>, label: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>Afbeelding wordt geladen</target>
@@ -547,6 +491,94 @@
 <trans-unit id="s1b7f4af051183fee">
   <source>Preferred backend</source>
 <target>Voorkeursbackend</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>De gegevens hebben geen kolommen.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>De kolomnamen zijn leeg of niet uniek.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>De gegevens hebben geen rijen.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>Een rij bevat meer waarden dan de kopregel.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>Het bestand is geen geldige JSON.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>Een JSON-array met objecten wordt verwacht.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>Het bestand bevat geen modellagen.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>Trainingsmetingen</target>
+</trans-unit>
+<trans-unit id="s5da30fd688d05a35">
+        <source>Edit Permissions</source>
+        <target>Bewerkingsrechten</target>
+      </trans-unit>
+<trans-unit id="s162c56231b25e6ff">
+        <source>hide widget</source>
+        <target>widget verbergen</target>
+      </trans-unit>
+<trans-unit id="s166d284a7cbc6181">
+        <source>read only</source>
+        <target>alleen-lezen</target>
+      </trans-unit>
+<trans-unit id="s2b28da40a8490a78">
+        <source>feature settings only</source>
+        <target>alleen functie-instellingen</target>
+      </trans-unit>
+<trans-unit id="s34af392b321cbfa6">
+        <source>edit everything</source>
+        <target>alles bewerken</target>
+      </trans-unit>
+<trans-unit id="s026fba1543d336b2">
+        <source>Feature Source</source>
+        <target>Bron van de functie</target>
+      </trans-unit>
+<trans-unit id="s32f2fa78e3267c4e">
+        <source>properties only</source>
+        <target>alleen eigenschappen</target>
+      </trans-unit>
+<trans-unit id="s9b5ec9d0b70a0fac">
+        <source>Max Model Parameters</source>
+        <target>Maximale modelparameters</target>
+      </trans-unit>
+<trans-unit id="s39e9054ae5edaf30">
+        <source>Max Layer Parameters</source>
+        <target>Maximale laagparameters</target>
+      </trans-unit>
+<trans-unit id="sd6b72022c37e1ae0">
+        <source>Design Source</source>
+        <target>Ontwerpbron</target>
+      </trans-unit>
+<trans-unit id="s410415ac2406c84e">
+        <source>Preferred Backend</source>
+        <target>Voorkeursbackend</target>
+      </trans-unit>
+<trans-unit id="s1ca51d37e3dae07a">
+        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
+        <target>Hierdoor kunnen de getransformeerde monsters op het rekenapparaat worden opgeslagen, waardoor de trainingssnelheid aanzienlijk wordt verhoogd, maar er ook aanzienlijk meer opslagruimte op het apparaat nodig is.</target>
+      </trans-unit>
+<trans-unit id="s19a2ee331d08ad42">
+        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
+        <target>(Waarschuwing: te veel tensor-gegevens kunnen het RAM-geheugen van het apparaat overbelasten en tijdens de training tot een crash leiden en in het ergste geval het hostsysteem blokkeren.)</target>
+      </trans-unit>
+<trans-unit id="s4c08da5f7528a7e3">
+        <source>Model Source</source>
+        <target>Modelbron</target>
+      </trans-unit>
 </body>
   </file>
 </xliff>

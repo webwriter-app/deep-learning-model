@@ -24,8 +24,8 @@
   <source>Show selection</source>
 <target>තේරීම පෙන්වන්න</target></trans-unit>
 <trans-unit id="sc3727a4fc25d7500">
-  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>පුරෝකථනය: <x id="0" equiv-text="${predClass} ${relation}" /> ලේබලය: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>පුරෝකථනය: <x id="0" equiv-text="${predClass} ${relation}"/> ලේබලය: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
 <trans-unit id="sc3d8f37ea5f4bd79">
   <source>Visualizing Difference...</source>
 <target>වෙනස දෘශ්‍යගත කරමින්...</target></trans-unit>
@@ -66,14 +66,14 @@
   <source>Grayscale</source>
 <target>අළු පැහැ පරිමාණය</target></trans-unit>
 <trans-unit id="sc0e01e8b4662bec2">
-  <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>පුරෝකථනය: <x id="0" equiv-text="${predValue}" />, ලේබලය: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>පුරෝකථනය: <x id="0" equiv-text="${predValue}"/>, ලේබලය: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
 <trans-unit id="sab09aa21c8921bea">
   <source>Loading image</source>
 <target>රූපය පූරණය වෙමින්...</target></trans-unit>
 <trans-unit id="se1c4d8107171ecb2">
-  <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>පුරෝකථනය: <x id="0" equiv-text="${predValue}" /> - ලේබලය: <x id="1" equiv-text="${labelValue}" /> = වෙනස: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>පුරෝකථනය: <x id="0" equiv-text="${predValue}"/> - ලේබලය: <x id="1" equiv-text="${labelValue}"/> = වෙනස: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
 <trans-unit id="se2b49a41b39653fc">
   <source>Value Scale</source>
 <target>අගය පරිමාණය</target></trans-unit>
@@ -159,11 +159,11 @@
   <source>Loss Function</source>
 <target>පාඩු ශ්‍රිතය</target></trans-unit>
 <trans-unit id="s38ddf839c081bbaf">
-  <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target><x id="0" equiv-text="${(i + 1)}" /> වන මානය</target></trans-unit>
+  <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target><x id="0" equiv-text="${(i + 1)}"/> වන මානය</target></trans-unit>
 <trans-unit id="s2c48e68704ff98c2">
-  <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>ප්‍රතිදාන හැඩය වැරදියි: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+  <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>ප්‍රතිදාන හැඩය වැරදියි: <x id="0" equiv-text="${inDim}"/> != <x id="1" equiv-text="${outDim}"/></target></trans-unit>
 <trans-unit id="sbfe9518a1fe4f185">
   <source>Reshape</source>
 <target>හැඩය වෙනස් කරන්න</target></trans-unit>
@@ -210,8 +210,8 @@
   <source>Dataset using</source>
 <target>දත්ත කට්ටලයේ</target></trans-unit>
 <trans-unit id="sb03650788f41c135">
-  <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>න්‍යාය <x id="0" equiv-text="${this.samples.length}" /> නියැදි</target></trans-unit>
+  <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>න්‍යාය <x id="0" equiv-text="${this.samples.length}"/> නියැදි</target></trans-unit>
 <trans-unit id="s018f0f27bee12bb9">
   <source>Number of Operations:</source>
 <target>මෙහෙයුම් ගණන:</target></trans-unit>
@@ -383,6 +383,38 @@
 <trans-unit id="s2b6d43596140ef3a">
   <source>Continue Training</source>
 <target>පුහුණුව දිගටම කරගෙන යන්න</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>දත්තවල තීරු නැත.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>තීරු නම් හිස් හෝ අනන්‍ය නොවේ.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>දත්තවල පේළි නැත.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>පේළියක ශීර්ෂයට වඩා අගයන් ඇත.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>ගොනුව වලංගු JSON නොවේ.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>වස්තු සහිත JSON අරාවක් අපේක්ෂා කරයි.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>ගොනුවේ ආකෘති ස්ථර නැත.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>පුහුණු මිනුම්</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -24,8 +24,8 @@
   <source>Show selection</source>
 <target>显示选项</target></trans-unit>
 <trans-unit id="sc3727a4fc25d7500">
-  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>预测：<x id="0" equiv-text="${predClass} ${relation}" />，标签：<x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>预测：<x id="0" equiv-text="${predClass} ${relation}"/>，标签：<x id="1" equiv-text="${labelClass}"/></target></trans-unit>
 <trans-unit id="sc3d8f37ea5f4bd79">
   <source>Visualizing Difference...</source>
 <target>可视化差异...</target></trans-unit>
@@ -66,14 +66,14 @@
   <source>Grayscale</source>
 <target>灰度</target></trans-unit>
 <trans-unit id="sc0e01e8b4662bec2">
-  <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>预测：<x id="0" equiv-text="${predValue}" />，标签：<x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>预测：<x id="0" equiv-text="${predValue}"/>，标签：<x id="1" equiv-text="${labelValue}"/></target></trans-unit>
 <trans-unit id="sab09aa21c8921bea">
   <source>Loading image</source>
 <target>正在加载图片</target></trans-unit>
 <trans-unit id="se1c4d8107171ecb2">
-  <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>预测：<x id="0" equiv-text="${predValue}" /> − 标签：<x id="1" equiv-text="${labelValue}" /> = 差值：<x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+  <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>预测：<x id="0" equiv-text="${predValue}"/> − 标签：<x id="1" equiv-text="${labelValue}"/> = 差值：<x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
 <trans-unit id="se2b49a41b39653fc">
   <source>Value Scale</source>
 <target>价值尺度</target></trans-unit>
@@ -159,11 +159,11 @@
   <source>Loss Function</source>
 <target>损失函数</target></trans-unit>
 <trans-unit id="s38ddf839c081bbaf">
-  <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target>第 <x id="0" equiv-text="${(i + 1)}" /> 维</target></trans-unit>
+  <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target>第 <x id="0" equiv-text="${(i + 1)}"/> 维</target></trans-unit>
 <trans-unit id="s2c48e68704ff98c2">
-  <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>输出形状无效：<x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+  <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>输出形状无效：<x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
 <trans-unit id="sbfe9518a1fe4f185">
   <source>Reshape</source>
 <target>重塑</target></trans-unit>
@@ -210,8 +210,8 @@
   <source>Dataset using</source>
 <target>使用数据集</target></trans-unit>
 <trans-unit id="sb03650788f41c135">
-  <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>共 <x id="0" equiv-text="${this.samples.length}" /> 个样本</target></trans-unit>
+  <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>共 <x id="0" equiv-text="${this.samples.length}"/> 个样本</target></trans-unit>
 <trans-unit id="s018f0f27bee12bb9">
   <source>Number of Operations:</source>
 <target>操作次数：</target></trans-unit>
@@ -383,6 +383,38 @@
 <trans-unit id="s2b6d43596140ef3a">
   <source>Continue Training</source>
 <target>继续培训</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>数据没有列。</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>列名为空或不唯一。</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>数据没有行。</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>某一行的值多于标题行。</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>文件不是有效的 JSON。</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>需要一个由对象组成的 JSON 数组。</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>文件中没有模型层。</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>训练指标</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

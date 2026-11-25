@@ -54,26 +54,6 @@
         <source>Delete dataset</source>
         <target>Видалити набір даних</target>
       </trans-unit>
-      <trans-unit id="s5da30fd688d05a35">
-        <source>Edit Permissions</source>
-        <target>Редагувати дозволи</target>
-      </trans-unit>
-      <trans-unit id="s162c56231b25e6ff">
-        <source>hide widget</source>
-        <target>приховати віджет</target>
-      </trans-unit>
-      <trans-unit id="s166d284a7cbc6181">
-        <source>read only</source>
-        <target>тільки для читання</target>
-      </trans-unit>
-      <trans-unit id="s2b28da40a8490a78">
-        <source>feature settings only</source>
-        <target>тільки налаштування функцій</target>
-      </trans-unit>
-      <trans-unit id="s34af392b321cbfa6">
-        <source>edit everything</source>
-        <target>редагувати все</target>
-      </trans-unit>
       <trans-unit id="s26b5b115b8b61794">
         <source>Feature Engineering Widget hidden from students.</source>
         <target>Віджет «Інженерія функцій» прихований від студентів.</target>
@@ -170,22 +150,6 @@
         <source>Model Design Widget hidden from students.</source>
         <target>Модель дизайну Віджет прихований від студентів.</target>
       </trans-unit>
-      <trans-unit id="s026fba1543d336b2">
-        <source>Feature Source</source>
-        <target>Джерело функції</target>
-      </trans-unit>
-      <trans-unit id="s32f2fa78e3267c4e">
-        <source>properties only</source>
-        <target>тільки властивості</target>
-      </trans-unit>
-      <trans-unit id="s9b5ec9d0b70a0fac">
-        <source>Max Model Parameters</source>
-        <target>Параметри моделі Макса</target>
-      </trans-unit>
-      <trans-unit id="s39e9054ae5edaf30">
-        <source>Max Layer Parameters</source>
-        <target>Параметри максимального шару</target>
-      </trans-unit>
       <trans-unit id="sf99503650274b914">
         <source>Optimizer</source>
         <target>Оптимізатор</target>
@@ -246,14 +210,6 @@
         <source>Model Training Widget hidden from students.</source>
         <target>Віджет «Модельне навчання» прихований від студентів.</target>
       </trans-unit>
-      <trans-unit id="sd6b72022c37e1ae0">
-        <source>Design Source</source>
-        <target>Джерело дизайну</target>
-      </trans-unit>
-      <trans-unit id="s410415ac2406c84e">
-        <source>Preferred Backend</source>
-        <target>Бажаний бекенд</target>
-      </trans-unit>
       <trans-unit id="s0b453a19aa0f85a9">
         <source>CPU</source>
         <target>Процесор</target>
@@ -265,14 +221,6 @@
       <trans-unit id="s559e9b10ba86261e">
         <source>Cache training samples</source>
         <target>Зразки для навчання кешу</target>
-      </trans-unit>
-      <trans-unit id="s1ca51d37e3dae07a">
-        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
-        <target>Це дозволяє кешувати перетворені зразки на обчислювальному пристрої, що значно збільшує швидкість навчання, але вимагає значно більше місця для зберігання на пристрої.</target>
-      </trans-unit>
-      <trans-unit id="s19a2ee331d08ad42">
-        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
-        <target>(Попередження: надмірна кількість тензорних даних може переповнити оперативну пам'ять пристрою і призвести до збою під час навчання, а в найгіршому випадку — до блокування хост-системи.)</target>
       </trans-unit>
       <trans-unit id="s1bb08bff53933452">
         <source>Model version</source>
@@ -293,10 +241,6 @@
       <trans-unit id="sf84bd835fc5a52ef">
         <source>Worst Samples</source>
         <target>Найгірші зразки</target>
-      </trans-unit>
-      <trans-unit id="s4c08da5f7528a7e3">
-        <source>Model Source</source>
-        <target>Джерело моделі</target>
       </trans-unit>
       <trans-unit id="s8a73af950772f702">
         <source>No Model avaiable.</source>
@@ -339,11 +283,11 @@
         <target>Набір даних, що використовується</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>з <x id="0" equiv-text="${this.samples.length}" /> зразків</target></trans-unit>
+        <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>з <x id="0" equiv-text="${this.samples.length}"/> зразків</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>Прогноз: <x id="0" equiv-text="${predClass} ${relation}" />, мітка: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>Прогноз: <x id="0" equiv-text="${predClass} ${relation}"/>, мітка: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>Візуалізація відмінностей...</target>
@@ -401,8 +345,8 @@
         <target>Градація сірого</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>Прогноз: <x id="0" equiv-text="${predValue}" /> − мітка: <x id="1" equiv-text="${labelValue}" /> = різниця: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>Прогноз: <x id="0" equiv-text="${predValue}"/> − мітка: <x id="1" equiv-text="${labelValue}"/> = різниця: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>Шкала цінності</target>
@@ -472,14 +416,14 @@
         <target>Функція втрат</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target>Вимір <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+        <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target>Вимір <x id="0" equiv-text="${(i + 1)}"/></target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>Неприпустима форма виходу: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>Неприпустима форма виходу: <x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>Прогноз: <x id="0" equiv-text="${predValue}" />, мітка: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>Прогноз: <x id="0" equiv-text="${predValue}"/>, мітка: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>Завантаження зображення</target>
@@ -547,6 +491,94 @@
 <trans-unit id="s1b7f4af051183fee">
   <source>Preferred backend</source>
 <target>Бажаний обчислювальний рушій</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>У даних немає стовпців.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>Назви стовпців порожні або неунікальні.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>У даних немає рядків.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>У рядку більше значень, ніж у заголовку.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>Файл не є коректним JSON.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>Очікується масив JSON з об’єктів.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>У файлі немає шарів моделі.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>Метрики навчання</target>
+</trans-unit>
+<trans-unit id="s5da30fd688d05a35">
+        <source>Edit Permissions</source>
+        <target>Редагувати дозволи</target>
+      </trans-unit>
+<trans-unit id="s162c56231b25e6ff">
+        <source>hide widget</source>
+        <target>приховати віджет</target>
+      </trans-unit>
+<trans-unit id="s166d284a7cbc6181">
+        <source>read only</source>
+        <target>тільки для читання</target>
+      </trans-unit>
+<trans-unit id="s2b28da40a8490a78">
+        <source>feature settings only</source>
+        <target>тільки налаштування функцій</target>
+      </trans-unit>
+<trans-unit id="s34af392b321cbfa6">
+        <source>edit everything</source>
+        <target>редагувати все</target>
+      </trans-unit>
+<trans-unit id="s026fba1543d336b2">
+        <source>Feature Source</source>
+        <target>Джерело функції</target>
+      </trans-unit>
+<trans-unit id="s32f2fa78e3267c4e">
+        <source>properties only</source>
+        <target>тільки властивості</target>
+      </trans-unit>
+<trans-unit id="s9b5ec9d0b70a0fac">
+        <source>Max Model Parameters</source>
+        <target>Параметри моделі Макса</target>
+      </trans-unit>
+<trans-unit id="s39e9054ae5edaf30">
+        <source>Max Layer Parameters</source>
+        <target>Параметри максимального шару</target>
+      </trans-unit>
+<trans-unit id="sd6b72022c37e1ae0">
+        <source>Design Source</source>
+        <target>Джерело дизайну</target>
+      </trans-unit>
+<trans-unit id="s410415ac2406c84e">
+        <source>Preferred Backend</source>
+        <target>Бажаний бекенд</target>
+      </trans-unit>
+<trans-unit id="s1ca51d37e3dae07a">
+        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
+        <target>Це дозволяє кешувати перетворені зразки на обчислювальному пристрої, що значно збільшує швидкість навчання, але вимагає значно більше місця для зберігання на пристрої.</target>
+      </trans-unit>
+<trans-unit id="s19a2ee331d08ad42">
+        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
+        <target>(Попередження: надмірна кількість тензорних даних може переповнити оперативну пам'ять пристрою і призвести до збою під час навчання, а в найгіршому випадку — до блокування хост-системи.)</target>
+      </trans-unit>
+<trans-unit id="s4c08da5f7528a7e3">
+        <source>Model Source</source>
+        <target>Джерело моделі</target>
+      </trans-unit>
 </body>
   </file>
 </xliff>

@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -44,6 +44,9 @@
 's446eb2b422b286af': `Dynamik`,
 's49730f3d5751a433': `Wird geladen...`,
 's4f5eeeb48a97ea9a': `Verlust`,
+'s4f7691c326912146': `Trainingsmetriken`,
+'s4ffa704641ad66d2': `Eine Zeile enthält mehr Werte als die Kopfzeile.`,
+'s51c124e5e98f9718': `Die Spaltennamen sind leer oder nicht eindeutig.`,
 's547a4465533a6f5f': `Bildcodierung`,
 's5561b945c8cd59b0': `Batch-Größe`,
 's559e9b10ba86261e': `Cache-Trainingsbeispiele`,
@@ -51,6 +54,7 @@
 's56a6aa2100291b96': `Modell-Trainings-Widget für Schüler ausgeblendet.`,
 's56eedda42b0bb66f': `Sonstige Schicht hinzufügen`,
 's5732d2277d736ba1': `Quadratisch`,
+'s5754a3a243ce0bd2': `Die Daten enthalten keine Spalten.`,
 's58bee799432dbc69': `Addition`,
 's58d6b1ecd5084538': `Schritt`,
 's61ac82c68c336bb1': `Training beenden`,
@@ -60,6 +64,7 @@
 's6557e193c4f15b9c': `Mehrere Klassen pro Probe`,
 's6610206d0ad97d60': `Datensatz-Merkmalsspalten:`,
 's66a5898632280fe2': `Verlustfunktion`,
+'s6715c7a212ee37fe': `Die Daten enthalten keine Zeilen.`,
 's679b3c0fcb1bdadf': `Widget ausblenden`,
 's6b0e650acd025eff': `Base64-Zeichenfolge`,
 's6c02f2ec8c3f52a4': `Genauigkeit`,
@@ -85,8 +90,10 @@
 's981f232bd33ec927': `Rate`,
 's99456cbda3e05fb0': `Rückruf`,
 's9eac77171764efaa': `Transponierte Faltung`,
+'s9f72fa206c8b32e0': `Ein JSON-Array aus Objekten wird erwartet.`,
 'sa4ef4c5175793d6f': `Berechnung des Verlusts für Proben...`,
 'sa60f5f53cc29b8cf': `Nur Ebeneneigenschaften`,
+'sa6570e7053d51656': `Die Datei enthält keine Modellschichten.`,
 'sa68f184fe626daf3': `Trainierbare Schicht hinzufügen`,
 'sa8082d7f7ef02f42': `Diese Transformation ist für die Werte nicht anwendbar.`,
 'sa812ba9ded26aa98': `Modell wird geladen...`,
@@ -102,6 +109,7 @@
 'sb59d68ed12d46377': `Laden`,
 'sb633a04ba54b2dc0': `Die Schicht hat zu viele trainierbare Parameter. Versuchen Sie, die Eingabegröße oder die einstellbaren Eigenschaften zu reduzieren.`,
 'sb850938497d0a395': `Bearbeitungsrechte`,
+'sb8c878135ee917b1': `Die Datei ist kein gültiges JSON.`,
 'sbf1ff3369db980c0': `Entwurfsquelle`,
 'sbfe9518a1fe4f185': `Umformung`,
 'sc0e01e8b4662bec2': str`Vorhersage: ${0}, Zielwert: ${1}`,
