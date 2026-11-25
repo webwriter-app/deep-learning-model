@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="gu">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — અંકો વાંચવા</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ફીચર એન્જિનિયરિંગ</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>સૌપ્રથમ આપણે ડેટાસેટ આયાત કરીને પૂર્વપ્રક્રિયા કરીશું. ડેટાસેટના લખાણને ટેન્સર તરીકે કેવી રીતે સમજવું તે કમ્પ્યુટરને જણાવવું પડશે.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>મૉડેલ ડિઝાઇન</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>આગળ, ઉપલબ્ધ અંકોમાંથી કયો અંક છબીમાં છે તે ઓળખે એવું મૉડેલ બનાવીએ. અહીં વર્ગને વિશ્વસનીય રીતે ઓળખવા માટે એક સરળ કન્વોલ્યુશન પછી ડેન્સ લેયર વપરાય છે.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>મૉડેલ ટ્રેનિંગ</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ડેટાસેટ પર નુકસાન ઓછામાં ઓછું થાય તે માટે મૉડેલની રચનાનો ઉપયોગ કરીને તેના વેઇટ્સ ઑપ્ટિમાઇઝ કરીએ છીએ. દરેક બૅચ પછી વેઇટ્સ ઑપ્ટિમાઇઝ થાય છે; બધા ટ્રેનિંગ નમૂનાઓ પ્રક્રિયા થયા પછી નવો યુગ શરૂ થાય છે અને આ પ્રક્રિયા ફરી થાય છે.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>મૉડેલ અનુમાન</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>ટ્રેનિંગ પછી નવા અંકોનું વર્ગીકરણ કરવા માટે મૉડેલનો ઉપયોગ કરી શકીએ છીએ.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>મૉડેલ મૂલ્યાંકન</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>મૉડેલની ગુણવત્તા માપવા અને અન્ય મૉડેલ સાથે સરખાવવા માટે સામાન્ય રીતે આપણે શ્રેણીબદ્ધ પરીક્ષણો ચલાવીએ છીએ, જે તેની કામગીરીનો અંદાજ આપે છે.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

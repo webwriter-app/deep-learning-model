@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ta">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — எண்களைப் படித்தல்</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>அம்சப் பொறியியல்</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>முதலில் தரவுத்தொகுப்பை இறக்குமதி செய்து முன்செயலாக்குவோம். தரவுத்தொகுப்பின் உரையை டென்சர்களாக எவ்வாறு புரிந்துகொள்ள வேண்டும் என்பதை கணினியிடம் கூற வேண்டும்.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>மாதிரி வடிவமைப்பு</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>அடுத்து, கிடைக்கக்கூடிய எண்களில் படம் எதைக் காட்டுகிறது என்பதை வகைப்படுத்தும் மாதிரியை வடிவமைப்போம். வகையை நம்பகமாகக் கண்டறிய இங்கு எளிய கன்வல்யூஷனுக்குப் பிறகு அடர்த்தியான அடுக்கு பயன்படுத்தப்படுகிறது.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>மாதிரிப் பயிற்சி</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>தரவுத்தொகுப்பில் ஏற்படும் இழப்பைக் குறைக்க மாதிரி அமைப்பைப் பயன்படுத்தி அதன் எடைகளை உகப்பாக்குகிறோம். ஒவ்வொரு தொகுதிக்குப் பிறகும் எடைகள் உகப்பாக்கப்படுகின்றன. எல்லாப் பயிற்சி மாதிரிகளும் செயலாக்கப்பட்டதும் புதிய பயிற்சிச் சுற்று தொடங்கி செயல்முறை மீண்டும் நடைபெறும்.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>மாதிரிக் கணிப்பு</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>பயிற்சிக்குப் பிறகு புதிய எண்களை வகைப்படுத்த மாதிரியைப் பயன்படுத்தலாம்.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>மாதிரி மதிப்பீடு</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>மாதிரியின் தரத்தை மதிப்பிடவும் மற்றவற்றுடன் ஒப்பிடவும் பொதுவாகப் பல சோதனைகளை நடத்துகிறோம். அவை மாதிரியின் செயல்திறனைப் புரிந்துகொள்ள உதவுகின்றன.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

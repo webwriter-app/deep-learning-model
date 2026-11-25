@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="si">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — සංඛ්‍යා කියවීම</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>විශේෂාංග සැකසීම</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>පළමුව අපි දත්ත කට්ටලය ආනයනය කර පෙර සැකසුම් කරන්නෙමු. දත්ත කට්ටලයේ පෙළ ටෙන්සර් ලෙස අර්ථකථනය කරන ආකාරය පරිගණකයට කියා දිය යුතුය.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ආකෘති සැලසුම</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>ඊළඟට ලබාගත හැකි සංඛ්‍යා අතරින් රූපයේ දැක්වෙන සංඛ්‍යාව වර්ගීකරණය කිරීමට ආකෘතියක් සැලසුම් කරමු. පන්තිය විශ්වාසදායකව හඳුනාගැනීමට මෙහි සරල සංවලනයකට පසු ඝන ස්තරයක් යොදා ඇත.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ආකෘති පුහුණුව</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>දත්ත කට්ටලයේ පාඩුව අවම වන ලෙස ආකෘතියේ ව්‍යුහය භාවිත කර එහි බර ප්‍රශස්ත කරමු. එක් එක් කණ්ඩායමෙන් පසු බර ප්‍රශස්ත වේ. සියලු පුහුණු නියැදි සැකසූ පසු නව යුගයක් ආරම්භ වී ක්‍රියාවලිය නැවත සිදු වේ.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ආකෘති අනාවැකිය</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>පුහුණුවෙන් පසු නව සංඛ්‍යා වර්ගීකරණයට ආකෘතිය යොදාගත හැක.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ආකෘති ඇගයීම</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ආකෘතියේ ගුණාත්මකභාවය මැනීමට සහ අනෙක් ඒවා සමඟ සැසඳීමට අපි සාමාන්‍යයෙන් පරීක්ෂණ මාලාවක් පවත්වමු. එමඟින් ආකෘතියේ කාර්යසාධනය පිළිබඳ අදහසක් ලැබේ.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

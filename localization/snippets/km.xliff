@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="km">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — អានលេខ</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>វិស្វកម្មលក្ខណៈពិសេស</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ដំបូង យើងនឹងនាំចូល និងដំណើរការសំណុំទិន្នន័យជាមុន។ យើងត្រូវប្រាប់កុំព្យូទ័រអំពីរបៀបបកស្រាយអត្ថបទក្នុងសំណុំទិន្នន័យជាតង់ស័រ។</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>រចនាម៉ូដែល</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>បន្ទាប់មក យើងរចនាម៉ូដែលដើម្បីចាត់ថ្នាក់ថារូបភាពបង្ហាញលេខណាមួយក្នុងចំណោមលេខដែលមាន។ ក្នុងករណីនេះ ប្រើកនវូលូស្យុងសាមញ្ញមួយបន្ទាប់ដោយស្រទាប់ដង់ស៊ីតេ ដើម្បីស្វែងរកថ្នាក់ឱ្យបានជាក់លាក់។</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>បណ្តុះបណ្តាលម៉ូដែល</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>យើងប្រើស្ថាបត្យកម្មម៉ូដែលដើម្បីកែសម្រួលទម្ងន់របស់ម៉ូដែលឱ្យការបាត់បង់លើសំណុំទិន្នន័យទាបបំផុត។ បន្ទាប់ពីបាច់នីមួយៗ ទម្ងន់ត្រូវបានកែសម្រួល។ ពេលដំណើរការគំរូបណ្តុះបណ្តាលទាំងអស់រួច អេផុកថ្មីចាប់ផ្តើម ហើយដំណើរការធ្វើឡើងវិញ។</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ការព្យាករណ៍ម៉ូដែល</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>បន្ទាប់ពីបណ្តុះបណ្តាល យើងអាចប្រើម៉ូដែលដើម្បីចាត់ថ្នាក់លេខថ្មីៗ។</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>វាយតម្លៃម៉ូដែល</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ដើម្បីវាយតម្លៃគុណភាពម៉ូដែល និងប្រៀបធៀបជាមួយម៉ូដែលផ្សេង ជាទូទៅយើងដំណើរការការធ្វើតេស្តជាបន្តបន្ទាប់ ដើម្បីទទួលបានការយល់ដឹងអំពីប្រសិទ្ធភាពរបស់ម៉ូដែល។</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ml">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — അക്കങ്ങൾ വായിക്കൽ</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>ഫീച്ചർ എൻജിനീയറിങ്</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>ആദ്യം ഡാറ്റാസെറ്റ് ഇറക്കുമതി ചെയ്ത് പ്രീപ്രോസസ് ചെയ്യാം. ഡാറ്റാസെറ്റിലെ എഴുത്തിനെ ടെൻസറുകളായി എങ്ങനെ വ്യാഖ്യാനിക്കണമെന്ന് കമ്പ്യൂട്ടറോട് പറയണം.</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>മോഡൽ ഡിസൈൻ</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>അടുത്തതായി ലഭ്യമായ അക്കങ്ങളിൽ ചിത്രം കാണിക്കുന്ന അക്കം തിരിച്ചറിയുന്ന മോഡൽ രൂപകൽപ്പന ചെയ്യാം. ക്ലാസ് വിശ്വസനീയമായി കണ്ടെത്താൻ ലളിതമായ കൺവല്യൂഷനു ശേഷം ഡെൻസ് ലെയർ ഉപയോഗിക്കുന്നു.</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>മോഡൽ പരിശീലനം</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ഡാറ്റാസെറ്റിലെ നഷ്ടം ഏറ്റവും കുറയ്ക്കാൻ മോഡൽ ഘടന ഉപയോഗിച്ച് അതിന്റെ ഭാരങ്ങൾ ഓപ്റ്റിമൈസ് ചെയ്യുന്നു. ഓരോ ബാച്ചിനും ശേഷം ഭാരങ്ങൾ ക്രമീകരിക്കുന്നു. എല്ലാ പരിശീലന സാമ്പിളുകളും പ്രോസസ് ചെയ്താൽ പുതിയ എപ്പോക് തുടങ്ങി പ്രക്രിയ ആവർത്തിക്കുന്നു.</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>മോഡൽ പ്രവചനം</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>പരിശീലനത്തിനു ശേഷം പുതിയ അക്കങ്ങളെ തരംതിരിക്കാൻ മോഡൽ ഉപയോഗിക്കാം.</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>മോഡൽ വിലയിരുത്തൽ</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>മോഡലിന്റെ ഗുണനിലവാരം വിലയിരുത്താനും മറ്റുള്ളവയുമായി താരതമ്യം ചെയ്യാനും സാധാരണയായി ഒരു കൂട്ടം പരീക്ഷണങ്ങൾ നടത്തുന്നു. അതിലൂടെ പ്രകടനത്തെക്കുറിച്ച് ധാരണ ലഭിക്കുന്നു.</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

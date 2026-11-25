@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="ur">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST — اعداد پڑھنا</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>فیچر انجینئرنگ</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>سب سے پہلے ہم ڈیٹاسیٹ درآمد کر کے اس کی ابتدائی پروسیسنگ کریں گے۔ ہمیں کمپیوٹر کو بتانا ہوگا کہ ڈیٹاسیٹ کے متن کو ٹینسرز کے طور پر کیسے سمجھنا ہے۔</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>ماڈل ڈیزائن</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>اگلا مرحلہ ایسا ماڈل بنانا ہے جو دستیاب اعداد میں سے تصویر میں دکھائی دینے والے عدد کی درجہ بندی کرے۔ یہاں کلاس کو قابلِ اعتماد طریقے سے شناخت کرنے کے لیے سادہ کنولوشن کے بعد ڈینس لیئر استعمال کی گئی ہے۔</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>ماڈل کی تربیت</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>ماڈل کی ساخت استعمال کرتے ہوئے ہم ڈیٹاسیٹ پر لاس کم سے کم کرنے کے لیے اس کے وزن بہتر بناتے ہیں۔ ہر بیچ کے بعد وزن بہتر کیے جاتے ہیں۔ تمام تربیتی نمونے مکمل ہونے پر نیا ایپوک شروع ہوتا ہے اور یہ عمل دہرایا جاتا ہے۔</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>ماڈل کی پیش گوئی</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>تربیت کے بعد ہم نئے اعداد کی درجہ بندی کے لیے ماڈل استعمال کر سکتے ہیں۔</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>ماڈل کی جانچ</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>ماڈل کے معیار کا اندازہ لگانے اور دوسرے ماڈلز سے موازنہ کرنے کے لیے ہم عموماً کئی ٹیسٹ چلاتے ہیں، جن سے ماڈل کی کارکردگی کا اندازہ ہوتا ہے۔</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>

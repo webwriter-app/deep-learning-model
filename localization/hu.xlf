@@ -1,4 +1,5 @@
-<xliff xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2">
   <file original="lit-localize-inputs" datatype="plaintext" source-language="en" target-language="hu">
     <body>
       <trans-unit id="s6610206d0ad97d60">
@@ -52,26 +53,6 @@
       <trans-unit id="s731e8d25df7b1886">
         <source>Delete dataset</source>
         <target>Adatkészlet törlése</target>
-      </trans-unit>
-      <trans-unit id="s5da30fd688d05a35">
-        <source>Edit Permissions</source>
-        <target>Szerkesztési jogosultságok</target>
-      </trans-unit>
-      <trans-unit id="s162c56231b25e6ff">
-        <source>hide widget</source>
-        <target>widget elrejtése</target>
-      </trans-unit>
-      <trans-unit id="s166d284a7cbc6181">
-        <source>read only</source>
-        <target>csak olvasható</target>
-      </trans-unit>
-      <trans-unit id="s2b28da40a8490a78">
-        <source>feature settings only</source>
-        <target>csak funkcióbeállítások</target>
-      </trans-unit>
-      <trans-unit id="s34af392b321cbfa6">
-        <source>edit everything</source>
-        <target>mindent szerkeszteni</target>
       </trans-unit>
       <trans-unit id="s26b5b115b8b61794">
         <source>Feature Engineering Widget hidden from students.</source>
@@ -169,22 +150,6 @@
         <source>Model Design Widget hidden from students.</source>
         <target>A modelltervező widget a hallgatók számára rejtve van.</target>
       </trans-unit>
-      <trans-unit id="s026fba1543d336b2">
-        <source>Feature Source</source>
-        <target>Forrás</target>
-      </trans-unit>
-      <trans-unit id="s32f2fa78e3267c4e">
-        <source>properties only</source>
-        <target>csak tulajdonságok</target>
-      </trans-unit>
-      <trans-unit id="s9b5ec9d0b70a0fac">
-        <source>Max Model Parameters</source>
-        <target>Maximális modellparaméterek</target>
-      </trans-unit>
-      <trans-unit id="s39e9054ae5edaf30">
-        <source>Max Layer Parameters</source>
-        <target>Maximális réteg paraméterek</target>
-      </trans-unit>
       <trans-unit id="sf99503650274b914">
         <source>Optimizer</source>
         <target>Optimalizáló</target>
@@ -245,14 +210,6 @@
         <source>Model Training Widget hidden from students.</source>
         <target>A modellképzési widget a hallgatók elől el van rejtve.</target>
       </trans-unit>
-      <trans-unit id="sd6b72022c37e1ae0">
-        <source>Design Source</source>
-        <target>Tervezési forrás</target>
-      </trans-unit>
-      <trans-unit id="s410415ac2406c84e">
-        <source>Preferred Backend</source>
-        <target>Előnyben részesített háttérrendszer</target>
-      </trans-unit>
       <trans-unit id="s0b453a19aa0f85a9">
         <source>CPU</source>
         <target>CPU</target>
@@ -264,14 +221,6 @@
       <trans-unit id="s559e9b10ba86261e">
         <source>Cache training samples</source>
         <target>Cache képzési minták</target>
-      </trans-unit>
-      <trans-unit id="s1ca51d37e3dae07a">
-        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
-        <target>Ez lehetővé teszi, hogy az átalakított minták a számítási eszközön tárolódjanak, ami jelentősen növeli a képzési sebességet, de lényegesen több tárhelyet igényel az eszközön.</target>
-      </trans-unit>
-      <trans-unit id="s19a2ee331d08ad42">
-        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
-        <target>(Figyelem: A túl sok tenzoradat túlterhelheti az eszköz RAM-ját, ami a képzés során összeomlást okozhat, és a legrosszabb esetben a gazdaszerver rendszerét is leállíthatja.)</target>
       </trans-unit>
       <trans-unit id="s1bb08bff53933452">
         <source>Model version</source>
@@ -292,10 +241,6 @@
       <trans-unit id="sf84bd835fc5a52ef">
         <source>Worst Samples</source>
         <target>Legrosszabb minták</target>
-      </trans-unit>
-      <trans-unit id="s4c08da5f7528a7e3">
-        <source>Model Source</source>
-        <target>Modell forrás</target>
       </trans-unit>
       <trans-unit id="s8a73af950772f702">
         <source>No Model avaiable.</source>
@@ -338,23 +283,11 @@
         <target>Adatkészlet használata</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of 
-          <x id="0" equiv-text="${this.samples.length}"/> Samples
-        </source>
-        <target>
-          <x id="0" equiv-text="${this.samples.length}"/> -minták
-        </target>
-      </trans-unit>
+        <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target><x id="0" equiv-text="${this.samples.length}"/> mintából</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predClass} ${relation}"/> Label: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </source>
-        <target>Előrejelzés: 
-          <x id="0" equiv-text="${predClass} ${span}"/> Címke: 
-          <x id="1" equiv-text="${labelClass}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>Előrejelzés: <x id="0" equiv-text="${predClass} ${relation}"/>, címke: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>A különbség vizualizálása...</target>
@@ -412,17 +345,8 @@
         <target>Szürkeskála</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/> - Label: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </source>
-        <target>Előrejelzés: 
-          <x id="0" equiv-text="${predValue}"/> - Címke: 
-          <x id="1" equiv-text="${labelValue}"/> = Delta: 
-          <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>Előrejelzés: <x id="0" equiv-text="${predValue}"/> − címke: <x id="1" equiv-text="${labelValue}"/> = eltérés: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>Értékskála</target>
@@ -492,33 +416,14 @@
         <target>Veszteségfüggvény</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source>
-          <x id="0" equiv-text="${(i + 1)}"/>th dim
-        </source>
-        <target>
-          <x id="0" equiv-text="${(i + 1)}"/> th dim
-        </target>
-      </trans-unit>
+        <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target><x id="0" equiv-text="${(i + 1)}"/>. dimenzió</target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </source>
-        <target>Kimeneti forma érvénytelen: 
-          <x id="0" equiv-text="${inDim}"/> != 
-          <x id="1" equiv-text="${outDim}"/>
-        </target>
-      </trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>Érvénytelen kimeneti alak: <x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: 
-          <x id="0" equiv-text="${predValue}"/>,  Label: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </source>
-        <target>Előrejelzés: 
-          <x id="0" equiv-text="${predValue}"/> ,  Címke: 
-          <x id="1" equiv-text="${labelValue}"/>
-        </target>
-      </trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>Előrejelzés: <x id="0" equiv-text="${predValue}"/>, címke: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>Kép betöltése</target>
@@ -547,6 +452,133 @@
         <source>Delete selected</source>
         <target>A kijelöltek törlése</target>
       </trans-unit>
-    </body>
+    <trans-unit id="sb850938497d0a395">
+  <source>Edit permissions</source>
+<target>Szerkesztési jogosultságok</target></trans-unit>
+<trans-unit id="sdbaa4e0831238006">
+  <source>Edit everything</source>
+<target>Minden szerkeszthető</target></trans-unit>
+<trans-unit id="s250a7fc28124c361">
+  <source>Read only</source>
+<target>Csak olvasható</target></trans-unit>
+<trans-unit id="se6c8329ea1c50858">
+  <source>Feature settings only</source>
+<target>Csak a jellemzők beállításai</target></trans-unit>
+<trans-unit id="s679b3c0fcb1bdadf">
+  <source>Hide widget</source>
+<target>Modul elrejtése</target></trans-unit>
+<trans-unit id="s6266829135c39917">
+  <source>Delete this dataset?</source>
+<target>Törli ezt az adatkészletet?</target></trans-unit>
+<trans-unit id="sf02c84d2e8520b92">
+  <source>Feature source</source>
+<target>Jellemzők forrása</target></trans-unit>
+<trans-unit id="sa60f5f53cc29b8cf">
+  <source>Layer properties only</source>
+<target>Csak a rétegtulajdonságok</target></trans-unit>
+<trans-unit id="s84536b272065202c">
+  <source>Max model parameters</source>
+<target>Modellparaméterek maximális száma</target></trans-unit>
+<trans-unit id="s3c0b025716311430">
+  <source>Max layer parameters</source>
+<target>Rétegparaméterek maximális száma</target></trans-unit>
+<trans-unit id="s858e82f5fff9aac3">
+  <source>Model source</source>
+<target>Modell forrása</target></trans-unit>
+<trans-unit id="sbf1ff3369db980c0">
+  <source>Design source</source>
+<target>Architektúra forrása</target></trans-unit>
+<trans-unit id="s1b7f4af051183fee">
+  <source>Preferred backend</source>
+<target>Előnyben részesített számítási háttérrendszer</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>Az adatoknak nincsenek oszlopai.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>Az oszlopnevek üresek vagy nem egyediek.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>Az adatoknak nincsenek sorai.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>Egy sorban több érték van, mint a fejlécben.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>A fájl nem érvényes JSON.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>Objektumok JSON-tömbje szükséges.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>A fájl nem tartalmaz modellrétegeket.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>Tanítási metrikák</target>
+</trans-unit>
+<trans-unit id="s5da30fd688d05a35">
+        <source>Edit Permissions</source>
+        <target>Szerkesztési jogosultságok</target>
+      </trans-unit>
+<trans-unit id="s162c56231b25e6ff">
+        <source>hide widget</source>
+        <target>widget elrejtése</target>
+      </trans-unit>
+<trans-unit id="s166d284a7cbc6181">
+        <source>read only</source>
+        <target>csak olvasható</target>
+      </trans-unit>
+<trans-unit id="s2b28da40a8490a78">
+        <source>feature settings only</source>
+        <target>csak funkcióbeállítások</target>
+      </trans-unit>
+<trans-unit id="s34af392b321cbfa6">
+        <source>edit everything</source>
+        <target>mindent szerkeszteni</target>
+      </trans-unit>
+<trans-unit id="s026fba1543d336b2">
+        <source>Feature Source</source>
+        <target>Forrás</target>
+      </trans-unit>
+<trans-unit id="s32f2fa78e3267c4e">
+        <source>properties only</source>
+        <target>csak tulajdonságok</target>
+      </trans-unit>
+<trans-unit id="s9b5ec9d0b70a0fac">
+        <source>Max Model Parameters</source>
+        <target>Maximális modellparaméterek</target>
+      </trans-unit>
+<trans-unit id="s39e9054ae5edaf30">
+        <source>Max Layer Parameters</source>
+        <target>Maximális réteg paraméterek</target>
+      </trans-unit>
+<trans-unit id="sd6b72022c37e1ae0">
+        <source>Design Source</source>
+        <target>Tervezési forrás</target>
+      </trans-unit>
+<trans-unit id="s410415ac2406c84e">
+        <source>Preferred Backend</source>
+        <target>Előnyben részesített háttérrendszer</target>
+      </trans-unit>
+<trans-unit id="s1ca51d37e3dae07a">
+        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
+        <target>Ez lehetővé teszi, hogy az átalakított minták a számítási eszközön tárolódjanak, ami jelentősen növeli a képzési sebességet, de lényegesen több tárhelyet igényel az eszközön.</target>
+      </trans-unit>
+<trans-unit id="s19a2ee331d08ad42">
+        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
+        <target>(Figyelem: A túl sok tenzoradat túlterhelheti az eszköz RAM-ját, ami a képzés során összeomlást okozhat, és a legrosszabb esetben a gazdaszerver rendszerét is leállíthatja.)</target>
+      </trans-unit>
+<trans-unit id="s4c08da5f7528a7e3">
+        <source>Model Source</source>
+        <target>Modell forrás</target>
+      </trans-unit>
+</body>
   </file>
 </xliff>

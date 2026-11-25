@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.1" srcLang="en" trgLang="hi">
+  <file id="./snippets/MNIST.html" original="./snippets/MNIST.html">
+    <unit id="MNIST - Reading numbers#1">
+      <segment>
+        <source>MNIST - Reading numbers</source>
+        <target>MNIST – अंकों को पढ़ना</target>
+      </segment>
+    </unit>
+    <unit id="Feature Engineering#1">
+      <segment>
+        <source>Feature Engineering</source>
+        <target>फ़ीचर इंजीनियरिंग</target>
+      </segment>
+    </unit>
+    <unit id="First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.#1">
+      <segment>
+        <source>First we will import and preprocess the dataset. We need to tell the computer how to interpret the text from the dataset as tensors.</source>
+        <target>पहले हम डेटासेट आयात करेंगे और उसे तैयार करेंगे। हमें कंप्यूटर को बताना है कि डेटासेट के टेक्स्ट को टेंसर के रूप में कैसे समझना है।</target>
+      </segment>
+    </unit>
+    <unit id="Model Designing#1">
+      <segment>
+        <source>Model Designing</source>
+        <target>मॉडल डिज़ाइन</target>
+      </segment>
+    </unit>
+    <unit id="Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.#1">
+      <segment>
+        <source>Next we design a model to classify the image as showing one of the available numbers. In this case a simple convolution with a dense layer after it to reliably find the class.</source>
+        <target>फिर हम एक मॉडल बनाएँगे जो चित्र को उपलब्ध अंकों में से किसी एक के रूप में वर्गीकृत करे। यहाँ सही वर्ग की विश्वसनीय पहचान के लिए एक सरल कन्वोल्यूशन के बाद एक डेंस लेयर इस्तेमाल करेंगे।</target>
+      </segment>
+    </unit>
+    <unit id="Model Training#1">
+      <segment>
+        <source>Model Training</source>
+        <target>मॉडल प्रशिक्षण</target>
+      </segment>
+    </unit>
+    <unit id="Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.#1">
+      <segment>
+        <source>Using the model architecture we optimize the model weights to produce the lowest loss on the dataset. After each batch the model weights are optimized and once all training samples are processed we begin a new epoch and repeat the process.</source>
+        <target>मॉडल की संरचना के आधार पर हम उसके भारों को इस तरह समायोजित करते हैं कि डेटासेट पर हानि कम से कम हो। हर बैच के बाद भार समायोजित होते हैं। सभी प्रशिक्षण नमूने संसाधित होने पर हम नया एपॉक शुरू करके प्रक्रिया दोहराते हैं।</target>
+      </segment>
+    </unit>
+    <unit id="Model Prediction#1">
+      <segment>
+        <source>Model Prediction</source>
+        <target>मॉडल से पूर्वानुमान</target>
+      </segment>
+    </unit>
+    <unit id="After training we can use the model to classify new numbers.#1">
+      <segment>
+        <source>After training we can use the model to classify new numbers.</source>
+        <target>प्रशिक्षण के बाद मॉडल नए अंकों को वर्गीकृत कर सकता है।</target>
+      </segment>
+    </unit>
+    <unit id="Model Evaluation#1">
+      <segment>
+        <source>Model Evaluation</source>
+        <target>मॉडल का मूल्यांकन</target>
+      </segment>
+    </unit>
+    <unit id="To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.#1">
+      <segment>
+        <source>To assess the quality of the model and compare it to others we usually run our model through a suite of tests that give us a feeling about the performance of the model.</source>
+        <target>मॉडल की गुणवत्ता आँकने और दूसरे मॉडलों से तुलना करने के लिए हम आम तौर पर कई परीक्षण करते हैं। इनसे मॉडल के प्रदर्शन का अंदाज़ा मिलता है।</target>
+      </segment>
+    </unit>
+  </file>
+</xliff>
