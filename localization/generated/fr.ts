@@ -2,7 +2,7 @@
     // Do not modify this file by hand!
     // Re-generate this file by running lit-localize
 
-    
+
     import {str} from '@lit/localize';
 
     /* eslint-disable no-irregular-whitespace */
@@ -44,6 +44,9 @@
 's446eb2b422b286af': `Élan`,
 's49730f3d5751a433': `Chargement...`,
 's4f5eeeb48a97ea9a': `Perte`,
+'s4f7691c326912146': `Mesures d’entraînement`,
+'s4ffa704641ad66d2': `Une ligne contient plus de valeurs que l’en-tête.`,
+'s51c124e5e98f9718': `Les noms de colonnes sont vides ou non uniques.`,
 's547a4465533a6f5f': `Codage d'image`,
 's5561b945c8cd59b0': `Taille du lot`,
 's559e9b10ba86261e': `Échantillons d'entraînement du cache`,
@@ -51,6 +54,7 @@
 's56a6aa2100291b96': `Widget de formation sur les modèles masqué aux étudiants.`,
 's56eedda42b0bb66f': `Ajouter une couche diverse`,
 's5732d2277d736ba1': `Quadratic`,
+'s5754a3a243ce0bd2': `Les données ne contiennent aucune colonne.`,
 's58bee799432dbc69': `Ajout`,
 's58d6b1ecd5084538': `Foulée`,
 's61ac82c68c336bb1': `Arrêter l'entraînement`,
@@ -60,6 +64,7 @@
 's6557e193c4f15b9c': `Plusieurs classes par échantillon`,
 's6610206d0ad97d60': `Colonnes des caractéristiques de l'ensemble de données :`,
 's66a5898632280fe2': `Fonction de perte`,
+'s6715c7a212ee37fe': `Les données ne contiennent aucune ligne.`,
 's679b3c0fcb1bdadf': `Masquer le widget`,
 's6b0e650acd025eff': `Chaîne Base64`,
 's6c02f2ec8c3f52a4': `Précision`,
@@ -85,8 +90,10 @@
 's981f232bd33ec927': `Taux`,
 's99456cbda3e05fb0': `Rappel`,
 's9eac77171764efaa': `Transposer la convolution`,
+'s9f72fa206c8b32e0': `Un tableau JSON d’objets est attendu.`,
 'sa4ef4c5175793d6f': `Calcul des pertes pour les échantillons...`,
 'sa60f5f53cc29b8cf': `Propriétés des couches uniquement`,
+'sa6570e7053d51656': `Le fichier ne contient aucune couche de modèle.`,
 'sa68f184fe626daf3': `Ajouter une couche entraînable`,
 'sa8082d7f7ef02f42': `Cette transformation ne s'applique pas aux valeurs suivantes`,
 'sa812ba9ded26aa98': `Chargement du modèle...`,
@@ -102,6 +109,7 @@
 'sb59d68ed12d46377': `Chargement`,
 'sb633a04ba54b2dc0': `La couche comporte trop de paramètres entraînables. Essayez de réduire la taille de l'entrée ou les propriétés réglables.`,
 'sb850938497d0a395': `Autorisations de modification`,
+'sb8c878135ee917b1': `Le fichier n’est pas un JSON valide.`,
 'sbf1ff3369db980c0': `Source de l’architecture`,
 'sbfe9518a1fe4f185': `Remodeler`,
 'sc0e01e8b4662bec2': str`Prédiction : ${0}, valeur cible : ${1}`,

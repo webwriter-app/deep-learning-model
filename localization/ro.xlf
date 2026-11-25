@@ -54,26 +54,6 @@
         <source>Delete dataset</source>
         <target>Ștergeți setul de date</target>
       </trans-unit>
-      <trans-unit id="s5da30fd688d05a35">
-        <source>Edit Permissions</source>
-        <target>Editați permisiunile</target>
-      </trans-unit>
-      <trans-unit id="s162c56231b25e6ff">
-        <source>hide widget</source>
-        <target>ascunde widgetul</target>
-      </trans-unit>
-      <trans-unit id="s166d284a7cbc6181">
-        <source>read only</source>
-        <target>numai pentru citire</target>
-      </trans-unit>
-      <trans-unit id="s2b28da40a8490a78">
-        <source>feature settings only</source>
-        <target>numai setări caracteristici</target>
-      </trans-unit>
-      <trans-unit id="s34af392b321cbfa6">
-        <source>edit everything</source>
-        <target>editează totul</target>
-      </trans-unit>
       <trans-unit id="s26b5b115b8b61794">
         <source>Feature Engineering Widget hidden from students.</source>
         <target>Widgetul Feature Engineering ascuns de studenți.</target>
@@ -170,22 +150,6 @@
         <source>Model Design Widget hidden from students.</source>
         <target>Widgetul Model Design ascuns de studenți.</target>
       </trans-unit>
-      <trans-unit id="s026fba1543d336b2">
-        <source>Feature Source</source>
-        <target>Sursă caracteristică</target>
-      </trans-unit>
-      <trans-unit id="s32f2fa78e3267c4e">
-        <source>properties only</source>
-        <target>numai proprietăți</target>
-      </trans-unit>
-      <trans-unit id="s9b5ec9d0b70a0fac">
-        <source>Max Model Parameters</source>
-        <target>Parametrii modelului maxim</target>
-      </trans-unit>
-      <trans-unit id="s39e9054ae5edaf30">
-        <source>Max Layer Parameters</source>
-        <target>Parametri maximi ai stratului</target>
-      </trans-unit>
       <trans-unit id="sf99503650274b914">
         <source>Optimizer</source>
         <target>Optimizator</target>
@@ -246,14 +210,6 @@
         <source>Model Training Widget hidden from students.</source>
         <target>Widgetul de instruire a modelelor ascuns de studenți.</target>
       </trans-unit>
-      <trans-unit id="sd6b72022c37e1ae0">
-        <source>Design Source</source>
-        <target>Sursa designului</target>
-      </trans-unit>
-      <trans-unit id="s410415ac2406c84e">
-        <source>Preferred Backend</source>
-        <target>Backend preferat</target>
-      </trans-unit>
       <trans-unit id="s0b453a19aa0f85a9">
         <source>CPU</source>
         <target>procesor</target>
@@ -265,14 +221,6 @@
       <trans-unit id="s559e9b10ba86261e">
         <source>Cache training samples</source>
         <target>Eșantioane de antrenament cache</target>
-      </trans-unit>
-      <trans-unit id="s1ca51d37e3dae07a">
-        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
-        <target>Acest lucru permite ca probele transformate să fie stocate în memoria cache a dispozitivului de calcul, crescând astfel considerabil viteza de antrenare, dar necesitând mult mai mult spațiu de stocare pe dispozitiv.</target>
-      </trans-unit>
-      <trans-unit id="s19a2ee331d08ad42">
-        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
-        <target>(Avertisment: prea multe date tensoriale pot supraîncărca memoria RAM a dispozitivului și pot provoca blocarea acestuia în timpul antrenamentului și, în cel mai rău caz, blocarea sistemului gazdă.)</target>
       </trans-unit>
       <trans-unit id="s1bb08bff53933452">
         <source>Model version</source>
@@ -293,10 +241,6 @@
       <trans-unit id="sf84bd835fc5a52ef">
         <source>Worst Samples</source>
         <target>Cele mai proaste mostre</target>
-      </trans-unit>
-      <trans-unit id="s4c08da5f7528a7e3">
-        <source>Model Source</source>
-        <target>Sursa modelului</target>
       </trans-unit>
       <trans-unit id="s8a73af950772f702">
         <source>No Model avaiable.</source>
@@ -339,11 +283,11 @@
         <target>Set de date utilizat</target>
       </trans-unit>
       <trans-unit id="sb03650788f41c135">
-        <source>of <x id="0" equiv-text="${this.samples.length}" /> Samples</source>
-<target>din <x id="0" equiv-text="${this.samples.length}" /> eșantioane</target></trans-unit>
+        <source>of <x id="0" equiv-text="${samples.length}"/> Samples</source>
+<target>din <x id="0" equiv-text="${this.samples.length}"/> eșantioane</target></trans-unit>
       <trans-unit id="sc3727a4fc25d7500">
-        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}" /> Label: <x id="1" equiv-text="${labelClass}" /></source>
-<target>Predicție: <x id="0" equiv-text="${predClass} ${relation}" />, etichetă: <x id="1" equiv-text="${labelClass}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predClass} ${relation}"/> Label: <x id="1" equiv-text="${labelClass}"/></source>
+<target>Predicție: <x id="0" equiv-text="${predClass} ${relation}"/>, etichetă: <x id="1" equiv-text="${labelClass}"/></target></trans-unit>
       <trans-unit id="sc3d8f37ea5f4bd79">
         <source>Visualizing Difference...</source>
         <target>Vizualizarea diferenței...</target>
@@ -401,8 +345,8 @@
         <target>Scala de gri</target>
       </trans-unit>
       <trans-unit id="se1c4d8107171ecb2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" /> - Label: <x id="1" equiv-text="${labelValue}" /> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></source>
-<target>Predicție: <x id="0" equiv-text="${predValue}" /> − etichetă: <x id="1" equiv-text="${labelValue}" /> = diferență: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/> - Label: <x id="1" equiv-text="${labelValue}"/> = Delta: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></source>
+<target>Predicție: <x id="0" equiv-text="${predValue}"/> − etichetă: <x id="1" equiv-text="${labelValue}"/> = diferență: <x id="2" equiv-text="${parseFloat(predValue) - parseFloat(labelValue)}"/></target></trans-unit>
       <trans-unit id="se2b49a41b39653fc">
         <source>Value Scale</source>
         <target>Scala valorică</target>
@@ -472,14 +416,14 @@
         <target>Funcția de pierdere</target>
       </trans-unit>
       <trans-unit id="s38ddf839c081bbaf">
-        <source><x id="0" equiv-text="${(i + 1)}" />th dim</source>
-<target>Dimensiunea <x id="0" equiv-text="${(i + 1)}" /></target></trans-unit>
+        <source><x id="0" equiv-text="${index + 1}"/>th dim</source>
+<target>Dimensiunea <x id="0" equiv-text="${(i + 1)}"/></target></trans-unit>
       <trans-unit id="s2c48e68704ff98c2">
-        <source>Output shape invalid: <x id="0" equiv-text="${inDim}" /> != <x id="1" equiv-text="${outDim}" /></source>
-<target>Forma ieșirii nu este validă: <x id="0" equiv-text="${inDim}" /> ≠ <x id="1" equiv-text="${outDim}" /></target></trans-unit>
+        <source>Output shape invalid: <x id="0" equiv-text="${info.reshapeError.from}"/> != <x id="1" equiv-text="${info.reshapeError.to}"/></source>
+<target>Forma ieșirii nu este validă: <x id="0" equiv-text="${inDim}"/> ≠ <x id="1" equiv-text="${outDim}"/></target></trans-unit>
       <trans-unit id="sc0e01e8b4662bec2">
-        <source>Prediction: <x id="0" equiv-text="${predValue}" />,  Label: <x id="1" equiv-text="${labelValue}" /></source>
-<target>Predicție: <x id="0" equiv-text="${predValue}" />, etichetă: <x id="1" equiv-text="${labelValue}" /></target></trans-unit>
+        <source>Prediction: <x id="0" equiv-text="${predValue}"/>,  Label: <x id="1" equiv-text="${labelValue}"/></source>
+<target>Predicție: <x id="0" equiv-text="${predValue}"/>, etichetă: <x id="1" equiv-text="${labelValue}"/></target></trans-unit>
       <trans-unit id="sab09aa21c8921bea">
         <source>Loading image</source>
         <target>Se încarcă imaginea</target>
@@ -547,6 +491,94 @@
 <trans-unit id="s1b7f4af051183fee">
   <source>Preferred backend</source>
 <target>Motor de calcul preferat</target></trans-unit>
+<trans-unit id="s5754a3a243ce0bd2">
+  <source>The data has no columns.</source>
+        <target>Datele nu au coloane.</target>
+</trans-unit>
+<trans-unit id="s51c124e5e98f9718">
+  <source>The column names are empty or not unique.</source>
+        <target>Numele coloanelor sunt goale sau nu sunt unice.</target>
+</trans-unit>
+<trans-unit id="s6715c7a212ee37fe">
+  <source>The data has no rows.</source>
+        <target>Datele nu au rânduri.</target>
+</trans-unit>
+<trans-unit id="s4ffa704641ad66d2">
+  <source>A row has more values than the header.</source>
+        <target>Un rând are mai multe valori decât antetul.</target>
+</trans-unit>
+<trans-unit id="sb8c878135ee917b1">
+  <source>The file is not valid JSON.</source>
+        <target>Fișierul nu este JSON valid.</target>
+</trans-unit>
+<trans-unit id="s9f72fa206c8b32e0">
+  <source>Expected a JSON array of objects.</source>
+        <target>Se așteaptă un tablou JSON de obiecte.</target>
+</trans-unit>
+<trans-unit id="sa6570e7053d51656">
+  <source>The file holds no model layers.</source>
+        <target>Fișierul nu conține straturi ale modelului.</target>
+</trans-unit>
+<trans-unit id="s4f7691c326912146">
+  <source>Training Metrics</source>
+        <target>Indicatori de antrenare</target>
+</trans-unit>
+<trans-unit id="s5da30fd688d05a35">
+        <source>Edit Permissions</source>
+        <target>Editați permisiunile</target>
+      </trans-unit>
+<trans-unit id="s162c56231b25e6ff">
+        <source>hide widget</source>
+        <target>ascunde widgetul</target>
+      </trans-unit>
+<trans-unit id="s166d284a7cbc6181">
+        <source>read only</source>
+        <target>numai pentru citire</target>
+      </trans-unit>
+<trans-unit id="s2b28da40a8490a78">
+        <source>feature settings only</source>
+        <target>numai setări caracteristici</target>
+      </trans-unit>
+<trans-unit id="s34af392b321cbfa6">
+        <source>edit everything</source>
+        <target>editează totul</target>
+      </trans-unit>
+<trans-unit id="s026fba1543d336b2">
+        <source>Feature Source</source>
+        <target>Sursă caracteristică</target>
+      </trans-unit>
+<trans-unit id="s32f2fa78e3267c4e">
+        <source>properties only</source>
+        <target>numai proprietăți</target>
+      </trans-unit>
+<trans-unit id="s9b5ec9d0b70a0fac">
+        <source>Max Model Parameters</source>
+        <target>Parametrii modelului maxim</target>
+      </trans-unit>
+<trans-unit id="s39e9054ae5edaf30">
+        <source>Max Layer Parameters</source>
+        <target>Parametri maximi ai stratului</target>
+      </trans-unit>
+<trans-unit id="sd6b72022c37e1ae0">
+        <source>Design Source</source>
+        <target>Sursa designului</target>
+      </trans-unit>
+<trans-unit id="s410415ac2406c84e">
+        <source>Preferred Backend</source>
+        <target>Backend preferat</target>
+      </trans-unit>
+<trans-unit id="s1ca51d37e3dae07a">
+        <source>This allows for the transformed samples to be cached on the computation device thus dramatically increasing training speed but requiring significantly more storage on the device.</source>
+        <target>Acest lucru permite ca probele transformate să fie stocate în memoria cache a dispozitivului de calcul, crescând astfel considerabil viteza de antrenare, dar necesitând mult mai mult spațiu de stocare pe dispozitiv.</target>
+      </trans-unit>
+<trans-unit id="s19a2ee331d08ad42">
+        <source>(Warning: Too much tensor data can overfill the device RAM and crash during training and in the worst case lock-up the host system.)</source>
+        <target>(Avertisment: prea multe date tensoriale pot supraîncărca memoria RAM a dispozitivului și pot provoca blocarea acestuia în timpul antrenamentului și, în cel mai rău caz, blocarea sistemului gazdă.)</target>
+      </trans-unit>
+<trans-unit id="s4c08da5f7528a7e3">
+        <source>Model Source</source>
+        <target>Sursa modelului</target>
+      </trans-unit>
 </body>
   </file>
 </xliff>
