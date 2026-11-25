@@ -461,9 +461,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-feature-engineering",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-feature-engineering.ts",
-          "definitionPath": "src/widgets/webwriter-feature-engineering.ts"
+          "customElement": true
         }
       ],
       "exports": [
@@ -810,9 +808,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-model-designing",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-model-designing.ts",
-          "definitionPath": "src/widgets/webwriter-model-designing.ts"
+          "customElement": true
         }
       ],
       "exports": [
@@ -1021,9 +1017,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-model-evaluation",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-model-evaluation.ts",
-          "definitionPath": "src/widgets/webwriter-model-evaluation.ts"
+          "customElement": true
         }
       ],
       "exports": [
@@ -1275,9 +1269,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-model-prediction",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-model-prediction.ts",
-          "definitionPath": "src/widgets/webwriter-model-prediction.ts"
+          "customElement": true
         }
       ],
       "exports": [
@@ -1804,9 +1796,7 @@
             "package": "@webwriter/lit"
           },
           "tagName": "webwriter-model-training",
-          "customElement": true,
-          "modulePath": "src/widgets/webwriter-model-training.ts",
-          "definitionPath": "src/widgets/webwriter-model-training.ts"
+          "customElement": true
         }
       ],
       "exports": [

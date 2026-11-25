@@ -1,7 +1,7 @@
 # Deep Learning Model (`@webwriter/deep-learning-model@2.0.0`)
 [License: MIT](LICENSE) | Version: 2.0.0
 
-A set of blocks to create, train and evaluate deep learning models.
+Explore and configure deep learning models through interactive visualizations.
 
 ## Snippets
 [Snippets](https://webwriter.app/docs/snippets/snippets/) are examples and templates using the package's widgets.
@@ -377,4 +377,4 @@ npm install @webwriter/deep-learning-model
 
 
 ---
-*Generated with @webwriter/build@1.14.0*
+*Generated with @webwriter/build@1.15.0*
