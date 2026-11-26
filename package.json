@@ -1,6 +1,6 @@
 {
   "name": "@webwriter/deep-learning-model",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Explore and configure deep learning models through interactive visualizations.",
   "repository": "https://github.com/webwriter-app/deep-learning-model",
   "keywords": [
@@ -186,6 +186,7 @@
     "./snippets/MNIST-Image-to-Number.html": "./snippets/MNIST.html",
     "./icon": "./icon.svg",
     "./preview": "./assets/preview.mp4",
+    "./preview/de": "./assets/preview-de.mp4",
     "./editing-config.json": "./editing-config.json",
     "./custom-elements.json": "./custom-elements.json",
     "./tests/data-block.*": {
