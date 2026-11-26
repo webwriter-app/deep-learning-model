@@ -1,5 +1,5 @@
-# Deep Learning Model (`@webwriter/deep-learning-model@2.1.0`)
-[License: MIT](LICENSE) | Version: 2.1.0
+# Deep Learning Model (`@webwriter/deep-learning-model@2.1.1`)
+[License: MIT](LICENSE) | Version: 2.1.1
 
 Explore and configure deep learning models through interactive visualizations.
 
